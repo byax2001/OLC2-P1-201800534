@@ -8,6 +8,8 @@ class Operador(Enum):
     MULTI = 3
     DIV = 4
     UNARIO = 5
+    MOD = 6
+    POW = 7
 
 
 def getOperador(op) -> Operador:

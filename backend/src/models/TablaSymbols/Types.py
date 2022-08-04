@@ -3,6 +3,7 @@ from enum import Enum
 class Types(Enum):
     INT64 = 1
     FLOAT64 = 2
+    STRING = 3
 def getTipo(s:str):
     if s=="INT64":
         return Types.INT64

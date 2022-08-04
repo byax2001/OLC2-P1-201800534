@@ -1,4 +1,4 @@
-from models.Instruccion import Instruccion
+from models.Instruction import Instruction
 
 
 class Ast:

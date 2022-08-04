@@ -1,7 +1,9 @@
 # Declaracion de tokens
 from ply import lex
-
-tokens = ('mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false")
+reservadas = {
+    'ejecutar': 'EJECUTAR',
+}
+tokens = ('mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false")+ list(reservadas.values())
 
 
 # Caracteres ignorados

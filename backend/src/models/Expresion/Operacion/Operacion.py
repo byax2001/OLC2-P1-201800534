@@ -23,6 +23,11 @@ def getOperador(op) -> Operador:
         return Operador.DIV
     elif op == 'UNARIO':
         return Operador.UNARIO
+    elif op == "%":
+        return Operador.MOD
+    elif op == 'pow':
+        return Operador.POW
+
 
 
 def getOperacion(op: Operador):

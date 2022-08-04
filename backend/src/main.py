@@ -1,8 +1,18 @@
 
+from backend.src.models import TablaSymbols
 from gramatica.parser import parser
+from models.TablaSymbols.Enviroment import Enviroment
+from models.Driver import Driver
+from models.Ast.Ast import Ast
+
 
 f = open("./entrada.txt", "r")
 input = f.read()
 print(input)
-result=parser.parse(input)
-print(result)
+
+ast: Ast =parser.parse(input)
+ts = TablaSymbols(None, 'Global')
+driver = Driver()
+ast.ejecutar(driver, ts)
+
+print(driver.console)

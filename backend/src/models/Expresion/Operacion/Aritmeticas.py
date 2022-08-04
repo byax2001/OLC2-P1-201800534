@@ -1,3 +1,4 @@
+from re import X
 from models.Expresion.Operacion.Operacion import Operacion, Operador, getOperacion
 from models.TablaSymbols.Types import Types,definirTipo
 class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas hereda de Operacion
@@ -6,23 +7,10 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
         value = self.getValor(driver, ts)
         return definirTipo(value)
 
-    # get Valor con Diccionarios
-    def getValor(self, driver, ts):
-        if not self.expU:
-            valor_exp1 = self.exp1.getValor(driver, ts)
-            valor_exp2 = self.exp2.getValor(driver, ts)
-            Types.
-            operacion = matriz_operaciones[self.operador]
-            t_nodoIzq = operacion[self.exp1.getTipo(driver, ts)]
-            funcion = t_nodoIzq[self.exp2.getTipo(driver, ts)]
-
-            return funcion(valor_exp1, valor_exp2)
-
     # get valor con condicionales
-    def getValor2(self, driver, ts):
+    def getValor(self, driver, ts):
         t_nodoIzq = self.exp1.getTipo(driver, ts)
         t_nodoDer = self.exp2.getTipo(driver, ts) if not self.expU else None
-
         if self.expU is not None:
             if self.operador == Operador.UNARIO:
                 return - self.exp1.getValor(driver, ts)
@@ -61,6 +49,22 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
             if t_nodoIzq == t_nodoDer:
                 if t_nodoIzq in [Types.INT64, Types.FLOAT64]:
                     return self.exp1.getValor(driver, ts) / self.exp2.getValor(driver, ts)
+                else:
+                    print(f'Las expresiones para la  division debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
+            else:
+               print(f'Las expresiones a restar deben de ser del mismo tipo')
+        elif self.operador == Operador.MOD:
+            if t_nodoIzq == t_nodoDer:
+                if t_nodoIzq in [Types.INT64, Types.FLOAT64]:
+                    return self.exp1.getValor(driver, ts) % self.exp2.getValor(driver, ts)
+                else:
+                    print(f'Las expresiones para la  division debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
+            else:
+               print(f'Las expresiones a restar deben de ser del mismo tipo')
+        elif self.operador == Operador.POW:
+            if t_nodoIzq == t_nodoDer:
+                if t_nodoIzq in [Types.INT64, Types.FLOAT64]:
+                    return pow(self.exp1.getValor(driver, ts),self.exp2.getValor(driver, ts))
                 else:
                     print(f'Las expresiones para la  division debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
             else:

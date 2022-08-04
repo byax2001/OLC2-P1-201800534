@@ -1,9 +1,11 @@
 # Declaracion de tokens
 from ply import lex
 reservadas = {
-    'ejecutar': 'EJECUTAR',
+    #r'exp regular' : id 
+    'pow': 'pow',
+    'println!': 'println'
 }
-tokens = ('mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false")+ list(reservadas.values())
+tokens = ('mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false","id")+ list(reservadas.values())
 
 
 # Caracteres ignorados
@@ -31,6 +33,17 @@ t_igual=r'='
 t_or=r'||'
 t_and=r'&&'
 t_not=r'!'
+
+#otros simbolos
+t_cora=r'['
+t_corc=r']'
+t_llavea="{"
+t_llavec="}"
+t_coma=r','
+t_puntoycoma=r';'
+t_dospuntos=r':'
+t_interrogacion=r'\?'
+
 
 #tipos de datos
 t_i64=r'i64'
@@ -63,6 +76,10 @@ def t_false(t):
     r'false'
     t.value=bool(t.value)
     return t
+def t_id(t):
+    r'[A-Za-z_][A-Za-z_1-9]*'
+    t.value=str(t.value)
+    return t 
 
 #Ignora comentarios
 def t_ignorar_comentarios(t):

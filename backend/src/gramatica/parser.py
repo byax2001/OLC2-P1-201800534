@@ -1,9 +1,17 @@
 from ply.yacc import yacc
 from gramatica import lexer
 
+from models.Expresion.Operacion.Operacion import Aritmeticas
+from models.Expresion.Primitivo import Primitivo
+from models.Ast.Ast import Ast
+
+#Instrucciones
+from models.Instruction.println import Println
+
+
 tokens = lexer.tokens
 
-# expression : term MAS term
+# EXPRESION : term MAS term
 #            | term MENOS term
 #            | term
 # term : factor
@@ -21,7 +29,7 @@ def p_inicio(p):
     """
     INICIO : INSTRUCCIONES
     """
-    p[0] = p[1]
+    p[0] = Ast(p[1])
     
 def p_instrucciones(p):
     """
@@ -38,56 +46,59 @@ def p_instruccion(p):
 
 def p_expresion(p):
     """
-    EXPRESION :  EXPRESION mas EXPRESION 
+    EXPRESION : EXPRESION mas EXPRESION 
             |   EXPRESION menos EXPRESION
             |   EXPRESION div EXPRESION
             |   EXPRESION multi EXPRESION
-            |   EXPRESION mod EXPRESION
-            
-            |      
+            |   EXPRESION mod EXPRESION  
+            |   pow para EXPRESION coma EXPRESION parc   
     """
     # p contiene los elementos de la gramatica
     #
-    # expression : term MAS term
+    # EXPRESION : term MAS term
     #   p[0]     : p[1] p[2] p[3]
     #
-    if p[2] == '+':
-        p[0] = p[1] + p[3]
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*':
-        p[0] = p[1] * p[3]
-    elif p[2] == '/':
-        p[0] = p[1] / p[3]
+    if p[2] != '(':
+        p[0] = Aritmeticas(exp1=p[1], operador=p[2], exp2=p[3], expU=False, linea=p.lineno(1), columna=0)
+    else:
+        p[0] = Aritmeticas(exp1=p[3], operador="pow", exp2=p[5], expU=False, linea=p.lineno(1), columna=0)
 
-
-def p_expression_par(p):
+def p_EXPRESION_par(p):
     """
-    expression : PARA expression PARC
+    EXPRESION : para EXPRESION parc
     """
     p[0] = p[2]
 
 
-
-def p_factor_number(p):
-    """
-    expression : ENTERO
-        | DECIMAL
-    """
-    p[0] = p[1]
-
-
 def p_factor_unario(p):
     """
-    expression : MAS expression
-           | MENOS expression %prec UNARIO
+    EXPRESION : menos EXPRESION %prec UNARIO
     """
-    if p[1] == '-':
-        p[0] = -p[2]
-    else:
-        p[0] = p[2]
+    p[0] = Aritmeticas(exp1=p[2], operador=p[1], exp2=None, expU=True, linea=p.lineno(1), columna=0)
         
+def p_exp_tdato(p):
+    """
+    EXPRESION : TIPODATO
+    """
+    p[0]=p[1]
+    
+def p_tipo_dato(p):
+    """
+    TIPODATO : entero
+        | decimal
+        | cadena
+        | caracter 
+        | id
+    """
+    p[0] = Primitivo(p[1], p.lineno(1), 0) 
 
+
+#Instrucciones
+def p_print(p):
+    """
+        println  : para EXPRESION parc 
+    """
+    p[0] = Ejecutar(p[3], p.lineno(1), 0)
 
 # Error sintactico
 def p_error(p):

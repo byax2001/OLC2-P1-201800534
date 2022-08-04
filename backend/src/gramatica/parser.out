@@ -1,0 +1,420 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    CHAR
+    STRING
+
+Grammar
+
+Rule 0     S' -> inicio
+Rule 1     inicio -> instruccion
+Rule 2     instruccion -> expression
+Rule 3     expression -> expression MAS expression
+Rule 4     expression -> expression MENOS expression
+Rule 5     expression -> expression DIV expression
+Rule 6     expression -> expression MULTI expression
+Rule 7     expression -> PARA expression PARC
+Rule 8     expression -> ENTERO
+Rule 9     expression -> DECIMAL
+Rule 10    expression -> MAS expression
+Rule 11    expression -> MENOS expression
+
+Terminals, with rules where they appear
+
+CHAR                 : 
+DECIMAL              : 9
+DIV                  : 5
+ENTERO               : 8
+MAS                  : 3 10
+MENOS                : 4 11
+MULTI                : 6
+PARA                 : 7
+PARC                 : 7
+STRING               : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 2 3 3 4 4 5 5 6 6 7 10 11
+inicio               : 0
+instruccion          : 1
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . inicio
+    (1) inicio -> . instruccion
+    (2) instruccion -> . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression DIV expression
+    (6) expression -> . expression MULTI expression
+    (7) expression -> . PARA expression PARC
+    (8) expression -> . ENTERO
+    (9) expression -> . DECIMAL
+    (10) expression -> . MAS expression
+    (11) expression -> . MENOS expression
+
+    PARA            shift and go to state 6
+    ENTERO          shift and go to state 7
+    DECIMAL         shift and go to state 8
+    MAS             shift and go to state 4
+    MENOS           shift and go to state 5
+
+    inicio                         shift and go to state 1
+    instruccion                    shift and go to state 2
+    expression                     shift and go to state 3
+
+state 1
+
+    (0) S' -> inicio .
+
+
+
+state 2
+
+    (1) inicio -> instruccion .
+
+    $end            reduce using rule 1 (inicio -> instruccion .)
+
+
+state 3
+
+    (2) instruccion -> expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . DIV expression
+    (6) expression -> expression . MULTI expression
+
+    $end            reduce using rule 2 (instruccion -> expression .)
+    MAS             shift and go to state 9
+    MENOS           shift and go to state 10
+    DIV             shift and go to state 11
+    MULTI           shift and go to state 12
+
+
+state 4
+
+    (10) expression -> MAS . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression DIV expression
+    (6) expression -> . expression MULTI expression
+    (7) expression -> . PARA expression PARC
+    (8) expression -> . ENTERO
+    (9) expression -> . DECIMAL
+    (10) expression -> . MAS expression
+    (11) expression -> . MENOS expression
+
+    PARA            shift and go to state 6
+    ENTERO          shift and go to state 7
+    DECIMAL         shift and go to state 8
+    MAS             shift and go to state 4
+    MENOS           shift and go to state 5
+
+    expression                     shift and go to state 13
+
+state 5
+
+    (11) expression -> MENOS . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression DIV expression
+    (6) expression -> . expression MULTI expression
+    (7) expression -> . PARA expression PARC
+    (8) expression -> . ENTERO
+    (9) expression -> . DECIMAL
+    (10) expression -> . MAS expression
+    (11) expression -> . MENOS expression
+
+    PARA            shift and go to state 6
+    ENTERO          shift and go to state 7
+    DECIMAL         shift and go to state 8
+    MAS             shift and go to state 4
+    MENOS           shift and go to state 5
+
+    expression                     shift and go to state 14
+
+state 6
+
+    (7) expression -> PARA . expression PARC
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression DIV expression
+    (6) expression -> . expression MULTI expression
+    (7) expression -> . PARA expression PARC
+    (8) expression -> . ENTERO
+    (9) expression -> . DECIMAL
+    (10) expression -> . MAS expression
+    (11) expression -> . MENOS expression
+
+    PARA            shift and go to state 6
+    ENTERO          shift and go to state 7
+    DECIMAL         shift and go to state 8
+    MAS             shift and go to state 4
+    MENOS           shift and go to state 5
+
+    expression                     shift and go to state 15
+
+state 7
+
+    (8) expression -> ENTERO .
+
+    MAS             reduce using rule 8 (expression -> ENTERO .)
+    MENOS           reduce using rule 8 (expression -> ENTERO .)
+    DIV             reduce using rule 8 (expression -> ENTERO .)
+    MULTI           reduce using rule 8 (expression -> ENTERO .)
+    $end            reduce using rule 8 (expression -> ENTERO .)
+    PARC            reduce using rule 8 (expression -> ENTERO .)
+
+
+state 8
+
+    (9) expression -> DECIMAL .
+
+    MAS             reduce using rule 9 (expression -> DECIMAL .)
+    MENOS           reduce using rule 9 (expression -> DECIMAL .)
+    DIV             reduce using rule 9 (expression -> DECIMAL .)
+    MULTI           reduce using rule 9 (expression -> DECIMAL .)
+    $end            reduce using rule 9 (expression -> DECIMAL .)
+    PARC            reduce using rule 9 (expression -> DECIMAL .)
+
+
+state 9
+
+    (3) expression -> expression MAS . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression DIV expression
+    (6) expression -> . expression MULTI expression
+    (7) expression -> . PARA expression PARC
+    (8) expression -> . ENTERO
+    (9) expression -> . DECIMAL
+    (10) expression -> . MAS expression
+    (11) expression -> . MENOS expression
+
+    PARA            shift and go to state 6
+    ENTERO          shift and go to state 7
+    DECIMAL         shift and go to state 8
+    MAS             shift and go to state 4
+    MENOS           shift and go to state 5
+
+    expression                     shift and go to state 16
+
+state 10
+
+    (4) expression -> expression MENOS . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression DIV expression
+    (6) expression -> . expression MULTI expression
+    (7) expression -> . PARA expression PARC
+    (8) expression -> . ENTERO
+    (9) expression -> . DECIMAL
+    (10) expression -> . MAS expression
+    (11) expression -> . MENOS expression
+
+    PARA            shift and go to state 6
+    ENTERO          shift and go to state 7
+    DECIMAL         shift and go to state 8
+    MAS             shift and go to state 4
+    MENOS           shift and go to state 5
+
+    expression                     shift and go to state 17
+
+state 11
+
+    (5) expression -> expression DIV . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression DIV expression
+    (6) expression -> . expression MULTI expression
+    (7) expression -> . PARA expression PARC
+    (8) expression -> . ENTERO
+    (9) expression -> . DECIMAL
+    (10) expression -> . MAS expression
+    (11) expression -> . MENOS expression
+
+    PARA            shift and go to state 6
+    ENTERO          shift and go to state 7
+    DECIMAL         shift and go to state 8
+    MAS             shift and go to state 4
+    MENOS           shift and go to state 5
+
+    expression                     shift and go to state 18
+
+state 12
+
+    (6) expression -> expression MULTI . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression DIV expression
+    (6) expression -> . expression MULTI expression
+    (7) expression -> . PARA expression PARC
+    (8) expression -> . ENTERO
+    (9) expression -> . DECIMAL
+    (10) expression -> . MAS expression
+    (11) expression -> . MENOS expression
+
+    PARA            shift and go to state 6
+    ENTERO          shift and go to state 7
+    DECIMAL         shift and go to state 8
+    MAS             shift and go to state 4
+    MENOS           shift and go to state 5
+
+    expression                     shift and go to state 19
+
+state 13
+
+    (10) expression -> MAS expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . DIV expression
+    (6) expression -> expression . MULTI expression
+
+    MAS             reduce using rule 10 (expression -> MAS expression .)
+    MENOS           reduce using rule 10 (expression -> MAS expression .)
+    $end            reduce using rule 10 (expression -> MAS expression .)
+    PARC            reduce using rule 10 (expression -> MAS expression .)
+    DIV             shift and go to state 11
+    MULTI           shift and go to state 12
+
+  ! DIV             [ reduce using rule 10 (expression -> MAS expression .) ]
+  ! MULTI           [ reduce using rule 10 (expression -> MAS expression .) ]
+  ! MAS             [ shift and go to state 9 ]
+  ! MENOS           [ shift and go to state 10 ]
+
+
+state 14
+
+    (11) expression -> MENOS expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . DIV expression
+    (6) expression -> expression . MULTI expression
+
+    MAS             reduce using rule 11 (expression -> MENOS expression .)
+    MENOS           reduce using rule 11 (expression -> MENOS expression .)
+    DIV             reduce using rule 11 (expression -> MENOS expression .)
+    MULTI           reduce using rule 11 (expression -> MENOS expression .)
+    $end            reduce using rule 11 (expression -> MENOS expression .)
+    PARC            reduce using rule 11 (expression -> MENOS expression .)
+
+  ! MAS             [ shift and go to state 9 ]
+  ! MENOS           [ shift and go to state 10 ]
+  ! DIV             [ shift and go to state 11 ]
+  ! MULTI           [ shift and go to state 12 ]
+
+
+state 15
+
+    (7) expression -> PARA expression . PARC
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . DIV expression
+    (6) expression -> expression . MULTI expression
+
+    PARC            shift and go to state 20
+    MAS             shift and go to state 9
+    MENOS           shift and go to state 10
+    DIV             shift and go to state 11
+    MULTI           shift and go to state 12
+
+
+state 16
+
+    (3) expression -> expression MAS expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . DIV expression
+    (6) expression -> expression . MULTI expression
+
+    MAS             reduce using rule 3 (expression -> expression MAS expression .)
+    MENOS           reduce using rule 3 (expression -> expression MAS expression .)
+    $end            reduce using rule 3 (expression -> expression MAS expression .)
+    PARC            reduce using rule 3 (expression -> expression MAS expression .)
+    DIV             shift and go to state 11
+    MULTI           shift and go to state 12
+
+  ! DIV             [ reduce using rule 3 (expression -> expression MAS expression .) ]
+  ! MULTI           [ reduce using rule 3 (expression -> expression MAS expression .) ]
+  ! MAS             [ shift and go to state 9 ]
+  ! MENOS           [ shift and go to state 10 ]
+
+
+state 17
+
+    (4) expression -> expression MENOS expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . DIV expression
+    (6) expression -> expression . MULTI expression
+
+    MAS             reduce using rule 4 (expression -> expression MENOS expression .)
+    MENOS           reduce using rule 4 (expression -> expression MENOS expression .)
+    $end            reduce using rule 4 (expression -> expression MENOS expression .)
+    PARC            reduce using rule 4 (expression -> expression MENOS expression .)
+    DIV             shift and go to state 11
+    MULTI           shift and go to state 12
+
+  ! DIV             [ reduce using rule 4 (expression -> expression MENOS expression .) ]
+  ! MULTI           [ reduce using rule 4 (expression -> expression MENOS expression .) ]
+  ! MAS             [ shift and go to state 9 ]
+  ! MENOS           [ shift and go to state 10 ]
+
+
+state 18
+
+    (5) expression -> expression DIV expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . DIV expression
+    (6) expression -> expression . MULTI expression
+
+    MAS             reduce using rule 5 (expression -> expression DIV expression .)
+    MENOS           reduce using rule 5 (expression -> expression DIV expression .)
+    DIV             reduce using rule 5 (expression -> expression DIV expression .)
+    MULTI           reduce using rule 5 (expression -> expression DIV expression .)
+    $end            reduce using rule 5 (expression -> expression DIV expression .)
+    PARC            reduce using rule 5 (expression -> expression DIV expression .)
+
+  ! MAS             [ shift and go to state 9 ]
+  ! MENOS           [ shift and go to state 10 ]
+  ! DIV             [ shift and go to state 11 ]
+  ! MULTI           [ shift and go to state 12 ]
+
+
+state 19
+
+    (6) expression -> expression MULTI expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . DIV expression
+    (6) expression -> expression . MULTI expression
+
+    MAS             reduce using rule 6 (expression -> expression MULTI expression .)
+    MENOS           reduce using rule 6 (expression -> expression MULTI expression .)
+    DIV             reduce using rule 6 (expression -> expression MULTI expression .)
+    MULTI           reduce using rule 6 (expression -> expression MULTI expression .)
+    $end            reduce using rule 6 (expression -> expression MULTI expression .)
+    PARC            reduce using rule 6 (expression -> expression MULTI expression .)
+
+  ! MAS             [ shift and go to state 9 ]
+  ! MENOS           [ shift and go to state 10 ]
+  ! DIV             [ shift and go to state 11 ]
+  ! MULTI           [ shift and go to state 12 ]
+
+
+state 20
+
+    (7) expression -> PARA expression PARC .
+
+    MAS             reduce using rule 7 (expression -> PARA expression PARC .)
+    MENOS           reduce using rule 7 (expression -> PARA expression PARC .)
+    DIV             reduce using rule 7 (expression -> PARA expression PARC .)
+    MULTI           reduce using rule 7 (expression -> PARA expression PARC .)
+    $end            reduce using rule 7 (expression -> PARA expression PARC .)
+    PARC            reduce using rule 7 (expression -> PARA expression PARC .)
+

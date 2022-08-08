@@ -1,5 +1,3 @@
-
-from backend.src.models import TablaSymbols
 from gramatica.parser import parser
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Driver import Driver
@@ -11,8 +9,9 @@ input = f.read()
 print(input)
 
 ast: Ast =parser.parse(input)
-ts = TablaSymbols(None, 'Global')
+ts = Enviroment(None, 'Global')
 driver = Driver()
+
 ast.ejecutar(driver, ts)
 
 print(driver.console)

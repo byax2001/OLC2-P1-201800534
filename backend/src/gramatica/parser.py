@@ -1,8 +1,9 @@
 from ply.yacc import yacc
 from gramatica import lexer
 
-from models.Expresion.Operacion.Operacion import Aritmeticas
+from models.Expresion.Operacion.Aritmeticas import Aritmeticas
 from models.Expresion.Primitivo import Primitivo
+from models.Expresion.Id import Id
 from models.Ast.Ast import Ast
 
 #Instrucciones
@@ -31,16 +32,21 @@ def p_inicio(p):
     """
     p[0] = Ast(p[1])
     
-def p_instrucciones(p):
+def p_instrucciones_lista(p):
     """
-    INICIO : INSTRUCCIONES INSTRUCCION
-        | INSTRUCCION
+    INSTRUCCIONES : INSTRUCCIONES INSTRUCCION
     """
-    p[0] = p[1]
+    p[0] = p[1].append(p[2])
+    
+def p_instrucciones_instruccion(p):
+    """
+    INSTRUCCIONES : INSTRUCCION
+    """
+    p[0] = [p[1]]
 
 def p_instruccion(p):
     """
-    INSTRUCCION: EXPRESION
+    INSTRUCCION : PRINT puntoycoma
     """
     p[0] = p[1]
 
@@ -88,17 +94,19 @@ def p_tipo_dato(p):
         | decimal
         | cadena
         | caracter 
-        | id
     """
     p[0] = Primitivo(p[1], p.lineno(1), 0) 
-
-
+def p_id(p):
+    """
+    EXPRESION : id
+    """  
+    p[0] = p[1]
 #Instrucciones
-def p_print(p):
+def p_println(p):
     """
-        println  : para EXPRESION parc 
+    PRINT : println para EXPRESION parc
     """
-    p[0] = Ejecutar(p[3], p.lineno(1), 0)
+    p[0] = Println(p[3], p.lineno(1), 0)
 
 # Error sintactico
 def p_error(p):

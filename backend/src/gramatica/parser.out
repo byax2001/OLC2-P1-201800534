@@ -2,419 +2,821 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    CHAR
-    STRING
+    and
+    bool
+    char
+    cora
+    corc
+    diferente
+    dospuntos
+    f64
+    false
+    i64
+    igual
+    igualigual
+    interrogacion
+    llavea
+    llavec
+    mayor
+    mayorigual
+    menor
+    menorigual
+    not
+    or
+    string
+    struct
+    true
 
 Grammar
 
-Rule 0     S' -> inicio
-Rule 1     inicio -> instruccion
-Rule 2     instruccion -> expression
-Rule 3     expression -> expression MAS expression
-Rule 4     expression -> expression MENOS expression
-Rule 5     expression -> expression DIV expression
-Rule 6     expression -> expression MULTI expression
-Rule 7     expression -> PARA expression PARC
-Rule 8     expression -> ENTERO
-Rule 9     expression -> DECIMAL
-Rule 10    expression -> MAS expression
-Rule 11    expression -> MENOS expression
+Rule 0     S' -> INICIO
+Rule 1     INICIO -> INSTRUCCIONES
+Rule 2     INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION
+Rule 3     INSTRUCCIONES -> INSTRUCCION
+Rule 4     INSTRUCCION -> PRINT puntoycoma
+Rule 5     EXPRESION -> EXPRESION mas EXPRESION
+Rule 6     EXPRESION -> EXPRESION menos EXPRESION
+Rule 7     EXPRESION -> EXPRESION div EXPRESION
+Rule 8     EXPRESION -> EXPRESION multi EXPRESION
+Rule 9     EXPRESION -> EXPRESION mod EXPRESION
+Rule 10    EXPRESION -> pow para EXPRESION coma EXPRESION parc
+Rule 11    EXPRESION -> para EXPRESION parc
+Rule 12    EXPRESION -> menos EXPRESION
+Rule 13    EXPRESION -> TIPODATO
+Rule 14    TIPODATO -> entero
+Rule 15    TIPODATO -> decimal
+Rule 16    TIPODATO -> cadena
+Rule 17    TIPODATO -> caracter
+Rule 18    EXPRESION -> id
+Rule 19    PRINT -> println para EXPRESION parc
 
 Terminals, with rules where they appear
 
-CHAR                 : 
-DECIMAL              : 9
-DIV                  : 5
-ENTERO               : 8
-MAS                  : 3 10
-MENOS                : 4 11
-MULTI                : 6
-PARA                 : 7
-PARC                 : 7
-STRING               : 
+and                  : 
+bool                 : 
+cadena               : 16
+caracter             : 17
+char                 : 
+coma                 : 10
+cora                 : 
+corc                 : 
+decimal              : 15
+diferente            : 
+div                  : 7
+dospuntos            : 
+entero               : 14
 error                : 
+f64                  : 
+false                : 
+i64                  : 
+id                   : 18
+igual                : 
+igualigual           : 
+interrogacion        : 
+llavea               : 
+llavec               : 
+mas                  : 5
+mayor                : 
+mayorigual           : 
+menor                : 
+menorigual           : 
+menos                : 6 12
+mod                  : 9
+multi                : 8
+not                  : 
+or                   : 
+para                 : 10 11 19
+parc                 : 10 11 19
+pow                  : 10
+println              : 19
+puntoycoma           : 4
+string               : 
+struct               : 
+true                 : 
 
 Nonterminals, with rules where they appear
 
-expression           : 2 3 3 4 4 5 5 6 6 7 10 11
-inicio               : 0
-instruccion          : 1
+EXPRESION            : 5 5 6 6 7 7 8 8 9 9 10 10 11 12 19
+INICIO               : 0
+INSTRUCCION          : 2 3
+INSTRUCCIONES        : 1 2
+PRINT                : 4
+TIPODATO             : 13
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . inicio
-    (1) inicio -> . instruccion
-    (2) instruccion -> . expression
-    (3) expression -> . expression MAS expression
-    (4) expression -> . expression MENOS expression
-    (5) expression -> . expression DIV expression
-    (6) expression -> . expression MULTI expression
-    (7) expression -> . PARA expression PARC
-    (8) expression -> . ENTERO
-    (9) expression -> . DECIMAL
-    (10) expression -> . MAS expression
-    (11) expression -> . MENOS expression
+    (0) S' -> . INICIO
+    (1) INICIO -> . INSTRUCCIONES
+    (2) INSTRUCCIONES -> . INSTRUCCIONES INSTRUCCION
+    (3) INSTRUCCIONES -> . INSTRUCCION
+    (4) INSTRUCCION -> . PRINT puntoycoma
+    (19) PRINT -> . println para EXPRESION parc
 
-    PARA            shift and go to state 6
-    ENTERO          shift and go to state 7
-    DECIMAL         shift and go to state 8
-    MAS             shift and go to state 4
-    MENOS           shift and go to state 5
+    println         shift and go to state 5
 
-    inicio                         shift and go to state 1
-    instruccion                    shift and go to state 2
-    expression                     shift and go to state 3
+    INICIO                         shift and go to state 1
+    INSTRUCCIONES                  shift and go to state 2
+    INSTRUCCION                    shift and go to state 3
+    PRINT                          shift and go to state 4
 
 state 1
 
-    (0) S' -> inicio .
+    (0) S' -> INICIO .
 
 
 
 state 2
 
-    (1) inicio -> instruccion .
+    (1) INICIO -> INSTRUCCIONES .
+    (2) INSTRUCCIONES -> INSTRUCCIONES . INSTRUCCION
+    (4) INSTRUCCION -> . PRINT puntoycoma
+    (19) PRINT -> . println para EXPRESION parc
 
-    $end            reduce using rule 1 (inicio -> instruccion .)
+    $end            reduce using rule 1 (INICIO -> INSTRUCCIONES .)
+    println         shift and go to state 5
 
+    INSTRUCCION                    shift and go to state 6
+    PRINT                          shift and go to state 4
 
 state 3
 
-    (2) instruccion -> expression .
-    (3) expression -> expression . MAS expression
-    (4) expression -> expression . MENOS expression
-    (5) expression -> expression . DIV expression
-    (6) expression -> expression . MULTI expression
+    (3) INSTRUCCIONES -> INSTRUCCION .
 
-    $end            reduce using rule 2 (instruccion -> expression .)
-    MAS             shift and go to state 9
-    MENOS           shift and go to state 10
-    DIV             shift and go to state 11
-    MULTI           shift and go to state 12
+    println         reduce using rule 3 (INSTRUCCIONES -> INSTRUCCION .)
+    $end            reduce using rule 3 (INSTRUCCIONES -> INSTRUCCION .)
 
 
 state 4
 
-    (10) expression -> MAS . expression
-    (3) expression -> . expression MAS expression
-    (4) expression -> . expression MENOS expression
-    (5) expression -> . expression DIV expression
-    (6) expression -> . expression MULTI expression
-    (7) expression -> . PARA expression PARC
-    (8) expression -> . ENTERO
-    (9) expression -> . DECIMAL
-    (10) expression -> . MAS expression
-    (11) expression -> . MENOS expression
+    (4) INSTRUCCION -> PRINT . puntoycoma
 
-    PARA            shift and go to state 6
-    ENTERO          shift and go to state 7
-    DECIMAL         shift and go to state 8
-    MAS             shift and go to state 4
-    MENOS           shift and go to state 5
+    puntoycoma      shift and go to state 7
 
-    expression                     shift and go to state 13
 
 state 5
 
-    (11) expression -> MENOS . expression
-    (3) expression -> . expression MAS expression
-    (4) expression -> . expression MENOS expression
-    (5) expression -> . expression DIV expression
-    (6) expression -> . expression MULTI expression
-    (7) expression -> . PARA expression PARC
-    (8) expression -> . ENTERO
-    (9) expression -> . DECIMAL
-    (10) expression -> . MAS expression
-    (11) expression -> . MENOS expression
+    (19) PRINT -> println . para EXPRESION parc
 
-    PARA            shift and go to state 6
-    ENTERO          shift and go to state 7
-    DECIMAL         shift and go to state 8
-    MAS             shift and go to state 4
-    MENOS           shift and go to state 5
+    para            shift and go to state 8
 
-    expression                     shift and go to state 14
 
 state 6
 
-    (7) expression -> PARA . expression PARC
-    (3) expression -> . expression MAS expression
-    (4) expression -> . expression MENOS expression
-    (5) expression -> . expression DIV expression
-    (6) expression -> . expression MULTI expression
-    (7) expression -> . PARA expression PARC
-    (8) expression -> . ENTERO
-    (9) expression -> . DECIMAL
-    (10) expression -> . MAS expression
-    (11) expression -> . MENOS expression
+    (2) INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION .
 
-    PARA            shift and go to state 6
-    ENTERO          shift and go to state 7
-    DECIMAL         shift and go to state 8
-    MAS             shift and go to state 4
-    MENOS           shift and go to state 5
+    println         reduce using rule 2 (INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION .)
+    $end            reduce using rule 2 (INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION .)
 
-    expression                     shift and go to state 15
 
 state 7
 
-    (8) expression -> ENTERO .
+    (4) INSTRUCCION -> PRINT puntoycoma .
 
-    MAS             reduce using rule 8 (expression -> ENTERO .)
-    MENOS           reduce using rule 8 (expression -> ENTERO .)
-    DIV             reduce using rule 8 (expression -> ENTERO .)
-    MULTI           reduce using rule 8 (expression -> ENTERO .)
-    $end            reduce using rule 8 (expression -> ENTERO .)
-    PARC            reduce using rule 8 (expression -> ENTERO .)
+    println         reduce using rule 4 (INSTRUCCION -> PRINT puntoycoma .)
+    $end            reduce using rule 4 (INSTRUCCION -> PRINT puntoycoma .)
 
 
 state 8
 
-    (9) expression -> DECIMAL .
+    (19) PRINT -> println para . EXPRESION parc
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . para EXPRESION parc
+    (12) EXPRESION -> . menos EXPRESION
+    (13) EXPRESION -> . TIPODATO
+    (18) EXPRESION -> . id
+    (14) TIPODATO -> . entero
+    (15) TIPODATO -> . decimal
+    (16) TIPODATO -> . cadena
+    (17) TIPODATO -> . caracter
 
-    MAS             reduce using rule 9 (expression -> DECIMAL .)
-    MENOS           reduce using rule 9 (expression -> DECIMAL .)
-    DIV             reduce using rule 9 (expression -> DECIMAL .)
-    MULTI           reduce using rule 9 (expression -> DECIMAL .)
-    $end            reduce using rule 9 (expression -> DECIMAL .)
-    PARC            reduce using rule 9 (expression -> DECIMAL .)
+    pow             shift and go to state 12
+    para            shift and go to state 9
+    menos           shift and go to state 11
+    id              shift and go to state 14
+    entero          shift and go to state 15
+    decimal         shift and go to state 16
+    cadena          shift and go to state 17
+    caracter        shift and go to state 18
 
+    EXPRESION                      shift and go to state 10
+    TIPODATO                       shift and go to state 13
 
 state 9
 
-    (3) expression -> expression MAS . expression
-    (3) expression -> . expression MAS expression
-    (4) expression -> . expression MENOS expression
-    (5) expression -> . expression DIV expression
-    (6) expression -> . expression MULTI expression
-    (7) expression -> . PARA expression PARC
-    (8) expression -> . ENTERO
-    (9) expression -> . DECIMAL
-    (10) expression -> . MAS expression
-    (11) expression -> . MENOS expression
+    (11) EXPRESION -> para . EXPRESION parc
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . para EXPRESION parc
+    (12) EXPRESION -> . menos EXPRESION
+    (13) EXPRESION -> . TIPODATO
+    (18) EXPRESION -> . id
+    (14) TIPODATO -> . entero
+    (15) TIPODATO -> . decimal
+    (16) TIPODATO -> . cadena
+    (17) TIPODATO -> . caracter
 
-    PARA            shift and go to state 6
-    ENTERO          shift and go to state 7
-    DECIMAL         shift and go to state 8
-    MAS             shift and go to state 4
-    MENOS           shift and go to state 5
+    pow             shift and go to state 12
+    para            shift and go to state 9
+    menos           shift and go to state 11
+    id              shift and go to state 14
+    entero          shift and go to state 15
+    decimal         shift and go to state 16
+    cadena          shift and go to state 17
+    caracter        shift and go to state 18
 
-    expression                     shift and go to state 16
+    EXPRESION                      shift and go to state 19
+    TIPODATO                       shift and go to state 13
 
 state 10
 
-    (4) expression -> expression MENOS . expression
-    (3) expression -> . expression MAS expression
-    (4) expression -> . expression MENOS expression
-    (5) expression -> . expression DIV expression
-    (6) expression -> . expression MULTI expression
-    (7) expression -> . PARA expression PARC
-    (8) expression -> . ENTERO
-    (9) expression -> . DECIMAL
-    (10) expression -> . MAS expression
-    (11) expression -> . MENOS expression
+    (19) PRINT -> println para EXPRESION . parc
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
 
-    PARA            shift and go to state 6
-    ENTERO          shift and go to state 7
-    DECIMAL         shift and go to state 8
-    MAS             shift and go to state 4
-    MENOS           shift and go to state 5
+    parc            shift and go to state 20
+    mas             shift and go to state 21
+    menos           shift and go to state 22
+    div             shift and go to state 23
+    multi           shift and go to state 24
+    mod             shift and go to state 25
 
-    expression                     shift and go to state 17
 
 state 11
 
-    (5) expression -> expression DIV . expression
-    (3) expression -> . expression MAS expression
-    (4) expression -> . expression MENOS expression
-    (5) expression -> . expression DIV expression
-    (6) expression -> . expression MULTI expression
-    (7) expression -> . PARA expression PARC
-    (8) expression -> . ENTERO
-    (9) expression -> . DECIMAL
-    (10) expression -> . MAS expression
-    (11) expression -> . MENOS expression
+    (12) EXPRESION -> menos . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . para EXPRESION parc
+    (12) EXPRESION -> . menos EXPRESION
+    (13) EXPRESION -> . TIPODATO
+    (18) EXPRESION -> . id
+    (14) TIPODATO -> . entero
+    (15) TIPODATO -> . decimal
+    (16) TIPODATO -> . cadena
+    (17) TIPODATO -> . caracter
 
-    PARA            shift and go to state 6
-    ENTERO          shift and go to state 7
-    DECIMAL         shift and go to state 8
-    MAS             shift and go to state 4
-    MENOS           shift and go to state 5
+    pow             shift and go to state 12
+    para            shift and go to state 9
+    menos           shift and go to state 11
+    id              shift and go to state 14
+    entero          shift and go to state 15
+    decimal         shift and go to state 16
+    cadena          shift and go to state 17
+    caracter        shift and go to state 18
 
-    expression                     shift and go to state 18
+    EXPRESION                      shift and go to state 26
+    TIPODATO                       shift and go to state 13
 
 state 12
 
-    (6) expression -> expression MULTI . expression
-    (3) expression -> . expression MAS expression
-    (4) expression -> . expression MENOS expression
-    (5) expression -> . expression DIV expression
-    (6) expression -> . expression MULTI expression
-    (7) expression -> . PARA expression PARC
-    (8) expression -> . ENTERO
-    (9) expression -> . DECIMAL
-    (10) expression -> . MAS expression
-    (11) expression -> . MENOS expression
+    (10) EXPRESION -> pow . para EXPRESION coma EXPRESION parc
 
-    PARA            shift and go to state 6
-    ENTERO          shift and go to state 7
-    DECIMAL         shift and go to state 8
-    MAS             shift and go to state 4
-    MENOS           shift and go to state 5
+    para            shift and go to state 27
 
-    expression                     shift and go to state 19
 
 state 13
 
-    (10) expression -> MAS expression .
-    (3) expression -> expression . MAS expression
-    (4) expression -> expression . MENOS expression
-    (5) expression -> expression . DIV expression
-    (6) expression -> expression . MULTI expression
+    (13) EXPRESION -> TIPODATO .
 
-    MAS             reduce using rule 10 (expression -> MAS expression .)
-    MENOS           reduce using rule 10 (expression -> MAS expression .)
-    $end            reduce using rule 10 (expression -> MAS expression .)
-    PARC            reduce using rule 10 (expression -> MAS expression .)
-    DIV             shift and go to state 11
-    MULTI           shift and go to state 12
-
-  ! DIV             [ reduce using rule 10 (expression -> MAS expression .) ]
-  ! MULTI           [ reduce using rule 10 (expression -> MAS expression .) ]
-  ! MAS             [ shift and go to state 9 ]
-  ! MENOS           [ shift and go to state 10 ]
+    parc            reduce using rule 13 (EXPRESION -> TIPODATO .)
+    mas             reduce using rule 13 (EXPRESION -> TIPODATO .)
+    menos           reduce using rule 13 (EXPRESION -> TIPODATO .)
+    div             reduce using rule 13 (EXPRESION -> TIPODATO .)
+    multi           reduce using rule 13 (EXPRESION -> TIPODATO .)
+    mod             reduce using rule 13 (EXPRESION -> TIPODATO .)
+    coma            reduce using rule 13 (EXPRESION -> TIPODATO .)
 
 
 state 14
 
-    (11) expression -> MENOS expression .
-    (3) expression -> expression . MAS expression
-    (4) expression -> expression . MENOS expression
-    (5) expression -> expression . DIV expression
-    (6) expression -> expression . MULTI expression
+    (18) EXPRESION -> id .
 
-    MAS             reduce using rule 11 (expression -> MENOS expression .)
-    MENOS           reduce using rule 11 (expression -> MENOS expression .)
-    DIV             reduce using rule 11 (expression -> MENOS expression .)
-    MULTI           reduce using rule 11 (expression -> MENOS expression .)
-    $end            reduce using rule 11 (expression -> MENOS expression .)
-    PARC            reduce using rule 11 (expression -> MENOS expression .)
-
-  ! MAS             [ shift and go to state 9 ]
-  ! MENOS           [ shift and go to state 10 ]
-  ! DIV             [ shift and go to state 11 ]
-  ! MULTI           [ shift and go to state 12 ]
+    parc            reduce using rule 18 (EXPRESION -> id .)
+    mas             reduce using rule 18 (EXPRESION -> id .)
+    menos           reduce using rule 18 (EXPRESION -> id .)
+    div             reduce using rule 18 (EXPRESION -> id .)
+    multi           reduce using rule 18 (EXPRESION -> id .)
+    mod             reduce using rule 18 (EXPRESION -> id .)
+    coma            reduce using rule 18 (EXPRESION -> id .)
 
 
 state 15
 
-    (7) expression -> PARA expression . PARC
-    (3) expression -> expression . MAS expression
-    (4) expression -> expression . MENOS expression
-    (5) expression -> expression . DIV expression
-    (6) expression -> expression . MULTI expression
+    (14) TIPODATO -> entero .
 
-    PARC            shift and go to state 20
-    MAS             shift and go to state 9
-    MENOS           shift and go to state 10
-    DIV             shift and go to state 11
-    MULTI           shift and go to state 12
+    parc            reduce using rule 14 (TIPODATO -> entero .)
+    mas             reduce using rule 14 (TIPODATO -> entero .)
+    menos           reduce using rule 14 (TIPODATO -> entero .)
+    div             reduce using rule 14 (TIPODATO -> entero .)
+    multi           reduce using rule 14 (TIPODATO -> entero .)
+    mod             reduce using rule 14 (TIPODATO -> entero .)
+    coma            reduce using rule 14 (TIPODATO -> entero .)
 
 
 state 16
 
-    (3) expression -> expression MAS expression .
-    (3) expression -> expression . MAS expression
-    (4) expression -> expression . MENOS expression
-    (5) expression -> expression . DIV expression
-    (6) expression -> expression . MULTI expression
+    (15) TIPODATO -> decimal .
 
-    MAS             reduce using rule 3 (expression -> expression MAS expression .)
-    MENOS           reduce using rule 3 (expression -> expression MAS expression .)
-    $end            reduce using rule 3 (expression -> expression MAS expression .)
-    PARC            reduce using rule 3 (expression -> expression MAS expression .)
-    DIV             shift and go to state 11
-    MULTI           shift and go to state 12
-
-  ! DIV             [ reduce using rule 3 (expression -> expression MAS expression .) ]
-  ! MULTI           [ reduce using rule 3 (expression -> expression MAS expression .) ]
-  ! MAS             [ shift and go to state 9 ]
-  ! MENOS           [ shift and go to state 10 ]
+    parc            reduce using rule 15 (TIPODATO -> decimal .)
+    mas             reduce using rule 15 (TIPODATO -> decimal .)
+    menos           reduce using rule 15 (TIPODATO -> decimal .)
+    div             reduce using rule 15 (TIPODATO -> decimal .)
+    multi           reduce using rule 15 (TIPODATO -> decimal .)
+    mod             reduce using rule 15 (TIPODATO -> decimal .)
+    coma            reduce using rule 15 (TIPODATO -> decimal .)
 
 
 state 17
 
-    (4) expression -> expression MENOS expression .
-    (3) expression -> expression . MAS expression
-    (4) expression -> expression . MENOS expression
-    (5) expression -> expression . DIV expression
-    (6) expression -> expression . MULTI expression
+    (16) TIPODATO -> cadena .
 
-    MAS             reduce using rule 4 (expression -> expression MENOS expression .)
-    MENOS           reduce using rule 4 (expression -> expression MENOS expression .)
-    $end            reduce using rule 4 (expression -> expression MENOS expression .)
-    PARC            reduce using rule 4 (expression -> expression MENOS expression .)
-    DIV             shift and go to state 11
-    MULTI           shift and go to state 12
-
-  ! DIV             [ reduce using rule 4 (expression -> expression MENOS expression .) ]
-  ! MULTI           [ reduce using rule 4 (expression -> expression MENOS expression .) ]
-  ! MAS             [ shift and go to state 9 ]
-  ! MENOS           [ shift and go to state 10 ]
+    parc            reduce using rule 16 (TIPODATO -> cadena .)
+    mas             reduce using rule 16 (TIPODATO -> cadena .)
+    menos           reduce using rule 16 (TIPODATO -> cadena .)
+    div             reduce using rule 16 (TIPODATO -> cadena .)
+    multi           reduce using rule 16 (TIPODATO -> cadena .)
+    mod             reduce using rule 16 (TIPODATO -> cadena .)
+    coma            reduce using rule 16 (TIPODATO -> cadena .)
 
 
 state 18
 
-    (5) expression -> expression DIV expression .
-    (3) expression -> expression . MAS expression
-    (4) expression -> expression . MENOS expression
-    (5) expression -> expression . DIV expression
-    (6) expression -> expression . MULTI expression
+    (17) TIPODATO -> caracter .
 
-    MAS             reduce using rule 5 (expression -> expression DIV expression .)
-    MENOS           reduce using rule 5 (expression -> expression DIV expression .)
-    DIV             reduce using rule 5 (expression -> expression DIV expression .)
-    MULTI           reduce using rule 5 (expression -> expression DIV expression .)
-    $end            reduce using rule 5 (expression -> expression DIV expression .)
-    PARC            reduce using rule 5 (expression -> expression DIV expression .)
-
-  ! MAS             [ shift and go to state 9 ]
-  ! MENOS           [ shift and go to state 10 ]
-  ! DIV             [ shift and go to state 11 ]
-  ! MULTI           [ shift and go to state 12 ]
+    parc            reduce using rule 17 (TIPODATO -> caracter .)
+    mas             reduce using rule 17 (TIPODATO -> caracter .)
+    menos           reduce using rule 17 (TIPODATO -> caracter .)
+    div             reduce using rule 17 (TIPODATO -> caracter .)
+    multi           reduce using rule 17 (TIPODATO -> caracter .)
+    mod             reduce using rule 17 (TIPODATO -> caracter .)
+    coma            reduce using rule 17 (TIPODATO -> caracter .)
 
 
 state 19
 
-    (6) expression -> expression MULTI expression .
-    (3) expression -> expression . MAS expression
-    (4) expression -> expression . MENOS expression
-    (5) expression -> expression . DIV expression
-    (6) expression -> expression . MULTI expression
+    (11) EXPRESION -> para EXPRESION . parc
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
 
-    MAS             reduce using rule 6 (expression -> expression MULTI expression .)
-    MENOS           reduce using rule 6 (expression -> expression MULTI expression .)
-    DIV             reduce using rule 6 (expression -> expression MULTI expression .)
-    MULTI           reduce using rule 6 (expression -> expression MULTI expression .)
-    $end            reduce using rule 6 (expression -> expression MULTI expression .)
-    PARC            reduce using rule 6 (expression -> expression MULTI expression .)
-
-  ! MAS             [ shift and go to state 9 ]
-  ! MENOS           [ shift and go to state 10 ]
-  ! DIV             [ shift and go to state 11 ]
-  ! MULTI           [ shift and go to state 12 ]
+    parc            shift and go to state 28
+    mas             shift and go to state 21
+    menos           shift and go to state 22
+    div             shift and go to state 23
+    multi           shift and go to state 24
+    mod             shift and go to state 25
 
 
 state 20
 
-    (7) expression -> PARA expression PARC .
+    (19) PRINT -> println para EXPRESION parc .
 
-    MAS             reduce using rule 7 (expression -> PARA expression PARC .)
-    MENOS           reduce using rule 7 (expression -> PARA expression PARC .)
-    DIV             reduce using rule 7 (expression -> PARA expression PARC .)
-    MULTI           reduce using rule 7 (expression -> PARA expression PARC .)
-    $end            reduce using rule 7 (expression -> PARA expression PARC .)
-    PARC            reduce using rule 7 (expression -> PARA expression PARC .)
+    puntoycoma      reduce using rule 19 (PRINT -> println para EXPRESION parc .)
 
+
+state 21
+
+    (5) EXPRESION -> EXPRESION mas . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . para EXPRESION parc
+    (12) EXPRESION -> . menos EXPRESION
+    (13) EXPRESION -> . TIPODATO
+    (18) EXPRESION -> . id
+    (14) TIPODATO -> . entero
+    (15) TIPODATO -> . decimal
+    (16) TIPODATO -> . cadena
+    (17) TIPODATO -> . caracter
+
+    pow             shift and go to state 12
+    para            shift and go to state 9
+    menos           shift and go to state 11
+    id              shift and go to state 14
+    entero          shift and go to state 15
+    decimal         shift and go to state 16
+    cadena          shift and go to state 17
+    caracter        shift and go to state 18
+
+    EXPRESION                      shift and go to state 29
+    TIPODATO                       shift and go to state 13
+
+state 22
+
+    (6) EXPRESION -> EXPRESION menos . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . para EXPRESION parc
+    (12) EXPRESION -> . menos EXPRESION
+    (13) EXPRESION -> . TIPODATO
+    (18) EXPRESION -> . id
+    (14) TIPODATO -> . entero
+    (15) TIPODATO -> . decimal
+    (16) TIPODATO -> . cadena
+    (17) TIPODATO -> . caracter
+
+    pow             shift and go to state 12
+    para            shift and go to state 9
+    menos           shift and go to state 11
+    id              shift and go to state 14
+    entero          shift and go to state 15
+    decimal         shift and go to state 16
+    cadena          shift and go to state 17
+    caracter        shift and go to state 18
+
+    EXPRESION                      shift and go to state 30
+    TIPODATO                       shift and go to state 13
+
+state 23
+
+    (7) EXPRESION -> EXPRESION div . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . para EXPRESION parc
+    (12) EXPRESION -> . menos EXPRESION
+    (13) EXPRESION -> . TIPODATO
+    (18) EXPRESION -> . id
+    (14) TIPODATO -> . entero
+    (15) TIPODATO -> . decimal
+    (16) TIPODATO -> . cadena
+    (17) TIPODATO -> . caracter
+
+    pow             shift and go to state 12
+    para            shift and go to state 9
+    menos           shift and go to state 11
+    id              shift and go to state 14
+    entero          shift and go to state 15
+    decimal         shift and go to state 16
+    cadena          shift and go to state 17
+    caracter        shift and go to state 18
+
+    EXPRESION                      shift and go to state 31
+    TIPODATO                       shift and go to state 13
+
+state 24
+
+    (8) EXPRESION -> EXPRESION multi . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . para EXPRESION parc
+    (12) EXPRESION -> . menos EXPRESION
+    (13) EXPRESION -> . TIPODATO
+    (18) EXPRESION -> . id
+    (14) TIPODATO -> . entero
+    (15) TIPODATO -> . decimal
+    (16) TIPODATO -> . cadena
+    (17) TIPODATO -> . caracter
+
+    pow             shift and go to state 12
+    para            shift and go to state 9
+    menos           shift and go to state 11
+    id              shift and go to state 14
+    entero          shift and go to state 15
+    decimal         shift and go to state 16
+    cadena          shift and go to state 17
+    caracter        shift and go to state 18
+
+    EXPRESION                      shift and go to state 32
+    TIPODATO                       shift and go to state 13
+
+state 25
+
+    (9) EXPRESION -> EXPRESION mod . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . para EXPRESION parc
+    (12) EXPRESION -> . menos EXPRESION
+    (13) EXPRESION -> . TIPODATO
+    (18) EXPRESION -> . id
+    (14) TIPODATO -> . entero
+    (15) TIPODATO -> . decimal
+    (16) TIPODATO -> . cadena
+    (17) TIPODATO -> . caracter
+
+    pow             shift and go to state 12
+    para            shift and go to state 9
+    menos           shift and go to state 11
+    id              shift and go to state 14
+    entero          shift and go to state 15
+    decimal         shift and go to state 16
+    cadena          shift and go to state 17
+    caracter        shift and go to state 18
+
+    EXPRESION                      shift and go to state 33
+    TIPODATO                       shift and go to state 13
+
+state 26
+
+    (12) EXPRESION -> menos EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+
+    parc            reduce using rule 12 (EXPRESION -> menos EXPRESION .)
+    mas             reduce using rule 12 (EXPRESION -> menos EXPRESION .)
+    menos           reduce using rule 12 (EXPRESION -> menos EXPRESION .)
+    div             reduce using rule 12 (EXPRESION -> menos EXPRESION .)
+    multi           reduce using rule 12 (EXPRESION -> menos EXPRESION .)
+    mod             reduce using rule 12 (EXPRESION -> menos EXPRESION .)
+    coma            reduce using rule 12 (EXPRESION -> menos EXPRESION .)
+
+  ! mas             [ shift and go to state 21 ]
+  ! menos           [ shift and go to state 22 ]
+  ! div             [ shift and go to state 23 ]
+  ! multi           [ shift and go to state 24 ]
+  ! mod             [ shift and go to state 25 ]
+
+
+state 27
+
+    (10) EXPRESION -> pow para . EXPRESION coma EXPRESION parc
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . para EXPRESION parc
+    (12) EXPRESION -> . menos EXPRESION
+    (13) EXPRESION -> . TIPODATO
+    (18) EXPRESION -> . id
+    (14) TIPODATO -> . entero
+    (15) TIPODATO -> . decimal
+    (16) TIPODATO -> . cadena
+    (17) TIPODATO -> . caracter
+
+    pow             shift and go to state 12
+    para            shift and go to state 9
+    menos           shift and go to state 11
+    id              shift and go to state 14
+    entero          shift and go to state 15
+    decimal         shift and go to state 16
+    cadena          shift and go to state 17
+    caracter        shift and go to state 18
+
+    EXPRESION                      shift and go to state 34
+    TIPODATO                       shift and go to state 13
+
+state 28
+
+    (11) EXPRESION -> para EXPRESION parc .
+
+    parc            reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
+    mas             reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
+    menos           reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
+    div             reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
+    multi           reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
+    mod             reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
+    coma            reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
+
+
+state 29
+
+    (5) EXPRESION -> EXPRESION mas EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+
+    parc            reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    mas             reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    menos           reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    mod             reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    coma            reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    div             shift and go to state 23
+    multi           shift and go to state 24
+
+  ! div             [ reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .) ]
+  ! multi           [ reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .) ]
+  ! mas             [ shift and go to state 21 ]
+  ! menos           [ shift and go to state 22 ]
+  ! mod             [ shift and go to state 25 ]
+
+
+state 30
+
+    (6) EXPRESION -> EXPRESION menos EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+
+    parc            reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    mas             reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    menos           reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    mod             reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    coma            reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    div             shift and go to state 23
+    multi           shift and go to state 24
+
+  ! div             [ reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .) ]
+  ! multi           [ reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .) ]
+  ! mas             [ shift and go to state 21 ]
+  ! menos           [ shift and go to state 22 ]
+  ! mod             [ shift and go to state 25 ]
+
+
+state 31
+
+    (7) EXPRESION -> EXPRESION div EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+
+    parc            reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    mas             reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    menos           reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    div             reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    multi           reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    mod             reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    coma            reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+
+  ! mas             [ shift and go to state 21 ]
+  ! menos           [ shift and go to state 22 ]
+  ! div             [ shift and go to state 23 ]
+  ! multi           [ shift and go to state 24 ]
+  ! mod             [ shift and go to state 25 ]
+
+
+state 32
+
+    (8) EXPRESION -> EXPRESION multi EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+
+    parc            reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    mas             reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    menos           reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    div             reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    multi           reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    mod             reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    coma            reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+
+  ! mas             [ shift and go to state 21 ]
+  ! menos           [ shift and go to state 22 ]
+  ! div             [ shift and go to state 23 ]
+  ! multi           [ shift and go to state 24 ]
+  ! mod             [ shift and go to state 25 ]
+
+
+state 33
+
+    (9) EXPRESION -> EXPRESION mod EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for div resolved as shift
+  ! shift/reduce conflict for multi resolved as shift
+  ! shift/reduce conflict for mod resolved as shift
+    parc            reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .)
+    coma            reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .)
+    mas             shift and go to state 21
+    menos           shift and go to state 22
+    div             shift and go to state 23
+    multi           shift and go to state 24
+    mod             shift and go to state 25
+
+  ! mas             [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! menos           [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! div             [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! multi           [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! mod             [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+
+
+state 34
+
+    (10) EXPRESION -> pow para EXPRESION . coma EXPRESION parc
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+
+    coma            shift and go to state 35
+    mas             shift and go to state 21
+    menos           shift and go to state 22
+    div             shift and go to state 23
+    multi           shift and go to state 24
+    mod             shift and go to state 25
+
+
+state 35
+
+    (10) EXPRESION -> pow para EXPRESION coma . EXPRESION parc
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . para EXPRESION parc
+    (12) EXPRESION -> . menos EXPRESION
+    (13) EXPRESION -> . TIPODATO
+    (18) EXPRESION -> . id
+    (14) TIPODATO -> . entero
+    (15) TIPODATO -> . decimal
+    (16) TIPODATO -> . cadena
+    (17) TIPODATO -> . caracter
+
+    pow             shift and go to state 12
+    para            shift and go to state 9
+    menos           shift and go to state 11
+    id              shift and go to state 14
+    entero          shift and go to state 15
+    decimal         shift and go to state 16
+    cadena          shift and go to state 17
+    caracter        shift and go to state 18
+
+    EXPRESION                      shift and go to state 36
+    TIPODATO                       shift and go to state 13
+
+state 36
+
+    (10) EXPRESION -> pow para EXPRESION coma EXPRESION . parc
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+
+    parc            shift and go to state 37
+    mas             shift and go to state 21
+    menos           shift and go to state 22
+    div             shift and go to state 23
+    multi           shift and go to state 24
+    mod             shift and go to state 25
+
+
+state 37
+
+    (10) EXPRESION -> pow para EXPRESION coma EXPRESION parc .
+
+    parc            reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    mas             reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    menos           reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    div             reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    multi           reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    mod             reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    coma            reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for mas in state 33 resolved as shift
+WARNING: shift/reduce conflict for menos in state 33 resolved as shift
+WARNING: shift/reduce conflict for div in state 33 resolved as shift
+WARNING: shift/reduce conflict for multi in state 33 resolved as shift
+WARNING: shift/reduce conflict for mod in state 33 resolved as shift

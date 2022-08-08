@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftMENOSMASleftMULTIDIVrightUNARIOCHAR DECIMAL DIV ENTERO MAS MENOS MULTI PARA PARC STRING\n    inicio : instruccion\n    \n    instruccion : expression\n    \n    expression :  expression MAS expression \n            |   expression MENOS expression\n            |   expression DIV expression\n            |   expression MULTI expression \n    \n    expression : PARA expression PARC\n    \n    expression : ENTERO\n        | DECIMAL\n    \n    expression : MAS expression\n           | MENOS expression %prec UNARIO\n    '
+_lr_signature = 'leftmenosmasleftmultidivrightUNARIOand bool cadena caracter char coma cora corc decimal diferente div dospuntos entero f64 false i64 id igual igualigual interrogacion llavea llavec mas mayor mayorigual menor menorigual menos mod multi not or para parc pow println puntoycoma string struct true\n    INICIO : INSTRUCCIONES\n    \n    INSTRUCCIONES : INSTRUCCIONES INSTRUCCION\n    \n    INSTRUCCIONES : INSTRUCCION\n    \n    INSTRUCCION : PRINT puntoycoma\n    \n    EXPRESION : EXPRESION mas EXPRESION \n            |   EXPRESION menos EXPRESION\n            |   EXPRESION div EXPRESION\n            |   EXPRESION multi EXPRESION\n            |   EXPRESION mod EXPRESION  \n            |   pow para EXPRESION coma EXPRESION parc   \n    \n    EXPRESION : para EXPRESION parc\n    \n    EXPRESION : menos EXPRESION %prec UNARIO\n    \n    EXPRESION : TIPODATO\n    \n    TIPODATO : entero\n        | decimal\n        | cadena\n        | caracter \n    \n    EXPRESION : id\n    \n    PRINT : println para EXPRESION parc\n    '
     
-_lr_action_items = {'PARA':([0,4,5,6,9,10,11,12,],[6,6,6,6,6,6,6,6,]),'ENTERO':([0,4,5,6,9,10,11,12,],[7,7,7,7,7,7,7,7,]),'DECIMAL':([0,4,5,6,9,10,11,12,],[8,8,8,8,8,8,8,8,]),'MAS':([0,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,],[4,9,4,4,4,-8,-9,4,4,4,4,-10,-11,9,-3,-4,-5,-6,-7,]),'MENOS':([0,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,],[5,10,5,5,5,-8,-9,5,5,5,5,-10,-11,10,-3,-4,-5,-6,-7,]),'$end':([1,2,3,7,8,13,14,16,17,18,19,20,],[0,-1,-2,-8,-9,-10,-11,-3,-4,-5,-6,-7,]),'DIV':([3,7,8,13,14,15,16,17,18,19,20,],[11,-8,-9,11,-11,11,11,11,-5,-6,-7,]),'MULTI':([3,7,8,13,14,15,16,17,18,19,20,],[12,-8,-9,12,-11,12,12,12,-5,-6,-7,]),'PARC':([7,8,13,14,15,16,17,18,19,20,],[-8,-9,-10,-11,20,-3,-4,-5,-6,-7,]),}
+_lr_action_items = {'println':([0,2,3,6,7,],[5,5,-3,-2,-4,]),'$end':([1,2,3,6,7,],[0,-1,-3,-2,-4,]),'puntoycoma':([4,20,],[7,-19,]),'para':([5,8,9,11,12,21,22,23,24,25,27,35,],[8,9,9,9,27,9,9,9,9,9,9,9,]),'pow':([8,9,11,21,22,23,24,25,27,35,],[12,12,12,12,12,12,12,12,12,12,]),'menos':([8,9,10,11,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[11,11,22,11,-13,-18,-14,-15,-16,-17,22,11,11,11,11,11,-12,11,-11,-5,-6,-7,-8,22,22,11,22,-10,]),'id':([8,9,11,21,22,23,24,25,27,35,],[14,14,14,14,14,14,14,14,14,14,]),'entero':([8,9,11,21,22,23,24,25,27,35,],[15,15,15,15,15,15,15,15,15,15,]),'decimal':([8,9,11,21,22,23,24,25,27,35,],[16,16,16,16,16,16,16,16,16,16,]),'cadena':([8,9,11,21,22,23,24,25,27,35,],[17,17,17,17,17,17,17,17,17,17,]),'caracter':([8,9,11,21,22,23,24,25,27,35,],[18,18,18,18,18,18,18,18,18,18,]),'parc':([10,13,14,15,16,17,18,19,26,28,29,30,31,32,33,36,37,],[20,-13,-18,-14,-15,-16,-17,28,-12,-11,-5,-6,-7,-8,-9,37,-10,]),'mas':([10,13,14,15,16,17,18,19,26,28,29,30,31,32,33,34,36,37,],[21,-13,-18,-14,-15,-16,-17,21,-12,-11,-5,-6,-7,-8,21,21,21,-10,]),'div':([10,13,14,15,16,17,18,19,26,28,29,30,31,32,33,34,36,37,],[23,-13,-18,-14,-15,-16,-17,23,-12,-11,23,23,-7,-8,23,23,23,-10,]),'multi':([10,13,14,15,16,17,18,19,26,28,29,30,31,32,33,34,36,37,],[24,-13,-18,-14,-15,-16,-17,24,-12,-11,24,24,-7,-8,24,24,24,-10,]),'mod':([10,13,14,15,16,17,18,19,26,28,29,30,31,32,33,34,36,37,],[25,-13,-18,-14,-15,-16,-17,25,-12,-11,-5,-6,-7,-8,25,25,25,-10,]),'coma':([13,14,15,16,17,18,26,28,29,30,31,32,33,34,37,],[-13,-18,-14,-15,-16,-17,-12,-11,-5,-6,-7,-8,-9,35,-10,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'inicio':([0,],[1,]),'instruccion':([0,],[2,]),'expression':([0,4,5,6,9,10,11,12,],[3,13,14,15,16,17,18,19,]),}
+_lr_goto_items = {'INICIO':([0,],[1,]),'INSTRUCCIONES':([0,],[2,]),'INSTRUCCION':([0,2,],[3,6,]),'PRINT':([0,2,],[4,4,]),'EXPRESION':([8,9,11,21,22,23,24,25,27,35,],[10,19,26,29,30,31,32,33,34,36,]),'TIPODATO':([8,9,11,21,22,23,24,25,27,35,],[13,13,13,13,13,13,13,13,13,13,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,16 +26,24 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> inicio","S'",1,None,None,None),
-  ('inicio -> instruccion','inicio',1,'p_inicio','parser.py',22),
-  ('instruccion -> expression','instruccion',1,'p_instruccion','parser.py',28),
-  ('expression -> expression MAS expression','expression',3,'p_expression','parser.py',34),
-  ('expression -> expression MENOS expression','expression',3,'p_expression','parser.py',35),
-  ('expression -> expression DIV expression','expression',3,'p_expression','parser.py',36),
-  ('expression -> expression MULTI expression','expression',3,'p_expression','parser.py',37),
-  ('expression -> PARA expression PARC','expression',3,'p_expression_par','parser.py',56),
-  ('expression -> ENTERO','expression',1,'p_factor_number','parser.py',64),
-  ('expression -> DECIMAL','expression',1,'p_factor_number','parser.py',65),
-  ('expression -> MAS expression','expression',2,'p_factor_unario','parser.py',72),
-  ('expression -> MENOS expression','expression',2,'p_factor_unario','parser.py',73),
+  ("S' -> INICIO","S'",1,None,None,None),
+  ('INICIO -> INSTRUCCIONES','INICIO',1,'p_inicio','parser.py',31),
+  ('INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION','INSTRUCCIONES',2,'p_instrucciones_lista','parser.py',37),
+  ('INSTRUCCIONES -> INSTRUCCION','INSTRUCCIONES',1,'p_instrucciones_instruccion','parser.py',43),
+  ('INSTRUCCION -> PRINT puntoycoma','INSTRUCCION',2,'p_instruccion','parser.py',49),
+  ('EXPRESION -> EXPRESION mas EXPRESION','EXPRESION',3,'p_expresion','parser.py',55),
+  ('EXPRESION -> EXPRESION menos EXPRESION','EXPRESION',3,'p_expresion','parser.py',56),
+  ('EXPRESION -> EXPRESION div EXPRESION','EXPRESION',3,'p_expresion','parser.py',57),
+  ('EXPRESION -> EXPRESION multi EXPRESION','EXPRESION',3,'p_expresion','parser.py',58),
+  ('EXPRESION -> EXPRESION mod EXPRESION','EXPRESION',3,'p_expresion','parser.py',59),
+  ('EXPRESION -> pow para EXPRESION coma EXPRESION parc','EXPRESION',6,'p_expresion','parser.py',60),
+  ('EXPRESION -> para EXPRESION parc','EXPRESION',3,'p_EXPRESION_par','parser.py',74),
+  ('EXPRESION -> menos EXPRESION','EXPRESION',2,'p_factor_unario','parser.py',81),
+  ('EXPRESION -> TIPODATO','EXPRESION',1,'p_exp_tdato','parser.py',87),
+  ('TIPODATO -> entero','TIPODATO',1,'p_tipo_dato','parser.py',93),
+  ('TIPODATO -> decimal','TIPODATO',1,'p_tipo_dato','parser.py',94),
+  ('TIPODATO -> cadena','TIPODATO',1,'p_tipo_dato','parser.py',95),
+  ('TIPODATO -> caracter','TIPODATO',1,'p_tipo_dato','parser.py',96),
+  ('EXPRESION -> id','EXPRESION',1,'p_id','parser.py',101),
+  ('PRINT -> println para EXPRESION parc','PRINT',4,'p_println','parser.py',107),
 ]

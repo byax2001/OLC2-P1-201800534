@@ -11,3 +11,4 @@ class Println(Instruccion):
 
     def ejecutar(self, driver, ts):
         driver.append(str(self.exp.getValor(driver, ts)))
+        print(driver)

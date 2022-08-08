@@ -1,6 +1,6 @@
-from re import X
 from models.Expresion.Operacion.Operacion import Operacion, Operador, getOperacion
 from models.TablaSymbols.Types import Types,definirTipo
+
 class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas hereda de Operacion
     #var Operacion: exp1: Expresion, operador, exp2: Expresion, linea, columna, expU
     def getTipo(self, driver, ts):
@@ -9,6 +9,7 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
 
     # get valor con condicionales
     def getValor(self, driver, ts):
+        print("========================ARITMETICAS ")
         t_nodoIzq = self.exp1.getTipo(driver, ts)
         t_nodoDer = self.exp2.getTipo(driver, ts) if not self.expU else None
         if self.expU is not None:

@@ -1,4 +1,4 @@
-from models.TablaSymbols.Types import Types
+from models.TablaSymbols.Tipos import Tipos
 from enum import Enum
 
 class Symbol(Enum):
@@ -9,7 +9,7 @@ def getSymbol(s):
         return Symbol.Variable
     
 class Symbol():
-    def __init__(self, simbolo: int, tipo: Types, id: str, value) -> None:
+    def __init__(self, simbolo: int, tipo: Tipos, id: str, value) -> None:
         self.value = value
         self.id = id
         self.tipo = tipo

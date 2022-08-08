@@ -1,5 +1,5 @@
 from models.Expresion.Expresion import Expresion
-from models.TablaSymbols.Types import definirTipo,Types
+from models.TablaSymbols.Tipos import definirTipo
 
 
 class Id(Expresion):    

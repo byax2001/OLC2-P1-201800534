@@ -12,6 +12,7 @@ class Operador(Enum):
     POW = 7
 
 
+
 def getOperador(op) -> Operador:
     if op == '+':
         return Operador.SUMA
@@ -29,7 +30,7 @@ def getOperador(op) -> Operador:
         return Operador.POW
 
 
-
+#lambda es una minifuncion que solo necesita de un par de parametros, no se uso en esta ocasion
 def getOperacion(op: Operador):
     if op == Operador.SUMA:
         return lambda num1, num2: num1 + num2
@@ -42,7 +43,7 @@ def getOperacion(op: Operador):
 
 
 class Operacion(Expresion):
-    def __init__(self, exp1: Expresion, operador, exp2: Expresion, linea, columna, expU):
+    def __init__(self, exp1: Expresion, operador, exp2: Expresion, expU, linea, columna):
         super().__init__()
         self.expU = expU
         self.columna = columna

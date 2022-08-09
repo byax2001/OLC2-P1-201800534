@@ -1,5 +1,5 @@
 from models.Expresion.Expresion import Expresion
-from models.TablaSymbols.Tipos import definirTipo
+from models.TablaSymbols.Tipos import definirTipo,Tipos
 
 
 class Primitivo(Expresion):    
@@ -19,7 +19,8 @@ class Primitivo(Expresion):
     def getValor(self, driver, ts):
         value = self.valor
         self.tipo = definirTipo(value)
-        value = Primitivo.limpCad(value)
+        if(self.tipo==Tipos.STRING):
+            value = Primitivo.limpCad(value)
         return value
     
     def limpCad(cadena:str):

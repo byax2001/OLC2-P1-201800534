@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftmenosmasleftmultidivrightUNARIOand bool cadena caracter char coma cora corc decimal diferente div dospuntos entero f64 false i64 id igual igualigual interrogacion llavea llavec mas mayor mayorigual menor menorigual menos mod multi not or para parc pow println puntoycoma string struct true\n    INICIO : INSTRUCCIONES\n    \n    INSTRUCCIONES : INSTRUCCIONES INSTRUCCION\n    \n    INSTRUCCIONES : INSTRUCCION\n    \n    INSTRUCCION : PRINT puntoycoma\n    \n    EXPRESION : EXPRESION mas EXPRESION \n            |   EXPRESION menos EXPRESION\n            |   EXPRESION div EXPRESION\n            |   EXPRESION multi EXPRESION\n            |   EXPRESION mod EXPRESION  \n            |   pow para EXPRESION coma EXPRESION parc   \n    \n    EXPRESION : para EXPRESION parc\n    \n    EXPRESION : menos EXPRESION %prec UNARIO\n    \n    EXPRESION : TIPODATO\n    \n    TIPODATO : entero\n        | decimal\n        | cadena\n        | caracter \n    \n    EXPRESION : id\n    \n    PRINT : println para EXPRESION parc\n    '
+_lr_signature = 'leftmenosmasleftmultidivrightUNARIOand bool cadena caracter char coma cora corc decimal diferente div dospuntos entero f64 false i64 id igual igualigual interrogacion llavea llavec mas mayor mayorigual menor menorigual menos mod multi not or para parc pow println puntoycoma string struct true\n    INICIO : INSTRUCCIONES\n    \n    INSTRUCCIONES : INSTRUCCIONES INSTRUCCION\n    \n    INSTRUCCIONES : INSTRUCCION\n    \n    INSTRUCCION : PRINT puntoycoma\n    \n    EXPRESION : EXPRESION mas EXPRESION \n            |   EXPRESION menos EXPRESION\n            |   EXPRESION div EXPRESION\n            |   EXPRESION multi EXPRESION\n            |   EXPRESION mod EXPRESION  \n            |   pow para EXPRESION coma EXPRESION parc\n    \n    EXPRESION : menos EXPRESION %prec UNARIO\n    \n    EXPRESION :  EXPRESION mayor EXPRESION\n            |   EXPRESION menor EXPRESION\n            |   EXPRESION mayorigual EXPRESION\n            |   EXPRESION menorigual EXPRESION\n            |   EXPRESION igualigual EXPRESION\n            |   EXPRESION diferente EXPRESION\n    \n    EXPRESION :  EXPRESION and EXPRESION\n            |   EXPRESION or EXPRESION\n    \n    EXPRESION :  not EXPRESION\n    \n    EXPRESION : para EXPRESION parc\n    \n    EXPRESION : TIPODATO\n    \n    TIPODATO : entero\n        | decimal\n        | cadena\n        | caracter\n        | true\n        | false\n    \n    EXPRESION : id\n    \n    PRINT : println para EXPRESION parc\n    '
     
-_lr_action_items = {'println':([0,2,3,6,7,],[5,5,-3,-2,-4,]),'$end':([1,2,3,6,7,],[0,-1,-3,-2,-4,]),'puntoycoma':([4,20,],[7,-19,]),'para':([5,8,9,11,12,21,22,23,24,25,27,35,],[8,9,9,9,27,9,9,9,9,9,9,9,]),'pow':([8,9,11,21,22,23,24,25,27,35,],[12,12,12,12,12,12,12,12,12,12,]),'menos':([8,9,10,11,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[11,11,22,11,-13,-18,-14,-15,-16,-17,22,11,11,11,11,11,-12,11,-11,-5,-6,-7,-8,22,22,11,22,-10,]),'id':([8,9,11,21,22,23,24,25,27,35,],[14,14,14,14,14,14,14,14,14,14,]),'entero':([8,9,11,21,22,23,24,25,27,35,],[15,15,15,15,15,15,15,15,15,15,]),'decimal':([8,9,11,21,22,23,24,25,27,35,],[16,16,16,16,16,16,16,16,16,16,]),'cadena':([8,9,11,21,22,23,24,25,27,35,],[17,17,17,17,17,17,17,17,17,17,]),'caracter':([8,9,11,21,22,23,24,25,27,35,],[18,18,18,18,18,18,18,18,18,18,]),'parc':([10,13,14,15,16,17,18,19,26,28,29,30,31,32,33,36,37,],[20,-13,-18,-14,-15,-16,-17,28,-12,-11,-5,-6,-7,-8,-9,37,-10,]),'mas':([10,13,14,15,16,17,18,19,26,28,29,30,31,32,33,34,36,37,],[21,-13,-18,-14,-15,-16,-17,21,-12,-11,-5,-6,-7,-8,21,21,21,-10,]),'div':([10,13,14,15,16,17,18,19,26,28,29,30,31,32,33,34,36,37,],[23,-13,-18,-14,-15,-16,-17,23,-12,-11,23,23,-7,-8,23,23,23,-10,]),'multi':([10,13,14,15,16,17,18,19,26,28,29,30,31,32,33,34,36,37,],[24,-13,-18,-14,-15,-16,-17,24,-12,-11,24,24,-7,-8,24,24,24,-10,]),'mod':([10,13,14,15,16,17,18,19,26,28,29,30,31,32,33,34,36,37,],[25,-13,-18,-14,-15,-16,-17,25,-12,-11,-5,-6,-7,-8,25,25,25,-10,]),'coma':([13,14,15,16,17,18,26,28,29,30,31,32,33,34,37,],[-13,-18,-14,-15,-16,-17,-12,-11,-5,-6,-7,-8,-9,35,-10,]),}
+_lr_action_items = {'println':([0,2,3,6,7,],[5,5,-3,-2,-4,]),'$end':([1,2,3,6,7,],[0,-1,-3,-2,-4,]),'puntoycoma':([4,23,],[7,-30,]),'para':([5,8,9,11,12,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[8,9,9,9,38,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,]),'pow':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,]),'menos':([8,9,10,11,13,14,15,16,17,18,19,20,21,22,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,],[11,11,25,11,11,-22,-29,-23,-24,-25,-26,-27,-28,25,11,11,11,11,11,11,11,11,11,11,11,11,11,-11,11,25,-21,-5,-6,-7,-8,25,25,25,25,25,25,25,25,25,25,11,25,-10,]),'not':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,]),'id':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,]),'entero':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,]),'decimal':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,]),'cadena':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,]),'caracter':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,]),'true':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,]),'false':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,]),'parc':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,56,57,],[23,-22,-29,-23,-24,-25,-26,-27,-28,40,-11,-20,-21,-5,-6,-7,-8,-9,-12,-13,-14,-15,-16,-17,-18,-19,57,-10,]),'mas':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[24,-22,-29,-23,-24,-25,-26,-27,-28,24,-11,24,-21,-5,-6,-7,-8,24,24,24,24,24,24,24,24,24,24,24,-10,]),'div':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[26,-22,-29,-23,-24,-25,-26,-27,-28,26,-11,26,-21,26,26,-7,-8,26,26,26,26,26,26,26,26,26,26,26,-10,]),'multi':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[27,-22,-29,-23,-24,-25,-26,-27,-28,27,-11,27,-21,27,27,-7,-8,27,27,27,27,27,27,27,27,27,27,27,-10,]),'mod':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[28,-22,-29,-23,-24,-25,-26,-27,-28,28,-11,28,-21,-5,-6,-7,-8,28,28,28,28,28,28,28,28,28,28,28,-10,]),'mayor':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[29,-22,-29,-23,-24,-25,-26,-27,-28,29,-11,29,-21,-5,-6,-7,-8,29,29,29,29,29,29,29,29,29,29,29,-10,]),'menor':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[30,-22,-29,-23,-24,-25,-26,-27,-28,30,-11,30,-21,-5,-6,-7,-8,30,30,30,30,30,30,30,30,30,30,30,-10,]),'mayorigual':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[31,-22,-29,-23,-24,-25,-26,-27,-28,31,-11,31,-21,-5,-6,-7,-8,31,31,31,31,31,31,31,31,31,31,31,-10,]),'menorigual':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[32,-22,-29,-23,-24,-25,-26,-27,-28,32,-11,32,-21,-5,-6,-7,-8,32,32,32,32,32,32,32,32,32,32,32,-10,]),'igualigual':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[33,-22,-29,-23,-24,-25,-26,-27,-28,33,-11,33,-21,-5,-6,-7,-8,33,33,33,33,33,33,33,33,33,33,33,-10,]),'diferente':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[34,-22,-29,-23,-24,-25,-26,-27,-28,34,-11,34,-21,-5,-6,-7,-8,34,34,34,34,34,34,34,34,34,34,34,-10,]),'and':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[35,-22,-29,-23,-24,-25,-26,-27,-28,35,-11,35,-21,-5,-6,-7,-8,35,35,35,35,35,35,35,35,35,35,35,-10,]),'or':([10,14,15,16,17,18,19,20,21,22,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,57,],[36,-22,-29,-23,-24,-25,-26,-27,-28,36,-11,36,-21,-5,-6,-7,-8,36,36,36,36,36,36,36,36,36,36,36,-10,]),'coma':([14,15,16,17,18,19,20,21,37,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,57,],[-22,-29,-23,-24,-25,-26,-27,-28,-11,-20,-21,-5,-6,-7,-8,-9,-12,-13,-14,-15,-16,-17,-18,-19,55,-10,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'INICIO':([0,],[1,]),'INSTRUCCIONES':([0,],[2,]),'INSTRUCCION':([0,2,],[3,6,]),'PRINT':([0,2,],[4,4,]),'EXPRESION':([8,9,11,21,22,23,24,25,27,35,],[10,19,26,29,30,31,32,33,34,36,]),'TIPODATO':([8,9,11,21,22,23,24,25,27,35,],[13,13,13,13,13,13,13,13,13,13,]),}
+_lr_goto_items = {'INICIO':([0,],[1,]),'INSTRUCCIONES':([0,],[2,]),'INSTRUCCION':([0,2,],[3,6,]),'PRINT':([0,2,],[4,4,]),'EXPRESION':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[10,22,37,39,41,42,43,44,45,46,47,48,49,50,51,52,53,54,56,]),'TIPODATO':([8,9,11,13,24,25,26,27,28,29,30,31,32,33,34,35,36,38,55,],[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,23 +27,34 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> INICIO","S'",1,None,None,None),
-  ('INICIO -> INSTRUCCIONES','INICIO',1,'p_inicio','parser.py',31),
-  ('INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION','INSTRUCCIONES',2,'p_instrucciones_lista','parser.py',37),
-  ('INSTRUCCIONES -> INSTRUCCION','INSTRUCCIONES',1,'p_instrucciones_instruccion','parser.py',43),
-  ('INSTRUCCION -> PRINT puntoycoma','INSTRUCCION',2,'p_instruccion','parser.py',49),
-  ('EXPRESION -> EXPRESION mas EXPRESION','EXPRESION',3,'p_expresion','parser.py',55),
-  ('EXPRESION -> EXPRESION menos EXPRESION','EXPRESION',3,'p_expresion','parser.py',56),
-  ('EXPRESION -> EXPRESION div EXPRESION','EXPRESION',3,'p_expresion','parser.py',57),
-  ('EXPRESION -> EXPRESION multi EXPRESION','EXPRESION',3,'p_expresion','parser.py',58),
-  ('EXPRESION -> EXPRESION mod EXPRESION','EXPRESION',3,'p_expresion','parser.py',59),
-  ('EXPRESION -> pow para EXPRESION coma EXPRESION parc','EXPRESION',6,'p_expresion','parser.py',60),
-  ('EXPRESION -> para EXPRESION parc','EXPRESION',3,'p_EXPRESION_par','parser.py',74),
-  ('EXPRESION -> menos EXPRESION','EXPRESION',2,'p_factor_unario','parser.py',81),
-  ('EXPRESION -> TIPODATO','EXPRESION',1,'p_exp_tdato','parser.py',87),
-  ('TIPODATO -> entero','TIPODATO',1,'p_tipo_dato','parser.py',93),
-  ('TIPODATO -> decimal','TIPODATO',1,'p_tipo_dato','parser.py',94),
-  ('TIPODATO -> cadena','TIPODATO',1,'p_tipo_dato','parser.py',95),
-  ('TIPODATO -> caracter','TIPODATO',1,'p_tipo_dato','parser.py',96),
-  ('EXPRESION -> id','EXPRESION',1,'p_id','parser.py',101),
-  ('PRINT -> println para EXPRESION parc','PRINT',4,'p_println','parser.py',107),
+  ('INICIO -> INSTRUCCIONES','INICIO',1,'p_inicio','parser.py',33),
+  ('INSTRUCCIONES -> INSTRUCCIONES INSTRUCCION','INSTRUCCIONES',2,'p_instrucciones_lista','parser.py',39),
+  ('INSTRUCCIONES -> INSTRUCCION','INSTRUCCIONES',1,'p_instrucciones_instruccion','parser.py',45),
+  ('INSTRUCCION -> PRINT puntoycoma','INSTRUCCION',2,'p_instruccion','parser.py',51),
+  ('EXPRESION -> EXPRESION mas EXPRESION','EXPRESION',3,'p_expresion_aritmeticas','parser.py',57),
+  ('EXPRESION -> EXPRESION menos EXPRESION','EXPRESION',3,'p_expresion_aritmeticas','parser.py',58),
+  ('EXPRESION -> EXPRESION div EXPRESION','EXPRESION',3,'p_expresion_aritmeticas','parser.py',59),
+  ('EXPRESION -> EXPRESION multi EXPRESION','EXPRESION',3,'p_expresion_aritmeticas','parser.py',60),
+  ('EXPRESION -> EXPRESION mod EXPRESION','EXPRESION',3,'p_expresion_aritmeticas','parser.py',61),
+  ('EXPRESION -> pow para EXPRESION coma EXPRESION parc','EXPRESION',6,'p_expresion_aritmeticas','parser.py',62),
+  ('EXPRESION -> menos EXPRESION','EXPRESION',2,'p_factor_unario','parser.py',76),
+  ('EXPRESION -> EXPRESION mayor EXPRESION','EXPRESION',3,'p_expresion_relacionales','parser.py',82),
+  ('EXPRESION -> EXPRESION menor EXPRESION','EXPRESION',3,'p_expresion_relacionales','parser.py',83),
+  ('EXPRESION -> EXPRESION mayorigual EXPRESION','EXPRESION',3,'p_expresion_relacionales','parser.py',84),
+  ('EXPRESION -> EXPRESION menorigual EXPRESION','EXPRESION',3,'p_expresion_relacionales','parser.py',85),
+  ('EXPRESION -> EXPRESION igualigual EXPRESION','EXPRESION',3,'p_expresion_relacionales','parser.py',86),
+  ('EXPRESION -> EXPRESION diferente EXPRESION','EXPRESION',3,'p_expresion_relacionales','parser.py',87),
+  ('EXPRESION -> EXPRESION and EXPRESION','EXPRESION',3,'p_expresion_logicas','parser.py',93),
+  ('EXPRESION -> EXPRESION or EXPRESION','EXPRESION',3,'p_expresion_logicas','parser.py',94),
+  ('EXPRESION -> not EXPRESION','EXPRESION',2,'p_expresion_logicas_not','parser.py',99),
+  ('EXPRESION -> para EXPRESION parc','EXPRESION',3,'p_EXPRESION_par','parser.py',105),
+  ('EXPRESION -> TIPODATO','EXPRESION',1,'p_exp_tdato','parser.py',113),
+  ('TIPODATO -> entero','TIPODATO',1,'p_tipo_dato','parser.py',119),
+  ('TIPODATO -> decimal','TIPODATO',1,'p_tipo_dato','parser.py',120),
+  ('TIPODATO -> cadena','TIPODATO',1,'p_tipo_dato','parser.py',121),
+  ('TIPODATO -> caracter','TIPODATO',1,'p_tipo_dato','parser.py',122),
+  ('TIPODATO -> true','TIPODATO',1,'p_tipo_dato','parser.py',123),
+  ('TIPODATO -> false','TIPODATO',1,'p_tipo_dato','parser.py',124),
+  ('EXPRESION -> id','EXPRESION',1,'p_id','parser.py',129),
+  ('PRINT -> println para EXPRESION parc','PRINT',4,'p_println','parser.py',135),
 ]

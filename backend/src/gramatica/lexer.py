@@ -32,16 +32,16 @@ t_para = r'\('
 t_parc = r'\)'
 
 #Simbolos relacionales
-t_mayorigual=r'[>=]'
-t_menorigual=r'[<=]'
-t_igualigual=r'[==]'
-t_diferente=r'[!=]'
-t_mayor=r'[>]'
-t_menor=r'[<]'
-t_igual=r'[\=]'
+t_mayorigual=r'\>\='
+t_menorigual=r'\<\='
+t_igualigual=r'\=\='
+t_diferente=r'\!\='
+t_mayor=r'\>'
+t_menor=r'\<'
+t_igual=r'\='
 #simbolos logicos
 t_or=r'\|\|'
-t_and=r'[&&]'
+t_and=r'\&\&'
 t_not=r'\!'
 
 #otros simbolos

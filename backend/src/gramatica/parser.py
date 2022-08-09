@@ -2,6 +2,8 @@ from ply.yacc import yacc
 from gramatica import lexer
 
 from models.Expresion.Operacion.Aritmeticas import Aritmeticas
+from models.Expresion.Operacion.Relacionales import Relacionales
+from  models.Expresion.Operacion.Logicas import Logicas
 from models.Expresion.Primitivo import Primitivo
 from models.Expresion.Id import Id
 from models.Ast.Ast import Ast
@@ -50,14 +52,14 @@ def p_instruccion(p):
     """
     p[0] = p[1]
 
-def p_expresion(p):
+def p_expresion_aritmeticas(p):
     """
     EXPRESION : EXPRESION mas EXPRESION 
             |   EXPRESION menos EXPRESION
             |   EXPRESION div EXPRESION
             |   EXPRESION multi EXPRESION
             |   EXPRESION mod EXPRESION  
-            |   pow para EXPRESION coma EXPRESION parc   
+            |   pow para EXPRESION coma EXPRESION parc
     """
     # p contiene los elementos de la gramatica
     #
@@ -69,6 +71,35 @@ def p_expresion(p):
     else:
         p[0] = Aritmeticas(exp1=p[3], operador="pow", exp2=p[5], expU=False, linea=p.lineno(1), columna=0)
 
+def p_factor_unario(p):
+    """
+    EXPRESION : menos EXPRESION %prec UNARIO
+    """
+    p[0] = Aritmeticas(exp1=p[2], operador=p[1], exp2=None, expU=True, linea=p.lineno(1), columna=0)
+
+def p_expresion_relacionales(p):
+    """
+    EXPRESION :  EXPRESION mayor EXPRESION
+            |   EXPRESION menor EXPRESION
+            |   EXPRESION mayorigual EXPRESION
+            |   EXPRESION menorigual EXPRESION
+            |   EXPRESION igualigual EXPRESION
+            |   EXPRESION diferente EXPRESION
+    """
+    p[0]= Relacionales(exp1=p[1], operador=p[2], exp2=p[3], linea=p.lineno(1), columna=0)
+
+def p_expresion_logicas(p):
+    """
+    EXPRESION :  EXPRESION and EXPRESION
+            |   EXPRESION or EXPRESION
+    """
+    p[0] = Logicas(exp1=p[1], operador=p[2], exp2=p[3],expU=False, linea=p.lineno(1), columna=0)
+def p_expresion_logicas_not(p):
+    """
+    EXPRESION :  not EXPRESION
+    """
+    p[0] = Logicas(exp1=p[2], operador=p[1], exp2=None, expU=True, linea=p.lineno(1), columna=0)
+
 def p_EXPRESION_par(p):
     """
     EXPRESION : para EXPRESION parc
@@ -76,11 +107,6 @@ def p_EXPRESION_par(p):
     p[0] = p[2]
 
 
-def p_factor_unario(p):
-    """
-    EXPRESION : menos EXPRESION %prec UNARIO
-    """
-    p[0] = Aritmeticas(exp1=p[2], operador=p[1], exp2=None, expU=True, linea=p.lineno(1), columna=0)
         
 def p_exp_tdato(p):
     """
@@ -93,7 +119,9 @@ def p_tipo_dato(p):
     TIPODATO : entero
         | decimal
         | cadena
-        | caracter 
+        | caracter
+        | true
+        | false
     """
     p[0] = Primitivo(p[1], p.lineno(1), 0) 
 def p_id(p):

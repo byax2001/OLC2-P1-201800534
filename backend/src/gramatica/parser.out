@@ -2,30 +2,19 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    and
     bool
     char
     cora
     corc
-    diferente
     dospuntos
     f64
-    false
     i64
     igual
-    igualigual
     interrogacion
     llavea
     llavec
-    mayor
-    mayorigual
-    menor
-    menorigual
-    not
-    or
     string
     struct
-    true
 
 Grammar
 
@@ -40,68 +29,79 @@ Rule 7     EXPRESION -> EXPRESION div EXPRESION
 Rule 8     EXPRESION -> EXPRESION multi EXPRESION
 Rule 9     EXPRESION -> EXPRESION mod EXPRESION
 Rule 10    EXPRESION -> pow para EXPRESION coma EXPRESION parc
-Rule 11    EXPRESION -> para EXPRESION parc
-Rule 12    EXPRESION -> menos EXPRESION
-Rule 13    EXPRESION -> TIPODATO
-Rule 14    TIPODATO -> entero
-Rule 15    TIPODATO -> decimal
-Rule 16    TIPODATO -> cadena
-Rule 17    TIPODATO -> caracter
-Rule 18    EXPRESION -> id
-Rule 19    PRINT -> println para EXPRESION parc
+Rule 11    EXPRESION -> menos EXPRESION
+Rule 12    EXPRESION -> EXPRESION mayor EXPRESION
+Rule 13    EXPRESION -> EXPRESION menor EXPRESION
+Rule 14    EXPRESION -> EXPRESION mayorigual EXPRESION
+Rule 15    EXPRESION -> EXPRESION menorigual EXPRESION
+Rule 16    EXPRESION -> EXPRESION igualigual EXPRESION
+Rule 17    EXPRESION -> EXPRESION diferente EXPRESION
+Rule 18    EXPRESION -> EXPRESION and EXPRESION
+Rule 19    EXPRESION -> EXPRESION or EXPRESION
+Rule 20    EXPRESION -> not EXPRESION
+Rule 21    EXPRESION -> para EXPRESION parc
+Rule 22    EXPRESION -> TIPODATO
+Rule 23    TIPODATO -> entero
+Rule 24    TIPODATO -> decimal
+Rule 25    TIPODATO -> cadena
+Rule 26    TIPODATO -> caracter
+Rule 27    TIPODATO -> true
+Rule 28    TIPODATO -> false
+Rule 29    EXPRESION -> id
+Rule 30    PRINT -> println para EXPRESION parc
 
 Terminals, with rules where they appear
 
-and                  : 
+and                  : 18
 bool                 : 
-cadena               : 16
-caracter             : 17
+cadena               : 25
+caracter             : 26
 char                 : 
 coma                 : 10
 cora                 : 
 corc                 : 
-decimal              : 15
-diferente            : 
+decimal              : 24
+diferente            : 17
 div                  : 7
 dospuntos            : 
-entero               : 14
+entero               : 23
 error                : 
 f64                  : 
-false                : 
+false                : 28
 i64                  : 
-id                   : 18
+id                   : 29
 igual                : 
-igualigual           : 
+igualigual           : 16
 interrogacion        : 
 llavea               : 
 llavec               : 
 mas                  : 5
-mayor                : 
-mayorigual           : 
-menor                : 
-menorigual           : 
-menos                : 6 12
+mayor                : 12
+mayorigual           : 14
+menor                : 13
+menorigual           : 15
+menos                : 6 11
 mod                  : 9
 multi                : 8
-not                  : 
-or                   : 
-para                 : 10 11 19
-parc                 : 10 11 19
+not                  : 20
+or                   : 19
+para                 : 10 21 30
+parc                 : 10 21 30
 pow                  : 10
-println              : 19
+println              : 30
 puntoycoma           : 4
 string               : 
 struct               : 
-true                 : 
+true                 : 27
 
 Nonterminals, with rules where they appear
 
-EXPRESION            : 5 5 6 6 7 7 8 8 9 9 10 10 11 12 19
+EXPRESION            : 5 5 6 6 7 7 8 8 9 9 10 10 11 12 12 13 13 14 14 15 15 16 16 17 17 18 18 19 19 20 21 30
 INICIO               : 0
 INSTRUCCION          : 2 3
 INSTRUCCIONES        : 1 2
 PRINT                : 4
-TIPODATO             : 13
+TIPODATO             : 22
 
 Parsing method: LALR
 
@@ -112,7 +112,7 @@ state 0
     (2) INSTRUCCIONES -> . INSTRUCCIONES INSTRUCCION
     (3) INSTRUCCIONES -> . INSTRUCCION
     (4) INSTRUCCION -> . PRINT puntoycoma
-    (19) PRINT -> . println para EXPRESION parc
+    (30) PRINT -> . println para EXPRESION parc
 
     println         shift and go to state 5
 
@@ -132,7 +132,7 @@ state 2
     (1) INICIO -> INSTRUCCIONES .
     (2) INSTRUCCIONES -> INSTRUCCIONES . INSTRUCCION
     (4) INSTRUCCION -> . PRINT puntoycoma
-    (19) PRINT -> . println para EXPRESION parc
+    (30) PRINT -> . println para EXPRESION parc
 
     $end            reduce using rule 1 (INICIO -> INSTRUCCIONES .)
     println         shift and go to state 5
@@ -157,7 +157,7 @@ state 4
 
 state 5
 
-    (19) PRINT -> println . para EXPRESION parc
+    (30) PRINT -> println . para EXPRESION parc
 
     para            shift and go to state 8
 
@@ -180,221 +180,429 @@ state 7
 
 state 8
 
-    (19) PRINT -> println para . EXPRESION parc
+    (30) PRINT -> println para . EXPRESION parc
     (5) EXPRESION -> . EXPRESION mas EXPRESION
     (6) EXPRESION -> . EXPRESION menos EXPRESION
     (7) EXPRESION -> . EXPRESION div EXPRESION
     (8) EXPRESION -> . EXPRESION multi EXPRESION
     (9) EXPRESION -> . EXPRESION mod EXPRESION
     (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
-    (11) EXPRESION -> . para EXPRESION parc
-    (12) EXPRESION -> . menos EXPRESION
-    (13) EXPRESION -> . TIPODATO
-    (18) EXPRESION -> . id
-    (14) TIPODATO -> . entero
-    (15) TIPODATO -> . decimal
-    (16) TIPODATO -> . cadena
-    (17) TIPODATO -> . caracter
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
     pow             shift and go to state 12
-    para            shift and go to state 9
     menos           shift and go to state 11
-    id              shift and go to state 14
-    entero          shift and go to state 15
-    decimal         shift and go to state 16
-    cadena          shift and go to state 17
-    caracter        shift and go to state 18
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
     EXPRESION                      shift and go to state 10
-    TIPODATO                       shift and go to state 13
+    TIPODATO                       shift and go to state 14
 
 state 9
 
-    (11) EXPRESION -> para . EXPRESION parc
+    (21) EXPRESION -> para . EXPRESION parc
     (5) EXPRESION -> . EXPRESION mas EXPRESION
     (6) EXPRESION -> . EXPRESION menos EXPRESION
     (7) EXPRESION -> . EXPRESION div EXPRESION
     (8) EXPRESION -> . EXPRESION multi EXPRESION
     (9) EXPRESION -> . EXPRESION mod EXPRESION
     (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
-    (11) EXPRESION -> . para EXPRESION parc
-    (12) EXPRESION -> . menos EXPRESION
-    (13) EXPRESION -> . TIPODATO
-    (18) EXPRESION -> . id
-    (14) TIPODATO -> . entero
-    (15) TIPODATO -> . decimal
-    (16) TIPODATO -> . cadena
-    (17) TIPODATO -> . caracter
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
     pow             shift and go to state 12
-    para            shift and go to state 9
     menos           shift and go to state 11
-    id              shift and go to state 14
-    entero          shift and go to state 15
-    decimal         shift and go to state 16
-    cadena          shift and go to state 17
-    caracter        shift and go to state 18
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
-    EXPRESION                      shift and go to state 19
-    TIPODATO                       shift and go to state 13
+    EXPRESION                      shift and go to state 22
+    TIPODATO                       shift and go to state 14
 
 state 10
 
-    (19) PRINT -> println para EXPRESION . parc
+    (30) PRINT -> println para EXPRESION . parc
     (5) EXPRESION -> EXPRESION . mas EXPRESION
     (6) EXPRESION -> EXPRESION . menos EXPRESION
     (7) EXPRESION -> EXPRESION . div EXPRESION
     (8) EXPRESION -> EXPRESION . multi EXPRESION
     (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
-    parc            shift and go to state 20
-    mas             shift and go to state 21
-    menos           shift and go to state 22
-    div             shift and go to state 23
-    multi           shift and go to state 24
-    mod             shift and go to state 25
+    parc            shift and go to state 23
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
 
 
 state 11
 
-    (12) EXPRESION -> menos . EXPRESION
+    (11) EXPRESION -> menos . EXPRESION
     (5) EXPRESION -> . EXPRESION mas EXPRESION
     (6) EXPRESION -> . EXPRESION menos EXPRESION
     (7) EXPRESION -> . EXPRESION div EXPRESION
     (8) EXPRESION -> . EXPRESION multi EXPRESION
     (9) EXPRESION -> . EXPRESION mod EXPRESION
     (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
-    (11) EXPRESION -> . para EXPRESION parc
-    (12) EXPRESION -> . menos EXPRESION
-    (13) EXPRESION -> . TIPODATO
-    (18) EXPRESION -> . id
-    (14) TIPODATO -> . entero
-    (15) TIPODATO -> . decimal
-    (16) TIPODATO -> . cadena
-    (17) TIPODATO -> . caracter
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
     pow             shift and go to state 12
-    para            shift and go to state 9
     menos           shift and go to state 11
-    id              shift and go to state 14
-    entero          shift and go to state 15
-    decimal         shift and go to state 16
-    cadena          shift and go to state 17
-    caracter        shift and go to state 18
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
-    EXPRESION                      shift and go to state 26
-    TIPODATO                       shift and go to state 13
+    EXPRESION                      shift and go to state 37
+    TIPODATO                       shift and go to state 14
 
 state 12
 
     (10) EXPRESION -> pow . para EXPRESION coma EXPRESION parc
 
-    para            shift and go to state 27
+    para            shift and go to state 38
 
 
 state 13
 
-    (13) EXPRESION -> TIPODATO .
+    (20) EXPRESION -> not . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
-    parc            reduce using rule 13 (EXPRESION -> TIPODATO .)
-    mas             reduce using rule 13 (EXPRESION -> TIPODATO .)
-    menos           reduce using rule 13 (EXPRESION -> TIPODATO .)
-    div             reduce using rule 13 (EXPRESION -> TIPODATO .)
-    multi           reduce using rule 13 (EXPRESION -> TIPODATO .)
-    mod             reduce using rule 13 (EXPRESION -> TIPODATO .)
-    coma            reduce using rule 13 (EXPRESION -> TIPODATO .)
+    pow             shift and go to state 12
+    menos           shift and go to state 11
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
+    EXPRESION                      shift and go to state 39
+    TIPODATO                       shift and go to state 14
 
 state 14
 
-    (18) EXPRESION -> id .
+    (22) EXPRESION -> TIPODATO .
 
-    parc            reduce using rule 18 (EXPRESION -> id .)
-    mas             reduce using rule 18 (EXPRESION -> id .)
-    menos           reduce using rule 18 (EXPRESION -> id .)
-    div             reduce using rule 18 (EXPRESION -> id .)
-    multi           reduce using rule 18 (EXPRESION -> id .)
-    mod             reduce using rule 18 (EXPRESION -> id .)
-    coma            reduce using rule 18 (EXPRESION -> id .)
+    parc            reduce using rule 22 (EXPRESION -> TIPODATO .)
+    mas             reduce using rule 22 (EXPRESION -> TIPODATO .)
+    menos           reduce using rule 22 (EXPRESION -> TIPODATO .)
+    div             reduce using rule 22 (EXPRESION -> TIPODATO .)
+    multi           reduce using rule 22 (EXPRESION -> TIPODATO .)
+    mod             reduce using rule 22 (EXPRESION -> TIPODATO .)
+    mayor           reduce using rule 22 (EXPRESION -> TIPODATO .)
+    menor           reduce using rule 22 (EXPRESION -> TIPODATO .)
+    mayorigual      reduce using rule 22 (EXPRESION -> TIPODATO .)
+    menorigual      reduce using rule 22 (EXPRESION -> TIPODATO .)
+    igualigual      reduce using rule 22 (EXPRESION -> TIPODATO .)
+    diferente       reduce using rule 22 (EXPRESION -> TIPODATO .)
+    and             reduce using rule 22 (EXPRESION -> TIPODATO .)
+    or              reduce using rule 22 (EXPRESION -> TIPODATO .)
+    coma            reduce using rule 22 (EXPRESION -> TIPODATO .)
 
 
 state 15
 
-    (14) TIPODATO -> entero .
+    (29) EXPRESION -> id .
 
-    parc            reduce using rule 14 (TIPODATO -> entero .)
-    mas             reduce using rule 14 (TIPODATO -> entero .)
-    menos           reduce using rule 14 (TIPODATO -> entero .)
-    div             reduce using rule 14 (TIPODATO -> entero .)
-    multi           reduce using rule 14 (TIPODATO -> entero .)
-    mod             reduce using rule 14 (TIPODATO -> entero .)
-    coma            reduce using rule 14 (TIPODATO -> entero .)
+    parc            reduce using rule 29 (EXPRESION -> id .)
+    mas             reduce using rule 29 (EXPRESION -> id .)
+    menos           reduce using rule 29 (EXPRESION -> id .)
+    div             reduce using rule 29 (EXPRESION -> id .)
+    multi           reduce using rule 29 (EXPRESION -> id .)
+    mod             reduce using rule 29 (EXPRESION -> id .)
+    mayor           reduce using rule 29 (EXPRESION -> id .)
+    menor           reduce using rule 29 (EXPRESION -> id .)
+    mayorigual      reduce using rule 29 (EXPRESION -> id .)
+    menorigual      reduce using rule 29 (EXPRESION -> id .)
+    igualigual      reduce using rule 29 (EXPRESION -> id .)
+    diferente       reduce using rule 29 (EXPRESION -> id .)
+    and             reduce using rule 29 (EXPRESION -> id .)
+    or              reduce using rule 29 (EXPRESION -> id .)
+    coma            reduce using rule 29 (EXPRESION -> id .)
 
 
 state 16
 
-    (15) TIPODATO -> decimal .
+    (23) TIPODATO -> entero .
 
-    parc            reduce using rule 15 (TIPODATO -> decimal .)
-    mas             reduce using rule 15 (TIPODATO -> decimal .)
-    menos           reduce using rule 15 (TIPODATO -> decimal .)
-    div             reduce using rule 15 (TIPODATO -> decimal .)
-    multi           reduce using rule 15 (TIPODATO -> decimal .)
-    mod             reduce using rule 15 (TIPODATO -> decimal .)
-    coma            reduce using rule 15 (TIPODATO -> decimal .)
+    parc            reduce using rule 23 (TIPODATO -> entero .)
+    mas             reduce using rule 23 (TIPODATO -> entero .)
+    menos           reduce using rule 23 (TIPODATO -> entero .)
+    div             reduce using rule 23 (TIPODATO -> entero .)
+    multi           reduce using rule 23 (TIPODATO -> entero .)
+    mod             reduce using rule 23 (TIPODATO -> entero .)
+    mayor           reduce using rule 23 (TIPODATO -> entero .)
+    menor           reduce using rule 23 (TIPODATO -> entero .)
+    mayorigual      reduce using rule 23 (TIPODATO -> entero .)
+    menorigual      reduce using rule 23 (TIPODATO -> entero .)
+    igualigual      reduce using rule 23 (TIPODATO -> entero .)
+    diferente       reduce using rule 23 (TIPODATO -> entero .)
+    and             reduce using rule 23 (TIPODATO -> entero .)
+    or              reduce using rule 23 (TIPODATO -> entero .)
+    coma            reduce using rule 23 (TIPODATO -> entero .)
 
 
 state 17
 
-    (16) TIPODATO -> cadena .
+    (24) TIPODATO -> decimal .
 
-    parc            reduce using rule 16 (TIPODATO -> cadena .)
-    mas             reduce using rule 16 (TIPODATO -> cadena .)
-    menos           reduce using rule 16 (TIPODATO -> cadena .)
-    div             reduce using rule 16 (TIPODATO -> cadena .)
-    multi           reduce using rule 16 (TIPODATO -> cadena .)
-    mod             reduce using rule 16 (TIPODATO -> cadena .)
-    coma            reduce using rule 16 (TIPODATO -> cadena .)
+    parc            reduce using rule 24 (TIPODATO -> decimal .)
+    mas             reduce using rule 24 (TIPODATO -> decimal .)
+    menos           reduce using rule 24 (TIPODATO -> decimal .)
+    div             reduce using rule 24 (TIPODATO -> decimal .)
+    multi           reduce using rule 24 (TIPODATO -> decimal .)
+    mod             reduce using rule 24 (TIPODATO -> decimal .)
+    mayor           reduce using rule 24 (TIPODATO -> decimal .)
+    menor           reduce using rule 24 (TIPODATO -> decimal .)
+    mayorigual      reduce using rule 24 (TIPODATO -> decimal .)
+    menorigual      reduce using rule 24 (TIPODATO -> decimal .)
+    igualigual      reduce using rule 24 (TIPODATO -> decimal .)
+    diferente       reduce using rule 24 (TIPODATO -> decimal .)
+    and             reduce using rule 24 (TIPODATO -> decimal .)
+    or              reduce using rule 24 (TIPODATO -> decimal .)
+    coma            reduce using rule 24 (TIPODATO -> decimal .)
 
 
 state 18
 
-    (17) TIPODATO -> caracter .
+    (25) TIPODATO -> cadena .
 
-    parc            reduce using rule 17 (TIPODATO -> caracter .)
-    mas             reduce using rule 17 (TIPODATO -> caracter .)
-    menos           reduce using rule 17 (TIPODATO -> caracter .)
-    div             reduce using rule 17 (TIPODATO -> caracter .)
-    multi           reduce using rule 17 (TIPODATO -> caracter .)
-    mod             reduce using rule 17 (TIPODATO -> caracter .)
-    coma            reduce using rule 17 (TIPODATO -> caracter .)
+    parc            reduce using rule 25 (TIPODATO -> cadena .)
+    mas             reduce using rule 25 (TIPODATO -> cadena .)
+    menos           reduce using rule 25 (TIPODATO -> cadena .)
+    div             reduce using rule 25 (TIPODATO -> cadena .)
+    multi           reduce using rule 25 (TIPODATO -> cadena .)
+    mod             reduce using rule 25 (TIPODATO -> cadena .)
+    mayor           reduce using rule 25 (TIPODATO -> cadena .)
+    menor           reduce using rule 25 (TIPODATO -> cadena .)
+    mayorigual      reduce using rule 25 (TIPODATO -> cadena .)
+    menorigual      reduce using rule 25 (TIPODATO -> cadena .)
+    igualigual      reduce using rule 25 (TIPODATO -> cadena .)
+    diferente       reduce using rule 25 (TIPODATO -> cadena .)
+    and             reduce using rule 25 (TIPODATO -> cadena .)
+    or              reduce using rule 25 (TIPODATO -> cadena .)
+    coma            reduce using rule 25 (TIPODATO -> cadena .)
 
 
 state 19
 
-    (11) EXPRESION -> para EXPRESION . parc
+    (26) TIPODATO -> caracter .
+
+    parc            reduce using rule 26 (TIPODATO -> caracter .)
+    mas             reduce using rule 26 (TIPODATO -> caracter .)
+    menos           reduce using rule 26 (TIPODATO -> caracter .)
+    div             reduce using rule 26 (TIPODATO -> caracter .)
+    multi           reduce using rule 26 (TIPODATO -> caracter .)
+    mod             reduce using rule 26 (TIPODATO -> caracter .)
+    mayor           reduce using rule 26 (TIPODATO -> caracter .)
+    menor           reduce using rule 26 (TIPODATO -> caracter .)
+    mayorigual      reduce using rule 26 (TIPODATO -> caracter .)
+    menorigual      reduce using rule 26 (TIPODATO -> caracter .)
+    igualigual      reduce using rule 26 (TIPODATO -> caracter .)
+    diferente       reduce using rule 26 (TIPODATO -> caracter .)
+    and             reduce using rule 26 (TIPODATO -> caracter .)
+    or              reduce using rule 26 (TIPODATO -> caracter .)
+    coma            reduce using rule 26 (TIPODATO -> caracter .)
+
+
+state 20
+
+    (27) TIPODATO -> true .
+
+    parc            reduce using rule 27 (TIPODATO -> true .)
+    mas             reduce using rule 27 (TIPODATO -> true .)
+    menos           reduce using rule 27 (TIPODATO -> true .)
+    div             reduce using rule 27 (TIPODATO -> true .)
+    multi           reduce using rule 27 (TIPODATO -> true .)
+    mod             reduce using rule 27 (TIPODATO -> true .)
+    mayor           reduce using rule 27 (TIPODATO -> true .)
+    menor           reduce using rule 27 (TIPODATO -> true .)
+    mayorigual      reduce using rule 27 (TIPODATO -> true .)
+    menorigual      reduce using rule 27 (TIPODATO -> true .)
+    igualigual      reduce using rule 27 (TIPODATO -> true .)
+    diferente       reduce using rule 27 (TIPODATO -> true .)
+    and             reduce using rule 27 (TIPODATO -> true .)
+    or              reduce using rule 27 (TIPODATO -> true .)
+    coma            reduce using rule 27 (TIPODATO -> true .)
+
+
+state 21
+
+    (28) TIPODATO -> false .
+
+    parc            reduce using rule 28 (TIPODATO -> false .)
+    mas             reduce using rule 28 (TIPODATO -> false .)
+    menos           reduce using rule 28 (TIPODATO -> false .)
+    div             reduce using rule 28 (TIPODATO -> false .)
+    multi           reduce using rule 28 (TIPODATO -> false .)
+    mod             reduce using rule 28 (TIPODATO -> false .)
+    mayor           reduce using rule 28 (TIPODATO -> false .)
+    menor           reduce using rule 28 (TIPODATO -> false .)
+    mayorigual      reduce using rule 28 (TIPODATO -> false .)
+    menorigual      reduce using rule 28 (TIPODATO -> false .)
+    igualigual      reduce using rule 28 (TIPODATO -> false .)
+    diferente       reduce using rule 28 (TIPODATO -> false .)
+    and             reduce using rule 28 (TIPODATO -> false .)
+    or              reduce using rule 28 (TIPODATO -> false .)
+    coma            reduce using rule 28 (TIPODATO -> false .)
+
+
+state 22
+
+    (21) EXPRESION -> para EXPRESION . parc
     (5) EXPRESION -> EXPRESION . mas EXPRESION
     (6) EXPRESION -> EXPRESION . menos EXPRESION
     (7) EXPRESION -> EXPRESION . div EXPRESION
     (8) EXPRESION -> EXPRESION . multi EXPRESION
     (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
-    parc            shift and go to state 28
-    mas             shift and go to state 21
-    menos           shift and go to state 22
-    div             shift and go to state 23
-    multi           shift and go to state 24
-    mod             shift and go to state 25
+    parc            shift and go to state 40
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
 
 
-state 20
+state 23
 
-    (19) PRINT -> println para EXPRESION parc .
+    (30) PRINT -> println para EXPRESION parc .
 
-    puntoycoma      reduce using rule 19 (PRINT -> println para EXPRESION parc .)
+    puntoycoma      reduce using rule 30 (PRINT -> println para EXPRESION parc .)
 
 
-state 21
+state 24
 
     (5) EXPRESION -> EXPRESION mas . EXPRESION
     (5) EXPRESION -> . EXPRESION mas EXPRESION
@@ -403,28 +611,42 @@ state 21
     (8) EXPRESION -> . EXPRESION multi EXPRESION
     (9) EXPRESION -> . EXPRESION mod EXPRESION
     (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
-    (11) EXPRESION -> . para EXPRESION parc
-    (12) EXPRESION -> . menos EXPRESION
-    (13) EXPRESION -> . TIPODATO
-    (18) EXPRESION -> . id
-    (14) TIPODATO -> . entero
-    (15) TIPODATO -> . decimal
-    (16) TIPODATO -> . cadena
-    (17) TIPODATO -> . caracter
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
     pow             shift and go to state 12
-    para            shift and go to state 9
     menos           shift and go to state 11
-    id              shift and go to state 14
-    entero          shift and go to state 15
-    decimal         shift and go to state 16
-    cadena          shift and go to state 17
-    caracter        shift and go to state 18
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
-    EXPRESION                      shift and go to state 29
-    TIPODATO                       shift and go to state 13
+    EXPRESION                      shift and go to state 41
+    TIPODATO                       shift and go to state 14
 
-state 22
+state 25
 
     (6) EXPRESION -> EXPRESION menos . EXPRESION
     (5) EXPRESION -> . EXPRESION mas EXPRESION
@@ -433,28 +655,42 @@ state 22
     (8) EXPRESION -> . EXPRESION multi EXPRESION
     (9) EXPRESION -> . EXPRESION mod EXPRESION
     (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
-    (11) EXPRESION -> . para EXPRESION parc
-    (12) EXPRESION -> . menos EXPRESION
-    (13) EXPRESION -> . TIPODATO
-    (18) EXPRESION -> . id
-    (14) TIPODATO -> . entero
-    (15) TIPODATO -> . decimal
-    (16) TIPODATO -> . cadena
-    (17) TIPODATO -> . caracter
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
     pow             shift and go to state 12
-    para            shift and go to state 9
     menos           shift and go to state 11
-    id              shift and go to state 14
-    entero          shift and go to state 15
-    decimal         shift and go to state 16
-    cadena          shift and go to state 17
-    caracter        shift and go to state 18
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
-    EXPRESION                      shift and go to state 30
-    TIPODATO                       shift and go to state 13
+    EXPRESION                      shift and go to state 42
+    TIPODATO                       shift and go to state 14
 
-state 23
+state 26
 
     (7) EXPRESION -> EXPRESION div . EXPRESION
     (5) EXPRESION -> . EXPRESION mas EXPRESION
@@ -463,28 +699,42 @@ state 23
     (8) EXPRESION -> . EXPRESION multi EXPRESION
     (9) EXPRESION -> . EXPRESION mod EXPRESION
     (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
-    (11) EXPRESION -> . para EXPRESION parc
-    (12) EXPRESION -> . menos EXPRESION
-    (13) EXPRESION -> . TIPODATO
-    (18) EXPRESION -> . id
-    (14) TIPODATO -> . entero
-    (15) TIPODATO -> . decimal
-    (16) TIPODATO -> . cadena
-    (17) TIPODATO -> . caracter
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
     pow             shift and go to state 12
-    para            shift and go to state 9
     menos           shift and go to state 11
-    id              shift and go to state 14
-    entero          shift and go to state 15
-    decimal         shift and go to state 16
-    cadena          shift and go to state 17
-    caracter        shift and go to state 18
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
-    EXPRESION                      shift and go to state 31
-    TIPODATO                       shift and go to state 13
+    EXPRESION                      shift and go to state 43
+    TIPODATO                       shift and go to state 14
 
-state 24
+state 27
 
     (8) EXPRESION -> EXPRESION multi . EXPRESION
     (5) EXPRESION -> . EXPRESION mas EXPRESION
@@ -493,28 +743,42 @@ state 24
     (8) EXPRESION -> . EXPRESION multi EXPRESION
     (9) EXPRESION -> . EXPRESION mod EXPRESION
     (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
-    (11) EXPRESION -> . para EXPRESION parc
-    (12) EXPRESION -> . menos EXPRESION
-    (13) EXPRESION -> . TIPODATO
-    (18) EXPRESION -> . id
-    (14) TIPODATO -> . entero
-    (15) TIPODATO -> . decimal
-    (16) TIPODATO -> . cadena
-    (17) TIPODATO -> . caracter
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
     pow             shift and go to state 12
-    para            shift and go to state 9
     menos           shift and go to state 11
-    id              shift and go to state 14
-    entero          shift and go to state 15
-    decimal         shift and go to state 16
-    cadena          shift and go to state 17
-    caracter        shift and go to state 18
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
-    EXPRESION                      shift and go to state 32
-    TIPODATO                       shift and go to state 13
+    EXPRESION                      shift and go to state 44
+    TIPODATO                       shift and go to state 14
 
-state 25
+state 28
 
     (9) EXPRESION -> EXPRESION mod . EXPRESION
     (5) EXPRESION -> . EXPRESION mas EXPRESION
@@ -523,52 +787,442 @@ state 25
     (8) EXPRESION -> . EXPRESION multi EXPRESION
     (9) EXPRESION -> . EXPRESION mod EXPRESION
     (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
-    (11) EXPRESION -> . para EXPRESION parc
-    (12) EXPRESION -> . menos EXPRESION
-    (13) EXPRESION -> . TIPODATO
-    (18) EXPRESION -> . id
-    (14) TIPODATO -> . entero
-    (15) TIPODATO -> . decimal
-    (16) TIPODATO -> . cadena
-    (17) TIPODATO -> . caracter
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
     pow             shift and go to state 12
-    para            shift and go to state 9
     menos           shift and go to state 11
-    id              shift and go to state 14
-    entero          shift and go to state 15
-    decimal         shift and go to state 16
-    cadena          shift and go to state 17
-    caracter        shift and go to state 18
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
-    EXPRESION                      shift and go to state 33
-    TIPODATO                       shift and go to state 13
+    EXPRESION                      shift and go to state 45
+    TIPODATO                       shift and go to state 14
 
-state 26
+state 29
 
-    (12) EXPRESION -> menos EXPRESION .
+    (12) EXPRESION -> EXPRESION mayor . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
+
+    pow             shift and go to state 12
+    menos           shift and go to state 11
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
+
+    EXPRESION                      shift and go to state 46
+    TIPODATO                       shift and go to state 14
+
+state 30
+
+    (13) EXPRESION -> EXPRESION menor . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
+
+    pow             shift and go to state 12
+    menos           shift and go to state 11
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
+
+    EXPRESION                      shift and go to state 47
+    TIPODATO                       shift and go to state 14
+
+state 31
+
+    (14) EXPRESION -> EXPRESION mayorigual . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
+
+    pow             shift and go to state 12
+    menos           shift and go to state 11
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
+
+    EXPRESION                      shift and go to state 48
+    TIPODATO                       shift and go to state 14
+
+state 32
+
+    (15) EXPRESION -> EXPRESION menorigual . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
+
+    pow             shift and go to state 12
+    menos           shift and go to state 11
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
+
+    EXPRESION                      shift and go to state 49
+    TIPODATO                       shift and go to state 14
+
+state 33
+
+    (16) EXPRESION -> EXPRESION igualigual . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
+
+    pow             shift and go to state 12
+    menos           shift and go to state 11
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
+
+    EXPRESION                      shift and go to state 50
+    TIPODATO                       shift and go to state 14
+
+state 34
+
+    (17) EXPRESION -> EXPRESION diferente . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
+
+    pow             shift and go to state 12
+    menos           shift and go to state 11
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
+
+    EXPRESION                      shift and go to state 51
+    TIPODATO                       shift and go to state 14
+
+state 35
+
+    (18) EXPRESION -> EXPRESION and . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
+
+    pow             shift and go to state 12
+    menos           shift and go to state 11
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
+
+    EXPRESION                      shift and go to state 52
+    TIPODATO                       shift and go to state 14
+
+state 36
+
+    (19) EXPRESION -> EXPRESION or . EXPRESION
+    (5) EXPRESION -> . EXPRESION mas EXPRESION
+    (6) EXPRESION -> . EXPRESION menos EXPRESION
+    (7) EXPRESION -> . EXPRESION div EXPRESION
+    (8) EXPRESION -> . EXPRESION multi EXPRESION
+    (9) EXPRESION -> . EXPRESION mod EXPRESION
+    (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
+
+    pow             shift and go to state 12
+    menos           shift and go to state 11
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
+
+    EXPRESION                      shift and go to state 53
+    TIPODATO                       shift and go to state 14
+
+state 37
+
+    (11) EXPRESION -> menos EXPRESION .
     (5) EXPRESION -> EXPRESION . mas EXPRESION
     (6) EXPRESION -> EXPRESION . menos EXPRESION
     (7) EXPRESION -> EXPRESION . div EXPRESION
     (8) EXPRESION -> EXPRESION . multi EXPRESION
     (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
-    parc            reduce using rule 12 (EXPRESION -> menos EXPRESION .)
-    mas             reduce using rule 12 (EXPRESION -> menos EXPRESION .)
-    menos           reduce using rule 12 (EXPRESION -> menos EXPRESION .)
-    div             reduce using rule 12 (EXPRESION -> menos EXPRESION .)
-    multi           reduce using rule 12 (EXPRESION -> menos EXPRESION .)
-    mod             reduce using rule 12 (EXPRESION -> menos EXPRESION .)
-    coma            reduce using rule 12 (EXPRESION -> menos EXPRESION .)
+    parc            reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    mas             reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    menos           reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    div             reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    multi           reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    mod             reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    mayor           reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    menor           reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    mayorigual      reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    menorigual      reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    igualigual      reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    diferente       reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    and             reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    or              reduce using rule 11 (EXPRESION -> menos EXPRESION .)
+    coma            reduce using rule 11 (EXPRESION -> menos EXPRESION .)
 
-  ! mas             [ shift and go to state 21 ]
-  ! menos           [ shift and go to state 22 ]
-  ! div             [ shift and go to state 23 ]
-  ! multi           [ shift and go to state 24 ]
-  ! mod             [ shift and go to state 25 ]
+  ! mas             [ shift and go to state 24 ]
+  ! menos           [ shift and go to state 25 ]
+  ! div             [ shift and go to state 26 ]
+  ! multi           [ shift and go to state 27 ]
+  ! mod             [ shift and go to state 28 ]
+  ! mayor           [ shift and go to state 29 ]
+  ! menor           [ shift and go to state 30 ]
+  ! mayorigual      [ shift and go to state 31 ]
+  ! menorigual      [ shift and go to state 32 ]
+  ! igualigual      [ shift and go to state 33 ]
+  ! diferente       [ shift and go to state 34 ]
+  ! and             [ shift and go to state 35 ]
+  ! or              [ shift and go to state 36 ]
 
 
-state 27
+state 38
 
     (10) EXPRESION -> pow para . EXPRESION coma EXPRESION parc
     (5) EXPRESION -> . EXPRESION mas EXPRESION
@@ -577,41 +1231,124 @@ state 27
     (8) EXPRESION -> . EXPRESION multi EXPRESION
     (9) EXPRESION -> . EXPRESION mod EXPRESION
     (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
-    (11) EXPRESION -> . para EXPRESION parc
-    (12) EXPRESION -> . menos EXPRESION
-    (13) EXPRESION -> . TIPODATO
-    (18) EXPRESION -> . id
-    (14) TIPODATO -> . entero
-    (15) TIPODATO -> . decimal
-    (16) TIPODATO -> . cadena
-    (17) TIPODATO -> . caracter
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
     pow             shift and go to state 12
-    para            shift and go to state 9
     menos           shift and go to state 11
-    id              shift and go to state 14
-    entero          shift and go to state 15
-    decimal         shift and go to state 16
-    cadena          shift and go to state 17
-    caracter        shift and go to state 18
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
-    EXPRESION                      shift and go to state 34
-    TIPODATO                       shift and go to state 13
+    EXPRESION                      shift and go to state 54
+    TIPODATO                       shift and go to state 14
 
-state 28
+state 39
 
-    (11) EXPRESION -> para EXPRESION parc .
+    (20) EXPRESION -> not EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
-    parc            reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
-    mas             reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
-    menos           reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
-    div             reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
-    multi           reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
-    mod             reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
-    coma            reduce using rule 11 (EXPRESION -> para EXPRESION parc .)
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for div resolved as shift
+  ! shift/reduce conflict for multi resolved as shift
+  ! shift/reduce conflict for mod resolved as shift
+  ! shift/reduce conflict for mayor resolved as shift
+  ! shift/reduce conflict for menor resolved as shift
+  ! shift/reduce conflict for mayorigual resolved as shift
+  ! shift/reduce conflict for menorigual resolved as shift
+  ! shift/reduce conflict for igualigual resolved as shift
+  ! shift/reduce conflict for diferente resolved as shift
+  ! shift/reduce conflict for and resolved as shift
+  ! shift/reduce conflict for or resolved as shift
+    parc            reduce using rule 20 (EXPRESION -> not EXPRESION .)
+    coma            reduce using rule 20 (EXPRESION -> not EXPRESION .)
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
+
+  ! mas             [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! menos           [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! div             [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! multi           [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! mod             [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! mayor           [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! menor           [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! mayorigual      [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! menorigual      [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! igualigual      [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! diferente       [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! and             [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
+  ! or              [ reduce using rule 20 (EXPRESION -> not EXPRESION .) ]
 
 
-state 29
+state 40
+
+    (21) EXPRESION -> para EXPRESION parc .
+
+    parc            reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    mas             reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    menos           reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    div             reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    multi           reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    mod             reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    mayor           reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    menor           reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    mayorigual      reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    menorigual      reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    igualigual      reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    diferente       reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    and             reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    or              reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+    coma            reduce using rule 21 (EXPRESION -> para EXPRESION parc .)
+
+
+state 41
 
     (5) EXPRESION -> EXPRESION mas EXPRESION .
     (5) EXPRESION -> EXPRESION . mas EXPRESION
@@ -619,23 +1356,47 @@ state 29
     (7) EXPRESION -> EXPRESION . div EXPRESION
     (8) EXPRESION -> EXPRESION . multi EXPRESION
     (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
     parc            reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
     mas             reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
     menos           reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
     mod             reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    mayor           reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    menor           reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    mayorigual      reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    menorigual      reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    igualigual      reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    diferente       reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    and             reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
+    or              reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
     coma            reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .)
-    div             shift and go to state 23
-    multi           shift and go to state 24
+    div             shift and go to state 26
+    multi           shift and go to state 27
 
   ! div             [ reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .) ]
   ! multi           [ reduce using rule 5 (EXPRESION -> EXPRESION mas EXPRESION .) ]
-  ! mas             [ shift and go to state 21 ]
-  ! menos           [ shift and go to state 22 ]
-  ! mod             [ shift and go to state 25 ]
+  ! mas             [ shift and go to state 24 ]
+  ! menos           [ shift and go to state 25 ]
+  ! mod             [ shift and go to state 28 ]
+  ! mayor           [ shift and go to state 29 ]
+  ! menor           [ shift and go to state 30 ]
+  ! mayorigual      [ shift and go to state 31 ]
+  ! menorigual      [ shift and go to state 32 ]
+  ! igualigual      [ shift and go to state 33 ]
+  ! diferente       [ shift and go to state 34 ]
+  ! and             [ shift and go to state 35 ]
+  ! or              [ shift and go to state 36 ]
 
 
-state 30
+state 42
 
     (6) EXPRESION -> EXPRESION menos EXPRESION .
     (5) EXPRESION -> EXPRESION . mas EXPRESION
@@ -643,23 +1404,47 @@ state 30
     (7) EXPRESION -> EXPRESION . div EXPRESION
     (8) EXPRESION -> EXPRESION . multi EXPRESION
     (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
     parc            reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
     mas             reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
     menos           reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
     mod             reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    mayor           reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    menor           reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    mayorigual      reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    menorigual      reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    igualigual      reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    diferente       reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    and             reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
+    or              reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
     coma            reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .)
-    div             shift and go to state 23
-    multi           shift and go to state 24
+    div             shift and go to state 26
+    multi           shift and go to state 27
 
   ! div             [ reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .) ]
   ! multi           [ reduce using rule 6 (EXPRESION -> EXPRESION menos EXPRESION .) ]
-  ! mas             [ shift and go to state 21 ]
-  ! menos           [ shift and go to state 22 ]
-  ! mod             [ shift and go to state 25 ]
+  ! mas             [ shift and go to state 24 ]
+  ! menos           [ shift and go to state 25 ]
+  ! mod             [ shift and go to state 28 ]
+  ! mayor           [ shift and go to state 29 ]
+  ! menor           [ shift and go to state 30 ]
+  ! mayorigual      [ shift and go to state 31 ]
+  ! menorigual      [ shift and go to state 32 ]
+  ! igualigual      [ shift and go to state 33 ]
+  ! diferente       [ shift and go to state 34 ]
+  ! and             [ shift and go to state 35 ]
+  ! or              [ shift and go to state 36 ]
 
 
-state 31
+state 43
 
     (7) EXPRESION -> EXPRESION div EXPRESION .
     (5) EXPRESION -> EXPRESION . mas EXPRESION
@@ -667,6 +1452,14 @@ state 31
     (7) EXPRESION -> EXPRESION . div EXPRESION
     (8) EXPRESION -> EXPRESION . multi EXPRESION
     (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
     parc            reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
     mas             reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
@@ -674,16 +1467,32 @@ state 31
     div             reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
     multi           reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
     mod             reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    mayor           reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    menor           reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    mayorigual      reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    menorigual      reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    igualigual      reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    diferente       reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    and             reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
+    or              reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
     coma            reduce using rule 7 (EXPRESION -> EXPRESION div EXPRESION .)
 
-  ! mas             [ shift and go to state 21 ]
-  ! menos           [ shift and go to state 22 ]
-  ! div             [ shift and go to state 23 ]
-  ! multi           [ shift and go to state 24 ]
-  ! mod             [ shift and go to state 25 ]
+  ! mas             [ shift and go to state 24 ]
+  ! menos           [ shift and go to state 25 ]
+  ! div             [ shift and go to state 26 ]
+  ! multi           [ shift and go to state 27 ]
+  ! mod             [ shift and go to state 28 ]
+  ! mayor           [ shift and go to state 29 ]
+  ! menor           [ shift and go to state 30 ]
+  ! mayorigual      [ shift and go to state 31 ]
+  ! menorigual      [ shift and go to state 32 ]
+  ! igualigual      [ shift and go to state 33 ]
+  ! diferente       [ shift and go to state 34 ]
+  ! and             [ shift and go to state 35 ]
+  ! or              [ shift and go to state 36 ]
 
 
-state 32
+state 44
 
     (8) EXPRESION -> EXPRESION multi EXPRESION .
     (5) EXPRESION -> EXPRESION . mas EXPRESION
@@ -691,6 +1500,14 @@ state 32
     (7) EXPRESION -> EXPRESION . div EXPRESION
     (8) EXPRESION -> EXPRESION . multi EXPRESION
     (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
     parc            reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
     mas             reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
@@ -698,16 +1515,32 @@ state 32
     div             reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
     multi           reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
     mod             reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    mayor           reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    menor           reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    mayorigual      reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    menorigual      reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    igualigual      reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    diferente       reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    and             reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
+    or              reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
     coma            reduce using rule 8 (EXPRESION -> EXPRESION multi EXPRESION .)
 
-  ! mas             [ shift and go to state 21 ]
-  ! menos           [ shift and go to state 22 ]
-  ! div             [ shift and go to state 23 ]
-  ! multi           [ shift and go to state 24 ]
-  ! mod             [ shift and go to state 25 ]
+  ! mas             [ shift and go to state 24 ]
+  ! menos           [ shift and go to state 25 ]
+  ! div             [ shift and go to state 26 ]
+  ! multi           [ shift and go to state 27 ]
+  ! mod             [ shift and go to state 28 ]
+  ! mayor           [ shift and go to state 29 ]
+  ! menor           [ shift and go to state 30 ]
+  ! mayorigual      [ shift and go to state 31 ]
+  ! menorigual      [ shift and go to state 32 ]
+  ! igualigual      [ shift and go to state 33 ]
+  ! diferente       [ shift and go to state 34 ]
+  ! and             [ shift and go to state 35 ]
+  ! or              [ shift and go to state 36 ]
 
 
-state 33
+state 45
 
     (9) EXPRESION -> EXPRESION mod EXPRESION .
     (5) EXPRESION -> EXPRESION . mas EXPRESION
@@ -715,28 +1548,548 @@ state 33
     (7) EXPRESION -> EXPRESION . div EXPRESION
     (8) EXPRESION -> EXPRESION . multi EXPRESION
     (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
   ! shift/reduce conflict for mas resolved as shift
   ! shift/reduce conflict for menos resolved as shift
   ! shift/reduce conflict for div resolved as shift
   ! shift/reduce conflict for multi resolved as shift
   ! shift/reduce conflict for mod resolved as shift
+  ! shift/reduce conflict for mayor resolved as shift
+  ! shift/reduce conflict for menor resolved as shift
+  ! shift/reduce conflict for mayorigual resolved as shift
+  ! shift/reduce conflict for menorigual resolved as shift
+  ! shift/reduce conflict for igualigual resolved as shift
+  ! shift/reduce conflict for diferente resolved as shift
+  ! shift/reduce conflict for and resolved as shift
+  ! shift/reduce conflict for or resolved as shift
     parc            reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .)
     coma            reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .)
-    mas             shift and go to state 21
-    menos           shift and go to state 22
-    div             shift and go to state 23
-    multi           shift and go to state 24
-    mod             shift and go to state 25
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
 
   ! mas             [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
   ! menos           [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
   ! div             [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
   ! multi           [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
   ! mod             [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! mayor           [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! menor           [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! mayorigual      [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! menorigual      [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! igualigual      [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! diferente       [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! and             [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
+  ! or              [ reduce using rule 9 (EXPRESION -> EXPRESION mod EXPRESION .) ]
 
 
-state 34
+state 46
+
+    (12) EXPRESION -> EXPRESION mayor EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
+
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for div resolved as shift
+  ! shift/reduce conflict for multi resolved as shift
+  ! shift/reduce conflict for mod resolved as shift
+  ! shift/reduce conflict for mayor resolved as shift
+  ! shift/reduce conflict for menor resolved as shift
+  ! shift/reduce conflict for mayorigual resolved as shift
+  ! shift/reduce conflict for menorigual resolved as shift
+  ! shift/reduce conflict for igualigual resolved as shift
+  ! shift/reduce conflict for diferente resolved as shift
+  ! shift/reduce conflict for and resolved as shift
+  ! shift/reduce conflict for or resolved as shift
+    parc            reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .)
+    coma            reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .)
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
+
+  ! mas             [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! menos           [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! div             [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! multi           [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! mod             [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! mayor           [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! menor           [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! mayorigual      [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! menorigual      [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! igualigual      [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! diferente       [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! and             [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+  ! or              [ reduce using rule 12 (EXPRESION -> EXPRESION mayor EXPRESION .) ]
+
+
+state 47
+
+    (13) EXPRESION -> EXPRESION menor EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
+
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for div resolved as shift
+  ! shift/reduce conflict for multi resolved as shift
+  ! shift/reduce conflict for mod resolved as shift
+  ! shift/reduce conflict for mayor resolved as shift
+  ! shift/reduce conflict for menor resolved as shift
+  ! shift/reduce conflict for mayorigual resolved as shift
+  ! shift/reduce conflict for menorigual resolved as shift
+  ! shift/reduce conflict for igualigual resolved as shift
+  ! shift/reduce conflict for diferente resolved as shift
+  ! shift/reduce conflict for and resolved as shift
+  ! shift/reduce conflict for or resolved as shift
+    parc            reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .)
+    coma            reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .)
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
+
+  ! mas             [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! menos           [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! div             [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! multi           [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! mod             [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! mayor           [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! menor           [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! mayorigual      [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! menorigual      [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! igualigual      [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! diferente       [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! and             [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+  ! or              [ reduce using rule 13 (EXPRESION -> EXPRESION menor EXPRESION .) ]
+
+
+state 48
+
+    (14) EXPRESION -> EXPRESION mayorigual EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
+
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for div resolved as shift
+  ! shift/reduce conflict for multi resolved as shift
+  ! shift/reduce conflict for mod resolved as shift
+  ! shift/reduce conflict for mayor resolved as shift
+  ! shift/reduce conflict for menor resolved as shift
+  ! shift/reduce conflict for mayorigual resolved as shift
+  ! shift/reduce conflict for menorigual resolved as shift
+  ! shift/reduce conflict for igualigual resolved as shift
+  ! shift/reduce conflict for diferente resolved as shift
+  ! shift/reduce conflict for and resolved as shift
+  ! shift/reduce conflict for or resolved as shift
+    parc            reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .)
+    coma            reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .)
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
+
+  ! mas             [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! menos           [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! div             [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! multi           [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! mod             [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! mayor           [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! menor           [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! mayorigual      [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! menorigual      [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! igualigual      [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! diferente       [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! and             [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+  ! or              [ reduce using rule 14 (EXPRESION -> EXPRESION mayorigual EXPRESION .) ]
+
+
+state 49
+
+    (15) EXPRESION -> EXPRESION menorigual EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
+
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for div resolved as shift
+  ! shift/reduce conflict for multi resolved as shift
+  ! shift/reduce conflict for mod resolved as shift
+  ! shift/reduce conflict for mayor resolved as shift
+  ! shift/reduce conflict for menor resolved as shift
+  ! shift/reduce conflict for mayorigual resolved as shift
+  ! shift/reduce conflict for menorigual resolved as shift
+  ! shift/reduce conflict for igualigual resolved as shift
+  ! shift/reduce conflict for diferente resolved as shift
+  ! shift/reduce conflict for and resolved as shift
+  ! shift/reduce conflict for or resolved as shift
+    parc            reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .)
+    coma            reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .)
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
+
+  ! mas             [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! menos           [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! div             [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! multi           [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! mod             [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! mayor           [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! menor           [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! mayorigual      [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! menorigual      [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! igualigual      [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! diferente       [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! and             [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+  ! or              [ reduce using rule 15 (EXPRESION -> EXPRESION menorigual EXPRESION .) ]
+
+
+state 50
+
+    (16) EXPRESION -> EXPRESION igualigual EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
+
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for div resolved as shift
+  ! shift/reduce conflict for multi resolved as shift
+  ! shift/reduce conflict for mod resolved as shift
+  ! shift/reduce conflict for mayor resolved as shift
+  ! shift/reduce conflict for menor resolved as shift
+  ! shift/reduce conflict for mayorigual resolved as shift
+  ! shift/reduce conflict for menorigual resolved as shift
+  ! shift/reduce conflict for igualigual resolved as shift
+  ! shift/reduce conflict for diferente resolved as shift
+  ! shift/reduce conflict for and resolved as shift
+  ! shift/reduce conflict for or resolved as shift
+    parc            reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .)
+    coma            reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .)
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
+
+  ! mas             [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! menos           [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! div             [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! multi           [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! mod             [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! mayor           [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! menor           [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! mayorigual      [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! menorigual      [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! igualigual      [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! diferente       [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! and             [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+  ! or              [ reduce using rule 16 (EXPRESION -> EXPRESION igualigual EXPRESION .) ]
+
+
+state 51
+
+    (17) EXPRESION -> EXPRESION diferente EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
+
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for div resolved as shift
+  ! shift/reduce conflict for multi resolved as shift
+  ! shift/reduce conflict for mod resolved as shift
+  ! shift/reduce conflict for mayor resolved as shift
+  ! shift/reduce conflict for menor resolved as shift
+  ! shift/reduce conflict for mayorigual resolved as shift
+  ! shift/reduce conflict for menorigual resolved as shift
+  ! shift/reduce conflict for igualigual resolved as shift
+  ! shift/reduce conflict for diferente resolved as shift
+  ! shift/reduce conflict for and resolved as shift
+  ! shift/reduce conflict for or resolved as shift
+    parc            reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .)
+    coma            reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .)
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
+
+  ! mas             [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! menos           [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! div             [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! multi           [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! mod             [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! mayor           [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! menor           [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! mayorigual      [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! menorigual      [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! igualigual      [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! diferente       [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! and             [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+  ! or              [ reduce using rule 17 (EXPRESION -> EXPRESION diferente EXPRESION .) ]
+
+
+state 52
+
+    (18) EXPRESION -> EXPRESION and EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
+
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for div resolved as shift
+  ! shift/reduce conflict for multi resolved as shift
+  ! shift/reduce conflict for mod resolved as shift
+  ! shift/reduce conflict for mayor resolved as shift
+  ! shift/reduce conflict for menor resolved as shift
+  ! shift/reduce conflict for mayorigual resolved as shift
+  ! shift/reduce conflict for menorigual resolved as shift
+  ! shift/reduce conflict for igualigual resolved as shift
+  ! shift/reduce conflict for diferente resolved as shift
+  ! shift/reduce conflict for and resolved as shift
+  ! shift/reduce conflict for or resolved as shift
+    parc            reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .)
+    coma            reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .)
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
+
+  ! mas             [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! menos           [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! div             [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! multi           [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! mod             [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! mayor           [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! menor           [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! mayorigual      [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! menorigual      [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! igualigual      [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! diferente       [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! and             [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+  ! or              [ reduce using rule 18 (EXPRESION -> EXPRESION and EXPRESION .) ]
+
+
+state 53
+
+    (19) EXPRESION -> EXPRESION or EXPRESION .
+    (5) EXPRESION -> EXPRESION . mas EXPRESION
+    (6) EXPRESION -> EXPRESION . menos EXPRESION
+    (7) EXPRESION -> EXPRESION . div EXPRESION
+    (8) EXPRESION -> EXPRESION . multi EXPRESION
+    (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
+
+  ! shift/reduce conflict for mas resolved as shift
+  ! shift/reduce conflict for menos resolved as shift
+  ! shift/reduce conflict for div resolved as shift
+  ! shift/reduce conflict for multi resolved as shift
+  ! shift/reduce conflict for mod resolved as shift
+  ! shift/reduce conflict for mayor resolved as shift
+  ! shift/reduce conflict for menor resolved as shift
+  ! shift/reduce conflict for mayorigual resolved as shift
+  ! shift/reduce conflict for menorigual resolved as shift
+  ! shift/reduce conflict for igualigual resolved as shift
+  ! shift/reduce conflict for diferente resolved as shift
+  ! shift/reduce conflict for and resolved as shift
+  ! shift/reduce conflict for or resolved as shift
+    parc            reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .)
+    coma            reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .)
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
+
+  ! mas             [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! menos           [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! div             [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! multi           [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! mod             [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! mayor           [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! menor           [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! mayorigual      [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! menorigual      [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! igualigual      [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! diferente       [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! and             [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+  ! or              [ reduce using rule 19 (EXPRESION -> EXPRESION or EXPRESION .) ]
+
+
+state 54
 
     (10) EXPRESION -> pow para EXPRESION . coma EXPRESION parc
     (5) EXPRESION -> EXPRESION . mas EXPRESION
@@ -744,16 +2097,32 @@ state 34
     (7) EXPRESION -> EXPRESION . div EXPRESION
     (8) EXPRESION -> EXPRESION . multi EXPRESION
     (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
-    coma            shift and go to state 35
-    mas             shift and go to state 21
-    menos           shift and go to state 22
-    div             shift and go to state 23
-    multi           shift and go to state 24
-    mod             shift and go to state 25
+    coma            shift and go to state 55
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
 
 
-state 35
+state 55
 
     (10) EXPRESION -> pow para EXPRESION coma . EXPRESION parc
     (5) EXPRESION -> . EXPRESION mas EXPRESION
@@ -762,28 +2131,42 @@ state 35
     (8) EXPRESION -> . EXPRESION multi EXPRESION
     (9) EXPRESION -> . EXPRESION mod EXPRESION
     (10) EXPRESION -> . pow para EXPRESION coma EXPRESION parc
-    (11) EXPRESION -> . para EXPRESION parc
-    (12) EXPRESION -> . menos EXPRESION
-    (13) EXPRESION -> . TIPODATO
-    (18) EXPRESION -> . id
-    (14) TIPODATO -> . entero
-    (15) TIPODATO -> . decimal
-    (16) TIPODATO -> . cadena
-    (17) TIPODATO -> . caracter
+    (11) EXPRESION -> . menos EXPRESION
+    (12) EXPRESION -> . EXPRESION mayor EXPRESION
+    (13) EXPRESION -> . EXPRESION menor EXPRESION
+    (14) EXPRESION -> . EXPRESION mayorigual EXPRESION
+    (15) EXPRESION -> . EXPRESION menorigual EXPRESION
+    (16) EXPRESION -> . EXPRESION igualigual EXPRESION
+    (17) EXPRESION -> . EXPRESION diferente EXPRESION
+    (18) EXPRESION -> . EXPRESION and EXPRESION
+    (19) EXPRESION -> . EXPRESION or EXPRESION
+    (20) EXPRESION -> . not EXPRESION
+    (21) EXPRESION -> . para EXPRESION parc
+    (22) EXPRESION -> . TIPODATO
+    (29) EXPRESION -> . id
+    (23) TIPODATO -> . entero
+    (24) TIPODATO -> . decimal
+    (25) TIPODATO -> . cadena
+    (26) TIPODATO -> . caracter
+    (27) TIPODATO -> . true
+    (28) TIPODATO -> . false
 
     pow             shift and go to state 12
-    para            shift and go to state 9
     menos           shift and go to state 11
-    id              shift and go to state 14
-    entero          shift and go to state 15
-    decimal         shift and go to state 16
-    cadena          shift and go to state 17
-    caracter        shift and go to state 18
+    not             shift and go to state 13
+    para            shift and go to state 9
+    id              shift and go to state 15
+    entero          shift and go to state 16
+    decimal         shift and go to state 17
+    cadena          shift and go to state 18
+    caracter        shift and go to state 19
+    true            shift and go to state 20
+    false           shift and go to state 21
 
-    EXPRESION                      shift and go to state 36
-    TIPODATO                       shift and go to state 13
+    EXPRESION                      shift and go to state 56
+    TIPODATO                       shift and go to state 14
 
-state 36
+state 56
 
     (10) EXPRESION -> pow para EXPRESION coma EXPRESION . parc
     (5) EXPRESION -> EXPRESION . mas EXPRESION
@@ -791,16 +2174,32 @@ state 36
     (7) EXPRESION -> EXPRESION . div EXPRESION
     (8) EXPRESION -> EXPRESION . multi EXPRESION
     (9) EXPRESION -> EXPRESION . mod EXPRESION
+    (12) EXPRESION -> EXPRESION . mayor EXPRESION
+    (13) EXPRESION -> EXPRESION . menor EXPRESION
+    (14) EXPRESION -> EXPRESION . mayorigual EXPRESION
+    (15) EXPRESION -> EXPRESION . menorigual EXPRESION
+    (16) EXPRESION -> EXPRESION . igualigual EXPRESION
+    (17) EXPRESION -> EXPRESION . diferente EXPRESION
+    (18) EXPRESION -> EXPRESION . and EXPRESION
+    (19) EXPRESION -> EXPRESION . or EXPRESION
 
-    parc            shift and go to state 37
-    mas             shift and go to state 21
-    menos           shift and go to state 22
-    div             shift and go to state 23
-    multi           shift and go to state 24
-    mod             shift and go to state 25
+    parc            shift and go to state 57
+    mas             shift and go to state 24
+    menos           shift and go to state 25
+    div             shift and go to state 26
+    multi           shift and go to state 27
+    mod             shift and go to state 28
+    mayor           shift and go to state 29
+    menor           shift and go to state 30
+    mayorigual      shift and go to state 31
+    menorigual      shift and go to state 32
+    igualigual      shift and go to state 33
+    diferente       shift and go to state 34
+    and             shift and go to state 35
+    or              shift and go to state 36
 
 
-state 37
+state 57
 
     (10) EXPRESION -> pow para EXPRESION coma EXPRESION parc .
 
@@ -810,13 +2209,146 @@ state 37
     div             reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
     multi           reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
     mod             reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    mayor           reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    menor           reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    mayorigual      reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    menorigual      reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    igualigual      reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    diferente       reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    and             reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
+    or              reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
     coma            reduce using rule 10 (EXPRESION -> pow para EXPRESION coma EXPRESION parc .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for mas in state 33 resolved as shift
-WARNING: shift/reduce conflict for menos in state 33 resolved as shift
-WARNING: shift/reduce conflict for div in state 33 resolved as shift
-WARNING: shift/reduce conflict for multi in state 33 resolved as shift
-WARNING: shift/reduce conflict for mod in state 33 resolved as shift
+WARNING: shift/reduce conflict for mas in state 39 resolved as shift
+WARNING: shift/reduce conflict for menos in state 39 resolved as shift
+WARNING: shift/reduce conflict for div in state 39 resolved as shift
+WARNING: shift/reduce conflict for multi in state 39 resolved as shift
+WARNING: shift/reduce conflict for mod in state 39 resolved as shift
+WARNING: shift/reduce conflict for mayor in state 39 resolved as shift
+WARNING: shift/reduce conflict for menor in state 39 resolved as shift
+WARNING: shift/reduce conflict for mayorigual in state 39 resolved as shift
+WARNING: shift/reduce conflict for menorigual in state 39 resolved as shift
+WARNING: shift/reduce conflict for igualigual in state 39 resolved as shift
+WARNING: shift/reduce conflict for diferente in state 39 resolved as shift
+WARNING: shift/reduce conflict for and in state 39 resolved as shift
+WARNING: shift/reduce conflict for or in state 39 resolved as shift
+WARNING: shift/reduce conflict for mas in state 45 resolved as shift
+WARNING: shift/reduce conflict for menos in state 45 resolved as shift
+WARNING: shift/reduce conflict for div in state 45 resolved as shift
+WARNING: shift/reduce conflict for multi in state 45 resolved as shift
+WARNING: shift/reduce conflict for mod in state 45 resolved as shift
+WARNING: shift/reduce conflict for mayor in state 45 resolved as shift
+WARNING: shift/reduce conflict for menor in state 45 resolved as shift
+WARNING: shift/reduce conflict for mayorigual in state 45 resolved as shift
+WARNING: shift/reduce conflict for menorigual in state 45 resolved as shift
+WARNING: shift/reduce conflict for igualigual in state 45 resolved as shift
+WARNING: shift/reduce conflict for diferente in state 45 resolved as shift
+WARNING: shift/reduce conflict for and in state 45 resolved as shift
+WARNING: shift/reduce conflict for or in state 45 resolved as shift
+WARNING: shift/reduce conflict for mas in state 46 resolved as shift
+WARNING: shift/reduce conflict for menos in state 46 resolved as shift
+WARNING: shift/reduce conflict for div in state 46 resolved as shift
+WARNING: shift/reduce conflict for multi in state 46 resolved as shift
+WARNING: shift/reduce conflict for mod in state 46 resolved as shift
+WARNING: shift/reduce conflict for mayor in state 46 resolved as shift
+WARNING: shift/reduce conflict for menor in state 46 resolved as shift
+WARNING: shift/reduce conflict for mayorigual in state 46 resolved as shift
+WARNING: shift/reduce conflict for menorigual in state 46 resolved as shift
+WARNING: shift/reduce conflict for igualigual in state 46 resolved as shift
+WARNING: shift/reduce conflict for diferente in state 46 resolved as shift
+WARNING: shift/reduce conflict for and in state 46 resolved as shift
+WARNING: shift/reduce conflict for or in state 46 resolved as shift
+WARNING: shift/reduce conflict for mas in state 47 resolved as shift
+WARNING: shift/reduce conflict for menos in state 47 resolved as shift
+WARNING: shift/reduce conflict for div in state 47 resolved as shift
+WARNING: shift/reduce conflict for multi in state 47 resolved as shift
+WARNING: shift/reduce conflict for mod in state 47 resolved as shift
+WARNING: shift/reduce conflict for mayor in state 47 resolved as shift
+WARNING: shift/reduce conflict for menor in state 47 resolved as shift
+WARNING: shift/reduce conflict for mayorigual in state 47 resolved as shift
+WARNING: shift/reduce conflict for menorigual in state 47 resolved as shift
+WARNING: shift/reduce conflict for igualigual in state 47 resolved as shift
+WARNING: shift/reduce conflict for diferente in state 47 resolved as shift
+WARNING: shift/reduce conflict for and in state 47 resolved as shift
+WARNING: shift/reduce conflict for or in state 47 resolved as shift
+WARNING: shift/reduce conflict for mas in state 48 resolved as shift
+WARNING: shift/reduce conflict for menos in state 48 resolved as shift
+WARNING: shift/reduce conflict for div in state 48 resolved as shift
+WARNING: shift/reduce conflict for multi in state 48 resolved as shift
+WARNING: shift/reduce conflict for mod in state 48 resolved as shift
+WARNING: shift/reduce conflict for mayor in state 48 resolved as shift
+WARNING: shift/reduce conflict for menor in state 48 resolved as shift
+WARNING: shift/reduce conflict for mayorigual in state 48 resolved as shift
+WARNING: shift/reduce conflict for menorigual in state 48 resolved as shift
+WARNING: shift/reduce conflict for igualigual in state 48 resolved as shift
+WARNING: shift/reduce conflict for diferente in state 48 resolved as shift
+WARNING: shift/reduce conflict for and in state 48 resolved as shift
+WARNING: shift/reduce conflict for or in state 48 resolved as shift
+WARNING: shift/reduce conflict for mas in state 49 resolved as shift
+WARNING: shift/reduce conflict for menos in state 49 resolved as shift
+WARNING: shift/reduce conflict for div in state 49 resolved as shift
+WARNING: shift/reduce conflict for multi in state 49 resolved as shift
+WARNING: shift/reduce conflict for mod in state 49 resolved as shift
+WARNING: shift/reduce conflict for mayor in state 49 resolved as shift
+WARNING: shift/reduce conflict for menor in state 49 resolved as shift
+WARNING: shift/reduce conflict for mayorigual in state 49 resolved as shift
+WARNING: shift/reduce conflict for menorigual in state 49 resolved as shift
+WARNING: shift/reduce conflict for igualigual in state 49 resolved as shift
+WARNING: shift/reduce conflict for diferente in state 49 resolved as shift
+WARNING: shift/reduce conflict for and in state 49 resolved as shift
+WARNING: shift/reduce conflict for or in state 49 resolved as shift
+WARNING: shift/reduce conflict for mas in state 50 resolved as shift
+WARNING: shift/reduce conflict for menos in state 50 resolved as shift
+WARNING: shift/reduce conflict for div in state 50 resolved as shift
+WARNING: shift/reduce conflict for multi in state 50 resolved as shift
+WARNING: shift/reduce conflict for mod in state 50 resolved as shift
+WARNING: shift/reduce conflict for mayor in state 50 resolved as shift
+WARNING: shift/reduce conflict for menor in state 50 resolved as shift
+WARNING: shift/reduce conflict for mayorigual in state 50 resolved as shift
+WARNING: shift/reduce conflict for menorigual in state 50 resolved as shift
+WARNING: shift/reduce conflict for igualigual in state 50 resolved as shift
+WARNING: shift/reduce conflict for diferente in state 50 resolved as shift
+WARNING: shift/reduce conflict for and in state 50 resolved as shift
+WARNING: shift/reduce conflict for or in state 50 resolved as shift
+WARNING: shift/reduce conflict for mas in state 51 resolved as shift
+WARNING: shift/reduce conflict for menos in state 51 resolved as shift
+WARNING: shift/reduce conflict for div in state 51 resolved as shift
+WARNING: shift/reduce conflict for multi in state 51 resolved as shift
+WARNING: shift/reduce conflict for mod in state 51 resolved as shift
+WARNING: shift/reduce conflict for mayor in state 51 resolved as shift
+WARNING: shift/reduce conflict for menor in state 51 resolved as shift
+WARNING: shift/reduce conflict for mayorigual in state 51 resolved as shift
+WARNING: shift/reduce conflict for menorigual in state 51 resolved as shift
+WARNING: shift/reduce conflict for igualigual in state 51 resolved as shift
+WARNING: shift/reduce conflict for diferente in state 51 resolved as shift
+WARNING: shift/reduce conflict for and in state 51 resolved as shift
+WARNING: shift/reduce conflict for or in state 51 resolved as shift
+WARNING: shift/reduce conflict for mas in state 52 resolved as shift
+WARNING: shift/reduce conflict for menos in state 52 resolved as shift
+WARNING: shift/reduce conflict for div in state 52 resolved as shift
+WARNING: shift/reduce conflict for multi in state 52 resolved as shift
+WARNING: shift/reduce conflict for mod in state 52 resolved as shift
+WARNING: shift/reduce conflict for mayor in state 52 resolved as shift
+WARNING: shift/reduce conflict for menor in state 52 resolved as shift
+WARNING: shift/reduce conflict for mayorigual in state 52 resolved as shift
+WARNING: shift/reduce conflict for menorigual in state 52 resolved as shift
+WARNING: shift/reduce conflict for igualigual in state 52 resolved as shift
+WARNING: shift/reduce conflict for diferente in state 52 resolved as shift
+WARNING: shift/reduce conflict for and in state 52 resolved as shift
+WARNING: shift/reduce conflict for or in state 52 resolved as shift
+WARNING: shift/reduce conflict for mas in state 53 resolved as shift
+WARNING: shift/reduce conflict for menos in state 53 resolved as shift
+WARNING: shift/reduce conflict for div in state 53 resolved as shift
+WARNING: shift/reduce conflict for multi in state 53 resolved as shift
+WARNING: shift/reduce conflict for mod in state 53 resolved as shift
+WARNING: shift/reduce conflict for mayor in state 53 resolved as shift
+WARNING: shift/reduce conflict for menor in state 53 resolved as shift
+WARNING: shift/reduce conflict for mayorigual in state 53 resolved as shift
+WARNING: shift/reduce conflict for menorigual in state 53 resolved as shift
+WARNING: shift/reduce conflict for igualigual in state 53 resolved as shift
+WARNING: shift/reduce conflict for diferente in state 53 resolved as shift
+WARNING: shift/reduce conflict for and in state 53 resolved as shift
+WARNING: shift/reduce conflict for or in state 53 resolved as shift

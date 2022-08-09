@@ -9,8 +9,6 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
 
     # get valor con condicionales
     def getValor(self, driver, ts):
-        print("========================ARITMETICAS ")
-
         t_nodoIzq = self.exp1.getTipo(driver, ts)
         t_nodoDer = self.exp2.getTipo(driver, ts) if not self.expU else None
         

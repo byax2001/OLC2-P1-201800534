@@ -10,4 +10,4 @@ class Println(Instruccion):
         self.exp = exp
 
     def ejecutar(self, driver, ts):
-        driver.append(str(self.exp.getValor(driver, ts)))
+        driver.append(str(self.exp.getValor(driver, ts))+"\n")

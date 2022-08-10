@@ -10,7 +10,5 @@ class Ast:
 
     def ejecutar(self, driver, ts):
         for instruccion in self.instrucciones:
-            try:
+
                 instruccion.ejecutar(driver, ts)
-            except:
-                print("====== Ocurrio un error ======")

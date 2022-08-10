@@ -1,15 +1,16 @@
 from ply.yacc import yacc
 from gramatica import lexer
-
+#Expresiones
 from models.Expresion.Operacion.Aritmeticas import Aritmeticas
 from models.Expresion.Operacion.Relacionales import Relacionales
-from  models.Expresion.Operacion.Logicas import Logicas
+from models.Expresion.Operacion.Logicas import Logicas
 from models.Expresion.Primitivo import Primitivo
 from models.Expresion.Id import Id
 from models.Ast.Ast import Ast
 
 #Instrucciones
 from models.Instruction.println import Println
+from models.Instruction.Declaracion import Declaracion
 
 
 tokens = lexer.tokens
@@ -38,7 +39,8 @@ def p_instrucciones_lista(p):
     """
     INSTRUCCIONES : INSTRUCCIONES INSTRUCCION
     """
-    p[0] = p[1].append(p[2])
+    p[1].append(p[2])
+    p[0] = p[1]
     
 def p_instrucciones_instruccion(p):
     """
@@ -49,6 +51,7 @@ def p_instrucciones_instruccion(p):
 def p_instruccion(p):
     """
     INSTRUCCION : PRINT puntoycoma
+        | DECLARACION puntoycoma
     """
     p[0] = p[1]
 
@@ -106,8 +109,6 @@ def p_EXPRESION_par(p):
     """
     p[0] = p[2]
 
-
-        
 def p_exp_tdato(p):
     """
     EXPRESION : TIPODATO
@@ -128,13 +129,55 @@ def p_id(p):
     """
     EXPRESION : id
     """  
+    p[0] = Id(p[1],p.lineno(1), 0)
+def p_tipo_var(p):
+    """
+    TIPOVAR : i64
+        | f64
+        | bool
+        | string
+        | char
+        | str
+    """
     p[0] = p[1]
+
 #Instrucciones
 def p_println(p):
     """
     PRINT : println para EXPRESION parc
     """
     p[0] = Println(p[3], p.lineno(1), 0)
+#Declaraciones
+def p_declaracion_t1(p):
+    """
+    DECLARACION : let mut id dospuntos TIPOVAR igual EXPRESION
+                | let mut id igual EXPRESION
+    """
+    if(p[4]==":"):
+        p[0]=Declaracion(mut=True,id=p[3],tipo=p[5],exp=p[7],linea=p.lineno(1), columna=0)
+    else:
+        p[0]=Declaracion(mut=True,id=p[3],tipo="",exp=p[5],linea=p.lineno(1), columna=0)
+
+def p_declaracion_t2(p):
+    """
+    DECLARACION : let id dospuntos TIPOVAR igual EXPRESION
+                | let id igual EXPRESION
+    """
+    if (p[4] == ":"):
+        p[0] = Declaracion(mut=False, id=p[2], tipo=[4], exp=p[6], linea=p.lineno(1), columna=0)
+    else:
+        p[0] = Declaracion(mut=False, id=p[2], tipo="", exp=p[4], linea=p.lineno(1), columna=0)
+
+def p_declaracion_t3(p):
+    """
+    DECLARACION : let mut id dospuntos TIPOVAR
+    """
+    if (p[2] == "mut"):
+        p[0] = Declaracion(mut=True, id=p[2], tipo=[4], exp=None, linea=p.lineno(1), columna=0)
+    else:
+        p[0] = Declaracion(mut=False, id=p[2], tipo=[4], exp=None, linea=p.lineno(1), columna=0)
+
+#Asignaciones
 
 # Error sintactico
 def p_error(p):

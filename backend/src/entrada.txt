@@ -1,2 +1,6 @@
+println!("!false");
 println!(!false);
+
+let mut hola  = "pedro";
+println!(hola);
 // HOla que tla mucho gusto

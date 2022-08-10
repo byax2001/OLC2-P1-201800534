@@ -5,10 +5,17 @@ reservadas = {
     #r'exp regular' : id 
     'pow': 'pow',
     'struct': 'struct',
-    'println!': 'println'
+    'println!': 'println',
+    'let':'let',
+    'mut':'mut',
+    'i64':'i64',
+    'f64':'f64',
+    'char': 'char',
+    'bool':'bool',
+    'String':'string',
+    '&str': 'str'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
-          "string","bool","char","i64","f64",
           "mayor","menor","mayorigual","menorigual","igualigual","diferente",
           "or","and","not","interrogacion",
           'mod',
@@ -55,13 +62,6 @@ t_dospuntos=r'\:'
 t_interrogacion=r'\?'
 
 
-#tipos de datos
-t_i64=r'i64'
-t_f64=r'f64'
-t_bool= r'bool'
-t_char=r'char'
-t_string=r'(&str|String)'
-
 # Tipos de Datos, reconocer primero unos valores de otros para que los tokens funcione, en este caso decimal y entero, al reves reconoceria entero primero y daria error en el decimal
 def t_decimal(t):
     r'\d+[.]\d+'
@@ -88,7 +88,12 @@ def t_false(t):
 def t_println(t):
     r"""println!"""
     t.type=reservadas.get(t.value)
-    return t 
+    return t
+def t_str(t):
+    r""" \&str"""
+    t.type = reservadas.get(t.value)
+    return t
+
 def t_id(t):
     r'[A-Za-z_][A-Za-z0-9_]*'
     t.type =reservadas.get(t.value, 'id')

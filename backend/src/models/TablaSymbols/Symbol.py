@@ -2,15 +2,25 @@ from models.TablaSymbols.Tipos import Tipos
 from enum import Enum
 
 class Symbol(Enum):
-    Variable=1
+    VARIABLE=0
+    ARREGLO=1
+    FUNCION=2
+
 
 def getSymbol(s):
-    if s==1:
-        return Symbol.Variable
+    if s==0:
+        return Symbol.VARIABLE
+    elif s==1:
+        return Symbol.ARREGLO
+    elif s==2:
+        return Symbol.FUNCION
     
 class Symbol():
-    def __init__(self, simbolo: int, tipo: Tipos, id: str, value) -> None:
-        self.value = value
+    def __init__(self,mut:bool,id: str, value, tipo_simbolo: int, tipo: Tipos,line:int,column:int) -> None:
+        self.mut=mut
         self.id = id
-        self.tipo = tipo
-        self.simbolo = getSymbol(simbolo)
+        self.value = value
+        self.tsimbolo = getSymbol(tipo_simbolo)  #Tipo de Variable: variable normal, arreglo, funcion
+        self.tipo = tipo  #i64,f64, string, char
+        self.line=line
+        self.column=column

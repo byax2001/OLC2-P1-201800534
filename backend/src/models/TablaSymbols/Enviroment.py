@@ -6,7 +6,7 @@ class Enviroment:
         self.anterior=anterior
         self.tabla={}
     
-    def add(self, id: str, simbolo: Symbol):
+    def addVar(self, id: str, simbolo: Symbol):
         self.tabla[id] = simbolo
 
     def buscar(self, id: str) -> Symbol:
@@ -21,5 +21,5 @@ class Enviroment:
 
         return None
 
-    def buscarActual(self, id: str) -> Symbol:
+    def buscarActualTs(self, id: str) -> Symbol:
         return self.tabla.get(id)

@@ -13,4 +13,4 @@ class Ast:
             try:
                 instruccion.ejecutar(driver, ts)
             except:
-                print("ocurrio un error")
+                print("====== Ocurrio un error ======")

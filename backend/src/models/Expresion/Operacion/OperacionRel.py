@@ -21,7 +21,7 @@ def getOperador(op) -> OperadorRel:
     elif op == '<=':
         return OperadorRel.MENORIGUALQUE
     elif op == '==':
-        return OperadorRel.IGUAQUE
+        return OperadorRel.IGUALQUE
     elif op == "!=":
         return OperadorRel.DIFERENTEQUE
 

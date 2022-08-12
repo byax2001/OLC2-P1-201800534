@@ -6,13 +6,14 @@ from models.Expresion.Operacion.Relacionales import Relacionales
 from models.Expresion.Operacion.Logicas import Logicas
 from models.Expresion.Primitivo import Primitivo
 from models.Expresion.Id import Id
+from models.Expresion.If_Ternario import If_ternario
 from models.Ast.Ast import Ast
 
 #Instrucciones
 from models.Instruction.println import Println
 from models.Instruction.Declaracion import Declaracion
-
-
+from models.Instruction.Asignacion import Asignacion
+from models.Instruction.If import If
 tokens = lexer.tokens
 
 # EXPRESION : term MAS term
@@ -52,6 +53,8 @@ def p_instruccion(p):
     """
     INSTRUCCION : PRINT puntoycoma
         | DECLARACION puntoycoma
+        | ASIGNACION puntoycoma
+        | IF puntoycoma
     """
     p[0] = p[1]
 
@@ -108,13 +111,14 @@ def p_EXPRESION_par(p):
     EXPRESION : para EXPRESION parc
     """
     p[0] = p[2]
-
-def p_exp_tdato(p):
+#PRODUCCION PARA EXPRESIONES DE UN SOLO ELEMETO
+def p_exp_one_element(p):
     """
     EXPRESION : TIPODATO
+        | IF_TER
     """
     p[0]=p[1]
-    
+#tipo de dato
 def p_tipo_dato(p):
     """
     TIPODATO : entero
@@ -124,12 +128,14 @@ def p_tipo_dato(p):
         | true
         | false
     """
-    p[0] = Primitivo(p[1], p.lineno(1), 0) 
+    p[0] = Primitivo(p[1], p.lineno(1), 0)
+#dato tipo id
 def p_id(p):
     """
     EXPRESION : id
     """  
     p[0] = Id(p[1],p.lineno(1), 0)
+#tipo de variable
 def p_tipo_var(p):
     """
     TIPOVAR : i64
@@ -140,6 +146,22 @@ def p_tipo_var(p):
         | str
     """
     p[0] = p[1]
+#If ternario
+def p_if_ternario(p):
+    """
+    IF_TER : if  EXPRESION  llavea EXPRESION llavec
+    """
+    p[0] = If_ternario(exp=p[2],expB1=p[4],expB2="",line=p.lineno(1), column=0)
+def p_if_else_ternario(p):
+    """
+    IF_TER : if  EXPRESION  llavea EXPRESION llavec else llavea EXPRESION llavec
+    """
+    p[0] = If_ternario(exp=p[2], expB1=p[4], expB2=p[8], line=p.lineno(1), column=0)
+def p_if_else_if_ternario(p):
+    """
+    IF_TER : if EXPRESION  llavea EXPRESION llavec else IF_TER
+    """
+    p[0] = If_ternario(exp=p[2], expB1=p[4], expB2=p[7], line=p.lineno(1), column=0)
 
 #Instrucciones
 def p_println(p):
@@ -176,9 +198,35 @@ def p_declaracion_t3(p):
         p[0] = Declaracion(mut=True, id=p[2], tipo=[4], exp=None, linea=p.lineno(1), columna=0)
     else:
         p[0] = Declaracion(mut=False, id=p[2], tipo=[4], exp=None, linea=p.lineno(1), columna=0)
-
 #Asignaciones
+def p_asignaciones(p):
+    """
+    ASIGNACION : id igual EXPRESION
+    """
+    p[0] = Asignacion(p[1],p[3],linea=p.lineno(1), columna=0)
 
+#If
+def p_if(p):
+    """
+    IF : if  EXPRESION  BLOQUE_INST
+    """
+    p[0] = If(exp=p[2],bloque1=p[3],bloque2=[],line=p.lineno(1), column=0)
+def p_if_else(p):
+    """
+    IF : if  EXPRESION  BLOQUE_INST else BLOQUE_INST
+    """
+    p[0] = If(exp=p[2], bloque1=p[3], bloque2=p[5], line=p.lineno(1), column=0)
+def p_if_else_if(p):
+    """
+    IF : if EXPRESION  BLOQUE_INST else IF
+    """
+    p[0] = If(exp=p[2], bloque1=p[3], bloque2=[p[5]], line=p.lineno(1), column=0)
+#bloque instrucciones
+def p_bloque_instrucciones(p):
+    """
+    BLOQUE_INST : llavea  INSTRUCCIONES llavec
+    """
+    p[0]=p[2]
 # Error sintactico
 def p_error(p):
     print(f'Error de sintaxis {p.value!r}')

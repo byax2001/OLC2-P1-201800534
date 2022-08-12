@@ -13,7 +13,9 @@ reservadas = {
     'char': 'char',
     'bool':'bool',
     'String':'string',
-    '&str': 'str'
+    '&str': 'str',
+    'if': 'if',
+    'else': 'else'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
           "mayor","menor","mayorigual","menorigual","igualigual","diferente",
@@ -95,7 +97,7 @@ def t_str(t):
     return t
 
 def t_id(t):
-    r'[A-Za-z_][A-Za-z0-9_]*'
+    r'[A-Za-z_ñÑ][A-Za-z0-9_ñÑ]*'
     t.type =reservadas.get(t.value, 'id')
     return t 
 

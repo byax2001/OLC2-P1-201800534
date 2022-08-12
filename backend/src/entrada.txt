@@ -1,6 +1,21 @@
-println!("!false");
+
 println!(!false);
 
-let mut hola  = "pedro";
+let mut hola  = 123;
 println!(hola);
+hola = hola +1 ;
+println!(hola);
+
+if 5==6 {
+    println!("mañana");
+} else if 6==8 {
+    println!("fer");
+} else {
+     println!("ayer");
+};
+
+let x= if 2==3 { 10 } else if 4<2 { 20 } else if 6<4 { 30 } else { 80 };
+println!(x);
+
+
 // HOla que tla mucho gusto

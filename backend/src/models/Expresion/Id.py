@@ -12,7 +12,8 @@ class Id(Expresion):
 
     def getTipo(self, driver, ts):
         if self.tipo is None or self.value is None:
-            value = self.getValor(driver, ts)
+            self.value = self.getValor(driver, ts)
+            self.tipo = definirTipo(self.value)
             return self.tipo
         else:
             return self.tipo

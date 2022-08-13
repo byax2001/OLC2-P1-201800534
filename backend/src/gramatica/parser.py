@@ -14,6 +14,9 @@ from models.Instruction.println import Println
 from models.Instruction.Declaracion import Declaracion
 from models.Instruction.Asignacion import Asignacion
 from models.Instruction.If import If
+from  models.Instruction.Brazo import Brazo
+from  models.Instruction.Match import Match
+
 tokens = lexer.tokens
 
 # EXPRESION : term MAS term
@@ -38,23 +41,24 @@ def p_inicio(p):
     
 def p_instrucciones_lista(p):
     """
-    INSTRUCCIONES : INSTRUCCIONES INSTRUCCION
+    INSTRUCCIONES : INSTRUCCIONES INSTRUCCION puntoycoma
     """
     p[1].append(p[2])
     p[0] = p[1]
     
 def p_instrucciones_instruccion(p):
     """
-    INSTRUCCIONES : INSTRUCCION
+    INSTRUCCIONES : INSTRUCCION puntoycoma
     """
     p[0] = [p[1]]
 
 def p_instruccion(p):
     """
-    INSTRUCCION : PRINT puntoycoma
-        | DECLARACION puntoycoma
-        | ASIGNACION puntoycoma
-        | IF puntoycoma
+    INSTRUCCION : PRINT
+        | DECLARACION
+        | ASIGNACION
+        | IF
+        | MATCH
     """
     p[0] = p[1]
 
@@ -221,6 +225,38 @@ def p_if_else_if(p):
     IF : if EXPRESION  BLOQUE_INST else IF
     """
     p[0] = If(exp=p[2], bloque1=p[3], bloque2=[p[5]], line=p.lineno(1), column=0)
+
+#match
+def p_match_1(p):
+    """
+    MATCH : match EXPRESION llavea BRAZOS guionbajo igual mayor BLOQUE_INST llavec
+    """
+    p[0] = Match(exp=p[2],lbrazos=p[4],default=p[8], line=p.lineno(1), column=0)
+def p_match_2(p):
+    """
+    MATCH : match EXPRESION llavea BRAZOS guionbajo igual mayor INSTRUCCION coma llavec
+    """
+    p[0] = Match(exp=p[2],lbrazos=p[4],default=[p[8]], line=p.lineno(1), column=0)
+def p_brazos_list(p):
+    """
+    BRAZOS : BRAZOS BRAZO
+    """
+    p[1].append(p[2])
+    p[0] = p[1]
+def p_brazos_brazo(p):
+    """
+    BRAZOS : BRAZO
+    """
+    p[0]=[p[1]]
+def p_brazo(p):
+    """
+    BRAZO : EXPRESION igual mayor BLOQUE_INST
+        | EXPRESION igual mayor INSTRUCCION coma
+    """
+    if type(p[4]) in (tuple,list):
+        p[0] = Brazo(exp=p[1],bloque=p[4], line=p.lineno(1), column=0)
+    else:
+        p[0] = Brazo(exp=p[1], bloque=[p[4]], line=p.lineno(1), column=0)
 #bloque instrucciones
 def p_bloque_instrucciones(p):
     """
@@ -229,7 +265,7 @@ def p_bloque_instrucciones(p):
     p[0]=p[2]
 # Error sintactico
 def p_error(p):
-    print(f'Error de sintaxis {p.value!r}')
+    print(f'Error de sintaxis {p.value!r} ')
 
 
 # Build the parser

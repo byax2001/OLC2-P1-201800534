@@ -15,20 +15,23 @@ reservadas = {
     'String':'string',
     '&str': 'str',
     'if': 'if',
-    'else': 'else'
+    'else': 'else',
+    'match':'match',
+    "_": 'guionbajo'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
           "mayor","menor","mayorigual","menorigual","igualigual","diferente",
           "or","and","not","interrogacion",
           'mod',
           'puntoycoma','dospuntos','llavea','llavec','cora','corc','igual','coma',
-          'id'
+          'id',
           ] + list(reservadas.values())
         
         
 # Caracteres ignorados
 t_ignore = '[\t\r ]'
 
+# Caracteres especiales
 
 
 # Tokens con Regex

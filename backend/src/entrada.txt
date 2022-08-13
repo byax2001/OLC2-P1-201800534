@@ -18,4 +18,13 @@ let x= if 2==3 { 10 } else if 4<2 { 20 } else if 6<4 { 30 } else { 80 };
 println!(x);
 
 
+match x {
+    40 => {println!("hola");}
+    80 =>  println!("90 en match \n \"manzana\""),
+
+    _=>
+        println!("90 en match x"),
+
+};
+
 // HOla que tla mucho gusto

@@ -14,7 +14,7 @@ if 5==6 {
      println!("ayer");
 };
 
-let x= if 3==3 { 10 } else if 4<2 { 20 } else if 6<4 { 30 } else { 80 };
+let x= if 3==3 { 11 } else if 4<2 { 20 } else if 6<4 { 30 } else { 80 };
 println!(x);
 
 
@@ -27,5 +27,10 @@ match x {
 
 };
 
-
+let a= match x {
+    10 => "hola",
+    11 => "aa",
+    _=> "que tal",
+};
+println!(a);
 // HOla que tla mucho gusto

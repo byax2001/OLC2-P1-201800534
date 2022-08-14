@@ -7,6 +7,8 @@ from models.Expresion.Operacion.Logicas import Logicas
 from models.Expresion.Primitivo import Primitivo
 from models.Expresion.Id import Id
 from models.Expresion.If_Ternario import If_ternario
+from models.Expresion.BrazoTer import BrazoTer
+from models.Expresion.MatchTer import  MatchTer
 from models.Ast.Ast import Ast
 
 #Instrucciones
@@ -120,6 +122,7 @@ def p_exp_one_element(p):
     """
     EXPRESION : TIPODATO
         | IF_TER
+        | MATCH_TER
     """
     p[0]=p[1]
 #tipo de dato
@@ -171,6 +174,32 @@ def p_if_else_if_ternario(p):
     IF_TER : if EXPRESION  llavea EXPRESION llavec else IF_TER
     """
     p[0] = If_ternario(exp=p[2], expB1=p[4], expB2=p[7], line=p.lineno(1), column=0)
+#Match ternario
+def p_matchTer(p):
+    """
+    MATCH_TER : match EXPRESION llavea BRAZOS_TER guionbajo igual mayor EXPRESION coma llavec
+        |  match EXPRESION llavea guionbajo igual mayor EXPRESION coma llavec
+    """
+    if p[4]!="_":
+        p[0] = MatchTer(exp=p[2],brazos=p[4],default=p[8], line=p.lineno(1), column=0)
+    else:
+        p[0] = MatchTer(exp=p[2],brazos=[], default=p[7], line=p.lineno(1), column=0)
+def p_brazosTer_list(p):
+    """
+    BRAZOS_TER : BRAZOS_TER BRAZO_TER
+    """
+    p[1].append(p[2])
+    p[0] = p[1]
+def p_brazosTer_brazo(p):
+    """
+    BRAZOS_TER : BRAZO_TER
+    """
+    p[0]=[p[1]]
+def p_brazoTer(p):
+    """
+    BRAZO_TER : CONJEXP igual mayor EXPRESION coma
+    """
+    p[0] = BrazoTer(cExp=p[1], bloque=p[4], line=p.lineno(1), column=0)
 
 #Instrucciones
 def p_println(p):
@@ -235,13 +264,21 @@ def p_if_else_if(p):
 def p_match_1(p):
     """
     MATCH : match EXPRESION llavea BRAZOS guionbajo igual mayor BLOQUE_INST llavec
+        | match EXPRESION llavea guionbajo igual mayor BLOQUE_INST llavec
     """
-    p[0] = Match(exp=p[2],lbrazos=p[4],default=p[8], line=p.lineno(1), column=0)
+    if p[4]!="_":
+        p[0] = Match(exp=p[2],lbrazos=p[4],default=p[8], line=p.lineno(1), column=0)
+    else:
+        p[0] = Match(exp=p[2], lbrazos=[], default=p[8], line=p.lineno(1), column=0)
 def p_match_2(p):
     """
     MATCH : match EXPRESION llavea BRAZOS guionbajo igual mayor INSTRUCCION coma llavec
+        |  match EXPRESION llavea guionbajo igual mayor INSTRUCCION coma llavec
     """
-    p[0] = Match(exp=p[2],lbrazos=p[4],default=[p[8]], line=p.lineno(1), column=0)
+    if p[4]!="_":
+        p[0] = Match(exp=p[2],lbrazos=p[4],default=[p[8]], line=p.lineno(1), column=0)
+    else:
+        p[0] = Match(exp=p[2], lbrazos=[], default=[p[8]], line=p.lineno(1), column=0)
 def p_brazos_list(p):
     """
     BRAZOS : BRAZOS BRAZO
@@ -277,8 +314,8 @@ def p_bloque_instrucciones(p):
     p[0]=p[2]
 # Error sintactico
 def p_error(p):
-    print(f'Error de sintaxis {p.value!r} ')
+    print(f'Error de sintaxis {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')
 
 
 # Build the parser
-parser = yacc()
+parser = yacc(debug=True)

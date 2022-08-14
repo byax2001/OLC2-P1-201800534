@@ -1,7 +1,7 @@
 from models.Instruction.Instruction import Instruccion
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Enviroment import Enviroment
-from  models import Driver
+from models import Driver
 from models.Instruction.Brazo import Brazo
 from models.TablaSymbols.Tipos import Tipos,definirTipo
 

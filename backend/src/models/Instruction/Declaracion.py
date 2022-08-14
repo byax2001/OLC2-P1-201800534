@@ -17,21 +17,24 @@ class Declaracion(Instruccion):
         if (self.exp != None):
             t_exp=self.exp.getTipo(driver,ts)
             v_exp=self.exp.getValor(driver,ts)
-            existe=ts.buscarActualTs(self.id);
-            if(existe==None):
-                if(self.tipoVar==None):
-                    newVar=Symbol(self.mut,self.id,v_exp,0,t_exp,self.linea,self.columna)
-                    ts.addVar(self.id,newVar)
-                    print("se añadio una variable")
-                else:
-                    if(self.tipoVar==t_exp):
-                        newVar = Symbol(self.mut, self.id, v_exp, 0, t_exp, self.linea, self.columna)
-                        ts.addVar(self.id, newVar)
+            if t_exp != Tipos.ERROR:
+                existe=ts.buscarActualTs(self.id);
+                if(existe==None):
+                    if(self.tipoVar==None):
+                        newVar=Symbol(self.mut,self.id,v_exp,0,t_exp,self.linea,self.columna)
+                        ts.addVar(self.id,newVar)
                         print("se añadio una variable")
                     else:
-                        print("El tipo de variable no corresponde con el valor de la variable a declarar")
+                        if(self.tipoVar==t_exp):
+                            newVar = Symbol(self.mut, self.id, v_exp, 0, t_exp, self.linea, self.columna)
+                            ts.addVar(self.id, newVar)
+                            print("se añadio una variable")
+                        else:
+                            print("El tipo de variable no corresponde con el valor de la variable a declarar")
+                else:
+                    print("La variable ya ha sido declarada con anterioridad")
             else:
-                print("La variable ya ha sido declarada con anterioridad")
+                print("La expresion para declarar retorna un valor con error")
         else:
             existe = ts.buscarActualTs(self.id)
             v_exp = Declaracion.valueDefault(self.tipoVar)

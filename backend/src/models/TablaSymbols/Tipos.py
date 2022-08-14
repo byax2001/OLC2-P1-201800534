@@ -20,6 +20,8 @@ def getTipo(s:str):
         return Tipos.CHAR
     elif s=="&str" or s=="String":
         return Tipos.STRING
+    else:
+        return None
 
 def definirTipo(value):
 

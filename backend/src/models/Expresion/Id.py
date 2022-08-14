@@ -1,5 +1,5 @@
 from models.Expresion.Expresion import Expresion
-from models.TablaSymbols.Tipos import definirTipo
+from models.TablaSymbols.Tipos import definirTipo,Tipos
 from models.TablaSymbols.Enviroment import Enviroment
 
 class Id(Expresion):    
@@ -12,8 +12,11 @@ class Id(Expresion):
 
     def getTipo(self, driver, ts):
         if self.tipo is None or self.value is None:
-            self.value = self.getValor(driver, ts)
-            self.tipo = definirTipo(self.value)
+            symbol = ts.buscar(self.id);
+            if symbol != None:
+                self.tipo = symbol.tipo
+            else:
+                self.tipo =Tipos.ERROR
             return self.tipo
         else:
             return self.tipo
@@ -22,7 +25,6 @@ class Id(Expresion):
         symbol = ts.buscar(self.id);
         if symbol!=None:
             self.value = symbol.value;
-            self.tipo = definirTipo(self.value)
             return self.value
         else:
             return None

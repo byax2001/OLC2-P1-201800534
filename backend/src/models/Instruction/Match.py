@@ -19,14 +19,14 @@ class Match(Instruccion):
         new_ts = Enviroment(ts, 'Match')
         #se revisa que todos los brazos tengan el mismo tipo de expresion que la expresion principal
         for brazo in self.listBrazos:
-            t_expBrazo=brazo.getT_ExpBrazo(driver,new_ts)
-            if (t_exp != t_expBrazo):
+            CmpTipos=brazo.CompararTexps(driver,new_ts,t_exp) #Comparar tipos de la exp del match con los tipos de las exp del brazo
+            if (not CmpTipos):
                 print("Error: uno de los brazos tiene como expresion un tipo distinto a la expresion del match")
-                return
+                return None
 
         for brazo in self.listBrazos:
-            v_expBrazo= brazo.getV_ExpBrazo(driver,new_ts)
-            if(v_exp==v_expBrazo):
+            CmpValores = brazo.CompararVexps(driver, new_ts,v_exp)
+            if(CmpValores):
                 brazo.ejecutar(driver,new_ts) #ejecuta la instruccion del brazo
                 return
         #si no se ejecuta ninguna de las instrucciones anteriores se ejecuta el default

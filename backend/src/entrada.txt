@@ -14,17 +14,18 @@ if 5==6 {
      println!("ayer");
 };
 
-let x= if 2==3 { 10 } else if 4<2 { 20 } else if 6<4 { 30 } else { 80 };
+let x= if 3==3 { 10 } else if 4<2 { 20 } else if 6<4 { 30 } else { 80 };
 println!(x);
 
 
 match x {
     40 => {println!("hola");}
-    80 =>  println!("90 en match \n \"manzana\""),
+    80|10|5 =>  println!("90 en match \n \"manzana\""),
 
     _=>
-        println!("90 en match x"),
+        println!("90 en match x  dssd"),
 
 };
+
 
 // HOla que tla mucho gusto

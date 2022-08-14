@@ -1,10 +1,10 @@
 from models.Expresion.Expresion import Expresion
-from models.TablaSymbols.Tipos import definirTipo,Tipos
+from models.TablaSymbols.Tipos import definirTipo,Tipos,getTipo
 
 
-class Primitivo(Expresion):    
-    def __init__(self, valor, linea: int, columna: int):
-        self.tipo = None
+class Primitivo(Expresion):
+    def __init__(self, valor, linea: int, columna: int, aux = ""):
+        self.tipo = None if aux=="" else getTipo(aux)
         self.valor = valor
         self.linea = linea
         self.columna = columna
@@ -22,7 +22,7 @@ class Primitivo(Expresion):
         if(self.tipo==Tipos.STRING or self.tipo==Tipos.CHAR):
             value = Primitivo.limpCad(value)
         return value
-    
+
     def limpCad(cadena:str):
         cadena=cadena[1:len(cadena)-1]
         cadena=cadena.replace("\\\"","\"")

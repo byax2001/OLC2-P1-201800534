@@ -20,11 +20,12 @@ reservadas = {
     "_": 'guionbajo'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
-          "mayor","menor","mayorigual","menorigual","igualigual","diferente",
-          "or","and","not","interrogacion",
-          'mod',
-          'puntoycoma','dospuntos','llavea','llavec','cora','corc','igual','coma',
-          'id',
+            "mayor","menor","mayorigual","menorigual","igualigual","diferente",
+            "or","and","not","interrogacion",
+            'mod',
+            'puntoycoma','dospuntos','llavea','llavec','cora','corc','igual','coma',
+            'id',
+            'bvertical'
           ] + list(reservadas.values())
         
         
@@ -32,7 +33,7 @@ tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cad
 t_ignore = '[\t\r ]'
 
 # Caracteres especiales
-
+t_bvertical = r'\|'
 
 # Tokens con Regex
 t_mas = r'\+'

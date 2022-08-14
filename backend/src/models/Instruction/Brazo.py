@@ -4,8 +4,8 @@ from models.TablaSymbols.Enviroment import Enviroment
 from models.TablaSymbols.Tipos import Tipos,definirTipo
 
 class Brazo(Instruccion):
-    def __init__(self,exp:Expresion,bloque:[Instruccion],line:int,column:int):
-        self.exp=exp
+    def __init__(self,cExp:[Expresion],bloque:[Instruccion],line:int,column:int):
+        self.cExp=cExp
         self.bloque=bloque
         self.line=line
         self.column=column
@@ -14,10 +14,14 @@ class Brazo(Instruccion):
         new_ts = Enviroment(ts, 'Brazo Match')
         for instruccion in self.bloque:
             instruccion.ejecutar(driver,new_ts)
+    def CompararVexps(self,driver,ts,valorEmatch):
+        for exp in self.cExp:
+            if exp.getValor(driver, ts)==valorEmatch:
+                return True
+        return False
 
-    def getV_ExpBrazo(self, driver, ts: Enviroment):
-        value = self.exp.getValor(driver,ts)
-        return value
-    def getT_ExpBrazo(self,driver,ts:Enviroment):
-        tipo = definirTipo(self.getV_ExpBrazo(driver,ts));
-        return tipo
+    def CompararTexps(self,driver,ts:Enviroment,tipoEMatch):
+        for element in self.cExp:
+            if element.getTipo(driver,ts) !=tipoEMatch:
+                return False
+        return True

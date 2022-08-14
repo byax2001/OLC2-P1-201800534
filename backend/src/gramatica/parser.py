@@ -128,7 +128,6 @@ def p_tipo_dato(p):
     TIPODATO : entero
         | decimal
         | cadena
-        | caracter
         | true
         | false
     """
@@ -139,6 +138,12 @@ def p_id(p):
     EXPRESION : id
     """  
     p[0] = Id(p[1],p.lineno(1), 0)
+
+def p_char(p):
+    """
+    TIPODATO : caracter
+    """
+    p[0] = Primitivo(p[1], p.lineno(1), 0,"char")
 #tipo de variable
 def p_tipo_var(p):
     """
@@ -189,8 +194,8 @@ def p_declaracion_t2(p):
     DECLARACION : let id dospuntos TIPOVAR igual EXPRESION
                 | let id igual EXPRESION
     """
-    if (p[4] == ":"):
-        p[0] = Declaracion(mut=False, id=p[2], tipo=[4], exp=p[6], linea=p.lineno(1), columna=0)
+    if (p[3] == ":"):
+        p[0] = Declaracion(mut=False, id=p[2], tipo=p[4], exp=p[6], linea=p.lineno(1), columna=0)
     else:
         p[0] = Declaracion(mut=False, id=p[2], tipo="", exp=p[4], linea=p.lineno(1), columna=0)
 
@@ -250,14 +255,21 @@ def p_brazos_brazo(p):
     p[0]=[p[1]]
 def p_brazo(p):
     """
-    BRAZO : EXPRESION igual mayor BLOQUE_INST
-        | EXPRESION igual mayor INSTRUCCION coma
+    BRAZO : CONJEXP igual mayor BLOQUE_INST
+        | CONJEXP igual mayor INSTRUCCION coma
     """
     if type(p[4]) in (tuple,list):
-        p[0] = Brazo(exp=p[1],bloque=p[4], line=p.lineno(1), column=0)
+        p[0] = Brazo(cExp=p[1],bloque=p[4], line=p.lineno(1), column=0)
     else:
-        p[0] = Brazo(exp=p[1], bloque=[p[4]], line=p.lineno(1), column=0)
+        p[0] = Brazo(cExp=p[1], bloque=[p[4]], line=p.lineno(1), column=0)
+def p_conj_exp_match_list(p):
+    """CONJEXP : CONJEXP bvertical EXPRESION"""
+    p[1].append(p[3])
+    p[0]=p[1]
+def p_conj_exp_match_exp(p):
 #bloque instrucciones
+    """CONJEXP : EXPRESION"""
+    p[0]=[p[1]]
 def p_bloque_instrucciones(p):
     """
     BLOQUE_INST : llavea  INSTRUCCIONES llavec

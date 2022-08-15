@@ -2,6 +2,9 @@ from models.Instruction.Instruction import Instruccion
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Enviroment import Enviroment
 from models.TablaSymbols.Tipos import Tipos
+from models.Instruction.Break import Break
+from models.Instruction.Continue import Continue
+from models.Instruction.Return import Return
 
 class If(Instruccion):
     def __init__(self,exp:Expresion,bloque1:[Instruccion],bloque2:[Instruccion],line:int,column:int):
@@ -18,10 +21,18 @@ class If(Instruccion):
             if t_exp ==Tipos.BOOLEAN:
                 if v_exp==True:
                     for element in self.bloque1:
-                        element.ejecutar(driver,ts)
+                        if isinstance(element,Break) or isinstance(element,Continue) or isinstance(element,Return):
+                            return element
+                        rInst=element.ejecutar(driver,ts)
+                        if isinstance(rInst,Break) or isinstance(rInst,Continue) or isinstance(rInst,Return):
+                            return rInst
                 else:
                     for element in self.bloque2:
-                        element.ejecutar(driver, ts)
+                        if isinstance(element, Break) or isinstance(element, Continue) or isinstance(element, Return):
+                            return element
+                        rInst = element.ejecutar(driver, ts)
+                        if isinstance(rInst, Break) or isinstance(rInst, Continue) or isinstance(rInst, Return):
+                            return rInst
             else:
                 print("la expresion debe de dar un resultado booleano")
         else:

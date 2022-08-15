@@ -8,7 +8,7 @@ from models.Expresion.Primitivo import Primitivo
 from models.Expresion.Id import Id
 from models.Expresion.If_Ternario import If_ternario
 from models.Expresion.BrazoTer import BrazoTer
-from models.Expresion.MatchTer import  MatchTer
+from models.Expresion.MatchTer import MatchTer
 from models.Ast.Ast import Ast
 
 #Instrucciones
@@ -18,6 +18,10 @@ from models.Instruction.Asignacion import Asignacion
 from models.Instruction.If import If
 from  models.Instruction.Brazo import Brazo
 from  models.Instruction.Match import Match
+from  models.Instruction.Loop import Loop
+from models.Instruction.Return import Return
+from models.Instruction.Break import Break
+from models.Instruction.Continue import Continue
 
 tokens = lexer.tokens
 
@@ -61,6 +65,10 @@ def p_instruccion(p):
         | ASIGNACION
         | IF
         | MATCH
+        | LOOP
+        | CONTINUE
+        | RETURN
+        | BREAK
     """
     p[0] = p[1]
 
@@ -123,6 +131,7 @@ def p_exp_one_element(p):
     EXPRESION : TIPODATO
         | IF_TER
         | MATCH_TER
+        |   LOOP
     """
     p[0]=p[1]
 #tipo de dato
@@ -200,6 +209,8 @@ def p_brazoTer(p):
     BRAZO_TER : CONJEXP igual mayor EXPRESION coma
     """
     p[0] = BrazoTer(cExp=p[1], bloque=p[4], line=p.lineno(1), column=0)
+
+
 
 #Instrucciones
 def p_println(p):
@@ -307,6 +318,26 @@ def p_conj_exp_match_exp(p):
 #bloque instrucciones
     """CONJEXP : EXPRESION"""
     p[0]=[p[1]]
+#Match
+def p_loop(p):
+    """LOOP : loop BLOQUE_INST"""
+    p[0] = Loop(bloque=p[2],line=p.lineno(1),column=0)
+
+def p_break(p):
+    """BREAK : break"""
+    p[0] = Break(exp=None,line=p.lineno(1),column=0)
+def p_break2(p):
+    """BREAK : break EXPRESION"""
+    p[0] = Break(exp=p[2],line=p.lineno(1),column=0)
+def p_continue(p):
+    """CONTINUE : continue"""
+    p[0] = Continue(line=p.lineno(1),column=0)
+def p_return(p):
+    """RETURN : return EXPRESION"""
+    p[0] = Return(exp=p[2],line=p.lineno(1),column=0)
+def p_return_2(p):
+    """RETURN : return"""
+    p[0] = Return(exp=None,line=p.lineno(1),column=0)
 def p_bloque_instrucciones(p):
     """
     BLOQUE_INST : llavea  INSTRUCCIONES llavec

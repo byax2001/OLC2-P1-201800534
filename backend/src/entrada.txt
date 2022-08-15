@@ -1,5 +1,5 @@
 
-println!(!false);
+println!(false);
 
 let mut hola  = 123;
 println!(hola);
@@ -33,4 +33,28 @@ let a= match x {
     _=> "que tal",
 };
 println!(a);
+
+let mut cont = 0;
+loop {
+    cont=cont+1;
+    if cont!=3 {
+        println!("prueba loop norm");
+    }else{
+        break;
+    };
+};
+
+let mut p1 = 2;
+let mut p3 = loop {
+    p1=p1-1;
+
+    if p1==0{
+        break "Loop ternario bien";
+    }else{
+        println!(p1);
+        println!(--- "prueba loop ---");
+    };
+};
+println!(p3);
+
 // HOla que tla mucho gusto

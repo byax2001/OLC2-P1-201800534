@@ -17,7 +17,11 @@ reservadas = {
     'if': 'if',
     'else': 'else',
     'match':'match',
-    "_": 'guionbajo'
+    "_": 'guionbajo',
+    "loop": 'loop',
+    'break' : 'break',
+    'return' : 'return',
+    'continue' : 'continue'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
             "mayor","menor","mayorigual","menorigual","igualigual","diferente",

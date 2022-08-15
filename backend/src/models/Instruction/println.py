@@ -1,6 +1,6 @@
 from models.Instruction.Instruction import Instruccion
 from models.Expresion.Expresion import Expresion
-
+from models.Expresion.Primitivo import Primitivo
 
 class Println(Instruccion):
 

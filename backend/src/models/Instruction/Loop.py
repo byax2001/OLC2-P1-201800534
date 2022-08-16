@@ -18,7 +18,7 @@ class Loop(Instruccion):
                 if isinstance(instruccion, Break):
                     return
                 elif isinstance(instruccion, Continue):
-                    continue
+                    break;
                 elif isinstance(instruccion, Return):
                     print("Error, existe return afuera de una funcion")
                     return
@@ -26,7 +26,7 @@ class Loop(Instruccion):
                 if isinstance(rInst, Break):
                     return rInst
                 elif isinstance(rInst, Continue):
-                    continue
+                    break;
                 elif isinstance(rInst, Return):
                     print("Error, existe return afuera de una funcion")
                     return

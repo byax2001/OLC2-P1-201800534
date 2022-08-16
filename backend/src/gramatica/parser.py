@@ -22,7 +22,7 @@ from  models.Instruction.Loop import Loop
 from models.Instruction.Return import Return
 from models.Instruction.Break import Break
 from models.Instruction.Continue import Continue
-
+from  models.Instruction.While import While
 tokens = lexer.tokens
 
 # EXPRESION : term MAS term
@@ -69,6 +69,7 @@ def p_instruccion(p):
         | CONTINUE
         | RETURN
         | BREAK
+        | WHILE
     """
     p[0] = p[1]
 
@@ -318,7 +319,7 @@ def p_conj_exp_match_exp(p):
 #bloque instrucciones
     """CONJEXP : EXPRESION"""
     p[0]=[p[1]]
-#Match
+#Loop
 def p_loop(p):
     """LOOP : loop BLOQUE_INST"""
     p[0] = Loop(bloque=p[2],line=p.lineno(1),column=0)
@@ -338,6 +339,9 @@ def p_return(p):
 def p_return_2(p):
     """RETURN : return"""
     p[0] = Return(exp=None,line=p.lineno(1),column=0)
+def p_while(p):
+    """WHILE : while EXPRESION BLOQUE_INST"""
+    p[0]= While(exp=p[2],bloque=p[3],line=p.lineno(1),column=0)
 def p_bloque_instrucciones(p):
     """
     BLOQUE_INST : llavea  INSTRUCCIONES llavec

@@ -16,7 +16,7 @@ class LoopTer(Expresion):
                 if isinstance(instruccion, Break):
                     return instruccion.getValor(driver,ts)
                 elif isinstance(instruccion, Continue):
-                    continue
+                    break;
                 elif isinstance(instruccion, Return):
                     print("Error, existe return afuera de una funcion")
                     return
@@ -24,7 +24,7 @@ class LoopTer(Expresion):
                 if isinstance(rInst, Break):
                     return rInst.getValor(driver,ts)
                 elif isinstance(rInst, Continue):
-                    continue
+                    break;
                 elif isinstance(rInst, Return):
                     print("Error, existe return afuera de una funcion")
                     return

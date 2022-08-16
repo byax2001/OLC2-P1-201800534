@@ -52,9 +52,16 @@ let mut p3 = loop {
         break "Loop ternario bien";
     }else{
         println!(p1);
-        println!(--- "prueba loop ---");
+        println!("---prueba loop ---");
     };
 };
 println!(p3);
+
+let mut pruebaW=0;
+while pruebaW<3 {
+    println!("it while");
+    pruebaW=pruebaW+1;
+};
+println!(pruebaW);
 
 // HOla que tla mucho gusto

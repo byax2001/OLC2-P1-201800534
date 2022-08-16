@@ -21,7 +21,8 @@ reservadas = {
     "loop": 'loop',
     'break' : 'break',
     'return' : 'return',
-    'continue' : 'continue'
+    'continue' : 'continue',
+    'while' : 'while'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
             "mayor","menor","mayorigual","menorigual","igualigual","diferente",

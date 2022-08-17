@@ -12,7 +12,7 @@ from models.Expresion.MatchTer import MatchTer
 from models.Ast.Ast import Ast
 
 #Instrucciones
-from models.Instruction.println import Println
+from models.Instruction.Println import Println
 from models.Instruction.Declaracion import Declaracion
 from models.Instruction.Asignacion import Asignacion
 from models.Instruction.If import If
@@ -23,6 +23,7 @@ from models.Instruction.Return import Return
 from models.Instruction.Break import Break
 from models.Instruction.Continue import Continue
 from  models.Instruction.While import While
+from models.Instruction.Funcion import Funcion
 tokens = lexer.tokens
 
 # EXPRESION : term MAS term
@@ -65,12 +66,17 @@ def p_instruccion(p):
         | ASIGNACION
         | IF
         | MATCH
-        | LOOP
         | CONTINUE
         | RETURN
         | BREAK
         | WHILE
+        | EXPRESION
+        | FUNCION
     """
+    #Anotaciones:
+        #LOOP ES TANTO INSTRUCCION COMO EXPRESION, TIENE GETVALOR,GETTIPO Y EJECUTAR ESTE SE ENCUENTRA DECLARADO EN EXPRESION
+        #La mayoria de expresiones tienen un ejecutar que no hace nada, es por si realiza una expresion afuera de cualquier estructura
+            #en rust es permitido
     p[0] = p[1]
 
 def p_expresion_aritmeticas(p):
@@ -126,16 +132,24 @@ def p_EXPRESION_par(p):
     EXPRESION : para EXPRESION parc
     """
     p[0] = p[2]
-#PRODUCCION PARA EXPRESIONES DE UN SOLO ELEMETO
+#PRODUCCION PARA EXPRESIONES DE UN SOLO ELEMENTO=====================================================================================0
 def p_exp_one_element(p):
     """
     EXPRESION : TIPODATO
         | IF_TER
         | MATCH_TER
-        |   LOOP
+        | LOOP
     """
     p[0]=p[1]
-#tipo de dato
+#CONJEXP=====================================================================================0
+def p_cexp_list(p):
+    """CONJEXP : CONJEXP coma EXPRESION"""
+    p[1].append(p[3])
+    p[0]=p[1]
+def p_cexp(p):
+    """CONJEXP : EXPRESION"""
+    p[0] = [p[1]]
+#tipo de dato=====================================================================================0
 def p_tipo_dato(p):
     """
     TIPODATO : entero
@@ -157,7 +171,7 @@ def p_char(p):
     TIPODATO : caracter
     """
     p[0] = Primitivo(p[1], p.lineno(1), 0,"char")
-#tipo de variable
+#tipo de variable=====================================================================================0
 def p_tipo_var(p):
     """
     TIPOVAR : i64
@@ -168,7 +182,7 @@ def p_tipo_var(p):
         | str
     """
     p[0] = p[1]
-#If ternario
+#If ternario=====================================================================================0
 def p_if_ternario(p):
     """
     IF_TER : if  EXPRESION  llavea EXPRESION llavec
@@ -184,7 +198,7 @@ def p_if_else_if_ternario(p):
     IF_TER : if EXPRESION  llavea EXPRESION llavec else IF_TER
     """
     p[0] = If_ternario(exp=p[2], expB1=p[4], expB2=p[7], line=p.lineno(1), column=0)
-#Match ternario
+#Match ternario=====================================================================================
 def p_matchTer(p):
     """
     MATCH_TER : match EXPRESION llavea BRAZOS_TER guionbajo igual mayor EXPRESION coma llavec
@@ -207,19 +221,24 @@ def p_brazosTer_brazo(p):
     p[0]=[p[1]]
 def p_brazoTer(p):
     """
-    BRAZO_TER : CONJEXP igual mayor EXPRESION coma
+    BRAZO_TER : CONJEXPM igual mayor EXPRESION coma
     """
     p[0] = BrazoTer(cExp=p[1], bloque=p[4], line=p.lineno(1), column=0)
 
 
 
-#Instrucciones
+#Instrucciones------------------------------------------------------------------------------------
 def p_println(p):
     """
     PRINT : println para EXPRESION parc
+        | println para EXPRESION coma CONJEXP parc
     """
-    p[0] = Println(p[3], p.lineno(1), 0)
-#Declaraciones
+    if(p[4]==")"):
+        p[0] = Println(exp=p[3],cExp=[], linea=p.lineno(1), columna=0)
+    else:
+        p[0] = Println(exp=p[3],cExp=p[5],linea= p.lineno(1), columna= 0)
+
+#Declaraciones=====================================================================================
 def p_declaracion_t1(p):
     """
     DECLARACION : let mut id dospuntos TIPOVAR igual EXPRESION
@@ -248,14 +267,14 @@ def p_declaracion_t3(p):
         p[0] = Declaracion(mut=True, id=p[2], tipo=[4], exp=None, linea=p.lineno(1), columna=0)
     else:
         p[0] = Declaracion(mut=False, id=p[2], tipo=[4], exp=None, linea=p.lineno(1), columna=0)
-#Asignaciones
+#Asignaciones=====================================================================================
 def p_asignaciones(p):
     """
     ASIGNACION : id igual EXPRESION
     """
     p[0] = Asignacion(p[1],p[3],linea=p.lineno(1), columna=0)
 
-#If
+#If=====================================================================================
 def p_if(p):
     """
     IF : if  EXPRESION  BLOQUE_INST
@@ -272,7 +291,7 @@ def p_if_else_if(p):
     """
     p[0] = If(exp=p[2], bloque1=p[3], bloque2=[p[5]], line=p.lineno(1), column=0)
 
-#match
+#match=====================================================================================
 def p_match_1(p):
     """
     MATCH : match EXPRESION llavea BRAZOS guionbajo igual mayor BLOQUE_INST llavec
@@ -304,41 +323,44 @@ def p_brazos_brazo(p):
     p[0]=[p[1]]
 def p_brazo(p):
     """
-    BRAZO : CONJEXP igual mayor BLOQUE_INST
-        | CONJEXP igual mayor INSTRUCCION coma
+    BRAZO : CONJEXPM igual mayor BLOQUE_INST
+        | CONJEXPM igual mayor INSTRUCCION coma
     """
     if type(p[4]) in (tuple,list):
         p[0] = Brazo(cExp=p[1],bloque=p[4], line=p.lineno(1), column=0)
     else:
         p[0] = Brazo(cExp=p[1], bloque=[p[4]], line=p.lineno(1), column=0)
 def p_conj_exp_match_list(p):
-    """CONJEXP : CONJEXP bvertical EXPRESION"""
+    """CONJEXPM : CONJEXPM bvertical EXPRESION"""
     p[1].append(p[3])
     p[0]=p[1]
 def p_conj_exp_match_exp(p):
-#bloque instrucciones
-    """CONJEXP : EXPRESION"""
+#bloque instrucciones=====================================================================================
+    """CONJEXPM : EXPRESION"""
     p[0]=[p[1]]
-#Loop
+#Loop=====================================================================================
 def p_loop(p):
     """LOOP : loop BLOQUE_INST"""
     p[0] = Loop(bloque=p[2],line=p.lineno(1),column=0)
-
+#break=====================================================================================
 def p_break(p):
     """BREAK : break"""
     p[0] = Break(exp=None,line=p.lineno(1),column=0)
 def p_break2(p):
     """BREAK : break EXPRESION"""
     p[0] = Break(exp=p[2],line=p.lineno(1),column=0)
+#Continue =====================================================================================
 def p_continue(p):
     """CONTINUE : continue"""
     p[0] = Continue(line=p.lineno(1),column=0)
+#return =====================================================================================
 def p_return(p):
     """RETURN : return EXPRESION"""
     p[0] = Return(exp=p[2],line=p.lineno(1),column=0)
 def p_return_2(p):
     """RETURN : return"""
     p[0] = Return(exp=None,line=p.lineno(1),column=0)
+#while =====================================================================================
 def p_while(p):
     """WHILE : while EXPRESION BLOQUE_INST"""
     p[0]= While(exp=p[2],bloque=p[3],line=p.lineno(1),column=0)
@@ -347,6 +369,41 @@ def p_bloque_instrucciones(p):
     BLOQUE_INST : llavea  INSTRUCCIONES llavec
     """
     p[0]=p[2]
+#Funcion=====================================================================================
+def p_funcion(p):
+    """
+    FUNCION : fn id para LISTAPARAMETROS parc menos mayor TIPOVAR BLOQUE_INST
+        | fn id para LISTAPARAMETROS parc BLOQUE_INST
+    """
+    if p[6]=="-":
+        p[0]=Funcion(id=p[2],lparametros=p[4],tipo=p[8],bloque=p[9],line=p.lineno(1),column=0)
+    else:
+        p[0]=Funcion(id=p[2],lparametros=p[4],tipo="",bloque=p[6],line=p.lineno(1),column=0)
+def p_funcion2(p):
+    """
+    FUNCION : fn id para  parc menos mayor TIPOVAR BLOQUE_INST
+        | fn id para  parc BLOQUE_INST
+    """
+    if p[5]=="-":
+        p[0]=Funcion(id=p[2],lparametros=[],tipo=p[7],bloque=p[8],line=p.lineno(1),column=0)
+    else:
+        p[0]=Funcion(id=p[2],lparametros=[],tipo="",bloque=p[5],line=p.lineno(1),column=0)
+def p_lista_parametros(p):
+    """LISTAPARAMETROS : LISTAPARAMETROS coma PARAMETRO"""
+    p[1].append(p[3])
+    p[0]=p[1]
+def p_lista_parametros_parametro(p):
+    """LISTAPARAMETROS : PARAMETRO"""
+    p[0]=[p[1]]
+def p_parametro(p):
+    """PARAMETRO : id dospuntos TIPOVAR
+                | mut id dospuntos TIPOVAR
+    """
+    if p[1]!="mut":
+        p[0] = Declaracion(mut=False, id=p[1], tipo=p[3], exp=None, line=p.lineno(1), column=0)
+    else:
+        p[0]=Declaracion(mut=True,id=p[2],tipo=p[4],exp=None,line=p.lineno(1),column=0)
+
 # Error sintactico
 def p_error(p):
     print(f'Error de sintaxis {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')

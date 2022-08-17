@@ -59,3 +59,6 @@ class MatchTer(Expresion):
                 return None
         # Retornar el tipo de dato que todos los brazos y default tienen
         return self.default.getTipo(driver, ts)
+    def ejecutar(self, driver, ts):
+        """En la mayoria de expresiones no realiza nada"""
+        pass

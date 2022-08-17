@@ -42,3 +42,6 @@ class LoopTer(Expresion):
                 print("Error, existe return afuera de una funcion")
                 return Tipos.ERROR
         return Tipos.ERROR
+    def ejecutar(self, driver, ts):
+        """En la mayoria de expresiones no realiza nada"""
+        pass

@@ -5,7 +5,7 @@ reservadas = {
     #r'exp regular' : id 
     'pow': 'pow',
     'struct': 'struct',
-    'println!': 'println',
+    'println!': 'println', #Hay que crear un def para esta funcion, si no no la detecta el analizador lexico
     'let':'let',
     'mut':'mut',
     'i64':'i64',
@@ -22,7 +22,8 @@ reservadas = {
     'break' : 'break',
     'return' : 'return',
     'continue' : 'continue',
-    'while' : 'while'
+    'while' : 'while',
+    'fn': 'fn'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
             "mayor","menor","mayorigual","menorigual","igualigual","diferente",

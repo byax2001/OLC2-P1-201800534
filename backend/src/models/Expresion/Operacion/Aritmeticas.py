@@ -72,3 +72,7 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                print(f'Las expresiones a restar deben de ser del mismo tipo')
         else:
             print(f'La operacion {self.operador} no es soportado')
+
+    def ejecutar(self, driver, ts):
+        """En la mayoria de expresiones no realiza nada"""
+        pass

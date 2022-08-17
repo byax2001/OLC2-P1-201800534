@@ -29,3 +29,7 @@ class BrazoTer(Expresion):
             if element.getTipo(driver, ts) != tipoEMatch:
                 return False
         return True
+
+    def ejecutar(self, driver, ts):
+        """En la mayoria de expresiones no realiza nada"""
+        pass

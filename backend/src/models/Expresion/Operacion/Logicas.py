@@ -24,3 +24,6 @@ class Logicas(OperacionLog): #de esta forma se esta indicando que aritmeticas he
                 return not (self.exp1.getValor(driver, ts))
         else:
             print("Se intenta hacer una operacion Relacion con uno o dos nodos no Booleanos")
+    def ejecutar(self, driver, ts):
+        """En la mayoria de expresiones no realiza nada"""
+        pass

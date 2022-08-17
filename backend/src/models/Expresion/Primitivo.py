@@ -32,3 +32,6 @@ class Primitivo(Expresion):
         cadena = cadena.replace("\\\'", "\'")
         cadena=cadena.replace("\\\\","\\")
         return cadena
+    def ejecutar(self, driver, ts):
+        """En la mayoria de expresiones no realiza nada"""
+        pass

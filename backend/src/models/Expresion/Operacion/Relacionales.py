@@ -27,3 +27,6 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
         else:
             print("Las literales a comparar no son del mismo tipo ")
             return None
+    def ejecutar(self, driver, ts):
+        """En la mayoria de expresiones no realiza nada"""
+        pass

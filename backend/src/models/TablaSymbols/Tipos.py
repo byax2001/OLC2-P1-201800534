@@ -8,6 +8,7 @@ class Tipos(Enum):
     BOOLEAN = 5
     ERROR = 6
     ID = 7
+    VOID = 8
 
 def getTipo(s:str):
     if s=="i64":

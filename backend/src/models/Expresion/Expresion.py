@@ -11,3 +11,6 @@ class Expresion:
         Returna el valor de la expresión
         """
         pass
+    def ejecutar(self,driver,ts):
+        """por si fuera necesario ejecutar algo"""
+        pass

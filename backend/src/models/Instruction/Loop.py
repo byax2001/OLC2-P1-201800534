@@ -24,7 +24,7 @@ class Loop(Instruccion):
                     return
                 rInst = instruccion.ejecutar(driver, ts)
                 if isinstance(rInst, Break):
-                    return rInst
+                    return
                 elif isinstance(rInst, Continue):
                     break;
                 elif isinstance(rInst, Return):

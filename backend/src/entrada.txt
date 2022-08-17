@@ -1,10 +1,15 @@
 
 println!(false);
+let aprint="Prueba print ";
+println!("{}",aprint);
+println!("{} que tal soy {}","Hola","Soy Manuel");
+
+println!(false);
 
 let mut hola  = 123;
-println!(hola);
+println!("{}",hola);
 hola = hola +1 ;
-println!(hola);
+println!("{}",hola);
 
 if 5==6 {
     println!("mañana");
@@ -15,7 +20,7 @@ if 5==6 {
 };
 
 let x= if 3==3 { 11 } else if 4<2 { 20 } else if 6<4 { 30 } else { 80 };
-println!(x);
+println!("{}",x);
 
 
 match x {
@@ -29,10 +34,10 @@ match x {
 
 let a= match x {
     10 => "hola",
-    11 => "aa",
+    11 => "11 x match iteracion",
     _=> "que tal",
 };
-println!(a);
+println!("{}",a);
 
 let mut cont = 0;
 loop {
@@ -51,17 +56,21 @@ let mut p3 = loop {
     if p1==0{
         break "Loop ternario bien";
     }else{
-        println!(p1);
+        println!("{}",p1);
         println!("---prueba loop ---");
     };
 };
-println!(p3);
+println!("{}",p3);
 
 let mut pruebaW=0;
 while pruebaW<3 {
     println!("it while");
     pruebaW=pruebaW+1;
 };
-println!(pruebaW);
+println!("{}",pruebaW);
+
+fn Funcion1 () {
+    println!("hola");
+};
 
 // HOla que tla mucho gusto

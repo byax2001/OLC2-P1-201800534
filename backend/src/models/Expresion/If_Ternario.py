@@ -37,3 +37,6 @@ class If_ternario(Expresion):
         else:
             print("La expresion en el if causa error")
             return None
+    def ejecutar(self, driver, ts):
+        """En la mayoria de expresiones no realiza nada"""
+        pass

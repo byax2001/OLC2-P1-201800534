@@ -21,12 +21,12 @@ class Declaracion(Instruccion):
                 existe=ts.buscarActualTs(self.id);
                 if(existe==None):
                     if(self.tipoVar==None):
-                        newVar=Symbol(self.mut,self.id,v_exp,0,t_exp,self.linea,self.columna)
+                        newVar=Symbol(mut=self.mut,id=self.id,value=v_exp,tipo_simbolo=0,tipo=t_exp,line=self.linea,column=self.columna)
                         ts.addVar(self.id,newVar)
                         print("se añadio una variable")
                     else:
                         if(self.tipoVar==t_exp):
-                            newVar = Symbol(self.mut, self.id, v_exp, 0, t_exp, self.linea, self.columna)
+                            newVar = Symbol(mut=self.mut,id=self.id, value=v_exp, tipo_simbolo=0,tipo= t_exp, line= self.linea,column= self.columna)
                             ts.addVar(self.id, newVar)
                             print("se añadio una variable")
                         else:
@@ -58,3 +58,6 @@ class Declaracion(Instruccion):
             return ""
         elif (tipo==Tipos.CHAR):
             return "\0"
+    #metodo para hacer declaraciones luego de llamada una funcion
+    def changeExp(self,exp:Expresion):
+        self.exp=exp

@@ -28,3 +28,12 @@ class Id(Expresion):
             return self.value
         else:
             return None
+    def getSymbol(self,driver,ts:Enviroment):
+        symbol = ts.buscar(self.id);
+        if symbol != None:
+            return symbol
+        else:
+            return None
+    def ejecutar(self, driver, ts):
+        """En la mayoria de expresiones no realiza nada"""
+        pass

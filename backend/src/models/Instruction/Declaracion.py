@@ -59,5 +59,9 @@ class Declaracion(Instruccion):
         elif (tipo==Tipos.CHAR):
             return "\0"
     #metodo para hacer declaraciones luego de llamada una funcion
-    def changeExp(self,exp:Expresion):
-        self.exp=exp
+    def changeExp(self,exp:Expresion,driver,ts):
+        if self.exp.getTipo(driver,ts)==exp.getTipo(driver,ts):
+            self.exp=exp
+            return True
+        return False
+    #return true si se hizo la delcaracion y return false si ocurrio algun error

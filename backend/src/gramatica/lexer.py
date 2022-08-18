@@ -23,13 +23,20 @@ reservadas = {
     'return' : 'return',
     'continue' : 'continue',
     'while' : 'while',
-    'fn': 'fn'
+    'fn': 'fn',
+    'as': 'as',
+    'to_string':'toString',
+    'to_owned': 'toOwned',
+    'abs': 'abs',
+    'sqrt':'sqrt',
+    'clone': 'clone',
+
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
             "mayor","menor","mayorigual","menorigual","igualigual","diferente",
             "or","and","not","interrogacion",
             'mod',
-            'puntoycoma','dospuntos','llavea','llavec','cora','corc','igual','coma',
+            'punto','puntoycoma','dospuntos','llavea','llavec','cora','corc','igual','coma',
             'id',
             'bvertical'
           ] + list(reservadas.values())
@@ -72,6 +79,7 @@ t_coma=r'\,'
 t_puntoycoma=r'\;'
 t_dospuntos=r'\:'
 t_interrogacion=r'\?'
+t_punto= r'\.'
 
 
 # Tipos de Datos, reconocer primero unos valores de otros para que los tokens funcione, en este caso decimal y entero, al reves reconoceria entero primero y daria error en el decimal

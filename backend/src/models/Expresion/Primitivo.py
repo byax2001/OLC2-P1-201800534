@@ -19,7 +19,7 @@ class Primitivo(Expresion):
     def getValor(self, driver, ts):
         value = self.valor
         self.tipo = definirTipo(value)
-        if(self.tipo==Tipos.STRING or self.tipo==Tipos.CHAR):
+        if(self.tipo==Tipos.STRING or self.tipo==Tipos.CHAR or self.tipo==Tipos.STR):
             value = Primitivo.limpCad(value)
         return value
 

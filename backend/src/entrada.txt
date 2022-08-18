@@ -1,5 +1,5 @@
 
-println!(false);
+println!("{}",!false);
 let aprint="Prueba print ";
 println!("{}",aprint);
 println!("{} que tal soy {}","Hola","Soy Manuel");
@@ -13,7 +13,7 @@ println!("{}",hola);
 
 if 5==6 {
     println!("mañana");
-} else if 6==8 {
+} else if 8==8 {
     println!("fer");
 } else {
      println!("ayer");
@@ -72,5 +72,19 @@ println!("{}",pruebaW);
 fn Funcion1 () {
     println!("hola");
 };
+
+//Nativas--------------------------
+let sprueba : String = "holamundo".to_string();
+let sprueba2 : &str = " prueba string";
+println!("Prueba concatenacion: {}",sprueba+sprueba2);
+
+let prueba : i64 =-64.abs();
+println!("prueba abs: {}",prueba);
+
+let manx: f64 = (32 as f64).sqrt();
+println!("prueba sqrt: {}",manx);
+
+let hi = "fer".clone();
+println!("prueba clone: {}",hi);
 
 // HOla que tla mucho gusto

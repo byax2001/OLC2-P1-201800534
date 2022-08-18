@@ -13,5 +13,5 @@ ts = Enviroment(None, 'Global')
 driver = Driver()
 
 ast.ejecutar(driver, ts)
-
+print("OUTPUT:")
 print(driver.console)

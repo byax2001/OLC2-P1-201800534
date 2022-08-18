@@ -2,6 +2,7 @@ from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import definirTipo,Tipos
 from models.TablaSymbols.Enviroment import Enviroment
 class BrazoTer(Expresion):
+    #brazo :  EXPRESION | EXPRESION | EXPRESION : BLOQUE  / EXPRESION : BLOQUE
     def __init__(self,cExp:[Expresion],bloque:Expresion, line: int, column: int):
         self.tipo=None
         self.value=None

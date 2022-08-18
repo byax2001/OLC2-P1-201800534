@@ -4,11 +4,12 @@ class Tipos(Enum):
     INT64 = 1
     FLOAT64 = 2
     STRING = 3
-    CHAR = 4
-    BOOLEAN = 5
-    ERROR = 6
-    ID = 7
-    VOID = 8
+    STR = 4
+    CHAR = 5
+    BOOLEAN = 6
+    ERROR = 7
+    ID = 8
+    VOID = 9
 
 def getTipo(s:str):
     if s=="i64":
@@ -19,10 +20,12 @@ def getTipo(s:str):
         return Tipos.BOOLEAN
     elif s=="char":
         return Tipos.CHAR
-    elif s=="&str" or s=="String":
+    elif s=="String":
         return Tipos.STRING
+    elif s=="&str":
+        return Tipos.STR
     else:
-        return None
+        return Tipos.ERROR
 
 def definirTipo(value):
 
@@ -31,11 +34,11 @@ def definirTipo(value):
     elif type(value) == int:
         return Tipos.INT64
     elif type(value) == str:
-        return Tipos.STRING
+        return Tipos.STR
     elif type(value) == bool:
         return Tipos.BOOLEAN
     else:
-        return None
+        return Tipos.ERROR
 
     
 class Tipo:

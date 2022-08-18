@@ -42,7 +42,7 @@ class Println(Instruccion):
 
             #reemplazo de los {} y {:?} por las expresiones en la cadena auxiliar, arriba se cubrieron todos los posibles errores, por lo cual no es necesario volver a cubrirlos
             #replace (exp1,exp2,1) indica que solo se reemplazara una vez de izquierda a derecha
-            if self.exp.getTipo(driver,ts) == Tipos.STRING:
+            if self.exp.getTipo(driver,ts) == Tipos.STR:
                 v_exp=str(self.exp.getValor(driver,ts))
                 if v_exp.count("{}")==c_llaves and v_exp.count("{:?}")==c_llavesint:
                     for exp in self.cExp: #se procede a recorrer cada expresion

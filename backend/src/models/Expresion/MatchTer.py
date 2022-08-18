@@ -46,17 +46,17 @@ class MatchTer(Expresion):
             CmpTipos = element.CompararTexps(driver, ts, t_exp)
             if (not CmpTipos):
                 print("Error: uno de los brazos tiene como expresion un tipo distinto a la expresion del match")
-                return None
+                return Tipos.ERROR
         # Revisar que todos los brazos retornen un mismo valor
         if (len(self.brazos) >= 2):
             firstE = self.brazos[0]
             for element in self.brazos:
                 if element.getTipo(driver, ts) != firstE.getTipo(driver, ts):
                     print("Un brazo retorna una expresion de distinto tipo al resto")
-                    return None
+                    return Tipos.ERROR
             if self.default.getTipo(driver, ts) != firstE.getTipo(driver, ts):
                 print("El brazo default retorna una expresion de distinto tipo al resto")
-                return None
+                return Tipos.ERROR
         # Retornar el tipo de dato que todos los brazos y default tienen
         return self.default.getTipo(driver, ts)
     def ejecutar(self, driver, ts):

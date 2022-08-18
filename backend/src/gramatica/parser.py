@@ -9,6 +9,12 @@ from models.Expresion.Id import Id
 from models.Expresion.If_Ternario import If_ternario
 from models.Expresion.BrazoTer import BrazoTer
 from models.Expresion.MatchTer import MatchTer
+from models.Expresion.As import As
+from models.Expresion.Nativas.Abs import Abs
+from models.Expresion.Nativas.Sqrt import Sqrt
+from models.Expresion.Nativas.ToStringOwned import ToStringOwned
+from models.Expresion.Nativas.Clone import Clone
+
 from models.Ast.Ast import Ast
 
 #Instrucciones
@@ -139,6 +145,11 @@ def p_exp_one_element(p):
         | IF_TER
         | MATCH_TER
         | LOOP
+        | CAST_AS
+        | ABS
+        | CLONE
+        | SQRT
+        | TO_STRING_OWNED
     """
     p[0]=p[1]
 #CONJEXP=====================================================================================0
@@ -224,9 +235,28 @@ def p_brazoTer(p):
     BRAZO_TER : CONJEXPM igual mayor EXPRESION coma
     """
     p[0] = BrazoTer(cExp=p[1], bloque=p[4], line=p.lineno(1), column=0)
-
-
-
+#AS=====================================================================================
+def p_as(p):
+    """CAST_AS : EXPRESION as TIPOVAR"""
+    p[0]=As(exp=p[1],tipocast=p[3],line=p.lineno(1), column=0)
+#ABS=====================================================================================
+def p_abs(p):
+    """ABS : EXPRESION punto abs para parc"""
+    p[0]=Abs(exp=p[1], line=p.lineno(1), column=0)
+#CLONE=====================================================================================
+def p_clone(p):
+    """CLONE : EXPRESION punto clone para parc"""
+    p[0]=Clone(exp=p[1], line=p.lineno(1), column=0)
+#Sqrt=====================================================================================
+def p_sqrt(p):
+    """SQRT : para CAST_AS parc punto sqrt para parc"""
+    p[0] = Sqrt(exp=p[2], line=p.lineno(1), column=0)
+#Sqrt=====================================================================================
+def p_tostrig_owned(p):
+    """TO_STRING_OWNED : EXPRESION punto toString para parc
+        | EXPRESION punto toOwned para parc
+    """
+    p[0] = ToStringOwned(exp=p[1], line=p.lineno(1), column=0)
 #Instrucciones------------------------------------------------------------------------------------
 def p_println(p):
     """

@@ -12,4 +12,4 @@ class Return(Instruccion):
         if self.exp==None:
             return None
         else:
-            return self.exp.getValor(driver,ts)
+            return self.exp

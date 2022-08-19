@@ -60,7 +60,7 @@ class Declaracion(Instruccion):
             return "\0"
     #metodo para hacer declaraciones luego de llamada una funcion
     def changeExp(self,exp:Expresion,driver,ts):
-        if self.exp.getTipo(driver,ts)==exp.getTipo(driver,ts):
+        if self.tipoVar==exp.getTipo(driver,ts):
             self.exp=exp
             return True
         return False

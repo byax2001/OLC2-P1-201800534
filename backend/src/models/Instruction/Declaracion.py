@@ -54,14 +54,12 @@ class Declaracion(Instruccion):
             return 0.0
         elif (tipo==Tipos.BOOLEAN):
             return False
+        elif (tipo==Tipos.STR):
+            return ""
         elif (tipo==Tipos.STRING):
             return ""
         elif (tipo==Tipos.CHAR):
             return "\0"
     #metodo para hacer declaraciones luego de llamada una funcion
-    def changeExp(self,exp:Expresion,driver,ts):
-        if self.tipoVar==exp.getTipo(driver,ts):
-            self.exp=exp
-            return True
-        return False
-    #return true si se hizo la delcaracion y return false si ocurrio algun error
+    def changeExp(self,exp:Expresion):
+        self.exp=exp

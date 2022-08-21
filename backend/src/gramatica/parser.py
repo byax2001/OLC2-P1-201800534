@@ -1,5 +1,6 @@
 from ply.yacc import yacc
 from gramatica import lexer
+from models.Ast.Ast import Ast
 #Expresiones
 from models.Expresion.Operacion.Aritmeticas import Aritmeticas
 from models.Expresion.Operacion.Relacionales import Relacionales
@@ -14,22 +15,26 @@ from models.Expresion.Nativas.Abs import Abs
 from models.Expresion.Nativas.Sqrt import Sqrt
 from models.Expresion.Nativas.ToStringOwned import ToStringOwned
 from models.Expresion.Nativas.Clone import Clone
-
-from models.Ast.Ast import Ast
+from models.Expresion.Vector.vecI import vecI
+from models.Instruction.Vector.DecVector import DecVector
 
 #Instrucciones
 from models.Instruction.Println import Println
 from models.Instruction.Declaracion import Declaracion
 from models.Instruction.Asignacion import Asignacion
 from models.Instruction.If import If
-from  models.Instruction.Brazo import Brazo
-from  models.Instruction.Match import Match
-from  models.Instruction.Loop import Loop
+from models.Instruction.Brazo import Brazo
+from models.Instruction.Match import Match
+from models.Instruction.Loop import Loop
 from models.Instruction.Return import Return
 from models.Instruction.Break import Break
 from models.Instruction.Continue import Continue
-from  models.Instruction.While import While
+from models.Instruction.While import While
 from models.Instruction.Funcion import Funcion
+from models.Instruction.Call import Call
+    #vectores
+from models.Instruction.Vector.Push import Push
+
 tokens = lexer.tokens
 
 # EXPRESION : term MAS term
@@ -78,6 +83,8 @@ def p_instruccion(p):
         | WHILE
         | EXPRESION
         | FUNCION
+        | DECVECTOR
+        | PUSH
     """
     #Anotaciones:
         #LOOP ES TANTO INSTRUCCION COMO EXPRESION, TIENE GETVALOR,GETTIPO Y EJECUTAR ESTE SE ENCUENTRA DECLARADO EN EXPRESION
@@ -150,6 +157,7 @@ def p_exp_one_element(p):
         | CLONE
         | SQRT
         | TO_STRING_OWNED
+        | CALL
     """
     p[0]=p[1]
 #CONJEXP=====================================================================================0
@@ -430,13 +438,71 @@ def p_parametro(p):
                 | mut id dospuntos TIPOVAR
     """
     if p[1]!="mut":
-        p[0] = Declaracion(mut=False, id=p[1], tipo=p[3], exp=None, line=p.lineno(1), column=0)
+        p[0] = Declaracion(mut=False, id=p[1], tipo=p[3], exp=None, linea=p.lineno(1), columna=0)
     else:
-        p[0]=Declaracion(mut=True,id=p[2],tipo=p[4],exp=None,line=p.lineno(1),column=0)
+        p[0]=Declaracion(mut=True,id=p[2],tipo=p[4],exp=None,linea=p.lineno(1),columna=0)
+#Call
+def p_call(p):
+    """CALL : id para CONJEXP parc
+        | id para parc
+    """
+    if p[3]!=")":
+        p[0]=Call(id=p[1],cExp=p[3], line=p.lineno(1), column=0)
+    else:
+        p[0]=Call(id=p[1],cExp=[], line=p.lineno(1), column=0)
+#DECLARACION DE VECTOR
+def p_defvector_1(p):
+    """
+    DECVECTOR : let id igual VECI
+        | let mut id igual VECI
+    """
+    if p[2] != "mut":
+        p[0]=DecVector(mut=False,id=p[2],tipo=None,vecI=p[4],capacity=None,line=p.lineno(1), column=0)
+    else:
+        p[0]=DecVector(mut=True,id=p[3],tipo=None,vecI=p[5],capacity=None,line=p.lineno(1), column=0)
 
+def p_devector_2(p):
+    """DECVECTOR : let id dospuntos Vec menor TIPOVAR mayor igual Vec dospuntos dospuntos FUNCVEC
+                | let mut id dospuntos Vec menor TIPOVAR mayor igual Vec dospuntos dospuntos FUNCVEC"""
+    if p[2]!="mut":
+        p[0] = DecVector(mut=False,id=p[2],tipo=p[6], vecI=None, capacity=p[12], line=p.lineno(1), column=0)
+    else:
+        p[0] = DecVector(mut=True,id=p[3],tipo=p[7],  vecI=None, capacity=p[13], line=p.lineno(1), column=0)
+
+def p_vectori(p):
+    #veci  =   vec!
+    """VECI : vecI cora CONJVECI  corc
+            | vecI cora EXPRESION puntoycoma EXPRESION corc"""
+    if p[4]!=";":
+        p[0]=vecI(cExp=p[3],exp=None,multiplicador=None,line=p.lineno(1), column=0)
+    else:
+        p[0]=vecI(cExp=None,exp=p[3],multiplicador=p[5],line=p.lineno(1), column=0)
+
+def p_conjveci_lista(p):
+    #conjunto de expresiones cojveci =   conjutno de expresiones conjveci coma elemento vec
+    """ CONJVECI : CONJVECI  coma ELVEC"""
+    p[1].append(p[3])
+    p[0]=p[1]
+def p_conjvei_element(p):
+    """CONJVECI : ELVEC"""
+    p[0]=[p[1]]
+def p_elemento_vec(p):
+    """ELVEC : EXPRESION
+            | VECI"""
+    p[0]=p[1]
+def p_func_vec(p):
+    """FUNCVEC : new para parc
+            | withcapacity para EXPRESION parc """
+    if p[1]=="new":
+        p[0]=None
+    else:
+        p[0]=p[3]
+def p_instv_push(p):
+    """PUSH : id punto push para EXPRESION parc"""
+    p[0]=Push(id=p[1],exp=p[5],line=p.lineno(1), column=0)
 # Error sintactico
 def p_error(p):
-    print(f'Error de sintaxis {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')
+    print(f'Error de sintaxis simbolo: {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')
 
 
 # Build the parser

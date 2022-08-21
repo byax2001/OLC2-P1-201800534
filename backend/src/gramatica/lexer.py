@@ -30,6 +30,12 @@ reservadas = {
     'abs': 'abs',
     'sqrt':'sqrt',
     'clone': 'clone',
+    'Vec' : 'Vec',
+    'vec!':'vecI',
+    'new':'new',
+    'with_capacity':'withcapacity',
+    #vectores
+    'push':'push'
 
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
@@ -43,7 +49,7 @@ tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cad
         
         
 # Caracteres ignorados
-t_ignore = '[\t\r ]'
+t_ignore = ' \t\r'
 
 # Caracteres especiales
 t_bvertical = r'\|'
@@ -56,6 +62,8 @@ t_div = r'/'
 t_mod = r'[%]'
 t_para = r'\('
 t_parc = r'\)'
+t_cora = r'\['
+t_corc = r'\]'
 
 #Simbolos relacionales
 t_mayorigual=r'\>\='
@@ -71,8 +79,6 @@ t_and=r'\&\&'
 t_not=r'\!'
 
 #otros simbolos
-t_cora=r'\['
-t_corc=r'\]'
 t_llavea="\{"
 t_llavec="\}"
 t_coma=r'\,'
@@ -111,6 +117,10 @@ def t_println(t):
     return t
 def t_str(t):
     r""" \&str"""
+    t.type = reservadas.get(t.value)
+    return t
+def t_vec(t):
+    r"""vec!"""
     t.type = reservadas.get(t.value)
     return t
 

@@ -3,12 +3,16 @@ from models.TablaSymbols.Tipos import Tipos,definirTipo
 import math
 class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas hereda de Operacion
     #var Operacion: exp1: Expresion, operador, exp2: Expresion, linea, columna, expU
+    #ARITMETICAS TIENE UN CONSTRUCTOR HEREDADO POR "OPERACION"
     def getTipo(self, driver, ts):
-        value = self.getValor(driver, ts)
+        if self.value==None and self.tipo==None:
+            self.value=self.getValor(driver, ts)
         if self.operador==Operador.SUMA and self.exp1.getTipo(driver,ts)==Tipos.STRING and self.exp2.getTipo(driver,ts)==Tipos.STR:
-            return Tipos.STRING
+            self.tipo=Tipos.STRING
+            return self.tipo
         else:
-            return definirTipo(value)
+            self.tipo=definirTipo(self.value)
+            return self.tipo
 
     # get valor con condicionales
     def getValor(self, driver, ts):

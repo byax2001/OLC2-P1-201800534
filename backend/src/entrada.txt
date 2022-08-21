@@ -88,3 +88,28 @@ let hi = "fer".clone();
 println!("prueba clone: {}",hi);
 
 // HOla que tla mucho gusto
+Funcion1();
+
+fn multi (mut x:i64, y:i64)->i64{
+
+    x= x*y;
+
+    println!("{}",x);
+    return x;
+};
+let y=multi(2,3);
+println!("El resultado de multi es: {}",y);
+
+//Vectores
+let mut vnew: Vec<i64> = Vec::new();
+let vnew2: Vec<i64> = Vec::new();
+
+let vcap: Vec<i64> = Vec::with_capacity(10);
+let mut vcap2: Vec<i64> = Vec::with_capacity(10);
+
+
+let vveci = vec![2,4,6,8,10];
+let vveci2 = vec![2;10];
+
+let vveci3 = vec! [2,3,4,vec![3;2]];
+vveci3.push(12);

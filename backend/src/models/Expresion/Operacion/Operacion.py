@@ -45,6 +45,8 @@ def getOperacion(op: Operador):
 class Operacion(Expresion):
     def __init__(self, exp1: Expresion, operador, exp2: Expresion, expU, linea, columna):
         super().__init__()
+        self.value=None
+        self.tipo=None
         self.expU = expU
         self.columna = columna
         self.linea = linea

@@ -13,6 +13,7 @@ class Vector:
                 self.capacity=self.capacity*2
     def insert(self,index:int,valor):
         if index<len(self.vector):
+            #colocar que el seguro de que index debe de ser TIPO.INT64
             self.vector.insert(index,valor)
             if self.stateCap == True:
                 self.ocupado += 1
@@ -39,7 +40,7 @@ class Vector:
         return self.capacity
 
     def Acces(self,indexs:[]):
-        try:
+        try: #Try como precaucion en caso se intente ingresar a una posicion de memoria fuera del rango del vector
             valor = self.vector
             for index in indexs:
                 valor=valor[index]["valor"]

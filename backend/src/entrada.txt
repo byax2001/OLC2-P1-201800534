@@ -111,6 +111,8 @@ let mut vcap2: Vec<i64> = Vec::with_capacity(10);
 let vveci = vec![2,4,6,8,10];
 let vveci2 = vec![2;10];
 
-let vveci3 = vec! [2,3,4,vec![3;2]];
+let mut vveci3 = vec! [2,3,4,vec![3;2]];
 vveci3.push(12);
-vveci3.insert("a",34);
+vveci3.insert(0,34);
+
+

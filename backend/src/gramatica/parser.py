@@ -17,6 +17,9 @@ from models.Expresion.Nativas.ToStringOwned import ToStringOwned
 from models.Expresion.Nativas.Clone import Clone
 from models.Expresion.Vector.vecI import vecI
 from models.Instruction.Vector.DecVector import DecVector
+#arreglo
+from models.Expresion.Arreglo.Arreglo import Arreglo
+from models.Expresion.Arreglo.DimensionalArreglo import DimensionalArreglo
 
 #Instrucciones
 from models.Instruction.Println import Println
@@ -39,6 +42,8 @@ from models.Expresion.Vector.Remove import Remove
 from models.Expresion.Vector.Contains import Contains
 from models.Expresion.Vector.Len import Len
 from models.Expresion.Vector.Capacity import Capacity
+    #arrays
+from models.Instruction.Arreglo.DecArreglo import DecArreglo
 tokens = lexer.tokens
 
 # EXPRESION : term MAS term
@@ -89,7 +94,8 @@ def p_instruccion(p):
         | FUNCION
         | DECVECTOR
         | PUSH
-        | INSERT 
+        | INSERT
+        | DECARREGLO
     """
     #Anotaciones:
         #LOOP ES TANTO INSTRUCCION COMO EXPRESION, TIENE GETVALOR,GETTIPO Y EJECUTAR ESTE SE ENCUENTRA DECLARADO EN EXPRESION
@@ -526,21 +532,43 @@ def p_instv_capacity(p):
     p[0]=Capacity(id=p[1],line=p.lineno(1), column=0)
 
 #ARREGLOS
-def p_declaracion_arreglos(p):
-    """DECARR : let id dospuntos DIMENSION_ARR igual ARREGLO"""
-
+def p_dec_arreglo1(p):
+    """DECARREGLO : let id dospuntos DIMENSION_ARR igual ARREGLO
+                | let mut id dospuntos DIMENSION_ARR igual ARREGLO """
+    if p[3]==":":
+        p[0]=DecArreglo(mut=False,id=p[1],arrDimensional=p[4],array=p[6],line=p.lineno(1), column=0)
+    else:
+        p[0]=DecArreglo(mut=True,id=p[2],arrDimensional=p[5],array=p[7],line=p.lineno(1), column=0)
+def p_dec_arreglo2(p):
+    """DECARREGLO : let id igual ARREGLO
+                | let mut id igual ARREGLO"""
+    if p[3]=="=":
+        p[0] = DecArreglo(mut=False, id=p[1], arrDimensional=None, array=p[4], line=p.lineno(1), column=0)
+    else:
+        p[0] = DecArreglo(mut=False, id=p[2], arrDimensional=None, array=p[5], line=p.lineno(1), column=0)
 def p_dimension_arreglo_multidimensional(p):
     """DIMENSION_ARR : cora DIMENSION_ARR puntoycoma EXPRESION corc """
+    p[0] = DimensionalArreglo(tipo="",dimArr=p[2], Dimensional=p[4], line=p.lineno(1), column=0)
 def p_dimension_arreglo_unidimensional(p):
     """DIMENSION_ARR : cora TIPOVAR puntoycoma EXPRESION corc"""
-def p_arreglo(p):
+    p[0]=DimensionalArreglo(tipo=p[1],dimArr=None,Dimensional=p[4],line=p.lineno(1), column=0)
+def p_arreglo_conj(p):
     """ARREGLO : cora CONT_ARR corc"""
+    p[0]=Arreglo(cExp=p[2],exp=None,multi=None,line=p.lineno(1), column=0)
+def p_arreglo_multi(p):
+    """ARREGLO : cora EXPRESION puntoycoma EXPRESION corc"""
+    p[0]=Arreglo(cExp=None,exp=p[1],multi=p[3],line=p.lineno(1), column=0)
 def p_cont_arreglo(p):
-    """CONT_ARR : CONT_ARR coma ELARR
-            | ELARR"""
+    """CONT_ARR : CONT_ARR coma ELARR"""
+    p[1].append(p[3])
+    p[0]=p[1]
+def p_cont_arreglo_u(p):
+    """CONT_ARR : ELARR"""
+    p[0]=[p[1]]
 def p_elemento_arreglo(p):
     """ELARR : ARREGLO
             | EXPRESION"""
+    p[0]=p[1]
 # Error sintactico
 def p_error(p):
     print(f'Error de sintaxis simbolo: {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')

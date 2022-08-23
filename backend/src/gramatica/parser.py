@@ -34,7 +34,11 @@ from models.Instruction.Funcion import Funcion
 from models.Instruction.Call import Call
     #vectores
 from models.Instruction.Vector.Push import Push
-
+from models.Instruction.Vector.Insert import Insert
+from models.Expresion.Vector.Remove import Remove
+from models.Expresion.Vector.Contains import Contains
+from models.Expresion.Vector.Len import Len
+from models.Expresion.Vector.Capacity import Capacity
 tokens = lexer.tokens
 
 # EXPRESION : term MAS term
@@ -85,6 +89,7 @@ def p_instruccion(p):
         | FUNCION
         | DECVECTOR
         | PUSH
+        | INSERT 
     """
     #Anotaciones:
         #LOOP ES TANTO INSTRUCCION COMO EXPRESION, TIENE GETVALOR,GETTIPO Y EJECUTAR ESTE SE ENCUENTRA DECLARADO EN EXPRESION
@@ -158,6 +163,10 @@ def p_exp_one_element(p):
         | SQRT
         | TO_STRING_OWNED
         | CALL
+        | REMOVE
+        | CONTAINS
+        | LEN
+        | CAPACITY
     """
     p[0]=p[1]
 #CONJEXP=====================================================================================0
@@ -500,6 +509,38 @@ def p_func_vec(p):
 def p_instv_push(p):
     """PUSH : id punto push para EXPRESION parc"""
     p[0]=Push(id=p[1],exp=p[5],line=p.lineno(1), column=0)
+def p_instv_insert(p):
+    """INSERT : id punto insert para EXPRESION coma EXPRESION parc """
+    p[0]=Insert(id=p[1],index=p[5],exp=p[7],line=p.lineno(1), column=0)
+def p_instv_remove(p): #esta va en expresiones
+    """REMOVE : id punto remove para EXPRESION parc"""
+    p[0]= Remove(id=p[1],index=p[5],line=p.lineno(1), column=0)
+def p_instv_contains(p):
+    """CONTAINS : id punto contains para ampersand EXPRESION parc"""
+    p[0]=Contains(id=p[1],exp=p[6],line=p.lineno(1), column=0)
+def p_instv_len(p):
+    """LEN : id punto len para parc """
+    p[0]=Len(id=p[1],line=p.lineno(1), column=0)
+def p_instv_capacity(p):
+    """CAPACITY : id punto capacity para parc"""
+    p[0]=Capacity(id=p[1],line=p.lineno(1), column=0)
+
+#ARREGLOS
+def p_declaracion_arreglos(p):
+    """DECARR : let id dospuntos DIMENSION_ARR igual ARREGLO"""
+
+def p_dimension_arreglo_multidimensional(p):
+    """DIMENSION_ARR : cora DIMENSION_ARR puntoycoma EXPRESION corc """
+def p_dimension_arreglo_unidimensional(p):
+    """DIMENSION_ARR : cora TIPOVAR puntoycoma EXPRESION corc"""
+def p_arreglo(p):
+    """ARREGLO : cora CONT_ARR corc"""
+def p_cont_arreglo(p):
+    """CONT_ARR : CONT_ARR coma ELARR
+            | ELARR"""
+def p_elemento_arreglo(p):
+    """ELARR : ARREGLO
+            | EXPRESION"""
 # Error sintactico
 def p_error(p):
     print(f'Error de sintaxis simbolo: {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')

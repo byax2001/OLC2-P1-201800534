@@ -35,14 +35,18 @@ reservadas = {
     'new':'new',
     'with_capacity':'withcapacity',
     #vectores
-    'push':'push'
-
+    'push':'push',
+    'insert':'insert',
+    'remove':'remove',
+    'contains':'contains',
+    'len':'len',
+    'capacity':'capacity'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
             "mayor","menor","mayorigual","menorigual","igualigual","diferente",
             "or","and","not","interrogacion",
             'mod',
-            'punto','puntoycoma','dospuntos','llavea','llavec','cora','corc','igual','coma',
+            'punto','puntoycoma','dospuntos','llavea','llavec','cora','corc','igual','coma','ampersand',
             'id',
             'bvertical'
           ] + list(reservadas.values())
@@ -79,6 +83,7 @@ t_and=r'\&\&'
 t_not=r'\!'
 
 #otros simbolos
+t_ampersand=r'\&'
 t_llavea="\{"
 t_llavec="\}"
 t_coma=r'\,'

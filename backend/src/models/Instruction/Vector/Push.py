@@ -13,21 +13,23 @@ class Push(Instruccion):
     def ejecutar(self, driver: Driver, ts: Enviroment):
         symbol=ts.buscar(self.id)
         if symbol!=None:
-            if symbol.tsimbolo==Symbols.VECTOR:
-                v_exp=self.exp.getValor(driver,ts)
-                t_exp=self.exp.getTipo(driver,ts)
-                if v_exp!=None and t_exp!=Tipos.ERROR:
-                    if t_exp==symbol.tipo:
-                        vector=symbol.value
-                        print(vector.vector)
-                        vector.push({"valor":v_exp,"tipo":t_exp})
+            if symbol.mut==True:
+                if symbol.tsimbolo==Symbols.VECTOR:
+                    v_exp=self.exp.getValor(driver,ts)
+                    t_exp=self.exp.getTipo(driver,ts)
+                    if v_exp!=None and t_exp!=Tipos.ERROR:
+                        if t_exp==symbol.tipo:
+                            vector=symbol.value
+                            vector.push({"valor":v_exp,"tipo":t_exp})
 
+                        else:
+                            print(f"Error Intento de push de un valor con un tipo distinto al vector linea:{self.line} ")
                     else:
-                        print(f"Error Intento de push de un valor con un tipo distinto al vector linea:{self.line} ")
+                        print(f"Expresion causa error al intentar hacer push  linea:{self.line} ")
                 else:
-                    print(f"Expresion causa error al intentar hacer push  linea:{self.line} ")
+                    print(f"Error Intento de push en una variable no vectorial  linea:{self.line} ")
             else:
-                print(f"Error Intento de push en una variable no vectorial  linea:{self.line} ")
+                print(f"Intento de Push en vector no muteable linea: {self.line}")
         else:
             print(f"Error Intento de push en vector no declarado linea:{self.line} ")
         print("push")

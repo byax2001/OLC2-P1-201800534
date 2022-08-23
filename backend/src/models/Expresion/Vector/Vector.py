@@ -22,10 +22,13 @@ class Vector:
         else:
             print("Error: ingreso de una posicion del vector fuera del rango")
     def remove(self,index:int):
-        valor=self.vector.pop(index)
-        if self.stateCap == True:
-            self.ocupado -= 1
-        return valor
+        if index<len(self.vector):
+            valor=self.vector.pop(index)["valor"]
+            if self.stateCap == True:
+                self.ocupado -= 1
+            return valor
+        else:
+            print("Error: posicion a remover fuera del rango del vector")
     def contains(self,valor):
         for element in self.vector:
             if element["valor"]==valor:
@@ -39,10 +42,10 @@ class Vector:
             self.capacity=len(self.vector)+1
         return self.capacity
 
-    def Acces(self,indexs:[]):
+    def acces(self,cIndex:[]):
         try: #Try como precaucion en caso se intente ingresar a una posicion de memoria fuera del rango del vector
             valor = self.vector
-            for index in indexs:
+            for index in cIndex:
                 valor=valor[index]["valor"]
             return valor
         except:

@@ -113,3 +113,4 @@ let vveci2 = vec![2;10];
 
 let vveci3 = vec! [2,3,4,vec![3;2]];
 vveci3.push(12);
+vveci3.insert("a",34);

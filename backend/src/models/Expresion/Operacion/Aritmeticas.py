@@ -51,12 +51,17 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                print(f'Las expresiones a restar deben de ser del mismo tipo')
         elif self.operador == Operador.DIV:
             if t_nodoIzq == t_nodoDer:
-                if t_nodoIzq==Tipos.INT64:
-                    return math.trunc(self.exp1.getValor(driver, ts) / self.exp2.getValor(driver, ts))
-                elif t_nodoIzq ==Tipos.FLOAT64:
-                    return self.exp1.getValor(driver, ts) / self.exp2.getValor(driver, ts)
+                v_exp1 = self.exp1.getValor(driver, ts)
+                v_exp2 = self.exp2.getValor(driver, ts)
+                if v_exp2!=0:
+                    if t_nodoIzq==Tipos.INT64:
+                        return math.trunc(v_exp1/ v_exp2)
+                    elif t_nodoIzq ==Tipos.FLOAT64:
+                        return v_exp1 / v_exp2
+                    else:
+                        print(f'Las expresiones para la  division debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
                 else:
-                    print(f'Las expresiones para la  division debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
+                    print("Error: Se intenta dividir entre 0")
             else:
                print(f'Las expresiones a restar deben de ser del mismo tipo')
         elif self.operador == Operador.MOD:

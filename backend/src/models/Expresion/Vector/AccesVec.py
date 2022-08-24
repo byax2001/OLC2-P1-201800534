@@ -20,11 +20,12 @@ class AccesVec(Expresion):
             symbol = ts.buscar(self.id)
             vecIndex=[]
             for index in self.cIndex:
-                if index[0].getTipo(driver,ts)==Tipos.INT64:  #cIndex= [[expresion],[expresion],[expresion]]
+                if index.getTipo(driver,ts)==Tipos.INT64:  #cIndex= [[expresion],[expresion],[expresion]]
                     vecIndex.append(index.getValor(driver,ts))
                 else:
                     print(f"Error: uno de los index no es un entero {self.line}")
                     return
+
             if symbol != None:  # si existe el vector, si ya fue declarado
                 if symbol.tsimbolo == Symbols.VECTOR or symbol.tsimbolo==Symbols.ARREGLO:  # si lo que se llamo fue un vector o arreglo
                     vector = symbol.value
@@ -32,11 +33,13 @@ class AccesVec(Expresion):
                     if self.value != None:
                         self.tipo = symbol.tipo
                     else:
+                        #mensaje de error en el metoo del vector
                         self.tipo = Tipos.ERROR
                 else:
                     print(f"Error Intento de obtener valor en una variable no vectorial  linea:{self.line} ")
             else:
                 print(f"Error Intento de Insert en vector no declarado linea:{self.line} ")
+        return self.value
     def getTipo(self, driver, ts):
         if self.value==None:
             self.getValor(driver,ts)

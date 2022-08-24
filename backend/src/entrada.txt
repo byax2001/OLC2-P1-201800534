@@ -104,6 +104,22 @@ println!("El resultado de multi es: {}",y);
 let mut vnew: Vec<i64> = Vec::new();
 let vnew2: Vec<i64> = Vec::new();
 
+
+
+//arreglos
+let mut arreglo1 = ["hola","que tal", "jijo"];
+let arr2 = [
+[ [ 1, 3, 5, 7], [ 9, 11, 13, 15] ],
+[ [ 2, 4, 6, 8], [10, 12, 14, 16] ]
+];
+//let arr1: [&str; 4] = ["Hola"; 4]; // ["Hola", "Hola", "Hola", "Hola"];
+let arr2p: [[&str;2];2] = [["Hola","hola"],["Hola","hola"]];
+let arre2p1: [[&str;4];2] = [["Hola","hola","hola","hola"],["Hola","hola","hola","hola"]];
+let arre2p2: [[[&str;5];2];2] = [
+[["Hola","hola","hola","hola"],["Hola","hola","hola","hola"]],
+[["Hola","hola","hola","hola"],["Hola","hola","hola","hola"]]
+];
+
 let vcap: Vec<i64> = Vec::with_capacity(10);
 let mut vcap2: Vec<i64> = Vec::with_capacity(10);
 
@@ -114,5 +130,15 @@ let vveci2 = vec![2;10];
 let mut vveci3 = vec! [2,3,4,vec![3;2]];
 vveci3.push(12);
 vveci3.insert(0,34);
+let pvec=vveci3.remove(0);
+println!("remove vector: {}",pvec);
+let mut pvec2:bool = vveci3.contains(&2); //siempre deben de ir con & los valores a buscar
+println!("Contains es true: {}",pvec2);
+println!("len : {}",vveci3.len());
 
+println!("vector decarado con capacity, Capacity : {}",vcap.capacity());
+println!("vector decarado sin capacity, Capacity : {}",vveci3.capacity());
 
+//Acceso a los datos de los arreglos
+let acces = vveci3[0];
+println!("Contenido de vveci3 en pos 0: {}",acces);

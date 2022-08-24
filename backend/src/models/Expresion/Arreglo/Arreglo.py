@@ -16,6 +16,7 @@ class Arreglo(Expresion):
             x = 0
             tipoaux = Tipos.ERROR
             if self.exp==None: #expresion a multiplicar
+
                 for exp in self.cExp:
                     if x == 0:
                         tipoaux = exp.getTipo(driver, ts)
@@ -42,6 +43,7 @@ class Arreglo(Expresion):
                     for x in range(v_mult):
                         vector.append({"valor":v_exp,"tipo":t_exp})
                     self.tipo=t_exp
+                    self.value = vector
                 else:
                     self.tipo=Tipos.ERROR
                     print(f"Error el numero de veces a multiplicar la expresion no es entero o la expresion causa error {self.line}")

@@ -34,7 +34,7 @@ class DecVector(Instruccion):
                 cap=self.capacity.getValor(driver,ts)
                 tcap=self.capacity.getTipo(driver,ts)
                 if tcap==Tipos.INT64:
-                    vec=self.rVector(self.tipo,cap)
+                    vec=[]
                     newVec=Vector(vec=vec,stateCap=True,capacity=cap)
                     symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo, line=self.line,
                                     column=self.column)

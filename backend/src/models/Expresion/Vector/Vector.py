@@ -24,6 +24,7 @@ class Vector:
     def remove(self,index:int):
         if index<len(self.vector):
             valor=self.vector.pop(index)["valor"]
+
             if self.stateCap == True:
                 self.ocupado -= 1
             return valor

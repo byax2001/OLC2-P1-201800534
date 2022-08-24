@@ -27,6 +27,7 @@ class Remove(Expresion):
                         if t_index == Tipos.INT64:  # el index es un entero
                             vector = symbol.value
                             self.value=vector.remove(v_index)
+
                             if self.value!=None:
                                 self.tipo=symbol.tipo
                             else:
@@ -39,6 +40,7 @@ class Remove(Expresion):
                     print(f"Intento de Insert en vector no muteable linea: {self.line}")
             else:
                 print(f"Error Intento de Insert en vector no declarado linea:{self.line} ")
+        return self.value
 
     def getTipo(self, driver, ts):
         if self.value==self.tipo==None:

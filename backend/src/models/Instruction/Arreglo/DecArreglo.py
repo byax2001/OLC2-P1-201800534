@@ -20,6 +20,7 @@ class DecArreglo(Instruccion):
                 t_array = self.array.getTipo(driver, ts)
                 v_array = self.array.getValor(driver,ts)
                 if t_dim==t_array:
+
                     arrCorrect=self.verifyArray(v_dim,v_array)
                     if arrCorrect==True:
                         #el array se declara como vector pues poseen metodos similares, sin embargo hay otros que no y estos estan asegurados
@@ -41,11 +42,10 @@ class DecArreglo(Instruccion):
                 ts.addVar(self.id, symbol)
                 print("Arreglo declarado")
         else:
-            print(f"Error el array ya ha sido declarado con anterioriad linea: {self.line}")
+            print(f"Error el array ya ha sido declarado con anterioridad linea: {self.line}")
 
 
     def verifyArray(self,arrDim,arrayC):
-        arrayC=arrayC["valor"]
         arrCorrect=True
         for dimensional in arrDim:#en anteriores metodos se aseguro que las dimensionales que vienen aca son enteras
             if type(arrayC)==list:

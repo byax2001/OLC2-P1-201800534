@@ -2,6 +2,7 @@ from models.Instruction.Instruction import Instruccion
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos,getTipo
 from models.TablaSymbols.Symbol import Symbol
+from models.Expresion.Vector.Vector import Vector
 
 class Declaracion(Instruccion):
     def __init__(self,mut:bool,id:str,tipo:str, exp: Expresion, linea:int, columna:int):
@@ -21,14 +22,28 @@ class Declaracion(Instruccion):
                 existe=ts.buscarActualTs(self.id);
                 if(existe==None):
                     if(self.tipoVar==None):
-                        newVar=Symbol(mut=self.mut,id=self.id,value=v_exp,tipo_simbolo=0,tipo=t_exp,line=self.linea,column=self.columna)
-                        ts.addVar(self.id,newVar)
-                        print("se añadio una variable")
+                        if type(v_exp)!=list:
+                            newVar=Symbol(mut=self.mut,id=self.id,value=v_exp,tipo_simbolo=0,tipo=t_exp,line=self.linea,column=self.columna)
+                            ts.addVar(self.id,newVar)
+                            print("se añadio una variable")
+                        else:  #si lo que se manda es la parte de un arreglo o vector
+                            nvector = Vector(vec=v_exp, stateCap=False, capacity=0)
+                            symbol = Symbol(mut=self.mut, id=self.id, value=nvector, tipo_simbolo=1, tipo=t_exp,
+                                            line=self.line, column=self.column)
+                            ts.addVar(self.id, symbol)
+                            print("Arreglo declarado")
                     else:
                         if(self.tipoVar==t_exp):
-                            newVar = Symbol(mut=self.mut,id=self.id, value=v_exp, tipo_simbolo=0,tipo= t_exp, line= self.linea,column= self.columna)
-                            ts.addVar(self.id, newVar)
-                            print("se añadio una variable")
+                            if type(v_exp) != list:
+                                newVar = Symbol(mut=self.mut,id=self.id, value=v_exp, tipo_simbolo=0,tipo= t_exp, line= self.linea,column= self.columna)
+                                ts.addVar(self.id, newVar)
+                                print("se añadio una variable")
+                            else: #si lo que se manda es la parte de un arreglo o vector
+                                nvector = Vector(vec=v_exp, stateCap=False, capacity=0)
+                                symbol = Symbol(mut=self.mut, id=self.id, value=nvector, tipo_simbolo=1, tipo=t_exp,
+                                                line=self.line, column=self.column)
+                                ts.addVar(self.id, symbol)
+                                print("Arreglo declarado")
                         else:
                             print("El tipo de variable no corresponde con el valor de la variable a declarar")
                 else:

@@ -15,11 +15,6 @@ from models.Expresion.Nativas.Abs import Abs
 from models.Expresion.Nativas.Sqrt import Sqrt
 from models.Expresion.Nativas.ToStringOwned import ToStringOwned
 from models.Expresion.Nativas.Clone import Clone
-from models.Expresion.Vector.vecI import vecI
-from models.Instruction.Vector.DecVector import DecVector
-#arreglo
-from models.Expresion.Arreglo.Arreglo import Arreglo
-from models.Expresion.Arreglo.DimensionalArreglo import DimensionalArreglo
 
 #Instrucciones
 from models.Instruction.Println import Println
@@ -36,14 +31,21 @@ from models.Instruction.While import While
 from models.Instruction.Funcion import Funcion
 from models.Instruction.Call import Call
     #vectores
+from models.Expresion.Vector.vecI import vecI
+from models.Expresion.Vector.AccesVec import AccesVec
 from models.Instruction.Vector.Push import Push
 from models.Instruction.Vector.Insert import Insert
 from models.Expresion.Vector.Remove import Remove
 from models.Expresion.Vector.Contains import Contains
 from models.Expresion.Vector.Len import Len
 from models.Expresion.Vector.Capacity import Capacity
-    #arrays
+from models.Instruction.Vector.DecVector import DecVector
+    #arreglos
 from models.Instruction.Arreglo.DecArreglo import DecArreglo
+from models.Expresion.Arreglo.Arreglo import Arreglo
+from models.Expresion.Arreglo.DimensionalArreglo import DimensionalArreglo
+
+
 tokens = lexer.tokens
 
 # EXPRESION : term MAS term
@@ -173,6 +175,7 @@ def p_exp_one_element(p):
         | CONTAINS
         | LEN
         | CAPACITY
+        | ACCESVEC
     """
     p[0]=p[1]
 #CONJEXP=====================================================================================0
@@ -530,34 +533,44 @@ def p_instv_len(p):
 def p_instv_capacity(p):
     """CAPACITY : id punto capacity para parc"""
     p[0]=Capacity(id=p[1],line=p.lineno(1), column=0)
+def p_instv_acces(p):
+    """ACCESVEC : id INDEXS"""
+    p[0]=AccesVec(id=p[1],cIndex=p[2],line=p.lineno(1), column=0)
+def p_index_acces_list(p):
+    """INDEXS : INDEXS cora EXPRESION corc"""
+    p[1].append(p[3])
+    p[0]=p[1]
+def p_index_acces(p):
+    """INDEXS : cora EXPRESION corc"""
+    p[0]=[p[2]]
 
 #ARREGLOS
 def p_dec_arreglo1(p):
     """DECARREGLO : let id dospuntos DIMENSION_ARR igual ARREGLO
                 | let mut id dospuntos DIMENSION_ARR igual ARREGLO """
     if p[3]==":":
-        p[0]=DecArreglo(mut=False,id=p[1],arrDimensional=p[4],array=p[6],line=p.lineno(1), column=0)
+        p[0]=DecArreglo(mut=False,id=p[2],arrDimensional=p[4],array=p[6],line=p.lineno(1), column=0)
     else:
-        p[0]=DecArreglo(mut=True,id=p[2],arrDimensional=p[5],array=p[7],line=p.lineno(1), column=0)
+        p[0]=DecArreglo(mut=True,id=p[3],arrDimensional=p[5],array=p[7],line=p.lineno(1), column=0)
 def p_dec_arreglo2(p):
     """DECARREGLO : let id igual ARREGLO
                 | let mut id igual ARREGLO"""
     if p[3]=="=":
-        p[0] = DecArreglo(mut=False, id=p[1], arrDimensional=None, array=p[4], line=p.lineno(1), column=0)
+        p[0] = DecArreglo(mut=False, id=p[2], arrDimensional=None, array=p[4], line=p.lineno(1), column=0)
     else:
-        p[0] = DecArreglo(mut=False, id=p[2], arrDimensional=None, array=p[5], line=p.lineno(1), column=0)
+        p[0] = DecArreglo(mut=False, id=p[3], arrDimensional=None, array=p[5], line=p.lineno(1), column=0)
 def p_dimension_arreglo_multidimensional(p):
     """DIMENSION_ARR : cora DIMENSION_ARR puntoycoma EXPRESION corc """
     p[0] = DimensionalArreglo(tipo="",dimArr=p[2], Dimensional=p[4], line=p.lineno(1), column=0)
 def p_dimension_arreglo_unidimensional(p):
     """DIMENSION_ARR : cora TIPOVAR puntoycoma EXPRESION corc"""
-    p[0]=DimensionalArreglo(tipo=p[1],dimArr=None,Dimensional=p[4],line=p.lineno(1), column=0)
+    p[0]=DimensionalArreglo(tipo=p[2],dimArr=None,Dimensional=p[4],line=p.lineno(1), column=0)
 def p_arreglo_conj(p):
     """ARREGLO : cora CONT_ARR corc"""
     p[0]=Arreglo(cExp=p[2],exp=None,multi=None,line=p.lineno(1), column=0)
 def p_arreglo_multi(p):
     """ARREGLO : cora EXPRESION puntoycoma EXPRESION corc"""
-    p[0]=Arreglo(cExp=None,exp=p[1],multi=p[3],line=p.lineno(1), column=0)
+    p[0]=Arreglo(cExp=None,exp=p[2],multi=p[4],line=p.lineno(1), column=0)
 def p_cont_arreglo(p):
     """CONT_ARR : CONT_ARR coma ELARR"""
     p[1].append(p[3])

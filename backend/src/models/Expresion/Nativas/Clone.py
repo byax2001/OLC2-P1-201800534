@@ -11,3 +11,5 @@ class Clone(Expresion):
     def getTipo(self, driver, ts):
         return self.exp.getTipo(driver,ts)
         # o solo simplemente return Tipos.STRING
+    def ejecutar(self,driver,ts):
+        pass

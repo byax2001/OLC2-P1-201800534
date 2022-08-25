@@ -11,3 +11,5 @@ class ToStringOwned(Expresion):
     def getTipo(self, driver, ts):
         return Tipos.STRING
         # o solo simplemente return Tipos.STRING
+    def ejecutar(self,driver,ts):
+        pass

@@ -18,3 +18,5 @@ class Sqrt(Expresion):
             return self.exp.getTipo(driver,ts)
         else:
             return Tipos.ERROR
+    def ejecutar(self,driver,ts):
+        pass

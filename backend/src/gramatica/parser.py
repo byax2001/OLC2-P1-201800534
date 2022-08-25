@@ -605,6 +605,24 @@ def p_charArr(p):
 def p_rangoArr(p):
     """RANGO : EXPRESION punto punto EXPRESION"""
     p[0]=Rango(exp1=p[1],exp2=p[4], line=p.lineno(1), column=0)
+
+#STRUCTS
+#MODULOS
+def p_modulos(p):
+    """MODULO : modu llavea CONTENT_MOD llavec """
+def p_content_mod_list(p):
+    """CONTENT_MOD : CONTENT_MOD ELEMENT_MOD"""
+    p[1].append(p[2])
+    p[0]=p[1]
+def p_content_mod_u(p):
+    """CONTENT_MOD : ELEMENT_MOD"""
+    p[0]=[p[1]]
+def p_content_mod(p):
+    """ELEMENT_MOD: FUNCION
+                | pub FUNCION
+                | MODULO
+                | pub MODULO
+    """
 # Error sintactico
 def p_error(p):
     print(f'Error de sintaxis simbolo: {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')

@@ -25,7 +25,7 @@ class Match(Instruccion):
                 return None
 
         for brazo in self.listBrazos:
-            CmpValores = brazo.CompararVexps(driver, new_ts,v_exp)
+            CmpValores = brazo.CompararVexps(driver, new_ts,v_exp) #si alguno de los brazos tiene como cabecera la expresion solicitada en el match
             if(CmpValores):
                 brazo.ejecutar(driver,new_ts) #ejecuta la instruccion del brazo
                 return

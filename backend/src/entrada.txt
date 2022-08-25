@@ -37,7 +37,7 @@ let a= match x {
     11 => "11 x match iteracion",
     _=> "que tal",
 };
-println!("{}",a);
+println!("match Iterador: {}",a);
 
 let mut cont = 0;
 loop {
@@ -56,7 +56,7 @@ let mut p3 = loop {
     if p1==0{
         break "Loop ternario bien";
     }else{
-        println!("{}",p1);
+        println!("adentro loop {}",p1);
         println!("---prueba loop ---");
     };
 };
@@ -67,10 +67,10 @@ while pruebaW<3 {
     println!("it while");
     pruebaW=pruebaW+1;
 };
-println!("{}",pruebaW);
+println!("despues de un while: {}",pruebaW);
 
 fn Funcion1 () {
-    println!("hola");
+    println!("hola esto es una funcion void");
 };
 
 //Nativas--------------------------
@@ -94,11 +94,11 @@ fn multi (mut x:i64, y:i64)->i64{
 
     x= x*y;
 
-    println!("{}",x);
+    println!("adentro de una funcion: {}",x);
     return x;
 };
 let y=multi(2,3);
-println!("El resultado de multi es: {}",y);
+println!("El resultado de funcion multi es: {}",y);
 
 //Vectores
 let mut vnew: Vec<i64> = Vec::new();
@@ -115,7 +115,7 @@ let arr2 = [
 //let arr1: [&str; 4] = ["Hola"; 4]; // ["Hola", "Hola", "Hola", "Hola"];
 let arr2p: [[&str;2];2] = [["Hola","hola"],["Hola","hola"]];
 let arre2p1: [[&str;4];2] = [["Hola","hola","hola","hola"],["Hola","hola","hola","hola"]];
-let arre2p2: [[[&str;5];2];2] = [
+let arre2p2: [[[&str;4];2];2] = [
 [["Hola","hola","hola","hola"],["Hola","hola","hola","hola"]],
 [["Hola","hola","hola","hola"],["Hola","hola","hola","hola"]]
 ];
@@ -150,6 +150,8 @@ for x in 0..4 {
 
 for palabra in ["hoy","manana","antier"] {
     println!("valor de palabra: {}",palabra);
+    continue;
+    println!("esto no se debe de imprimir");
 };
 for letra in "Guatemala".chars(){
     println!("letra: {}",letra);

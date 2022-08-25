@@ -15,22 +15,23 @@ class If(Instruccion):
         self.column=column
 
     def ejecutar(self, driver, ts: Enviroment):
-        v_exp=self.exp.getValor(driver,ts);
-        t_exp=self.exp.getTipo(driver,ts)
+        v_exp=self.exp.getValor(driver,ts); # con el ts anterior
+        t_exp=self.exp.getTipo(driver,ts);
+        new_ts=Enviroment(ts,"IF"); #ejecutar resto de instrucciones con el nuevo ts
         if(v_exp is not None):
             if t_exp ==Tipos.BOOLEAN:
                 if v_exp==True:
                     for element in self.bloque1:
                         if isinstance(element,Break) or isinstance(element,Continue) or isinstance(element,Return):
                             return element
-                        rInst=element.ejecutar(driver,ts)
+                        rInst=element.ejecutar(driver,new_ts)
                         if isinstance(rInst,Break) or isinstance(rInst,Continue) or isinstance(rInst,Return):
                             return rInst
                 else:
                     for element in self.bloque2:
                         if isinstance(element, Break) or isinstance(element, Continue) or isinstance(element, Return):
                             return element
-                        rInst = element.ejecutar(driver, ts)
+                        rInst = element.ejecutar(driver,new_ts)
                         if isinstance(rInst, Break) or isinstance(rInst, Continue) or isinstance(rInst, Return):
                             return rInst
             else:

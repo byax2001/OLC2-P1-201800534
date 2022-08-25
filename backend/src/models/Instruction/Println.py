@@ -25,11 +25,11 @@ class Println(Instruccion):
             c_llavesint=0  #para imprimir arrays enteros
             for element in self.cExp:
                 if isinstance(element,Id):
-                    Symbol=element.getSymbol(driver,ts)
+                    Symbol=element.getSymbol(driver,ts) #este metodo se encuentra declarado en la clase Id.py
                     if Symbol != None:
                         if Symbol.tsimbolo == Symbols.VARIABLE:
                             c_llaves+=1
-                        elif Symbol.tsimbolo == Symbols.ARREGLO:
+                        elif Symbol.tsimbolo == Symbols.ARREGLO or Symbol.tsimbolo == Symbols.VECTOR:
                             c_llavesint+=1
                         elif Symbol.tsimbolo == Symbols.FUNCION:
                             print("Se debe de ejecutar la funcion y no solo colocar id")
@@ -48,7 +48,7 @@ class Println(Instruccion):
                     for exp in self.cExp: #se procede a recorrer cada expresion
                         valorCexp = str(exp.getValor(driver, ts))
                         if isinstance(exp, Id):  #si la expresion es un id, hay que analizar si es un arreglo o una variable
-                            Symbol = element.getSymbol(driver, ts)
+                            Symbol = exp.getSymbol(driver, ts)
                             if Symbol.tsimbolo == Symbols.VARIABLE:
                                 v_exp=v_exp.replace("{}",valorCexp,1)  #si es una variable normal se reemplaza de forma comun
                             elif Symbol.tsimbolo == Symbols.ARREGLO:

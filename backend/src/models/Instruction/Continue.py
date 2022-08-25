@@ -2,9 +2,9 @@ from models.Instruction.Instruction import Instruccion
 
 
 class Continue(Instruccion):
-    def __init__(self,linea:int, columna:int):
-        self.linea = linea
-        self.columna = columna
+    def __init__(self,line:int, column:int):
+        self.linea = line
+        self.columna = column
     def ejecutar(self, driver, ts):
         pass
 

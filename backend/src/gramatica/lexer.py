@@ -43,7 +43,9 @@ reservadas = {
     'capacity':'capacity',
     'for':'for',
     'in':'in',
-    'chars':'chars'
+    'chars':'chars',
+    'mod':'modu',
+    'pub':'pub'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
             "mayor","menor","mayorigual","menorigual","igualigual","diferente",

@@ -40,11 +40,14 @@ reservadas = {
     'remove':'remove',
     'contains':'contains',
     'len':'len',
-    'capacity':'capacity'
+    'capacity':'capacity',
+    'for':'for',
+    'in':'in',
+    'chars':'chars'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",
             "mayor","menor","mayorigual","menorigual","igualigual","diferente",
-            "or","and","not","interrogacion",
+            "or","and","not",
             'mod',
             'punto','puntoycoma','dospuntos','llavea','llavec','cora','corc','igual','coma','ampersand',
             'id',
@@ -89,7 +92,6 @@ t_llavec="\}"
 t_coma=r'\,'
 t_puntoycoma=r'\;'
 t_dospuntos=r'\:'
-t_interrogacion=r'\?'
 t_punto= r'\.'
 
 

@@ -15,8 +15,8 @@ class CharArray(Expresion):
                 vector=[]
                 for i in v_exp:
                     vector.append({"valor":i,"tipo":Tipos.CHAR})
-                self.valor==vector
-                self.tipo==Tipos.CHAR
+                self.valor=vector
+                self.tipo=Tipos.CHAR
             else:
                 print("Error chars() en un elemento no &str")
         return self.valor

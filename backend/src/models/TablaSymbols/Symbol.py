@@ -16,6 +16,7 @@ def getSymbol(s):
         return Symbols.FUNCION
     elif s==3:
         return Symbols.VECTOR
+
     
 class Symbol():
     def __init__(self,mut:bool,id: str, value, tipo_simbolo: int, tipo: Tipos,line:int,column:int) -> None:

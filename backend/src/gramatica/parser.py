@@ -30,6 +30,9 @@ from models.Instruction.Continue import Continue
 from models.Instruction.While import While
 from models.Instruction.Funcion import Funcion
 from models.Instruction.Call import Call
+from models.Instruction.ForIn import ForIn
+from models.Expresion.Rango import Rango
+from models.Expresion.CharArray import CharArray
     #vectores
 from models.Expresion.Vector.vecI import vecI
 from models.Expresion.Vector.AccesVec import AccesVec
@@ -98,6 +101,7 @@ def p_instruccion(p):
         | PUSH
         | INSERT
         | DECARREGLO
+        | FORIN
     """
     #Anotaciones:
         #LOOP ES TANTO INSTRUCCION COMO EXPRESION, TIENE GETVALOR,GETTIPO Y EJECUTAR ESTE SE ENCUENTRA DECLARADO EN EXPRESION
@@ -468,6 +472,7 @@ def p_call(p):
         p[0]=Call(id=p[1],cExp=p[3], line=p.lineno(1), column=0)
     else:
         p[0]=Call(id=p[1],cExp=[], line=p.lineno(1), column=0)
+
 #DECLARACION DE VECTOR
 def p_defvector_1(p):
     """
@@ -582,6 +587,24 @@ def p_elemento_arreglo(p):
     """ELARR : ARREGLO
             | EXPRESION"""
     p[0]=p[1]
+
+
+# Forin
+def p_forin(p):
+    """FORIN : for id in ARRFOR BLOQUE_INST"""
+    p[0]=ForIn(id=p[2],arreglo=p[4],cInst=p[5],line=p.lineno(1), column=0)
+
+def p_arrfor(p):
+    """ARRFOR : CHARS
+            | ARREGLO
+            | RANGO"""
+    p[0]=p[1]
+def p_charArr(p):
+    """CHARS : EXPRESION punto chars para parc"""
+    p[0]=CharArray(exp=p[1], line=p.lineno(1), column=0)
+def p_rangoArr(p):
+    """RANGO : EXPRESION punto punto EXPRESION"""
+    p[0]=Rango(exp1=p[1],exp2=p[4], line=p.lineno(1), column=0)
 # Error sintactico
 def p_error(p):
     print(f'Error de sintaxis simbolo: {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')

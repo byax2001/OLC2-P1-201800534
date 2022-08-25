@@ -142,3 +142,15 @@ println!("vector decarado sin capacity, Capacity : {}",vveci3.capacity());
 //Acceso a los datos de los arreglos
 let acces = vveci3[0];
 println!("Contenido de vveci3 en pos 0: {}",acces);
+
+//FOR IN
+for x in 0..4 {
+    println!("valor de x: {}",x);
+};
+
+for palabra in ["hoy","manana","antier"] {
+    println!("valor de palabra: {}",palabra);
+};
+for letra in "Guatemala".chars(){
+    println!("letra: {}",letra);
+};

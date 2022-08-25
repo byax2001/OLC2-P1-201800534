@@ -1,4 +1,4 @@
-from models.TablaSymbols.Symbol import Symbol
+from models.TablaSymbols.Symbol import Symbol,getSymbol
 
 class Enviroment:
     def __init__(self,anterior,env) -> None:
@@ -25,6 +25,21 @@ class Enviroment:
             symbol= ts.tabla.get(id)
             if symbol is not None:
                 symbol.value=value
+                ts.tabla.update({id:symbol})
+                return True
+            ts =ts.anterior
+        return None
+
+    def updateForIn(self,id:str,value):
+        ts=self
+        while ts is not None:
+            symbol= ts.tabla.get(id)
+            if symbol is not None:
+                symbol.value=value
+                if type(value) == list:
+                    symbol.tsimbolo=getSymbol(1)
+                elif type(value) != list:
+                    symbol.tsimbolo=getSymbol(0)
                 ts.tabla.update({id:symbol})
                 return True
             ts =ts.anterior

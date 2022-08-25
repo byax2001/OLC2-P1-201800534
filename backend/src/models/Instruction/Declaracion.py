@@ -27,6 +27,8 @@ class Declaracion(Instruccion):
                             ts.addVar(self.id,newVar)
                             print("se añadio una variable")
                         else:  #si lo que se manda es la parte de un arreglo o vector
+                            # let p=[[1,2,3],[2,4,5]]  - declaracion de arreglo (ya existe instruccion a parte para eso)
+                            # let a=p[0] - declaracion normal con una posicion de un arreglo que da un array
                             nvector = Vector(vec=v_exp, stateCap=False, capacity=0)
                             symbol = Symbol(mut=self.mut, id=self.id, value=nvector, tipo_simbolo=1, tipo=t_exp,
                                             line=self.line, column=self.column)

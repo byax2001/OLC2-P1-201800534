@@ -156,3 +156,30 @@ for palabra in ["hoy","manana","antier"] {
 for letra in "Guatemala".chars(){
     println!("letra: {}",letra);
 };
+
+for i in vec![3;4] {
+    println!("elemento de un for vec!: {}",i);
+};
+
+//impresion de un vector
+println!("arreglo a imprimir es este:  {:?}",[2,3,4,5,5,[2,3,4,5,0]]);
+
+//prueba impresion vector declarado
+let mut impvec= [11,81,4,5,6,8];
+println!("vector declarado: {:?}",impvec);
+
+impvec[0]=24;
+println!("vector modificado: {:?}",impvec);
+let xvv=i64::pow(2,4);
+let xff=f64::powf(2.0,4.0);
+println!("pow: {}",xvv);
+println!("powf: {}",xff);
+
+//structs
+struct Personaje {
+nombre: String,
+edad: i64,
+descripcion: String
+};
+
+let personaje = Personaje { nombre:"brandon".to_string(),edad:74,descripcion:"estudiante".to_string()};

@@ -2,8 +2,9 @@
 from ply import lex
 
 reservadas = {
-    #r'exp regular' : id 
+    #r'exp regular' : id
     'pow': 'pow',
+    'powf': 'powf',
     'struct': 'struct',
     'println!': 'println', #Hay que crear un def para esta funcion, si no no la detecta el analizador lexico
     'let':'let',
@@ -14,6 +15,7 @@ reservadas = {
     'bool':'bool',
     'String':'string',
     '&str': 'str',
+    'usize':'usize',
     'if': 'if',
     'else': 'else',
     'match':'match',
@@ -149,6 +151,7 @@ def t_ignorar_salto(t):
 
 # Manejo de errores lexicos
 def t_error(t):
+
     print(f'Caracter no reconocido {t.value[0]!r} en la linea {t.lexer.lineno}')
     t.lexer.skip(1)
 

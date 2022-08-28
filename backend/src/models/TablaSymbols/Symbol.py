@@ -6,6 +6,7 @@ class Symbols(Enum):
     ARREGLO=1
     FUNCION=2
     VECTOR=3
+    OBJETO=4
 
 def getSymbol(s):
     if s==0:
@@ -16,6 +17,8 @@ def getSymbol(s):
         return Symbols.FUNCION
     elif s==3:
         return Symbols.VECTOR
+    elif s==4:
+        return Symbols.OBJETO
 
     
 class Symbol():

@@ -10,6 +10,9 @@ class Tipos(Enum):
     ERROR = 7
     ID = 8
     VOID = 9
+    USIZE=10 #int pero siempre mayor que 0
+    STRUCT=11
+
 
 def getTipo(s:str):
     if s=="i64":
@@ -24,6 +27,8 @@ def getTipo(s:str):
         return Tipos.STRING
     elif s=="&str":
         return Tipos.STR
+    elif s=="usize":
+        return Tipos.USIZE
     else:
         return Tipos.ERROR
 

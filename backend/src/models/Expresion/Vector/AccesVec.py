@@ -20,7 +20,8 @@ class AccesVec(Expresion):
             symbol = ts.buscar(self.id)
             vecIndex=[]
             for index in self.cIndex:
-                if index.getTipo(driver,ts)==Tipos.INT64:  #cIndex= [[expresion],[expresion],[expresion]]
+                tipo_index=index.getTipo(driver,ts)
+                if tipo_index==Tipos.INT64 or tipo_index==Tipos.USIZE:  #cIndex= [expresion,expresion,expresion]
                     vecIndex.append(index.getValor(driver,ts))
                 else:
                     print(f"Error: uno de los index no es un entero {self.line}")
@@ -29,7 +30,8 @@ class AccesVec(Expresion):
             if symbol != None:  # si existe el vector, si ya fue declarado
                 if symbol.tsimbolo == Symbols.VECTOR or symbol.tsimbolo==Symbols.ARREGLO:  # si lo que se llamo fue un vector o arreglo
                     vector = symbol.value
-                    self.value = vector.acces(vecIndex)
+                    self.value = vector.acces(vecIndex) #Se llama al metodo declarado en la clase Vector para obtener el valor del elemento deseado
+                                                        #con los indices especificados.
                     if self.value != None:
                         self.tipo = symbol.tipo
                     else:

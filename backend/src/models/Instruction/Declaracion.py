@@ -21,7 +21,7 @@ class Declaracion(Instruccion):
             if t_exp != Tipos.ERROR:
                 existe=ts.buscarActualTs(self.id);
                 if(existe==None):
-                    if(self.tipoVar==None):
+                    if(self.tipoVar==None): #si no se declaro el tipo de variable
                         if type(v_exp)!=list:
                             newVar=Symbol(mut=self.mut,id=self.id,value=v_exp,tipo_simbolo=0,tipo=t_exp,line=self.linea,column=self.columna)
                             ts.addVar(self.id,newVar)
@@ -34,8 +34,8 @@ class Declaracion(Instruccion):
                                             line=self.line, column=self.column)
                             ts.addVar(self.id, symbol)
                             print("Arreglo declarado")
-                    else:
-                        if(self.tipoVar==t_exp):
+                    else: #si si se declaro el tipo de variable
+                        if(self.tipoVar==t_exp):#el tipo de variable y la expresion a asignar deben de ser del mismo tipo para que sea posible declararlas
                             if type(v_exp) != list:
                                 newVar = Symbol(mut=self.mut,id=self.id, value=v_exp, tipo_simbolo=0,tipo= t_exp, line= self.linea,column= self.columna)
                                 ts.addVar(self.id, newVar)
@@ -46,12 +46,20 @@ class Declaracion(Instruccion):
                                                 line=self.line, column=self.column)
                                 ts.addVar(self.id, symbol)
                                 print("Arreglo declarado")
+                        elif self.tipoVar==Tipos.USIZE and t_exp==Tipos.INT64: #Unica excepcion donde el tipo de variable y tipo de expresion son diferentes y posibles de declarar
+                            newVar = Symbol(mut=self.mut, id=self.id, value=v_exp, tipo_simbolo=0, tipo=Tipos.USIZE,
+                                            line=self.linea, column=self.columna)
+                            ts.addVar(self.id, newVar)
+                            print("se añadio una variable")
                         else:
                             print("El tipo de variable no corresponde con el valor de la variable a declarar")
+                            return False
                 else:
                     print("La variable ya ha sido declarada con anterioridad")
+                    return False
             else:
                 print("La expresion para declarar retorna un valor con error")
+                return False
         else:
             existe = ts.buscarActualTs(self.id)
             v_exp = Declaracion.valueDefault(self.tipoVar)
@@ -61,6 +69,7 @@ class Declaracion(Instruccion):
                 ts.addVar(self.id, newVar)
             else:
                 print("La variable ya ha sido declarada con anterioridad")
+                return False
 
         #REVISAR SI EN EL PROYECTO HAY DECLARACIONES   let A; let B;
         #EN ESE CASO CREAR METODO QUE DEVUELVA UN VALOR POR DEFAULT EN CADA TIPO DE VARIABLE PARA DARSELOS COMO VALOR
@@ -80,3 +89,7 @@ class Declaracion(Instruccion):
     #metodo para hacer declaraciones luego de llamada una funcion
     def changeExp(self,exp:Expresion):
         self.exp=exp
+    def getId(self):
+        return self.id
+    def getExp(self):
+        return self.exp

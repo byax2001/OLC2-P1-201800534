@@ -1,6 +1,7 @@
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import definirTipo,Tipos
 from models.TablaSymbols.Enviroment import Enviroment
+from models.Expresion.Vector.Vector import Vector
 
 class Id(Expresion):    
     def __init__(self, id:str, linea: int, columna: int):
@@ -24,7 +25,9 @@ class Id(Expresion):
     def getValor(self, driver, ts:Enviroment):
         symbol = ts.buscar(self.id);
         if symbol!=None:
-            self.value = symbol.value;
+            self.value = symbol.value
+            if isinstance(self.value,Vector):  #EN CASO SEA UN ARRAY LO LLAMADO ESTE ESTARA ADENTRO DE UNA CLASE VECTOR
+                self.value=self.value.vector   #CON LA VARIABLE VECTOR (EL VALOR DESEADO A USAR) Y OTROS PARAMETROS
             return self.value
         else:
             return None

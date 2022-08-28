@@ -21,6 +21,7 @@ class Call(Instruccion):
     def getValor(self, driver: Driver, ts: Enviroment):
         if self.value==None and self.tipo==None:
             newts=Enviroment(ts,"Funcion")
+            newts2=Enviroment(newts,"BloqueFuncion")
             symbol=ts.buscar(self.id);
             if symbol!=None:
                 if symbol.tsimbolo==Symbols.FUNCION:
@@ -37,19 +38,20 @@ class Call(Instruccion):
                         for declaracion in paramsFun:
                             declaracion.ejecutar(driver,newts)
 
+                        #bloque de la funcion -----------------------------------------
                         if symbol.tipo==Tipos.VOID:
                             for instruccion in instFun:
                                 if isinstance(instruccion,Return):
-                                    if instruccion.ejecutar(driver,newts)!=None:
+                                    if instruccion.ejecutar(driver,newts2)!=None:
                                         print("Error se intenta retornar algo en una funcion Void")
                                         return
                                 elif isinstance(instruccion,Continue) or isinstance(instruccion,Break):
                                     print("Error se esta intentado usar Break o Continue en una funcion")
                                     return
-                                rInst=instruccion.ejecutar(driver,newts)
+                                rInst=instruccion.ejecutar(driver,newts2)
 
                                 if isinstance(rInst,Return):
-                                    if rInst.ejecutar(driver,newts)!=None:
+                                    if rInst.ejecutar(driver,newts2)!=None:
                                         print("Error se intenta retornar algo en una funcion Void")
                                         return
                                 elif isinstance(rInst,Continue) or isinstance(rInst,Break):
@@ -58,31 +60,31 @@ class Call(Instruccion):
                         else: #FUCIONES QUE RETORNAN VALORES-----------------------------------------------
                             for instruccion in instFun:
                                 if isinstance(instruccion, Return):
-                                    exp=instruccion.ejecutar(driver,newts)
+                                    exp=instruccion.ejecutar(driver,newts2)
                                     if exp== None:
                                         print("Error no se intenta retornar algo en la funcion que debe retornar")
                                         return
                                     else:
-                                        self.tipo=exp.getTipo(driver,newts)
+                                        self.tipo=exp.getTipo(driver,newts2)
                                         if self.tipo==symbol.tipo:  #la funcion debe de retornar un valor del mismo tipo el que fue declarada
-                                            self.value=exp.getValor(driver,newts)
+                                            self.value=exp.getValor(driver,newts2)
                                         else:
                                             print("La funcion no esta retornando un valor del mismo tipo que esta")
                                             return
                                 elif isinstance(instruccion, Continue) or isinstance(instruccion, Break):
                                     print("Error se esta intentado usar Break o Continue en una funcion")
                                     return
-                                rInst = instruccion.ejecutar(driver,newts)
+                                rInst = instruccion.ejecutar(driver,newts2)
 
                                 if isinstance(rInst, Return):
-                                    exp = rInst.ejecutar(driver,newts)
+                                    exp = rInst.ejecutar(driver,newts2)
                                     if exp == None:
                                         print("Error no se intenta retornar algo en la funcion que debe retornar")
                                         return
                                     else:
-                                        self.tipo = exp.getTipo(driver, newts)
+                                        self.tipo = exp.getTipo(driver, newts2)
                                         if self.tipo == symbol.tipo:
-                                            self.value = exp.getValor(driver, newts)
+                                            self.value = exp.getValor(driver, newts2)
                                         else:
                                             print("La funcion no esta retornando un valor del mismo tipo que esta")
                                             return

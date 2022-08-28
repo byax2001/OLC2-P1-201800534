@@ -15,7 +15,7 @@ from models.Expresion.Nativas.Abs import Abs
 from models.Expresion.Nativas.Sqrt import Sqrt
 from models.Expresion.Nativas.ToStringOwned import ToStringOwned
 from models.Expresion.Nativas.Clone import Clone
-
+from models.Expresion.Nothing import Nothing
 #Instrucciones
 from models.Instruction.Println import Println
 from models.Instruction.Declaracion import Declaracion
@@ -33,6 +33,10 @@ from models.Instruction.Call import Call
 from models.Instruction.ForIn import ForIn
 from models.Expresion.Rango import Rango
 from models.Expresion.CharArray import CharArray
+#structs
+from models.Instruction.Struct.SaveStruct import SaveStruct
+from models.Expresion.Struct.ExpStruct import ExpStruct
+from models.Instruction.Struct.DecStruct import DecStruct
     #vectores
 from models.Expresion.Vector.vecI import vecI
 from models.Expresion.Vector.AccesVec import AccesVec
@@ -102,6 +106,8 @@ def p_instruccion(p):
         | INSERT
         | DECARREGLO
         | FORIN
+        | STRUCT
+        | DECSTRUCT
     """
     #Anotaciones:
         #LOOP ES TANTO INSTRUCCION COMO EXPRESION, TIENE GETVALOR,GETTIPO Y EJECUTAR ESTE SE ENCUENTRA DECLARADO EN EXPRESION
@@ -116,17 +122,18 @@ def p_expresion_aritmeticas(p):
             |   EXPRESION div EXPRESION
             |   EXPRESION multi EXPRESION
             |   EXPRESION mod EXPRESION  
-            |   pow para EXPRESION coma EXPRESION parc
+            |   i64 dospuntos dospuntos pow para EXPRESION coma EXPRESION parc
+            |   f64 dospuntos dospuntos powf para EXPRESION coma EXPRESION parc
     """
     # p contiene los elementos de la gramatica
     #
     # EXPRESION : term MAS term
     #   p[0]     : p[1] p[2] p[3]
     #
-    if p[2] != '(':
+    if p[2] != ':':
         p[0] = Aritmeticas(exp1=p[1], operador=p[2], exp2=p[3], expU=False, linea=p.lineno(1), columna=0)
     else:
-        p[0] = Aritmeticas(exp1=p[3], operador="pow", exp2=p[5], expU=False, linea=p.lineno(1), columna=0)
+        p[0] = Aritmeticas(exp1=p[6], operador=p[4], exp2=p[8], expU=False, linea=p.lineno(1), columna=0)
 
 def p_factor_unario(p):
     """
@@ -184,12 +191,18 @@ def p_exp_one_element(p):
     p[0]=p[1]
 #CONJEXP=====================================================================================0
 def p_cexp_list(p):
-    """CONJEXP : CONJEXP coma EXPRESION"""
+    """CONJEXP : CONJEXP coma ELCONJ"""
     p[1].append(p[3])
     p[0]=p[1]
 def p_cexp(p):
-    """CONJEXP : EXPRESION"""
+    """CONJEXP : ELCONJ"""
     p[0] = [p[1]]
+
+def p_elementcexp(p):
+    """ELCONJ : EXPRESION
+            | VECI
+            | ARREGLO"""
+    p[0] = p[1]
 #tipo de dato=====================================================================================0
 def p_tipo_dato(p):
     """
@@ -221,6 +234,7 @@ def p_tipo_var(p):
         | string
         | char
         | str
+        | usize
     """
     p[0] = p[1]
 #If ternario=====================================================================================0
@@ -287,6 +301,8 @@ def p_tostrig_owned(p):
         | EXPRESION punto toOwned para parc
     """
     p[0] = ToStringOwned(exp=p[1], line=p.lineno(1), column=0)
+
+
 #Instrucciones------------------------------------------------------------------------------------
 def p_println(p):
     """
@@ -331,8 +347,12 @@ def p_declaracion_t3(p):
 def p_asignaciones(p):
     """
     ASIGNACION : id igual EXPRESION
-    """
-    p[0] = Asignacion(p[1],p[3],linea=p.lineno(1), columna=0)
+        | id INDEXS igual EXPRESION 
+    """  #el segundo es para los vectores  vector1[1][3]="hola";
+    if p[2]=="=":
+        p[0] = Asignacion(id=p[1],cIndex=[],exp=p[3],linea=p.lineno(1), columna=0)
+    else:
+        p[0] = Asignacion(id=p[1], cIndex=p[2], exp=p[4], linea=p.lineno(1), columna=0)
 
 #If=====================================================================================
 def p_if(p):
@@ -563,7 +583,7 @@ def p_dec_arreglo2(p):
     if p[3]=="=":
         p[0] = DecArreglo(mut=False, id=p[2], arrDimensional=None, array=p[4], line=p.lineno(1), column=0)
     else:
-        p[0] = DecArreglo(mut=False, id=p[3], arrDimensional=None, array=p[5], line=p.lineno(1), column=0)
+        p[0] = DecArreglo(mut=True, id=p[3], arrDimensional=None, array=p[5], line=p.lineno(1), column=0)
 def p_dimension_arreglo_multidimensional(p):
     """DIMENSION_ARR : cora DIMENSION_ARR puntoycoma EXPRESION corc """
     p[0] = DimensionalArreglo(tipo="",dimArr=p[2], Dimensional=p[4], line=p.lineno(1), column=0)
@@ -597,7 +617,8 @@ def p_forin(p):
 def p_arrfor(p):
     """ARRFOR : CHARS
             | ARREGLO
-            | RANGO"""
+            | VECI  
+            | RANGO"""   #-----------------------------CAMBIAR ------------ ARREGLO POR EXP
     p[0]=p[1]
 def p_charArr(p):
     """CHARS : EXPRESION punto chars para parc"""
@@ -606,7 +627,48 @@ def p_rangoArr(p):
     """RANGO : EXPRESION punto punto EXPRESION"""
     p[0]=Rango(exp1=p[1],exp2=p[4], line=p.lineno(1), column=0)
 
-#STRUCTS
+#STRUCTS  reconocimiento
+def p_struct(p):
+    """STRUCT : struct id llavea CONTENT_STRUCT llavec"""
+    p[0]=SaveStruct(id=p[2],cInst=p[4], line=p.lineno(1), column=0)
+def p_struct_content(p):
+    """CONTENT_STRUCT : CONTENT_STRUCT coma ELSTRUCT"""
+    p[1].append(p[3])
+    p[0]=p[1]
+def p_struc_content_u(p):
+    """CONTENT_STRUCT : ELSTRUCT"""
+    p[0] = [p[1]]
+def p_elemento_struct(p):
+    """ELSTRUCT : id dospuntos TIPOVAR"""
+    p[0]=Declaracion(mut=True,id=p[1],tipo=p[3],exp=None,linea=p.lineno(1), columna=0)
+#declaracion de variables structs
+def p_dec_var_struct(p):
+    """DECSTRUCT : let id igual id llavea CONJEXP_STRUCT llavec
+                    | let mut id igual id llavea CONJEXP_STRUCT llavec"""
+    if p[2]!="mut":
+        p[0]=DecStruct(mut=False,id=p[2],idStruct=p[4],expStruct=p[6],line=p.lineno(1), column=0)
+    else:
+        p[0] = DecStruct(mut=True, id=p[3], idStruct=p[5], expStruct=p[7], line=p.lineno(1), column=0)
+
+def p_conjexp_struct(p):
+    """CONJEXP_STRUCT : CONJEXP_STRUCT coma EXSTRUCT"""
+    p[1].append(p[3])
+    p[0] = p[1]
+def p_conjexp_struc_u(p):
+    """CONJEXP_STRUCT : EXSTRUCT"""
+    p[0] = [p[1]]
+def p_exstruct(p):
+    # Structname { var1:valor,var2:valor  }    expresion struct: var1 : valor
+    """EXSTRUCT : id dospuntos EXPRESION"""
+    p[0]=ExpStruct(id=p[1],exp1=p[3],line=p.lineno(1), column=0)
+    #{id:id expresion:expresion}
+#Acceso struct
+def p_acces_struct_expresion(p):
+    """ACCESO_STRUCT : CONJ_ACCES"""
+def p_acces_struct_list(p):
+    """CONJ_ACCES : CONJ_ACCES punto id """
+def p_acces_struct(p):
+    """CONJ_ACCES : id"""
 #MODULOS
 def p_modulos(p):
     """MODULO : modu llavea CONTENT_MOD llavec """
@@ -618,15 +680,17 @@ def p_content_mod_u(p):
     """CONTENT_MOD : ELEMENT_MOD"""
     p[0]=[p[1]]
 def p_content_mod(p):
-    """ELEMENT_MOD: FUNCION
+    """ELEMENT_MOD : FUNCION
                 | pub FUNCION
                 | MODULO
                 | pub MODULO
     """
 # Error sintactico
 def p_error(p):
-    print(f'Error de sintaxis simbolo: {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')
-
+    if p:
+        print(f'Error de sintaxis simbolo: {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')
+    else:
+        print("Syntax error")
 
 # Build the parser
 parser = yacc(debug=True)

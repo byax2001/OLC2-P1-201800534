@@ -10,6 +10,7 @@ class Operador(Enum):
     UNARIO = 5
     MOD = 6
     POW = 7
+    POWF = 8
 
 
 
@@ -28,6 +29,8 @@ def getOperador(op) -> Operador:
         return Operador.MOD
     elif op == 'pow':
         return Operador.POW
+    elif op == 'powf':
+        return Operador.POWF
 
 
 #lambda es una minifuncion que solo necesita de un par de parametros, no se uso en esta ocasion

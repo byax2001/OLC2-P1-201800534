@@ -52,3 +52,18 @@ class Vector:
         except:
             print("error, surgio un problema al acceder al contenido del vector")
             return None
+    def updateVector(self,cIndex:[],valor):
+        try: #Try como precaucion en caso se intente ingresar a una posicion de memoria fuera del rango del vector
+            vector = self.vector
+            x=0
+            for index in cIndex:
+                x+=1
+                if x==len(cIndex):
+                    vector[index]["valor"]=valor
+                    return True
+                vector=vector[index]["valor"]
+
+            return False
+        except:
+            print("error, surgio un problema al asignar un valor al contenido del vector o arreglo")
+            return False

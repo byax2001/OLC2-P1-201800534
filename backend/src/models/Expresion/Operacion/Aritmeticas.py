@@ -31,7 +31,7 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
             elif t_nodoIzq==Tipos.STRING and t_nodoDer==Tipos.STR:
                 return str(self.exp1.getValor(driver, ts)) +str(self.exp2.getValor(driver, ts))
             else:
-                print(f'Los nodos no son del mismo valor o no son posible de concatenar', self.exp2.linea,
+                print(f'Los nodos no son del mismo valor o no son posible de concatenar o sumar', self.exp2.linea,
                         self.exp2.columna)
         elif self.operador == Operador.RESTA:
             if t_nodoIzq == t_nodoDer:
@@ -48,7 +48,7 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                 else:
                     print(f'Las expresiones para la  multiplicacion debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
             else:
-               print(f'Las expresiones a restar deben de ser del mismo tipo')
+               print(f'Las expresiones a multiplicar deben de ser del mismo tipo')
         elif self.operador == Operador.DIV:
             if t_nodoIzq == t_nodoDer:
                 v_exp1 = self.exp1.getValor(driver, ts)
@@ -63,23 +63,31 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                 else:
                     print("Error: Se intenta dividir entre 0")
             else:
-               print(f'Las expresiones a restar deben de ser del mismo tipo')
+               print(f'Las expresiones a dividir deben de ser del mismo tipo')
         elif self.operador == Operador.MOD:
             if t_nodoIzq == t_nodoDer:
                 if t_nodoIzq in [Tipos.INT64, Tipos.FLOAT64]:
                     return self.exp1.getValor(driver, ts) % self.exp2.getValor(driver, ts)
                 else:
-                    print(f'Las expresiones para la  division debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
+                    print(f'Las expresiones para usar el operador modulo debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
             else:
-               print(f'Las expresiones a restar deben de ser del mismo tipo')
+               print(f'Las expresiones a hacer mod deben de ser del mismo tipo')
         elif self.operador == Operador.POW:
             if t_nodoIzq == t_nodoDer:
-                if t_nodoIzq in [Tipos.INT64, Tipos.FLOAT64]:
+                if t_nodoIzq ==Tipos.INT64:
                     return pow(self.exp1.getValor(driver, ts),self.exp2.getValor(driver, ts))
                 else:
-                    print(f'Las expresiones para la  division debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
+                    print(f'Las expresiones para el operador pow debe ser un integer ', self.exp2.linea, self.exp2.columna)
             else:
-               print(f'Las expresiones a restar deben de ser del mismo tipo')
+               print(f'Las expresiones a elevar deben de ser del mismo tipo')
+        elif self.operador == Operador.POWF:
+            if t_nodoIzq == t_nodoDer:
+                if t_nodoIzq==Tipos.FLOAT64:
+                    return pow(self.exp1.getValor(driver, ts),self.exp2.getValor(driver, ts))
+                else:
+                    print(f'Las expresiones para el operador powf deben de ser float ', self.exp2.linea, self.exp2.columna)
+            else:
+               print(f'Las expresiones a elevar deben de ser del mismo tipo')
         else:
             print(f'La operacion {self.operador} no es soportado')
 

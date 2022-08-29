@@ -46,7 +46,7 @@ reservadas = {
     'for':'for',
     'in':'in',
     'chars':'chars',
-    'mod':'modu',
+    'mod':'modulo',
     'pub':'pub'
 }
 tokens =['mas', 'menos', 'multi', 'div', 'para', 'parc', 'entero',"decimal","cadena","caracter","true","false",

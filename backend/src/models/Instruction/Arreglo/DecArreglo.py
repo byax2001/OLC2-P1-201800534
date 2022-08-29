@@ -12,6 +12,7 @@ class DecArreglo(Instruccion):
         self.array=array
         self.line=line
         self.column=column
+        self.tacceso = 0 #publico por default
     def ejecutar(self, driver: Driver, ts: Enviroment):
         if ts.buscarActualTs(self.id)==None:
             if self.arrDim!=None:
@@ -26,7 +27,8 @@ class DecArreglo(Instruccion):
                         #el array se declara como vector pues poseen metodos similares, sin embargo hay otros que no y estos estan asegurados
                         #para no usarse en arrays y solo en vectores
                         nvector=Vector(vec=v_array,stateCap=False,capacity=0)
-                        symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=t_dim,line=self.line,column=self.column)
+                        symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=t_dim,
+                                      line=self.line,column=self.column,tacceso=self.tacceso)
                         ts.addVar(self.id,symbol)
                         print("Arreglo declarado")
                     else:
@@ -38,7 +40,7 @@ class DecArreglo(Instruccion):
                 v_array = self.array.getValor(driver, ts)
                 nvector = Vector(vec=v_array, stateCap=False, capacity=0)
                 symbol = Symbol(mut=self.mut, id=self.id, value=nvector, tipo_simbolo=1, tipo=t_array, line=self.line,
-                                column=self.column)
+                                column=self.column,tacceso=self.tacceso)
                 ts.addVar(self.id, symbol)
                 print("Arreglo declarado")
         else:
@@ -57,3 +59,5 @@ class DecArreglo(Instruccion):
                 break
             arrayC=arrayC[0]["valor"]
         return arrCorrect
+    def changeAcces(self,acceso:int):
+        self.tacceso=acceso

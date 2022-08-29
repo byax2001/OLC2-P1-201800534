@@ -17,11 +17,15 @@ class Funcion(Instruccion):
         self.bloque=bloque
         self.line=line
         self.column=column
+        self.tacceso = 0 #publico por default
     def ejecutar(self, driver: Driver, ts: Enviroment):
         existe=ts.buscarActualTs(self.id)
         if existe==None:
             print("Se guardo una funcion")
-            newSymbol=Symbol(mut=False,id=self.id,value=[self.params,self.bloque],tipo_simbolo=2,tipo=self.tipoFun,line=self.line,column=self.column)
+            newSymbol=Symbol(mut=False,id=self.id,value=[self.params,self.bloque],tipo_simbolo=2,
+                             tipo=self.tipoFun,line=self.line,column=self.column,tacceso=self.tacceso)
             ts.addVar(self.id,newSymbol)
         else:
             print("Id ya declarado")
+    def changeAcces(self,acceso:int):
+        self.tacceso=acceso

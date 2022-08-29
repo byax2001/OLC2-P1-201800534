@@ -40,6 +40,8 @@ from models.Instruction.Struct.DecStruct import DecStruct
 from models.Expresion.Struct.DecStructExp import DecStructExp
 from models.Expresion.Struct.AccesStruct import AccesStruct
 from models.Instruction.Struct.Modi_Var_Struct import ModiVarStruct
+#Modulos
+from models.Instruction.Modulo.SaveModulo import SaveModulo
     #vectores
 from models.Expresion.Vector.vecI import vecI
 from models.Expresion.Vector.AccesVec import AccesVec
@@ -112,6 +114,7 @@ def p_instruccion(p):
         | STRUCT
         | DECSTRUCT
         | MOD_VAR_STRUCT
+        | MODULO
     """
     #Anotaciones:
         #LOOP ES TANTO INSTRUCCION COMO EXPRESION, TIENE GETVALOR,GETTIPO Y EJECUTAR ESTE SE ENCUENTRA DECLARADO EN EXPRESION
@@ -695,7 +698,8 @@ def p_mod_var_struct(p):
     p[0]=ModiVarStruct(idPrincipal=p[1],cIds=p[3],exp=p[5],line=p.lineno(1), column=0)
 #MODULOS
 def p_modulos(p):
-    """MODULO : modu llavea CONTENT_MOD llavec """
+    """MODULO : modulo id llavea CONTENT_MOD llavec """
+    p[0]=SaveModulo(id=p[1],cInst=p[3],line=p.lineno(1), column=0)
 def p_content_mod_list(p):
     """CONTENT_MOD : CONTENT_MOD ELEMENT_MOD"""
     p[1].append(p[2])
@@ -703,12 +707,24 @@ def p_content_mod_list(p):
 def p_content_mod_u(p):
     """CONTENT_MOD : ELEMENT_MOD"""
     p[0]=[p[1]]
+def p_acces_inst_mod(p):
+    """ELEMENT_MOD : pub INST_MOD
+                | INST_MOD"""
+    if p[1]!="pub":
+        p[1].changeAcces(1)
+        p[0]=p[1]
+    else:
+        p[0]=p[2]
 def p_content_mod(p):
-    """ELEMENT_MOD : FUNCION
-                | pub FUNCION
+    """INST_MOD : FUNCION
                 | MODULO
-                | pub MODULO
+                | STRUCT
+                | DECLARACION
+                | DECARREGLO
+                | DECVECTOR
+                | DECSTRUCT
     """
+    p[0]=p[1]
 # Error sintactico
 def p_error(p):
     if p:

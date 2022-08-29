@@ -10,6 +10,7 @@ class SaveStruct(Instruccion):
         self.cInst=cInst
         self.line=line
         self.column=column
+        self.tacceso=0 #publico por default
     def ejecutar(self, driver: Driver, ts: Enviroment):
         symbol=ts.buscarActualTs(self.id)
         if symbol==None:
@@ -17,8 +18,11 @@ class SaveStruct(Instruccion):
             #aqui se podria agregar un metodo donde si una declaracion tiene el mismo id que alguna de las anteriores dar error y no declarar el struct
 
             struct=Struct(self.cInst);
-            symbol=Symbol(mut=False,id=self.id,value=struct,tipo_simbolo=4,tipo=Tipos.STRUCT,line=self.line,column=self.column)
+            symbol=Symbol(mut=False,id=self.id,value=struct,tipo_simbolo=4,tipo=Tipos.STRUCT,line=self.line,
+                          column=self.column,tacceso=self.tacceso)
             ts.addVar(self.id,symbol)
             print(f"Struct declarado {self.id}")
         else:
             print(f"Error: se intenta declarar un struct con una id ya declarada {self.line}")
+    def changeAcces(self,acceso:int):
+        self.tacceso=acceso

@@ -16,7 +16,7 @@ class DecVector(Instruccion):
         self.tipo =getTipo(tipo) if tipo!=None else None
         self.line=line
         self.column=column
-
+        self.tacceso = 0  #publico por default
     def ejecutar(self, driver: Driver, ts: Enviroment):
         existe=ts.buscarActualTs(self.id)
         if existe==None:
@@ -25,7 +25,8 @@ class DecVector(Instruccion):
                 tvec=self.vecI.getTipo(driver,ts)
                 if tvec!=Tipos.ERROR and v_vec!=None:
                     newVec=Vector(vec=v_vec,stateCap=False,capacity=0)
-                    symbol=Symbol(mut=self.mut,id=self.id,value=newVec,tipo_simbolo=3,tipo=tvec,line=self.line,column=self.column)
+                    symbol=Symbol(mut=self.mut,id=self.id,value=newVec,tipo_simbolo=3,tipo=tvec,line=self.line,
+                                  column=self.column,tacceso=self.tacceso)
                     ts.addVar(self.id,symbol)
                     print("Se declaro un vector con \"vec!\"")
                 else:
@@ -36,8 +37,8 @@ class DecVector(Instruccion):
                 if tcap==Tipos.INT64 or tcap==Tipos.USIZE:
                     vec=[]
                     newVec=Vector(vec=vec,stateCap=True,capacity=cap)
-                    symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo, line=self.line,
-                                    column=self.column)
+                    symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
+                                    line=self.line,column=self.column,tacceso=self.tacceso)
                     ts.addVar(self.id, symbol)
                     print("Se declaro un vector con \"with_capacity()\"")
                 else:
@@ -45,8 +46,7 @@ class DecVector(Instruccion):
             else:  #con new--------------------------------------------------------------------
                 newVec = Vector(vec=[], stateCap=False, capacity=0)
                 symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
-                                line=self.line,
-                                column=self.column)
+                                line=self.line,column=self.column,tacceso=self.tacceso)
                 ts.addVar(self.id, symbol)
                 print("Se declaro un vector con \"new()\"")
         else:
@@ -72,3 +72,5 @@ class DecVector(Instruccion):
             return ""
         elif (tipo==Tipos.CHAR):
             return "\0"
+    def changeAcces(self,acceso:int):
+        self.tacceso=acceso

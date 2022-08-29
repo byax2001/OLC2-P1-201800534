@@ -12,6 +12,7 @@ class Tipos(Enum):
     VOID = 9
     USIZE=10 #int pero siempre mayor que 0
     STRUCT=11
+    MODULO=12
 
 
 def getTipo(s:str):

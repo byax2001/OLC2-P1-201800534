@@ -13,7 +13,7 @@ class DecStruct(Instruccion):
         self.exp=exp
         self.line=line
         self.column=column
-
+        self.tacceso = 0 #publico por default
     #  let id =     id       { var : valor , var2: valor }
     #      id      idStruct             expsStruct
 
@@ -26,10 +26,12 @@ class DecStruct(Instruccion):
 
                 # lo que guardaran los structs son enviroments nuevos donde se podra consultar las variables en posteriores ocasiones
                 symbol = Symbol(mut=self.mut, id=self.mut, value=v_exp, tipo_simbolo=4, tipo=Tipos.STRUCT,
-                                line=self.line, column=self.column)
+                                line=self.line, column=self.column,tacceso=self.tacceso)
                 ts.addVar(self.id, symbol)
                 print("Variable struct declarada")
             else:
                 print("Error el struct a declarar da error")
         else:
             print("Error la variable ya ha sido declarada")
+    def changeAcces(self,acceso:int):
+        self.tacceso=acceso

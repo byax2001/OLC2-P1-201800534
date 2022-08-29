@@ -22,7 +22,12 @@ class Declaracion(Instruccion):
                 existe=ts.buscarActualTs(self.id);
                 if(existe==None):
                     if(self.tipoVar==None): #si no se declaro el tipo de variable
-                        if type(v_exp)!=list:
+                        if t_exp==Tipos.STRUCT:
+                            newVar = Symbol(mut=self.mut, id=self.id, value=v_exp, tipo_simbolo=4, tipo=t_exp,
+                                            line=self.linea, column=self.columna)
+                            ts.addVar(self.id, newVar)
+                            print("se añadio una variable Struc")
+                        elif type(v_exp)!=list:
                             newVar=Symbol(mut=self.mut,id=self.id,value=v_exp,tipo_simbolo=0,tipo=t_exp,line=self.linea,column=self.columna)
                             ts.addVar(self.id,newVar)
                             print("se añadio una variable")

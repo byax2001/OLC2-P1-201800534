@@ -37,6 +37,9 @@ from models.Expresion.CharArray import CharArray
 from models.Instruction.Struct.SaveStruct import SaveStruct
 from models.Expresion.Struct.ExpStruct import ExpStruct
 from models.Instruction.Struct.DecStruct import DecStruct
+from models.Expresion.Struct.DecStructExp import DecStructExp
+from models.Expresion.Struct.AccesStruct import AccesStruct
+from models.Instruction.Struct.Modi_Var_Struct import ModiVarStruct
     #vectores
 from models.Expresion.Vector.vecI import vecI
 from models.Expresion.Vector.AccesVec import AccesVec
@@ -108,6 +111,7 @@ def p_instruccion(p):
         | FORIN
         | STRUCT
         | DECSTRUCT
+        | MOD_VAR_STRUCT
     """
     #Anotaciones:
         #LOOP ES TANTO INSTRUCCION COMO EXPRESION, TIENE GETVALOR,GETTIPO Y EJECUTAR ESTE SE ENCUENTRA DECLARADO EN EXPRESION
@@ -187,6 +191,7 @@ def p_exp_one_element(p):
         | LEN
         | CAPACITY
         | ACCESVEC
+        | ACCESO_STRUCT
     """
     p[0]=p[1]
 #CONJEXP=====================================================================================0
@@ -348,11 +353,14 @@ def p_asignaciones(p):
     """
     ASIGNACION : id igual EXPRESION
         | id INDEXS igual EXPRESION 
-    """  #el segundo es para los vectores  vector1[1][3]="hola";
+        | id INDEXS punto CONJ_ACCES igual EXPRESION  
+    """  #el segundo es para los vectores  vector1[1][3]="hola";   #*******************************************************
     if p[2]=="=":
-        p[0] = Asignacion(id=p[1],cIndex=[],exp=p[3],linea=p.lineno(1), columna=0)
+        p[0] = Asignacion(id=p[1],cIndex=[],cIds=[],exp=p[3],linea=p.lineno(1), columna=0)
+    elif p[3]!=".":
+        p[0] = Asignacion(id=p[1], cIndex=p[2],cIds=[], exp=p[4], linea=p.lineno(1), columna=0)
     else:
-        p[0] = Asignacion(id=p[1], cIndex=p[2], exp=p[4], linea=p.lineno(1), columna=0)
+        p[0] = Asignacion(id=p[1], cIndex=p[2],cIds=p[4],exp=p[6], linea=p.lineno(1), columna=0)
 
 #If=====================================================================================
 def p_if(p):
@@ -558,9 +566,13 @@ def p_instv_len(p):
 def p_instv_capacity(p):
     """CAPACITY : id punto capacity para parc"""
     p[0]=Capacity(id=p[1],line=p.lineno(1), column=0)
-def p_instv_acces(p):
-    """ACCESVEC : id INDEXS"""
-    p[0]=AccesVec(id=p[1],cIndex=p[2],line=p.lineno(1), column=0)
+def p_instv_acces(p):   #*******************************************************************************
+    """ACCESVEC : id INDEXS
+                | id INDEXS punto CONJ_ACCES"""
+    if len(p)==3:
+        p[0]=AccesVec(id=p[1],cIndex=p[2],cIds=[],line=p.lineno(1), column=0)
+    else:
+        p[0]=AccesVec(id=p[1],cIndex=p[2],cIds=p[4],line=p.lineno(1), column=0)
 def p_index_acces_list(p):
     """INDEXS : INDEXS cora EXPRESION corc"""
     p[1].append(p[3])
@@ -588,7 +600,8 @@ def p_dimension_arreglo_multidimensional(p):
     """DIMENSION_ARR : cora DIMENSION_ARR puntoycoma EXPRESION corc """
     p[0] = DimensionalArreglo(tipo="",dimArr=p[2], Dimensional=p[4], line=p.lineno(1), column=0)
 def p_dimension_arreglo_unidimensional(p):
-    """DIMENSION_ARR : cora TIPOVAR puntoycoma EXPRESION corc"""
+    """DIMENSION_ARR : cora TIPOVAR puntoycoma EXPRESION corc
+                    | cora id puntoycoma EXPRESION corc"""  #para los structs [ PersonajeStruct ; 3]
     p[0]=DimensionalArreglo(tipo=p[2],dimArr=None,Dimensional=p[4],line=p.lineno(1), column=0)
 def p_arreglo_conj(p):
     """ARREGLO : cora CONT_ARR corc"""
@@ -605,7 +618,8 @@ def p_cont_arreglo_u(p):
     p[0]=[p[1]]
 def p_elemento_arreglo(p):
     """ELARR : ARREGLO
-            | EXPRESION"""
+            | EXPRESION
+            | STRUCT_EXP"""
     p[0]=p[1]
 
 
@@ -643,13 +657,15 @@ def p_elemento_struct(p):
     p[0]=Declaracion(mut=True,id=p[1],tipo=p[3],exp=None,linea=p.lineno(1), columna=0)
 #declaracion de variables structs
 def p_dec_var_struct(p):
-    """DECSTRUCT : let id igual id llavea CONJEXP_STRUCT llavec
-                    | let mut id igual id llavea CONJEXP_STRUCT llavec"""
+    """DECSTRUCT : let id igual STRUCT_EXP
+                    | let mut id igual STRUCT_EXP"""
     if p[2]!="mut":
-        p[0]=DecStruct(mut=False,id=p[2],idStruct=p[4],expStruct=p[6],line=p.lineno(1), column=0)
+        p[0]=DecStruct(mut=False,id=p[2],exp=p[4],line=p.lineno(1), column=0)
     else:
-        p[0] = DecStruct(mut=True, id=p[3], idStruct=p[5], expStruct=p[7], line=p.lineno(1), column=0)
-
+        p[0] = DecStruct(mut=True, id=p[3],exp=p[5], line=p.lineno(1), column=0)
+def p_dec_var_struct_exp(p):
+    """STRUCT_EXP : id llavea CONJEXP_STRUCT llavec"""
+    p[0]=DecStructExp(idStruct=p[1],expStruct=p[3],line=p.lineno(1), column=0)
 def p_conjexp_struct(p):
     """CONJEXP_STRUCT : CONJEXP_STRUCT coma EXSTRUCT"""
     p[1].append(p[3])
@@ -664,11 +680,19 @@ def p_exstruct(p):
     #{id:id expresion:expresion}
 #Acceso struct
 def p_acces_struct_expresion(p):
-    """ACCESO_STRUCT : CONJ_ACCES"""
+    """ACCESO_STRUCT  : id  punto  CONJ_ACCES"""
+    p[0]=AccesStruct(idPrincipal=p[1],cIds=p[3],line=p.lineno(1), column=0)
 def p_acces_struct_list(p):
-    """CONJ_ACCES : CONJ_ACCES punto id """
+    """CONJ_ACCES  : CONJ_ACCES punto id"""
+    p[1].append(p[3])
+    p[0]=p[1]
 def p_acces_struct(p):
     """CONJ_ACCES : id"""
+    p[0]=[p[1]]
+#modificacion de structs
+def p_mod_var_struct(p):
+    """MOD_VAR_STRUCT : id punto CONJ_ACCES igual EXPRESION"""
+    p[0]=ModiVarStruct(idPrincipal=p[1],cIds=p[3],exp=p[5],line=p.lineno(1), column=0)
 #MODULOS
 def p_modulos(p):
     """MODULO : modu llavea CONTENT_MOD llavec """

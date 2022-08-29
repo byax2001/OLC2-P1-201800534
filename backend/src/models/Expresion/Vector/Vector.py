@@ -1,4 +1,5 @@
 from models.TablaSymbols.Tipos import Tipos
+from models.TablaSymbols.Enviroment import Enviroment
 class Vector:
     def __init__(self,vec,stateCap,capacity):
         self.vector=vec
@@ -65,5 +66,36 @@ class Vector:
 
             return False
         except:
+            print("error, surgio un problema al asignar un valor al contenido del vector o arreglo")
+            return False
+
+    def updateVectorStruct(self, cIndex: [],cIds:[], valor,tipo_val):
+        try:  # Try como precaucion en caso se intente ingresar a una posicion de memoria fuera del rango del vector
+            vector = self.vector
+            x = 0
+            tipo=Tipos.ERROR
+            for index in cIndex:
+                tipo = vector[index]["tipo"]
+                vector = vector[index]["valor"]
+
+            if tipo==Tipos.STRUCT:
+                nodo:Enviroment=vector
+                x=0
+
+                for id in cIds:
+                    nodo=nodo.buscar(id);
+                    x+=1
+                    if nodo.tipo!=Tipos.STRUCT and x!=len(cIndex):
+                        print("Error la variable no cuenta con tantos parametros anidados")
+                        return
+
+                if tipo_val==nodo.tipo:
+                    nodo.value=valor
+                else:
+                    print("Error los tipos del paramatero de la variable struct y el nuevo valor no son los mismos")
+            else:
+                print("Error el elemento no es una variable objeto que tenga el resto de parametros indicados")
+        except Exception as e:
+            print(e)
             print("error, surgio un problema al asignar un valor al contenido del vector o arreglo")
             return False

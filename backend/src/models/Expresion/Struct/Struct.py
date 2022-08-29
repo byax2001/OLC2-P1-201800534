@@ -17,6 +17,7 @@ class Struct:
                                              #ocurrio con normalidad entonces devuelve None
             if stateDec!=None:  #si devuelve Falso y no None es que ocurrio un error al declarar
                 return False
+
     def getSize(self):
         return self.size
 

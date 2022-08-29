@@ -5,11 +5,12 @@ from models.TablaSymbols.Symbol import Symbols
 from models.TablaSymbols.Tipos import Tipos,definirTipo
 
 class AccesVec(Expresion):
-    def __init__(self, id: str,cIndex:[Expresion], line: int, column: int):
+    def __init__(self, id: str,cIndex:[Expresion],cIds:[str], line: int, column: int):
         self.value=None
         self.tipo=None
         self.id = id
         self.cIndex=cIndex
+        self.cIds=cIds
         self.line = line
         self.column = column
 
@@ -37,6 +38,19 @@ class AccesVec(Expresion):
                     else:
                         #mensaje de error en el metoo del vector
                         self.tipo = Tipos.ERROR
+                        #HASTA ACA TERMINARIA SI FUERA SOLO arreglo[0]
+                        #pero si es arreglo[0].variable entonces hacer lo de abajo
+                    if len(self.cIds)>0 and self.tipo==Tipos.STRUCT:
+                        objeto:Enviroment=self.value
+                        x = 0
+                        for id in self.cIds:
+                            objeto=objeto.buscar(id)
+                            x += 1
+                            if objeto.tipo != Tipos.STRUCT and x != len(self.cIds):
+                                print("Error la variable no cuenta con tantos parametros anidados")
+                                return
+                        self.value=objeto.value
+                        self.tipo=objeto.tipo
                 else:
                     print(f"Error Intento de obtener valor en una variable no vectorial  linea:{self.line} ")
             else:

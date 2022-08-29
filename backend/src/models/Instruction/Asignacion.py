@@ -3,9 +3,10 @@ from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Symbols
 class Asignacion(Instruccion):
-    def __init__(self,id:str,cIndex:[Expresion],exp: Expresion, linea:int, columna:int):
+    def __init__(self,id:str,cIndex:[Expresion],cIds:[str],exp: Expresion, linea:int, columna:int):
         self.id=id
         self.cIndex=cIndex
+        self.cIds=cIds
         self.exp = exp
         self.linea = linea
         self.columna = columna
@@ -17,7 +18,7 @@ class Asignacion(Instruccion):
                 v_exp=self.exp.getValor(driver,ts)
                 if(v_exp!=None):
                     t_exp=self.exp.getTipo(driver,ts)
-                    if Symbol.tipo == t_exp:
+                    if Symbol.tipo == t_exp or Symbol.tipo==Tipos.STRUCT:
                         if len(self.cIndex)==0: #si es una asignacion normal
                             ts.actualizar(self.id,v_exp)
                         else: # si es la asignacion de un vector
@@ -30,11 +31,13 @@ class Asignacion(Instruccion):
                                     else:
                                         print(f"Error: uno de los index no es un entero {self.line}")
                                         return
-                                print(Symbol.value.vector)
-                                Symbol.value.updateVector(cIndex=vecIndex,valor=v_exp)
-                                print(Symbol.value.vector)
+                                if len(self.cIds)==0:    # arreglo[0]= "hola"
+                                    Symbol.value.updateVector(cIndex=vecIndex,valor=v_exp)
+                                else: #arreglo[0].palabra= "hola"
+                                    Symbol.value.updateVectorStruct(cIndex=vecIndex,cIds=self.cIds,valor=v_exp,tipo_val=t_exp)
                             else:
                                 print("intento de hacer asignacion de vector a una variable que no lo es")
+
                     else:
                         print("El valor a asignar es de distinto tipo al de la variable")
                 else:

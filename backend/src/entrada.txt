@@ -182,4 +182,23 @@ edad: i64,
 descripcion: String
 };
 
-let personaje = Personaje { nombre:"brandon".to_string(),edad:74,descripcion:"estudiante".to_string()};
+let mut personaje = Personaje { nombre:"brandon".to_string(),edad:74,descripcion:"estudiante".to_string()};
+
+let per1 = personaje.nombre;
+let edad = personaje.edad;
+let descrip= personaje.descripcion;
+println!("personaje nombre: {}", per1);
+println!("personaje edad: {}",edad);
+println!("personaje descripcion: {}",descrip);
+
+personaje.nombre="Alex".to_string();
+println!("personaje nombre: {}", personaje.nombre);
+
+//structs con arrays
+struct Persona {
+id: i64
+};
+let mut arr0: [Persona; 1] = [Persona{ id: 0 }];
+println!("parametro struct en array: {}",arr0[0].id);
+arr0[0].id=23;
+println!("parametro struct en array despues de asignar otro valor: {}",arr0[0].id);

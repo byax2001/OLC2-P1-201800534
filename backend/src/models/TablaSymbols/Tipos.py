@@ -29,6 +29,8 @@ def getTipo(s:str):
         return Tipos.STR
     elif s=="usize":
         return Tipos.USIZE
+    elif  s!="" and len(s)>0:  ## no es "" significa que es un id por tanto es un struct
+        return Tipos.STRUCT
     else:
         return Tipos.ERROR
 

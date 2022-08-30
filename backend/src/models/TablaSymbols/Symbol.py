@@ -1,6 +1,6 @@
 from models.TablaSymbols.Tipos import Tipos
 from enum import Enum
-class Acceso(Enum):
+class Accesos(Enum):
     PUBLICO=0
     PRIVADO=1
 
@@ -10,15 +10,15 @@ class Symbols(Enum):
     FUNCION=2
     VECTOR=3
     OBJETO=4
-    BASEDATOS=5
+    MOD=5
 
 def getAcceso(s):
     if s==0:
-        return Acceso.PUBLICO
+        return Accesos.PUBLICO
     elif s==1:
-        return Acceso.PRIVADO
+        return Accesos.PRIVADO
     else:
-        return Acceso.PUBLICO
+        return Accesos.PUBLICO
 def getSymbol(s):
     if s==0:
         return Symbols.VARIABLE
@@ -31,7 +31,7 @@ def getSymbol(s):
     elif s==4:
         return Symbols.OBJETO
     elif s==5:
-        return Symbols.BASEDATOS
+        return Symbols.MOD
     
 class Symbol():
     def __init__(self,mut:bool,id: str, value, tipo_simbolo: int, tipo: Tipos,line:int,column:int,tacceso:int=0) -> None:

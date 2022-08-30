@@ -202,3 +202,26 @@ let mut arr0: [Persona; 1] = [Persona{ id: 0 }];
 println!("parametro struct en array: {}",arr0[0].id);
 arr0[0].id=23;
 println!("parametro struct en array despues de asignar otro valor: {}",arr0[0].id);
+
+mod Holamod {
+    struct Hola {
+        id:i64
+    }
+    pub fn manzana(){
+        println!("Funcion de Modulo Holamod");
+    }
+    pub mod subHola{
+        pub fn funcsub(mut x: bool){
+            println!("funcion de submodulo con parametro: {}",x);
+        }
+    }
+    pub fn retString( x:String)->String{
+        println!("Retornanra un string");
+        return x;
+    }
+};
+Holamod::manzana();
+Holamod::subHola::funcsub(true);
+let modp="Mod funcion retorna bien".to_string();
+let modrcorrect:String= Holamod::retString(modp);
+println!("{}",modrcorrect);

@@ -42,6 +42,7 @@ from models.Expresion.Struct.AccesStruct import AccesStruct
 from models.Instruction.Struct.Modi_Var_Struct import ModiVarStruct
 #Modulos
 from models.Instruction.Modulo.SaveModulo import SaveModulo
+from models.Expresion.Modulo.AccesModulo import AccesModulo
     #vectores
 from models.Expresion.Vector.vecI import vecI
 from models.Expresion.Vector.AccesVec import AccesVec
@@ -195,6 +196,7 @@ def p_exp_one_element(p):
         | CAPACITY
         | ACCESVEC
         | ACCESO_STRUCT
+        | ACCESO_MOD
     """
     p[0]=p[1]
 #CONJEXP=====================================================================================0
@@ -699,7 +701,7 @@ def p_mod_var_struct(p):
 #MODULOS
 def p_modulos(p):
     """MODULO : modulo id llavea CONTENT_MOD llavec """
-    p[0]=SaveModulo(id=p[1],cInst=p[3],line=p.lineno(1), column=0)
+    p[0]=SaveModulo(id=p[2],cInst=p[4],line=p.lineno(1), column=0)
 def p_content_mod_list(p):
     """CONTENT_MOD : CONTENT_MOD ELEMENT_MOD"""
     p[1].append(p[2])
@@ -725,6 +727,20 @@ def p_content_mod(p):
                 | DECSTRUCT
     """
     p[0]=p[1]
+def p_acces_mod(p):
+    """ACCESO_MOD : id dospuntos dospuntos CONJ_ACCES_MOD para CONJEXP parc
+                | id dospuntos dospuntos CONJ_ACCES_MOD para parc"""
+    if len(p)==8:
+        p[0]=AccesModulo(id=p[1],cIds=p[4],Parametros=p[6],line=p.lineno(1), column=0)
+    else:
+        p[0] = AccesModulo(id=p[1], cIds=p[4], Parametros=[], line=p.lineno(1), column=0)
+def p_conj_acces_mod1(p):
+    """CONJ_ACCES_MOD : CONJ_ACCES_MOD dospuntos dospuntos id"""
+    p[1].append(p[4])
+    p[0]=p[1]
+def p_conj_acces_mod2(p):
+    """CONJ_ACCES_MOD : id"""
+    p[0]=[p[1]]
 # Error sintactico
 def p_error(p):
     if p:

@@ -24,6 +24,7 @@ class Call(Instruccion):
             newts2=Enviroment(newts,"BloqueFuncion")
             symbol=ts.buscar(self.id);
             if symbol!=None:
+                print(f"{self.id}   Symbols ****  {symbol.tsimbolo}")
                 if symbol.tsimbolo==Symbols.FUNCION:
                     paramsFun=symbol.value[0]  #parametros de la funcion
                     instFun=symbol.value[1]    #instrucciones de la funcion
@@ -57,6 +58,8 @@ class Call(Instruccion):
                                 elif isinstance(rInst,Continue) or isinstance(rInst,Break):
                                     print("Error se esta intentado usar Break o Continue en una funcion")
                                     return
+                            self.value=None
+                            self.tipo=Tipos.ERROR
                         else: #FUCIONES QUE RETORNAN VALORES-----------------------------------------------
                             for instruccion in instFun:
                                 if isinstance(instruccion, Return):
@@ -97,6 +100,7 @@ class Call(Instruccion):
                     print("la variable que se intenta ejecutar no es una funcion"+str(self.line))
             else:
                 print("No ha sido declarada dicha funcion "+str(self.line))
+
         return self.value
 
     def getTipo(self,driver,ts):

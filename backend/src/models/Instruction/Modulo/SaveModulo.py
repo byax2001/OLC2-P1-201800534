@@ -20,6 +20,7 @@ class SaveModulo(Instruccion):
             symbol=Symbol(mut=False,id=self.id,value=newts,tipo_simbolo=5,tipo=Tipos.MODULO,line=self.line,
                           column=self.column,tacceso=self.tacceso)
             ts.addVar(self.id,symbol)
+            print(f"Modulo declarado {self.id}")
         else:
             print("Error id ya ha sido declarado en otra variable")
     def changeAcces(self,acceso:int):

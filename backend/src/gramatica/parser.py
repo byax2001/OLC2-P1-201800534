@@ -70,17 +70,34 @@ tokens = lexer.tokens
 # precedencia
 
 precedence = (
+    ('left', 'or'),
+    ('left', 'and'),
+    ('left','igualigual','diferente','menor','menorigual','mayor','mayorigual'),
     ('left', 'menos', 'mas'),
-    ('left', 'multi', 'div'),
+    ('left', 'multi', 'div','mod'),
+    ('right', 'not'),
     ('right', 'UNARIO'),
 )
 
+
 def p_inicio(p):
     """
-    INICIO : INSTRUCCIONES
+    INICIO : INSTRUCCIONES_RUST
     """
     p[0] = Ast(p[1])
-    
+def p_rust_inst_lista(p):
+    """INSTRUCCIONES_RUST : INSTRUCCIONES_RUST INST_RUST"""
+    p[1].append(p[2])
+    p[0] = p[1]
+
+def p_rust_inst_instruccion(p):
+    """INSTRUCCIONES_RUST : INST_RUST"""
+    p[0] = [p[1]]
+def p_rust_inst(p):
+    """INST_RUST : MODULO
+                 | FUNCION"""
+    p[0]=p[1]
+
 def p_instrucciones_lista(p):
     """
     INSTRUCCIONES : INSTRUCCIONES INSTRUCCION puntoycoma
@@ -318,6 +335,10 @@ def p_clone_id(p):
 def p_sqrt(p):
     """SQRT : para CAST_AS parc punto sqrt para parc"""
     p[0] = Sqrt(exp=p[2], line=p.lineno(1), column=0)
+def p_sqrt_id(p):
+    """SQRT : id punto sqrt para parc"""
+    exp = Id(p[1], p.lineno(1), 0)
+    p[0] = Sqrt(exp=exp, line=p.lineno(1), column=0)
 #Sqrt=====================================================================================
 def p_tostrig_owned_id(p):
     """TO_STRING_OWNED : EXPRESION punto toString para parc

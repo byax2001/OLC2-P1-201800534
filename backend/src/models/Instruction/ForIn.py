@@ -19,14 +19,16 @@ class ForIn(Instruccion):
         self.column=column
     def ejecutar(self, driver: Driver, ts: Enviroment):
         new_ts=Enviroment(ts,"ForIn")
-        new_ts2=Enviroment(new_ts,"Bloque ForIn")
+        self.arreglo.value=None
+        self.arreglo.tipo=None
         cArr=self.arreglo.getValor(driver,ts)
         tArr=self.arreglo.getTipo(driver,ts)
         if type(cArr)==list:
             symbol=Symbol(mut=True,id=self.id,value="",tipo_simbolo=0,tipo=tArr,line=self.line,column=self.column)
             new_ts.addVar(self.id,symbol)
             for element in cArr:
-                new_ts.updateForIn(self.id,element["valor"]) #actualizar variable id en cada iteracion
+                new_ts.updateForIn(self.id, element["valor"])  # actualizar variable id en cada iteracion
+                new_ts2 = Enviroment(new_ts, "Bloque ForIn")
                 for inst in self.cInst:
                     if isinstance(inst,Break):
                         return
@@ -35,7 +37,7 @@ class ForIn(Instruccion):
                     elif isinstance(inst,Break):
                         print("Error hay un return en un for")
                         return
-
+                    print(f"FORRRRR {self.id}")
                     rInst=inst.ejecutar(driver,new_ts2)
 
                     if isinstance(rInst, Break):

@@ -57,8 +57,7 @@ class AccesVec(Expresion):
                 print(f"Error Intento de Insert en vector no declarado linea:{self.line} ")
         return self.value
     def getTipo(self, driver, ts):
-        if self.value==None:
-            self.getValor(driver,ts)
-            if self.value==None: #si despues de eso aun es None entonces da error al intentar obtener un valor
-                self.tipo==Tipos.ERROR
+        self.getValor(driver,ts)
+        if self.value==None: #si despues de eso aun es None entonces da error al intentar obtener un valor
+            self.tipo==Tipos.ERROR
         return self.tipo

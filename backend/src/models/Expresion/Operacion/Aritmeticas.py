@@ -5,12 +5,11 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
     #var Operacion: exp1: Expresion, operador, exp2: Expresion, linea, columna, expU
     #ARITMETICAS TIENE UN CONSTRUCTOR HEREDADO POR "OPERACION"
     def getTipo(self, driver, ts):
-        if self.value==None and self.tipo==None:
-            self.value=self.getValor(driver, ts)
         if self.operador==Operador.SUMA and self.exp1.getTipo(driver,ts)==Tipos.STRING and self.exp2.getTipo(driver,ts)==Tipos.STR:
             self.tipo=Tipos.STRING
             return self.tipo
         else:
+            self.value = self.getValor(driver, ts)
             self.tipo=definirTipo(self.value)
             return self.tipo
 

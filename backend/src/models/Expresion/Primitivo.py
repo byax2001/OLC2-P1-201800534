@@ -5,7 +5,7 @@ from models.TablaSymbols.Tipos import definirTipo,Tipos,getTipo
 class Primitivo(Expresion):
     def __init__(self, valor, linea: int, columna: int, aux = ""):
         self.tipo = None if aux=="" else getTipo(aux)
-        self.valor = valor
+        self.value = valor
         self.linea = linea
         self.columna = columna
 
@@ -17,7 +17,7 @@ class Primitivo(Expresion):
             return self.tipo
 
     def getValor(self, driver, ts):
-        value = self.valor
+        value = self.value
         self.tipo = definirTipo(value)
         if(self.tipo==Tipos.STRING or self.tipo==Tipos.CHAR or self.tipo==Tipos.STR):
             value = Primitivo.limpCad(value)

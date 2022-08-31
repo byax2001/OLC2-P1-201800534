@@ -16,7 +16,7 @@ class Asignacion(Instruccion):
         if Symbol !=None:
             if(Symbol.mut==True):
                 v_exp=self.exp.getValor(driver,ts)
-                if(v_exp!=None):
+                if v_exp!=None:
                     t_exp=self.exp.getTipo(driver,ts)
                     if Symbol.tipo == t_exp or Symbol.tipo==Tipos.STRUCT:
                         if len(self.cIndex)==0: #si es una asignacion normal

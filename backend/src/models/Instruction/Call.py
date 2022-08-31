@@ -72,8 +72,11 @@ class Call(Instruccion):
                                         return
                                     else:
                                         self.tipo=exp.getTipo(driver,newts2)
+                                        valor=exp.getValor(driver,newts2)
                                         if self.tipo==symbol.tipo:  #la funcion debe de retornar un valor del mismo tipo el que fue declarada
-                                            self.value=exp.getValor(driver,newts2)
+                                            self.value=valor
+                                        elif symbol.tipo==Tipos.ARREGLO and type(valor)==list: #symbol.tipo tipo del valor de la funcion a retornar
+                                            self.value = valor
                                         else:
                                             print("La funcion no esta retornando un valor del mismo tipo que esta")
                                             return

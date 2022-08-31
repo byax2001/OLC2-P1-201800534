@@ -235,3 +235,36 @@ fn valores(x: &mut [i64]) {
 
 valores(&mut arreglo0);
 println!("{:?}", arreglo0);
+
+let p1d= "hola";
+let p2d= p1d.to_string();
+
+
+fn insertar_tabla(mut _tabla: Vec<Venta2>, total: i64, cliente:String) -> Vec<Venta2> {
+    if _tabla.len() < _tabla.capacity() {
+    //Insertar un valor nuevo
+    let valor: Venta = Venta {
+    total: total,
+    cliente: cliente.to_string()
+    };
+    _tabla.push(valor);
+        println!("Valor nuevo agregado a tabla ventas");
+    }else {
+        println!("La tabla ha llegado a su maxima capacidad");
+    };
+    return _tabla;
+};
+
+fn main() {
+    let mut vector: Vec<tienda::ventas::Venta> = Vec::new();
+    //Iniciar la tabla
+    vector = tienda::ventas::crear_tabla(vector,10);
+    //Insertar valor
+    vector = tienda::ventas::insertar_tabla(vector,15,"Hector".to_string());
+    //Obtener un valor
+    let getValue: tienda::ventas::Venta =
+    tienda::ventas::select_venta_por_id(vector,0);
+    println!("total: {} cliente: {}", getValue.total, getValue.cliente);
+}
+
+

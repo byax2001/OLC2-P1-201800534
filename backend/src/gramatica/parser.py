@@ -181,6 +181,7 @@ def p_EXPRESION_par(p):
 def p_exp_one_element(p):
     """
     EXPRESION : TIPODATO
+        | ID
         | IF_TER
         | MATCH_TER
         | LOOP
@@ -230,7 +231,7 @@ def p_tipo_dato(p):
 #dato tipo id
 def p_id(p):
     """
-    EXPRESION : id
+    ID : id
     """  
     p[0] = Id(p[1],p.lineno(1), 0)
 
@@ -301,20 +302,33 @@ def p_as(p):
 def p_abs(p):
     """ABS : EXPRESION punto abs para parc"""
     p[0]=Abs(exp=p[1], line=p.lineno(1), column=0)
+def p_abs_id(p):
+    """ABS : id punto abs para parc"""
+    exp = Id(p[1], p.lineno(1), 0)
+    p[0] = Abs(exp=exp, line=p.lineno(1), column=0)
 #CLONE=====================================================================================
 def p_clone(p):
     """CLONE : EXPRESION punto clone para parc"""
     p[0]=Clone(exp=p[1], line=p.lineno(1), column=0)
+def p_clone_id(p):
+    """CLONE : id punto clone para parc"""
+    exp = Id(p[1], p.lineno(1), 0)
+    p[0] = Clone(exp=exp, line=p.lineno(1), column=0)
 #Sqrt=====================================================================================
 def p_sqrt(p):
     """SQRT : para CAST_AS parc punto sqrt para parc"""
     p[0] = Sqrt(exp=p[2], line=p.lineno(1), column=0)
 #Sqrt=====================================================================================
-def p_tostrig_owned(p):
+def p_tostrig_owned_id(p):
     """TO_STRING_OWNED : EXPRESION punto toString para parc
         | EXPRESION punto toOwned para parc
     """
     p[0] = ToStringOwned(exp=p[1], line=p.lineno(1), column=0)
+def p_tostring_owned2(p):
+    """TO_STRING_OWNED : id punto toString para parc
+        | id punto toOwned para parc"""
+    exp = Id(p[1], p.lineno(1), 0)
+    p[0] = ToStringOwned(exp=exp, line=p.lineno(1), column=0)
 
 
 #Instrucciones------------------------------------------------------------------------------------
@@ -485,6 +499,18 @@ def p_funcion2(p):
         p[0]=Funcion(id=p[2],lparametros=[],tipo=p[7],bloque=p[8],line=p.lineno(1),column=0)
     else:
         p[0]=Funcion(id=p[2],lparametros=[],tipo="",bloque=p[5],line=p.lineno(1),column=0)
+def p_funcion3(p):
+    #    ->  NameStruct {}     |    -> Vec < ID >
+    """
+    FUNCION : fn id para LISTAPARAMETROS parc menos mayor id BLOQUE_INST
+            | fn id para LISTAPARAMETROS parc menos mayor Vec menor id mayor BLOQUE_INST
+            | fn id para LISTAPARAMETROS parc menos mayor Vec menor TIPOVAR mayor BLOQUE_INST
+    """
+    if p[8]!="Vec":
+        p[0]=Funcion(id=p[2],lparametros=p[4],tipo=p[8],bloque=p[9],line=p.lineno(1),column=0)
+    else:
+        p[0]=Funcion(id=p[2],lparametros=p[4],tipo=p[10],bloque=p[12],line=p.lineno(1),column=0)
+
 def p_lista_parametros(p):
     """LISTAPARAMETROS : LISTAPARAMETROS coma PARAMETRO"""
     p[1].append(p[3])
@@ -511,6 +537,18 @@ def p_parametro2(p):
         p[0]=DecVector(mut=True,id=p[1],tipo=p[7],vecI=None,capacity=None,line=p.lineno(1),column=0)
     elif len(p)==6:
         p[0] = DecArreglo(mut=True, id=p[1], arrDimensional=p[5], array=None, line=p.lineno(1), column=0)
+
+def p_parametro3(p):
+    """PARAMETRO : id dospuntos Vec menor TIPOVAR mayor
+            | id dospuntos Vec menor id mayor
+            | mut id dospuntos Vec menor TIPOVAR mayor
+            | mut id dospuntos Vec menor id mayor
+    """
+    if p[1]!="mut":
+        p[0] = DecVector(mut=False, id=p[1], tipo=p[5], vecI=None, capacity=None, line=p.lineno(1), column=0)
+    else:
+        p[0] = DecVector(mut=True, id=p[1], tipo=p[6], vecI=None, capacity=None, line=p.lineno(1), column=0)
+
 #Call
 def p_call(p):
     """CALL : id para CONJEXP parc
@@ -657,6 +695,10 @@ def p_arrfor(p):
 def p_charArr(p):
     """CHARS : EXPRESION punto chars para parc"""
     p[0]=CharArray(exp=p[1], line=p.lineno(1), column=0)
+def p_charArr_id(p):
+    """CHARS : id punto chars para parc"""
+    exp = Id(p[1], p.lineno(1), 0)
+    p[0] = CharArray(exp=exp, line=p.lineno(1), column=0)
 def p_rangoArr(p):
     """RANGO : EXPRESION punto punto EXPRESION"""
     p[0]=Rango(exp1=p[1],exp2=p[4], line=p.lineno(1), column=0)
@@ -683,6 +725,13 @@ def p_dec_var_struct(p):
         p[0]=DecStruct(mut=False,id=p[2],exp=p[4],line=p.lineno(1), column=0)
     else:
         p[0] = DecStruct(mut=True, id=p[3],exp=p[5], line=p.lineno(1), column=0)
+def p_dec_var_struct2(p):
+    """DECSTRUCT : let id dospuntos id igual STRUCT_EXP
+                    | let mut id dospuntos id igual STRUCT_EXP"""
+    if p[2]!="mut":
+        p[0]=DecStruct(mut=False,id=p[2],exp=p[6],line=p.lineno(1), column=0)
+    else:
+        p[0] = DecStruct(mut=True, id=p[3],exp=p[7], line=p.lineno(1), column=0)
 def p_dec_var_struct_exp(p):
     """STRUCT_EXP : id llavea CONJEXP_STRUCT llavec"""
     p[0]=DecStructExp(idStruct=p[1],expStruct=p[3],line=p.lineno(1), column=0)

@@ -13,6 +13,7 @@ class Tipos(Enum):
     USIZE=10 #int pero siempre mayor que 0
     STRUCT=11
     MODULO=12
+    ARREGLO=13
 
 
 def getTipo(s:str):
@@ -30,6 +31,8 @@ def getTipo(s:str):
         return Tipos.STR
     elif s=="usize":
         return Tipos.USIZE
+    elif s=="Vec":
+        return Tipos.ARREGLO
     elif  s!="" and len(s)>0:  ## no es "" significa que es un id por tanto es un struct
         return Tipos.STRUCT
     else:

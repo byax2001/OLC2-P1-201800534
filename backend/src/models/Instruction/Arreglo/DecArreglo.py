@@ -59,5 +59,8 @@ class DecArreglo(Instruccion):
                 break
             arrayC=arrayC[0]["valor"]
         return arrCorrect
+    def changeExp(self,exp:Expresion):
+        self.array=exp
+
     def changeAcces(self,acceso:int):
         self.tacceso=acceso

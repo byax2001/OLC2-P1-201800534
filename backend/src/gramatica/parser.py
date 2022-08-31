@@ -211,8 +211,12 @@ def p_cexp(p):
 def p_elementcexp(p):
     """ELCONJ : EXPRESION
             | VECI
-            | ARREGLO"""
-    p[0] = p[1]
+            | ARREGLO
+            | ampersand mut EXPRESION"""
+    if p[1]!="&":
+        p[0] = p[1]
+    else:
+        p[0]=p[3]
 #tipo de dato=====================================================================================0
 def p_tipo_dato(p):
     """
@@ -496,6 +500,17 @@ def p_parametro(p):
         p[0] = Declaracion(mut=False, id=p[1], tipo=p[3], exp=None, linea=p.lineno(1), columna=0)
     else:
         p[0]=Declaracion(mut=True,id=p[2],tipo=p[4],exp=None,linea=p.lineno(1),columna=0)
+def p_parametro2(p):
+    """PARAMETRO :    id dospuntos ampersand mut cora TIPOVAR corc
+                    | id dospuntos ampersand mut Vec menor TIPOVAR mayor
+                    | id dospuntos ampersand mut DIMENSION_ARR
+        """
+    if len(p)==8:
+        p[0]=DecArreglo(mut=True,id=p[1],arrDimensional=None,array=None,line=p.lineno(1),column=0)
+    elif len(p)==9:
+        p[0]=DecVector(mut=True,id=p[1],tipo=p[7],vecI=None,capacity=None,line=p.lineno(1),column=0)
+    elif len(p)==6:
+        p[0] = DecArreglo(mut=True, id=p[1], arrDimensional=p[5], array=None, line=p.lineno(1), column=0)
 #Call
 def p_call(p):
     """CALL : id para CONJEXP parc

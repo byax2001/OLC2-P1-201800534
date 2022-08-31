@@ -1,0 +1,12 @@
+* Los structs se guardan como funciones y a la hora de declarar una variable struct que al final tendra un enviroment
+como valor, dicho enviroment contendra todas las declaraciones del struct y los metodos propios de un enviroment para manipular
+datos.
+* Los modulos son como las funciones, a la hora de declararlos su
+valor es un enviroment donde estan todos las instrucciones y structs de estos dicho enviroment posee todos los metodos que un enviroment tiene
+para manipular dichas instrucciones.
+Los structs tienen como contenido declaraciones a las que se les asigna null por default al igual que las funciones.
+En el caso de los structs se guardan como una funcion y a la hora de declarar una variable con este struct (let var=struct{id:5});
+se hace lo mismo que con las funciones un cambio a las expresiones de las declaraciones.
+*Por default los array se pasan por referencia por las funciones de python de tal modo que si se asigna donde sea
+un arreglo y esta asignacion es modificada, el arreglo es modificado hasta el punto de origen de este
+y todos los lugares donde fue asignado.

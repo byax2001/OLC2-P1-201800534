@@ -225,3 +225,13 @@ Holamod::subHola::funcsub(true);
 let modp="Mod funcion retorna bien".to_string();
 let modrcorrect:String= Holamod::retString(modp);
 println!("{}",modrcorrect);
+
+//paso de parametros relacionados
+
+let mut arreglo0: [i64; 3] = [10, 12, 45];
+fn valores(x: &mut [i64]) {
+    x[0] = 3;
+};
+
+valores(&mut arreglo0);
+println!("{:?}", arreglo0);

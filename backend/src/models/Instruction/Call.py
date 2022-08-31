@@ -24,7 +24,7 @@ class Call(Instruccion):
             newts2=Enviroment(newts,"BloqueFuncion")
             symbol=ts.buscar(self.id);
             if symbol!=None:
-                print(f"{self.id}   Symbols ****  {symbol.tsimbolo}")
+
                 if symbol.tsimbolo==Symbols.FUNCION:
                     paramsFun=symbol.value[0]  #parametros de la funcion
                     instFun=symbol.value[1]    #instrucciones de la funcion
@@ -36,9 +36,12 @@ class Call(Instruccion):
                             x+=1
 
                         #==============================Declaracion de parametros=======================
-                        for declaracion in paramsFun:
-                            declaracion.ejecutar(driver,newts)
-
+                        try:
+                            for declaracion in paramsFun:
+                                declaracion.ejecutar(driver,newts)
+                        except Exception as e:
+                            print(str(e)+"*********************")
+                            print("Ocurrio un error  a la hora de declarar las variables para esta funcion")
                         #bloque de la funcion -----------------------------------------
                         if symbol.tipo==Tipos.VOID:
                             for instruccion in instFun:

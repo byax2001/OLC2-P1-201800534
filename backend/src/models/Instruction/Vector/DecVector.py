@@ -70,7 +70,11 @@ class DecVector(Instruccion):
             return ""
         elif (tipo==Tipos.STRING):
             return ""
+            return ""
         elif (tipo==Tipos.CHAR):
             return "\0"
+    def changeExp(self,exp:Expresion):
+        self.vecI=exp
+
     def changeAcces(self,acceso:int):
         self.tacceso=acceso

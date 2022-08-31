@@ -66,8 +66,10 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                print(f'Las expresiones a dividir deben de ser del mismo tipo')
         elif self.operador == Operador.MOD:
             if t_nodoIzq == t_nodoDer:
-                if t_nodoIzq in [Tipos.INT64, Tipos.FLOAT64]:
+                if t_nodoIzq==Tipos.INT64:
                     return self.exp1.getValor(driver, ts) % self.exp2.getValor(driver, ts)
+                elif t_nodoIzq==Tipos.FLOAT64:
+                    return float(self.exp1.getValor(driver, ts) % self.exp2.getValor(driver, ts))
                 else:
                     print(f'Las expresiones para usar el operador modulo debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
             else:

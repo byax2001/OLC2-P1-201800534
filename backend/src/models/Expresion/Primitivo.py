@@ -10,9 +10,11 @@ class Primitivo(Expresion):
         self.columna = columna
 
     def getTipo(self, driver, ts):
-        value = self.getValor(driver, ts)
-        return definirTipo(value)
-
+        if self.tipo is None:
+            value = self.getValor(driver, ts)
+            return definirTipo(value)
+        else:
+            return self.tipo
 
     def getValor(self, driver, ts):
         value = self.value

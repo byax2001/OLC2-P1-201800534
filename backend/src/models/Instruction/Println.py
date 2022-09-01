@@ -43,7 +43,11 @@ class Println(Instruccion):
                 elif isinstance(element,vecI) or isinstance(element,Arreglo):
                     c_llavesint+=1;
                 else:
-                    c_llaves+=1
+                    valor=element.getValor(driver,ts)
+                    if type(valor)==list:
+                        c_llavesint+=1
+                    else:
+                        c_llaves+=1
 
             #reemplazo de los {} y {:?} por las expresiones en la cadena auxiliar, arriba se cubrieron todos los posibles errores, por lo cual no es necesario volver a cubrirlos
             #replace (exp1,exp2,1) indica que solo se reemplazara una vez de izquierda a derecha

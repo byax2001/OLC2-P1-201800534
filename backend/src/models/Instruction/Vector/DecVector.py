@@ -24,11 +24,22 @@ class DecVector(Instruccion):
                 v_vec=self.vecI.getValor(driver,ts)
                 tvec=self.vecI.getTipo(driver,ts)
                 if tvec!=Tipos.ERROR and v_vec!=None:
-                    newVec=Vector(vec=v_vec,stateCap=False,capacity=0)
-                    symbol=Symbol(mut=self.mut,id=self.id,value=newVec,tipo_simbolo=3,tipo=tvec,line=self.line,
-                                  column=self.column,tacceso=self.tacceso)
-                    ts.addVar(self.id,symbol)
-                    print("Se declaro un vector con \"vec!\"")
+                    if self.tipo==None:
+                        newVec=Vector(vec=v_vec,stateCap=False,capacity=0)
+                        symbol=Symbol(mut=self.mut,id=self.id,value=newVec,tipo_simbolo=3,tipo=tvec,line=self.line,
+                                      column=self.column,tacceso=self.tacceso)
+                        ts.addVar(self.id,symbol)
+                        print("Se declaro un vector con \"vec!\"")
+                    else:
+                        if self.tipo==tvec:
+                            newVec = Vector(vec=v_vec, stateCap=False, capacity=0)
+                            symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=tvec,
+                                            line=self.line,
+                                            column=self.column, tacceso=self.tacceso)
+                            ts.addVar(self.id, symbol)
+                            print("Se declaro un vector con \"vec!\"")
+                        else:
+                            "el tipo de variable declarado y de vec! no son iguales"
                 else:
                     print("declaracion vec! dio error")
             elif self.capacity!=None:  #con capacity-------------------------------------------

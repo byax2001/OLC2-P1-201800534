@@ -1,7 +1,5 @@
 
 
-
-
 fn main() {
 
 println!("{}",!false);
@@ -152,7 +150,6 @@ println!("Contenido de vveci3 en pos 0: {}",acces);
 for x in 0..4 {
     println!("valor de x: {}",x);
 }
-
 for palabra in ["hoy","manana","antier"] {
     println!("valor de palabra: {}",palabra);
     continue;
@@ -244,5 +241,4 @@ println!("{:?}", arreglo0);
 let p1d= "hola";
 let p2d= p1d.to_string();
 
-    
 }

@@ -333,8 +333,8 @@ def p_clone_id(p):
     p[0] = Clone(exp=exp, line=p.lineno(1), column=0)
 #Sqrt=====================================================================================
 def p_sqrt(p):
-    """SQRT : para CAST_AS parc punto sqrt para parc"""
-    p[0] = Sqrt(exp=p[2], line=p.lineno(1), column=0)
+    """SQRT : EXPRESION punto sqrt para parc"""
+    p[0] = Sqrt(exp=p[1], line=p.lineno(1), column=0)
 def p_sqrt_id(p):
     """SQRT : id punto sqrt para parc"""
     exp = Id(p[1], p.lineno(1), 0)
@@ -535,13 +535,9 @@ def p_funcion3(p):
     #    ->  NameStruct {}     |    -> Vec < ID >
     """
     FUNCION : fn id para LISTAPARAMETROS parc menos mayor id BLOQUE_INST
-            | fn id para LISTAPARAMETROS parc menos mayor Vec menor id mayor BLOQUE_INST
-            | fn id para LISTAPARAMETROS parc menos mayor Vec menor TIPOVAR mayor BLOQUE_INST
+            | fn id para LISTAPARAMETROS parc menos mayor VEC BLOQUE_INST
     """
-    if p[8]!="Vec":
-        p[0]=Funcion(id=p[2],lparametros=p[4],tipo=p[8],bloque=p[9],line=p.lineno(1),column=0)
-    else:
-        p[0]=Funcion(id=p[2],lparametros=p[4],tipo=p[10],bloque=p[12],line=p.lineno(1),column=0)
+    p[0]=Funcion(id=p[2],lparametros=p[4],tipo=p[8],bloque=p[9],line=p.lineno(1),column=0)
 
 def p_lista_parametros(p):
     """LISTAPARAMETROS : LISTAPARAMETROS coma PARAMETRO"""
@@ -560,26 +556,24 @@ def p_parametro(p):
         p[0]=Declaracion(mut=True,id=p[2],tipo=p[4],exp=None,linea=p.lineno(1),columna=0)
 def p_parametro2(p):
     """PARAMETRO :    id dospuntos ampersand mut cora TIPOVAR corc
-                    | id dospuntos ampersand mut Vec menor TIPOVAR mayor
                     | id dospuntos ampersand mut DIMENSION_ARR
         """
     if len(p)==8:
         p[0]=DecArreglo(mut=True,id=p[1],arrDimensional=None,array=None,line=p.lineno(1),column=0)
-    elif len(p)==9:
-        p[0]=DecVector(mut=True,id=p[1],tipo=p[7],vecI=None,capacity=None,line=p.lineno(1),column=0)
     elif len(p)==6:
         p[0] = DecArreglo(mut=True, id=p[1], arrDimensional=p[5], array=None, line=p.lineno(1), column=0)
-
 def p_parametro3(p):
-    """PARAMETRO : id dospuntos Vec menor TIPOVAR mayor
-            | id dospuntos Vec menor id mayor
-            | mut id dospuntos Vec menor TIPOVAR mayor
-            | mut id dospuntos Vec menor id mayor
+    """PARAMETRO : id dospuntos ampersand mut VEC"""
+    p[0]=DecVector(mut=True,id=p[1],tipo=p[5],vecI=None,capacity=None,line=p.lineno(1),column=0)
+
+def p_parametro4(p):
+    """PARAMETRO : id dospuntos VEC
+            | mut id dospuntos VEC
     """
     if p[1]!="mut":
-        p[0] = DecVector(mut=False, id=p[1], tipo=p[5], vecI=None, capacity=None, line=p.lineno(1), column=0)
+        p[0] = DecVector(mut=False, id=p[1], tipo=p[3], vecI=None, capacity=None, line=p.lineno(1), column=0)
     else:
-        p[0] = DecVector(mut=True, id=p[1], tipo=p[6], vecI=None, capacity=None, line=p.lineno(1), column=0)
+        p[0] = DecVector(mut=True, id=p[1], tipo=p[4], vecI=None, capacity=None, line=p.lineno(1), column=0)
 
 #Call
 def p_call(p):
@@ -601,14 +595,30 @@ def p_defvector_1(p):
         p[0]=DecVector(mut=False,id=p[2],tipo=None,vecI=p[4],capacity=None,line=p.lineno(1), column=0)
     else:
         p[0]=DecVector(mut=True,id=p[3],tipo=None,vecI=p[5],capacity=None,line=p.lineno(1), column=0)
-
-def p_devector_2(p):
-    """DECVECTOR : let id dospuntos Vec menor TIPOVAR mayor igual Vec dospuntos dospuntos FUNCVEC
-                | let mut id dospuntos Vec menor TIPOVAR mayor igual Vec dospuntos dospuntos FUNCVEC"""
-    if p[2]!="mut":
-        p[0] = DecVector(mut=False,id=p[2],tipo=p[6], vecI=None, capacity=p[12], line=p.lineno(1), column=0)
+def p_defvector_2(p):
+    """
+    DECVECTOR : let id dospuntos VEC igual VECI
+        | let mut id dospuntos VEC igual VECI
+    """
+    if p[2] != "mut":
+        p[0]=DecVector(mut=False,id=p[2],tipo=p[4],vecI=p[6],capacity=None,line=p.lineno(1), column=0)
     else:
-        p[0] = DecVector(mut=True,id=p[3],tipo=p[7],  vecI=None, capacity=p[13], line=p.lineno(1), column=0)
+        p[0]=DecVector(mut=True,id=p[3],tipo=p[5],vecI=p[7],capacity=None,line=p.lineno(1), column=0)
+
+def p_devector_3(p):
+    """DECVECTOR : let id dospuntos VEC igual Vec dospuntos dospuntos FUNCVEC
+                | let mut id dospuntos VEC igual Vec dospuntos dospuntos FUNCVEC"""
+    if p[2]!="mut":
+        p[0] = DecVector(mut=False,id=p[2],tipo=p[4], vecI=None, capacity=p[9], line=p.lineno(1), column=0)
+    else:
+        p[0] = DecVector(mut=True,id=p[3],tipo=p[5],  vecI=None, capacity=p[10], line=p.lineno(1), column=0)
+def p_dimensional_vector_recur(p):
+    """VEC : Vec menor VEC mayor"""
+    p[0]=p[3]
+def p_dimensional_vector(p):
+    """VEC : Vec menor TIPOVAR mayor
+           | Vec menor id mayor"""
+    p[0]=p[3]
 
 def p_vectori(p):
     #veci  =   vec!
@@ -722,7 +732,8 @@ def p_arrfor(p):
     """ARRFOR : CHARS
             | ARREGLO
             | VECI  
-            | RANGO"""   #-----------------------------CAMBIAR ------------ ARREGLO POR EXP
+            | RANGO
+            | ID"""   #-----------------------------CAMBIAR ------------ ARREGLO POR EXP
     p[0]=p[1]
 def p_charArr(p):
     """CHARS : EXPRESION punto chars para parc"""

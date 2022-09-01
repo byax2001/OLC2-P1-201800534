@@ -15,17 +15,16 @@ class DecStructExp(Expresion):
         self.cExp=expStruct
         self.line=line
         self.column=column
-        self.instancia = 0
+        self.instancia=0
+
     #  let id =     id       { var : valor , var2: valor }
     #      id      idStruct             expsStruct
     def getValor(self, driver, ts):  #lo que va a retornar va a ser un Enviromet o tabla ts a guardar
-        print("JAIJDJSAFJSIDDFJSJF")
         self.instancia+=1
         self.resetInst()
         if self.value==None and self.tipo==None:
             newts = Enviroment(ts, "Struct")
             struct = ts.buscar(self.idSt)
-            print(f"id struct solcitado: {self.idSt}")
             if struct != None:
                 if struct.tipo == Tipos.STRUCT:
                     st: Struct = struct.value
@@ -62,9 +61,10 @@ class DecStructExp(Expresion):
         return self.tipo
 
     def resetInst(self):
-        if self.instancia > 2:
-            self.instancia = 0
-            self.value = None
-            self.tipo = None
+        if self.instancia>2:
+            self.instancia=0
+            self.value=None
+            self.tipo=None
+
     def ejecutar(self, driver: Driver, ts: Enviroment):
         pass

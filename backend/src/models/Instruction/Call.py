@@ -16,9 +16,12 @@ class Call(Instruccion):
         self.cExp=cExp
         self.line=line
         self.column=column
+        self.instancia=0
     def ejecutar(self, driver: Driver, ts: Enviroment):
         self.getValor(driver,ts);
     def getValor(self, driver: Driver, ts: Enviroment):
+        self.instancia+=1
+        self.resetInst()
         if self.value==None and self.tipo==None:
             newts=Enviroment(ts,"Funcion")
             newts2=Enviroment(newts,"BloqueFuncion")
@@ -117,3 +120,8 @@ class Call(Instruccion):
             return self.tipo
         else:
             return self.tipo
+    def resetInst(self):
+        if self.instancia>2:
+            self.instancia=0
+            self.value=None
+            self.tipo=None

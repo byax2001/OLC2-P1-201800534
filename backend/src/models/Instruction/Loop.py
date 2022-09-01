@@ -12,6 +12,7 @@ class Loop(Instruccion):
         self.bloque=bloque
         self.line=line
         self.column=column
+        self.instancia=0
     def ejecutar(self, driver, ts: Enviroment):
         while True:
             new_ts= Enviroment(ts,"Loop");
@@ -33,6 +34,8 @@ class Loop(Instruccion):
                     return
     #esto solo se usara cuando se use como expresion
     def getValor(self, driver, ts):
+        self.instancia+=1
+        self.resetInst()
         if self.value==None:
             while True:
                 for instruccion in self.bloque:
@@ -65,3 +68,8 @@ class Loop(Instruccion):
             return self.tipo
         else:
             return self.tipo
+    def resetInst(self):
+        if self.instancia>2:
+            self.instancia=0
+            self.value=None
+            self.tipo=None

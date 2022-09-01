@@ -37,7 +37,6 @@ class ForIn(Instruccion):
                     elif isinstance(inst,Break):
                         print("Error hay un return en un for")
                         return
-                    print(f"FORRRRR {self.id}")
                     rInst=inst.ejecutar(driver,new_ts2)
 
                     if isinstance(rInst, Break):

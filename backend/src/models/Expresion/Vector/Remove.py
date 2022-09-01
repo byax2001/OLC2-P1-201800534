@@ -14,6 +14,7 @@ class Remove(Expresion):
         self.column = column
         self.instancia=0
 
+
     def ejecutar(self, driver: Driver, ts: Enviroment):
         self.getValor(driver,ts);
     def getValor(self, driver, ts):
@@ -48,7 +49,6 @@ class Remove(Expresion):
         if self.value==self.tipo==None:
             self.getValor(driver,ts)
         return self.tipo
-
     def resetInst(self):
         if self.instancia>2:
             self.instancia=0

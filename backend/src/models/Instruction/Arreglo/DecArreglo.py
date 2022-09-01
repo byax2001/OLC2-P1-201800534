@@ -16,7 +16,6 @@ class DecArreglo(Instruccion):
     def ejecutar(self, driver: Driver, ts: Enviroment):
         if ts.buscarActualTs(self.id)==None:
             if self.arrDim!=None:
-                print("HHHHHHHHHHHHHHHHh")
                 t_dim = self.arrDim.getTipo(driver, ts)
                 v_dim = self.arrDim.getValor(driver,ts)
                 t_array = self.array.getTipo(driver, ts)
@@ -37,7 +36,6 @@ class DecArreglo(Instruccion):
                 else:
                     print(f"Error el tipo de dimensional y el del array no concuerdan linea: {self.line}")
             else:
-                print("HHHHHHHHHHHHHHHHh")
                 t_array = self.array.getTipo(driver, ts)
                 v_array = self.array.getValor(driver, ts)
                 nvector = Vector(vec=v_array, stateCap=False, capacity=0)

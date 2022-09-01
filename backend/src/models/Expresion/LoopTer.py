@@ -5,6 +5,10 @@ from models.Instruction.Continue import Continue
 from models.Instruction.Return import Return
 from models.TablaSymbols.Tipos import Tipos
 
+
+#YA NO SE USO ESTA FUNCION, SE SUTITUYO POR LA INSTRUCCION NORMAL DE LOOP QUE TIENE TAMBIEN GETVALOR Y GETIPO
+
+
 class LoopTer(Expresion):
     def __init__(self,bloque:[Instruccion],line:int,column:int):
         self.bloque=bloque

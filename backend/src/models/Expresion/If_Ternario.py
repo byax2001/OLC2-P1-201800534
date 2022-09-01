@@ -11,13 +11,18 @@ class If_ternario(Expresion):
         self.expB2=expB2
         self.line=line
         self.column=column
-
+        self.instancia=0
     def getTipo(self, driver, ts):
-        self.value = self.getValor(driver, ts)
-        self.tipo = definirTipo(self.value)
-        return self.tipo
+        if self.tipo is None or self.value is None:
+            self.value = self.getValor(driver, ts)
+            self.tipo = definirTipo(self.value)
+            return self.tipo
+        else:
+            return self.tipo
 
     def getValor(self, driver, ts):
+        self.instancia+=1
+        self.resetInst()
         v_exp=self.exp.getValor(driver,ts);
         t_exp=self.exp.getTipo(driver,ts)
         if(v_exp is not None):
@@ -34,6 +39,11 @@ class If_ternario(Expresion):
         else:
             print("La expresion en el if causa error")
             return None
+    def resetInst(self):
+        if self.instancia>2:
+            self.instancia=0
+            self.value=None
+            self.tipo=None
     def ejecutar(self, driver, ts):
         """En la mayoria de expresiones no realiza nada"""
         pass

@@ -100,38 +100,38 @@ def p_rust_inst(p):
 
 def p_instrucciones_lista(p):
     """
-    INSTRUCCIONES : INSTRUCCIONES INSTRUCCION puntoycoma
+    INSTRUCCIONES : INSTRUCCIONES INSTRUCCION
     """
     p[1].append(p[2])
     p[0] = p[1]
     
 def p_instrucciones_instruccion(p):
     """
-    INSTRUCCIONES : INSTRUCCION puntoycoma
+    INSTRUCCIONES : INSTRUCCION
     """
     p[0] = [p[1]]
 
 def p_instruccion(p):
     """
-    INSTRUCCION : PRINT
-        | DECLARACION
-        | ASIGNACION
+    INSTRUCCION : PRINT puntoycoma
+        | DECLARACION puntoycoma
+        | ASIGNACION puntoycoma
         | IF
         | MATCH
-        | CONTINUE
-        | RETURN
-        | BREAK
+        | CONTINUE puntoycoma
+        | RETURN puntoycoma
+        | BREAK puntoycoma
         | WHILE
-        | EXPRESION
+        | EXPRESION puntoycoma
         | FUNCION
-        | DECVECTOR
-        | PUSH
-        | INSERT
-        | DECARREGLO
+        | DECVECTOR puntoycoma
+        | PUSH puntoycoma
+        | INSERT puntoycoma
+        | DECARREGLO puntoycoma
         | FORIN
         | STRUCT
-        | DECSTRUCT
-        | MOD_VAR_STRUCT
+        | DECSTRUCT puntoycoma
+        | MOD_VAR_STRUCT puntoycoma
         | MODULO
     """
     #Anotaciones:
@@ -435,13 +435,24 @@ def p_match_1(p):
         p[0] = Match(exp=p[2], lbrazos=[], default=p[8], line=p.lineno(1), column=0)
 def p_match_2(p):
     """
-    MATCH : match EXPRESION llavea BRAZOS guionbajo igual mayor INSTRUCCION coma llavec
-        |  match EXPRESION llavea guionbajo igual mayor INSTRUCCION coma llavec
+    MATCH : match EXPRESION llavea BRAZOS guionbajo igual mayor INSTRUCCION_1LINE coma llavec
+        |  match EXPRESION llavea guionbajo igual mayor INSTRUCCION_1LINE coma llavec
     """
     if p[4]!="_":
         p[0] = Match(exp=p[2],lbrazos=p[4],default=[p[8]], line=p.lineno(1), column=0)
     else:
         p[0] = Match(exp=p[2], lbrazos=[], default=[p[8]], line=p.lineno(1), column=0)
+def p_instruction_1oneline(p):
+    """INSTRUCCION_1LINE : PRINT
+                    | DECLARACION
+                    | ASIGNACION
+                    | PUSH
+                    | INSERT
+                    | DECARREGLO
+                    | DECVECTOR
+                    | DECSTRUCT
+                    | MOD_VAR_STRUCT"""
+    p[0]=p[1]
 def p_brazos_list(p):
     """
     BRAZOS : BRAZOS BRAZO
@@ -456,7 +467,7 @@ def p_brazos_brazo(p):
 def p_brazo(p):
     """
     BRAZO : CONJEXPM igual mayor BLOQUE_INST
-        | CONJEXPM igual mayor INSTRUCCION coma
+        | CONJEXPM igual mayor INSTRUCCION_1LINE coma
     """
     if type(p[4]) in (tuple,list):
         p[0] = Brazo(cExp=p[1],bloque=p[4], line=p.lineno(1), column=0)

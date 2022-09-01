@@ -10,7 +10,10 @@ class Arreglo(Expresion):
         self.multi=multi
         self.line=line
         self.column=column
+        self.instancia=0
     def getValor(self, driver, ts):
+        self.instancia += 1
+        self.resetInst()
         vector=[]
         if self.tipo==None and self.value==None:
             x = 0
@@ -53,3 +56,8 @@ class Arreglo(Expresion):
         return self.tipo
     def ejecutar(self,driver,ts):
         pass
+    def resetInst(self):
+        if self.instancia>2:
+            self.instancia=0
+            self.value=None
+            self.tipo=None

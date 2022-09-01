@@ -12,15 +12,13 @@ class Id(Expresion):
         self.columna = columna
 
     def getTipo(self, driver, ts):
-        if self.tipo is None or self.value is None:
-            symbol = ts.buscar(self.id);
-            if symbol != None:
-                self.tipo = symbol.tipo
-            else:
-                self.tipo =Tipos.ERROR
-            return self.tipo
+        symbol = ts.buscar(self.id);
+        if symbol != None:
+            self.tipo = symbol.tipo
         else:
-            return self.tipo
+            self.tipo =Tipos.ERROR
+        return self.tipo
+
 
     def getValor(self, driver, ts:Enviroment):
         symbol = ts.buscar(self.id);

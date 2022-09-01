@@ -17,24 +17,22 @@ class Contains(Expresion):
     def ejecutar(self, driver: Driver, ts: Enviroment):
         self.getValor(driver,ts);
     def getValor(self, driver, ts):
-        if self.value==self.tipo==None:
-            symbol = ts.buscar(self.id)
-            v_exp = self.index.getValor(driver, ts)
-            t_exp = self.index.getTipo(driver, ts)
-            if symbol != None:  # si existe el vector, si ya fue declarado
-                if symbol.tsimbolo == Symbols.VECTOR or symbol.tsimbolo==Symbols.ARREGLO:  # si lo que se llamo fue un vector o arreglo
-                    if t_exp != Tipos.ERROR and v_exp != None:
-                        vector = symbol.value
-                        self.value = vector.contains(v_exp)
-                    else:
-                        print(f"La expresion a analizar da error: {self.line}")
+        symbol = ts.buscar(self.id)
+        v_exp = self.index.getValor(driver, ts)
+        t_exp = self.index.getTipo(driver, ts)
+        if symbol != None:  # si existe el vector, si ya fue declarado
+            if symbol.tsimbolo == Symbols.VECTOR or symbol.tsimbolo==Symbols.ARREGLO:  # si lo que se llamo fue un vector o arreglo
+                if t_exp != Tipos.ERROR and v_exp != None:
+                    vector = symbol.value
+                    self.value = vector.contains(v_exp)
                 else:
-                    print(f"Error Intento de Contain en una variable no vectorial o Arreglo  linea:{self.line} ")
+                    print(f"La expresion a analizar da error: {self.line}")
             else:
-                print(f"Error Contain en vector o Arreglo no declarado linea:{self.line} ")
+                print(f"Error Intento de Contain en una variable no vectorial o Arreglo  linea:{self.line} ")
+        else:
+            print(f"Error Contain en vector o Arreglo no declarado linea:{self.line} ")
         return self.value
 
     def getTipo(self, driver, ts):
-        if self.value==None:
-            self.tipo=definirTipo(self.getValor(driver,ts))
+        self.tipo=definirTipo(self.getValor(driver,ts))
         return self.tipo

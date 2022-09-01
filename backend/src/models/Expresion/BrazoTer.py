@@ -11,12 +11,10 @@ class BrazoTer(Expresion):
         self.linea = line
         self.columna = column
     def getValor(self, driver, ts):
-        if self.value is None:
-            self.value= self.bloque.getValor(driver, ts)
+        self.value= self.bloque.getValor(driver, ts)
         return self.value
     def getTipo(self, driver, ts):
-        if self.tipo is None:
-            self.tipo = self.bloque.getTipo(driver,ts)
+        self.tipo = self.bloque.getTipo(driver,ts)
         return self.tipo
 
     def CompararVexps(self, driver, ts, valorEmatch):

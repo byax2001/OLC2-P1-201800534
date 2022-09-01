@@ -8,26 +8,24 @@ class CharArray(Expresion):
         self.line=line
         self.column=column
     def getValor(self, driver, ts):
-        if self.value==None and self.tipo==None:
-            t_exp=self.exp.getTipo(driver,ts)
-            if t_exp==Tipos.STR:
-                v_exp=self.exp.getValor(driver,ts)
-                vector=[]
-                for i in v_exp:
-                    vector.append({"valor":i,"tipo":Tipos.CHAR})
-                self.value=vector
-                self.tipo=Tipos.CHAR
-            else:
-                print("Error chars() en un elemento no &str")
+        t_exp=self.exp.getTipo(driver,ts)
+        if t_exp==Tipos.STR:
+            v_exp=self.exp.getValor(driver,ts)
+            vector=[]
+            for i in v_exp:
+                vector.append({"valor":i,"tipo":Tipos.CHAR})
+            self.value=vector
+            self.tipo=Tipos.CHAR
+        else:
+            print("Error chars() en un elemento no &str")
         return self.value
     #2x2
     #get tipo 4
     # get valor 8
     def getTipo(self, driver, ts):
-        if self.tipo == None:
-            self.getValor(driver, ts)
-            if self.value == None:
-                self.tipo == Tipos.ERROR
+        self.getValor(driver, ts)
+        if self.value == None:
+            self.tipo == Tipos.ERROR
         return self.tipo
     def ejecutar(self,driver,ts):
         pass

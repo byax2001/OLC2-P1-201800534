@@ -13,12 +13,9 @@ class If_ternario(Expresion):
         self.column=column
 
     def getTipo(self, driver, ts):
-        if self.tipo is None or self.value is None:
-            self.value = self.getValor(driver, ts)
-            self.tipo = definirTipo(self.value)
-            return self.tipo
-        else:
-            return self.tipo
+        self.value = self.getValor(driver, ts)
+        self.tipo = definirTipo(self.value)
+        return self.tipo
 
     def getValor(self, driver, ts):
         v_exp=self.exp.getValor(driver,ts);

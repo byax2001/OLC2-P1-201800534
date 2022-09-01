@@ -12,11 +12,13 @@ class Remove(Expresion):
         self.index = index
         self.line = line
         self.column = column
-
+        self.instancia=0
 
     def ejecutar(self, driver: Driver, ts: Enviroment):
         self.getValor(driver,ts);
     def getValor(self, driver, ts):
+        self.instancia+=1
+        self.resetInst()
         if self.value==self.tipo==None:
             symbol = ts.buscar(self.id)
             v_index = self.index.getValor(driver, ts)
@@ -46,3 +48,9 @@ class Remove(Expresion):
         if self.value==self.tipo==None:
             self.getValor(driver,ts)
         return self.tipo
+
+    def resetInst(self):
+        if self.instancia>2:
+            self.instancia=0
+            self.value=None
+            self.tipo=None

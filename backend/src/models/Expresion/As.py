@@ -16,10 +16,15 @@ class As(Expresion):
                 return int(valor)
             elif self.tipo==Tipos.FLOAT64:
                 return float(valor)
+            elif self.tip==Tipos.USIZE:
+                return abs(int(valor))
             else:
                 print("Casteo \"as\" no valido ")
                 return None
         else:
             print("Error, intento de casteo \"as\" para un valor no float o int ")
     def getTipo(self, driver, ts):
-        return definirTipo(self.getValor(driver,ts))
+        tipo=definirTipo(self.getValor(driver, ts))
+        if self.tipo==Tipos.USIZE:
+            tipo=Tipos.USIZE
+        return tipo

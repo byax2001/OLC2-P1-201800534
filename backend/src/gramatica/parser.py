@@ -70,6 +70,7 @@ tokens = lexer.tokens
 # precedencia
 
 precedence = (
+
     ('left', 'or'),
     ('left', 'and'),
     ('left','igualigual','diferente','menor','menorigual','mayor','mayorigual'),
@@ -95,7 +96,8 @@ def p_rust_inst_instruccion(p):
     p[0] = [p[1]]
 def p_rust_inst(p):
     """INST_RUST : MODULO
-                 | FUNCION"""
+                 | FUNCION
+                 | STRUCT"""
     p[0]=p[1]
 
 def p_instrucciones_lista(p):
@@ -122,7 +124,8 @@ def p_instruccion(p):
         | RETURN puntoycoma
         | BREAK puntoycoma
         | WHILE
-        | EXPRESION puntoycoma
+        | EXPRESION
+        | CALL puntoycoma
         | FUNCION
         | DECVECTOR puntoycoma
         | PUSH puntoycoma
@@ -133,6 +136,7 @@ def p_instruccion(p):
         | DECSTRUCT puntoycoma
         | MOD_VAR_STRUCT puntoycoma
         | MODULO
+        | ACCESO_MOD puntoycoma
     """
     #Anotaciones:
         #LOOP ES TANTO INSTRUCCION COMO EXPRESION, TIENE GETVALOR,GETTIPO Y EJECUTAR ESTE SE ENCUENTRA DECLARADO EN EXPRESION
@@ -272,19 +276,40 @@ def p_tipo_var(p):
 #If ternario=====================================================================================0
 def p_if_ternario(p):
     """
-    IF_TER : if  EXPRESION  llavea EXPRESION llavec
+    IF_TER : if  EXPRESION  llavea INSTRUCCIONES EXPRESION llavec
+        | if  EXPRESION  llavea EXPRESION llavec
     """
-    p[0] = If_ternario(exp=p[2],expB1=p[4],expB2="",line=p.lineno(1), column=0)
+    if len(p)==7:
+        p[0] = If_ternario(exp=p[2],bloque1=p[4],exp1b=p[5],bloque2=[],exp2b=None,line=p.lineno(1), column=0)
+    else:
+        p[0] = If_ternario(exp=p[2], bloque1=[], exp1b=p[4], bloque2=[], exp2b=None, line=p.lineno(1), column=0)
 def p_if_else_ternario(p):
     """
-    IF_TER : if  EXPRESION  llavea EXPRESION llavec else llavea EXPRESION llavec
+    IF_TER : if  EXPRESION  llavea INSTRUCCIONES EXPRESION llavec else llavea INSTRUCCIONES EXPRESION llavec
+           | if  EXPRESION  llavea  EXPRESION llavec else llavea EXPRESION llavec
     """
-    p[0] = If_ternario(exp=p[2], expB1=p[4], expB2=p[8], line=p.lineno(1), column=0)
+    if len(p)==12:
+        p[0] = If_ternario(exp=p[2], bloque1=p[4],exp1b=p[5], bloque2=p[9],exp2b=p[10], line=p.lineno(1), column=0)
+    else:
+        p[0] = If_ternario(exp=p[2], bloque1=[], exp1b=p[4], bloque2=[], exp2b=p[8], line=p.lineno(1), column=0)
+def p_if_else_ternario_2(p):
+    """
+    IF_TER : if  EXPRESION  llavea  EXPRESION llavec else llavea INSTRUCCIONES EXPRESION llavec
+           | if  EXPRESION  llavea  INSTRUCCIONES EXPRESION llavec else llavea EXPRESION llavec
+    """
+    if p[5]=="}":
+        p[0] = If_ternario(exp=p[2], bloque1=[],exp1b=p[4], bloque2=p[8],exp2b=p[9], line=p.lineno(1), column=0)
+    else:
+        p[0] = If_ternario(exp=p[2], bloque1=p[4], exp1b=p[5], bloque2=[], exp2b=p[9], line=p.lineno(1), column=0)
 def p_if_else_if_ternario(p):
     """
-    IF_TER : if EXPRESION  llavea EXPRESION llavec else IF_TER
+    IF_TER : if EXPRESION  llavea INSTRUCCIONES EXPRESION llavec else IF_TER
+        | if EXPRESION  llavea EXPRESION llavec else IF_TER
     """
-    p[0] = If_ternario(exp=p[2], expB1=p[4], expB2=p[7], line=p.lineno(1), column=0)
+    if len(p)==9:
+        p[0] = If_ternario(exp=p[2], bloque1=p[4],exp1b=p[5], bloque2=[], exp2b=p[8],line=p.lineno(1), column=0)
+    else:
+        p[0] = If_ternario(exp=p[2], bloque1=[], exp1b=p[4], bloque2=[], exp2b=p[7], line=p.lineno(1), column=0)
 #Match ternario=====================================================================================
 def p_matchTer(p):
     """
@@ -330,6 +355,10 @@ def p_clone(p):
 def p_clone_id(p):
     """CLONE : id punto clone para parc"""
     exp = Id(p[1], p.lineno(1), 0)
+    p[0] = Clone(exp=exp, line=p.lineno(1), column=0)
+def p_clone_vec(p):
+    """CLONE : id INDEXS punto clone para parc"""
+    exp = AccesVec(id=p[1], cIndex=p[2], cIds=[], line=p.lineno(1), column=0)
     p[0] = Clone(exp=exp, line=p.lineno(1), column=0)
 #Sqrt=====================================================================================
 def p_sqrt(p):
@@ -649,8 +678,9 @@ def p_func_vec(p):
     else:
         p[0]=p[3]
 def p_instv_push(p):
-    """PUSH : id punto push para EXPRESION parc"""
-    p[0]=Push(id=p[1],exp=p[5],line=p.lineno(1), column=0)
+    """PUSH : id punto push para EXPRESION parc
+            |  id punto push para VECI parc"""
+    p[0] = Push(id=p[1],exp=p[5],line=p.lineno(1), column=0)
 def p_instv_insert(p):
     """INSERT : id punto insert para EXPRESION coma EXPRESION parc """
     p[0]=Insert(id=p[1],index=p[5],exp=p[7],line=p.lineno(1), column=0)
@@ -661,8 +691,18 @@ def p_instv_contains(p):
     """CONTAINS : id punto contains para ampersand EXPRESION parc"""
     p[0]=Contains(id=p[1],exp=p[6],line=p.lineno(1), column=0)
 def p_instv_len(p):
+    """LEN : EXPRESION punto len para parc"""
+    p[0] = Len(exp=p[1],line=p.lineno(1), column=0)
+def p_instv_len2(p):
+    """LEN : id INDEXS punto len para parc"""
+    exp = AccesVec(id=p[1], cIndex=p[2], cIds=[], line=p.lineno(1), column=0)
+    p[0] = Len(exp=exp, line=p.lineno(1), column=0)
+def p_instv_len3(p):
     """LEN : id punto len para parc """
-    p[0]=Len(id=p[1],line=p.lineno(1), column=0)
+    exp=Id(p[1],linea=p.lineno(1),columna=0)
+    p[0]=Len(exp=exp,line=p.lineno(1), column=0)
+
+
 def p_instv_capacity(p):
     """CAPACITY : id punto capacity para parc"""
     p[0]=Capacity(id=p[1],line=p.lineno(1), column=0)

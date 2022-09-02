@@ -56,3 +56,4 @@ class Operacion(Expresion):
         self.exp2 = exp2
         self.operador = getOperador(operador)
         self.exp1 = exp1
+        self.instancia=0

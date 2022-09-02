@@ -33,3 +33,6 @@ class OperacionRel(Expresion):
         self.exp2 = exp2
         self.operador = getOperador(operador)
         self.exp1 = exp1
+        self.tipo=None
+        self.value=None
+        self.instancia=0

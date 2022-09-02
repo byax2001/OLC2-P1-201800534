@@ -32,6 +32,3 @@ class Push(Instruccion):
                 print(f"Intento de Push en vector no muteable linea: {self.line}")
         else:
             print(f"Error Intento de push en vector no declarado linea:{self.line} ")
-        print("push")
-        symbol2=ts.buscar(self.id)
-        print(symbol2.value.vector)

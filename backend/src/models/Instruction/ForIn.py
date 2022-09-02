@@ -19,10 +19,9 @@ class ForIn(Instruccion):
         self.column=column
     def ejecutar(self, driver: Driver, ts: Enviroment):
         new_ts=Enviroment(ts,"ForIn")
-        self.arreglo.value=None
-        self.arreglo.tipo=None
-        cArr=self.arreglo.getValor(driver,ts)
+
         tArr=self.arreglo.getTipo(driver,ts)
+        cArr = self.arreglo.getValor(driver, ts)
         if type(cArr)==list:
             symbol=Symbol(mut=True,id=self.id,value="",tipo_simbolo=0,tipo=tArr,line=self.line,column=self.column)
             new_ts.addVar(self.id,symbol)

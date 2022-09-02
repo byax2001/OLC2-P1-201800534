@@ -13,7 +13,6 @@ class AccesStruct(Expresion):
 
     def getValor(self, driver, ts:Enviroment):
         self.instancia+=1
-        self.resetInst()
         if self.value == None and self.tipo == None:
             varSt=ts.buscar(self.idPrincipal)
             if varSt!=None:
@@ -43,16 +42,19 @@ class AccesStruct(Expresion):
         return self.value
 
     def getTipo(self, driver, ts):
+        self.resetInst()
         if self.value == None and self.tipo == None:
             self.getValor(driver, ts)
             if self.value == None:
                 self.tipo = Tipos.ERROR
+        else:
+            self.instancia+=1
         return self.tipo
     def ejecutar(self,driver,ts):
         pass
 
     def resetInst(self):
-        if self.instancia>2:
+        if self.instancia==2:
             self.instancia=0
             self.value=None
             self.tipo=None

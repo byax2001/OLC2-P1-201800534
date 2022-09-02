@@ -8,8 +8,10 @@ class Primitivo(Expresion):
         self.value = valor
         self.linea = linea
         self.columna = columna
+        self.instancia=0
 
     def getTipo(self, driver, ts):
+
         if self.tipo is None:
             value = self.getValor(driver, ts)
             return definirTipo(value)
@@ -35,3 +37,8 @@ class Primitivo(Expresion):
     def ejecutar(self, driver, ts):
         """En la mayoria de expresiones no realiza nada"""
         pass
+    def resetInst(self):
+        if self.instancia==2:
+            self.instancia=0
+            self.value=None
+            self.tipo=None

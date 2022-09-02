@@ -14,8 +14,8 @@ class While(Instruccion):
         self.line=line
         self.column=column
     def ejecutar(self, driver: Driver, ts: Enviroment):
+        t_exp = self.exp.getTipo(driver, ts)
         v_exp=self.exp.getValor(driver,ts)
-        t_exp=self.exp.getTipo(driver,ts)
         if t_exp!=Tipos.ERROR and t_exp==Tipos.BOOLEAN:
             while(v_exp):
                 Newts = Enviroment(ts, 'While')
@@ -38,9 +38,8 @@ class While(Instruccion):
                     elif isinstance(rInst, Return):
                         print("Error, existe return afuera de una funcion")
                         return
-
-                v_exp=self.exp.getValor(driver,ts)
                 t_exp = self.exp.getTipo(driver, ts)
+                v_exp=self.exp.getValor(driver,ts)
                 if t_exp == Tipos.ERROR and t_exp != Tipos.BOOLEAN:
                     print("La expresion da error o no es booleana")
                     return

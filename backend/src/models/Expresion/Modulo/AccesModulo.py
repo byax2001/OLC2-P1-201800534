@@ -18,7 +18,6 @@ class AccesModulo(Expresion):
         self.instancia=0
     def getValor(self, driver, ts:Enviroment):
         self.instancia += 1
-        self.resetInst()
         if self.value==None and self.tipo==None:
             modulo=ts.buscar(self.id)
             if modulo!=None:
@@ -53,16 +52,19 @@ class AccesModulo(Expresion):
         return self.value
 
     def getTipo(self, driver, ts):
+        self.resetInst()
         if self.tipo == None:
             self.getValor(driver, ts)
             if self.value == None:
                 self.tipo == Tipos.ERROR
+        else:
+            self.instancia+=1
         return self.tipo
     def ejecutar(self,driver,ts):
         self.getValor(driver,ts)
 
     def resetInst(self):
-        if self.instancia>2:
+        if self.instancia==2:
             self.instancia=0
             self.value=None
             self.tipo=None

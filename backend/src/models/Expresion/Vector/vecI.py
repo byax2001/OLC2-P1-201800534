@@ -16,7 +16,6 @@ class vecI(Expresion):
     def getValor(self, driver, ts):
         vector=[]
         self.instancia+=1
-        self.resetInst()
         if self.value == None and self.tipo == None:
             if self.exp==None:
                 x=0
@@ -60,15 +59,16 @@ class vecI(Expresion):
         return self.value
 
     def getTipo(self, driver, ts):
+        self.resetInst()
         if self.value==None and self.tipo==None:
             self.getValor(driver,ts)
             if self.value == None:  # si despues de eso sigue siendo None ocurrio un error
                 self.tipo = Tipos.ERROR
-            return self.tipo
         else:
-            return self.tipo
+            self.instancia+=1
+        return self.tipo
     def resetInst(self):
-        if self.instancia>2:
+        if self.instancia==2:
             self.instancia=0
             self.value=None
             self.tipo=None

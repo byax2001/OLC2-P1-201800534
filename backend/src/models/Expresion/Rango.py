@@ -11,7 +11,6 @@ class Rango(Expresion):
         self.instancia=0
     def getValor(self, driver, ts):
         self.instancia+=1
-        self.resetInst()
         if self.value==None and self.tipo==None:
             t_exp1 = self.exp1.getTipo(driver, ts)
             t_exp2 = self.exp2.getTipo(driver,ts)
@@ -27,15 +26,18 @@ class Rango(Expresion):
                 print("Uno o los dos parametros de rango no son enteros o causan conflictos")
         return self.value
     def getTipo(self, driver, ts):
+        self.resetInst()
         if self.tipo==None:
             self.getValor(driver,ts)
             if self.value==None:
                 self.tipo==Tipos.ERROR
+        else:
+            self.instancia+=1
         return self.tipo
     def ejecutar(self,driver,ts):
         pass
     def resetInst(self):
-        if self.instancia>2:
+        if self.instancia==2:
             self.instancia=0
             self.value=None
             self.tipo=None

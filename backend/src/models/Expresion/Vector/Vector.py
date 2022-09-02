@@ -7,19 +7,32 @@ class Vector:
         self.capacity=capacity
         self.ocupado=0
     def push(self,valor):
-        self.vector.append(valor)
         if self.stateCap==True:
-            self.ocupado+=1
             if self.ocupado==self.capacity:
                 self.capacity=self.capacity*2
+
+
+        self.vector.append(valor)
+        if self.stateCap == True:
+            self.ocupado += 1
+
     def insert(self,index:int,valor):
         if index<len(self.vector):
-            #colocar que el seguro de que index debe de ser TIPO.INT64
+            if self.stateCap == True:
+                if self.ocupado == self.capacity:
+                    self.capacity = self.capacity * 2
+            #es seguro de que index debe de ser TIPO.INT64
             self.vector.insert(index,valor)
             if self.stateCap == True:
                 self.ocupado += 1
+        elif index==len(self.vector):
+            if self.stateCap == True:
                 if self.ocupado == self.capacity:
                     self.capacity = self.capacity * 2
+            #es seguro de que index debe de ser TIPO.INT64
+            self.vector.append(valor)
+            if self.stateCap == True:
+                self.ocupado += 1
         else:
             print("Error: ingreso de una posicion del vector fuera del rango")
     def remove(self,index:int):
@@ -61,6 +74,7 @@ class Vector:
                 x+=1
                 if x==len(cIndex):
                     vector[index]["valor"]=valor
+
                     return True
                 vector=vector[index]["valor"]
 

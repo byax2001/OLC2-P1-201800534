@@ -39,8 +39,8 @@ class MatchTer(Expresion):
         return self.default.getValor(driver,ts)
 
     def getTipo(self, driver, ts):
-        v_exp = self.exp.getValor(driver, ts)
         t_exp = self.exp.getTipo(driver, ts)
+        v_exp = self.exp.getValor(driver, ts)
         # Revisar que todas las expresiones para decidir que brazo usar sean del mismo tipo al de la expresion del match
         for element in self.brazos:
             CmpTipos = element.CompararTexps(driver, ts, t_exp)

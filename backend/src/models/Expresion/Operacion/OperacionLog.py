@@ -25,3 +25,6 @@ class OperacionLog(Expresion):
         self.exp2 = exp2
         self.operador = getOperador(operador)
         self.exp1 = exp1
+        self.value=None
+        self.tipo=None
+        self.instancia=0

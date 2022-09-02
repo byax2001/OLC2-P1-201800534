@@ -15,8 +15,8 @@ class If(Instruccion):
         self.column=column
 
     def ejecutar(self, driver, ts: Enviroment):
+        t_exp = self.exp.getTipo(driver, ts);
         v_exp=self.exp.getValor(driver,ts); # con el ts anterior
-        t_exp=self.exp.getTipo(driver,ts);
         new_ts=Enviroment(ts,"IF"); #ejecutar resto de instrucciones con el nuevo ts
         if(v_exp is not None):
             if t_exp ==Tipos.BOOLEAN:

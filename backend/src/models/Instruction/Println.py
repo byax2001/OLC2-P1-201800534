@@ -42,12 +42,8 @@ class Println(Instruccion):
                         return
                 elif isinstance(element,vecI) or isinstance(element,Arreglo):
                     c_llavesint+=1;
-                else:
-                    valor=element.getValor(driver,ts)
-                    if type(valor)==list:
-                        c_llavesint+=1
-                    else:
-                        c_llaves+=1
+                elif isinstance(element,Primitivo):
+                    c_llaves+=1
 
             #reemplazo de los {} y {:?} por las expresiones en la cadena auxiliar, arriba se cubrieron todos los posibles errores, por lo cual no es necesario volver a cubrirlos
             #replace (exp1,exp2,1) indica que solo se reemplazara una vez de izquierda a derecha
@@ -56,6 +52,7 @@ class Println(Instruccion):
                 if v_exp.count("{}")==c_llaves and v_exp.count("{:?}")==c_llavesint:
                     for exp in self.cExp: #se procede a recorrer cada expresion
                         valorCexp = exp.getValor(driver, ts)
+                        t_valorCexp=exp.getTipo(driver,ts)
                                     #el getvalor de un id que es vector o arreglo devuelve el vector contenido en la clase VECTOR por un metodo en la clase ID.py
                         if isinstance(exp, Id):  #si la expresion es un id, hay que analizar si es un arreglo o una variable
                             Symbol = exp.getSymbol(driver, ts)
@@ -71,7 +68,20 @@ class Println(Instruccion):
                             v_exp=v_exp.replace("{}",str(valorCexp),1) #si es un primitivo u otro dato se reemplaza de forma comun
                     driver.append(v_exp+"\n") #se copia a la consola la cadena resultante
                 else:
-                    print("Error la expresion auxiliar no tiene la cantidad adecuada de {} y/o {:?}")
+                    print("---------------------------------PRINT-------------------------------")
+                    for element in self.cExp:
+
+                        tipo = element.getTipo(driver, ts)
+                        valor = element.getValor(driver, ts)
+                        if type(valor) == list:
+                            valor=self.printArray(valor)
+                            v_exp = v_exp.replace("{:?}", str(valor), 1)
+                        else:
+                            v_exp = v_exp.replace("{}", str(valor), 1)
+                    if v_exp.count("{}")==0 and v_exp.count("{:?}")==0:
+                        driver.append(str(v_exp) + "\n")
+                    else:
+                        print("Error la expresion auxiliar no tiene la cantidad adecuada de {} y/o {:?}")
             else:
                 print("Error la expresion auxiliar para imprimir variables no es string")
 
@@ -86,4 +96,6 @@ class Println(Instruccion):
                     vector=vector+str(v_element)+","
                 else:
                     vector=vector+str(v_element)+"]"
+            if len(arrayVec)==0:
+                vector=vector+"]"
         return vector

@@ -15,9 +15,14 @@ class Asignacion(Instruccion):
         Symbol=ts.buscar(self.id);
         if Symbol !=None:
             if(Symbol.mut==True):
+                t_exp = self.exp.getTipo(driver, ts)
                 v_exp=self.exp.getValor(driver,ts)
                 if v_exp!=None:
-                    t_exp=self.exp.getTipo(driver,ts)
+                    t_exp=self.auxTipos(Symbol.tipo,v_exp,t_exp)  #para poder poder asignar aun si los tipos no son los mismos
+                                                                  #pero son los correctos, como un usize en un entero o viceversa y que el valor sea mayor o igual a 0
+                                                                  #si es usize y el tipo simbolo es entero se manipula
+                                                                  #el tipo de expresion a como el simbolo requiere por ejemplo
+
                     if Symbol.tipo == t_exp or Symbol.tipo==Tipos.STRUCT:
                         if len(self.cIndex)==0: #si es una asignacion normal
                             ts.actualizar(self.id,v_exp)
@@ -26,12 +31,14 @@ class Asignacion(Instruccion):
                                 vecIndex=[]
                                 for index in self.cIndex:
                                     tipo_index = index.getTipo(driver, ts)
+                                    valor_index = index.getValor(driver, ts)
                                     if tipo_index == Tipos.INT64 or tipo_index == Tipos.USIZE:  # cIndex= [expresion,expresion,expresion]
-                                        vecIndex.append(index.getValor(driver, ts))
+                                        vecIndex.append(valor_index)
                                     else:
                                         print(f"Error: uno de los index no es un entero {self.line}")
                                         return
                                 if len(self.cIds)==0:    # arreglo[0]= "hola"
+
                                     Symbol.value.updateVector(cIndex=vecIndex,valor=v_exp)
                                 else: #arreglo[0].palabra= "hola"
                                     Symbol.value.updateVectorStruct(cIndex=vecIndex,cIds=self.cIds,valor=v_exp,tipo_val=t_exp)
@@ -46,3 +53,13 @@ class Asignacion(Instruccion):
                 print("La variable que intenta cambiar no es muteable")
         else:
             print("No ha sido declarada dicha variable")
+    def auxTipos(self,tipo_sim,valor,t_exp):
+        if tipo_sim==Tipos.INT64:
+            if t_exp==Tipos.USIZE:
+                return Tipos.INT64
+        elif tipo_sim==Tipos.USIZE:
+            if valor>=0 and t_exp==Tipos.INT64:
+                return Tipos.USIZE
+        return t_exp
+
+

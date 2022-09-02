@@ -13,7 +13,6 @@ class Arreglo(Expresion):
         self.instancia=0
     def getValor(self, driver, ts):
         self.instancia += 1
-        self.resetInst()
         vector=[]
         if self.tipo==None and self.value==None:
             x = 0
@@ -52,12 +51,18 @@ class Arreglo(Expresion):
                     print(f"Error el numero de veces a multiplicar la expresion no es entero o la expresion causa error {self.line}")
         return self.value
     def getTipo(self, driver, ts):
-        self.getValor(driver,ts)
+        self.resetInst()
+        if self.tipo==None and self.value==None:
+            self.getValor(driver,ts)
+            if self.tipo==None:
+                self.tipo==Tipos.ERROR
+        else:
+            self.instancia+=1
         return self.tipo
     def ejecutar(self,driver,ts):
         pass
     def resetInst(self):
-        if self.instancia>2:
+        if self.instancia==2:
             self.instancia=0
             self.value=None
             self.tipo=None

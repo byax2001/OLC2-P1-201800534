@@ -24,7 +24,6 @@ class Insert(Instruccion):
                         if v_exp!=None and t_exp!=Tipos.ERROR:  #que el valor de la expresion a ingresar no de errores
                             if t_exp==symbol.tipo:  #que lo que se va a ingresar sea del mismo tipo que el vector
                                 vector=symbol.value
-                                print(vector.vector)
                                 vector.insert(v_index,{"valor":v_exp,"tipo":t_exp})
                             else:
                                 print(f"Error Intento de Insert de un valor con un tipo distinto al vector linea:{self.line} ")
@@ -38,6 +37,3 @@ class Insert(Instruccion):
                 print(f"Intento de Insert en vector no muteable linea: {self.line}")
         else:
             print(f"Error Intento de Insert en vector no declarado linea:{self.line} ")
-
-        symbol2=ts.buscar(self.id)
-        print(symbol2.value.vector)

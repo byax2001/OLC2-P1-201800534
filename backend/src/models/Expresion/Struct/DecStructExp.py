@@ -21,7 +21,6 @@ class DecStructExp(Expresion):
     #      id      idStruct             expsStruct
     def getValor(self, driver, ts):  #lo que va a retornar va a ser un Enviromet o tabla ts a guardar
         self.instancia+=1
-        self.resetInst()
         if self.value==None and self.tipo==None:
             newts = Enviroment(ts, "Struct")
             struct = ts.buscar(self.idSt)
@@ -54,14 +53,17 @@ class DecStructExp(Expresion):
         return self.value
 
     def getTipo(self, driver, ts):
+        self.resetInst()
         if self.value==None and self.tipo==None:
             self.getValor(driver,ts)
             if self.value==None:
                 self.tipo=Tipos.ERROR
+        else:
+            self.instancia+=1
         return self.tipo
 
     def resetInst(self):
-        if self.instancia>2:
+        if self.instancia==2:
             self.instancia=0
             self.value=None
             self.tipo=None

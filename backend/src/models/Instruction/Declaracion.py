@@ -51,13 +51,13 @@ class Declaracion(Instruccion):
                                                 line=self.line, column=self.column)
                                 ts.addVar(self.id, symbol)
                                 print("Arreglo declarado")
-                        elif self.tipoVar==Tipos.USIZE and t_exp==Tipos.INT64: #Unica excepcion donde el tipo de variable y tipo de expresion son diferentes y posibles de declarar
+                        elif self.tipoVar==Tipos.USIZE and t_exp==Tipos.INT64 and v_exp>=0: #Unica excepcion donde el tipo de variable y tipo de expresion son diferentes y posibles de declarar
                             newVar = Symbol(mut=self.mut, id=self.id, value=v_exp, tipo_simbolo=0, tipo=Tipos.USIZE,
                                             line=self.linea, column=self.columna)
                             ts.addVar(self.id, newVar)
                             print("se añadio una variable")
                         else:
-                            print("El tipo de variable no corresponde con el valor de la variable a declarar")
+                            print(f"El tipo de variable no corresponde con el valor de la variable a declarar {self.linea}")
                             return False
                 else:
                     print("La variable ya ha sido declarada con anterioridad")

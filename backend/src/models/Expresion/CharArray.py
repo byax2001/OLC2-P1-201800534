@@ -10,7 +10,6 @@ class CharArray(Expresion):
         self.instancia=0
     def getValor(self, driver, ts):
         self.instancia+=1
-        self.resetInst()
         if self.valor==None and self.tipo==None:
             t_exp=self.exp.getTipo(driver,ts)
             if t_exp==Tipos.STR:
@@ -24,16 +23,19 @@ class CharArray(Expresion):
                 print("Error chars() en un elemento no &str")
         return self.valor
     def getTipo(self, driver, ts):
+        self.resetInst()
         if self.tipo == None:
             self.getValor(driver, ts)
             if self.valor == None:
                 self.tipo == Tipos.ERROR
+        else:
+            self.instancia+=1
         return self.tipo
     def ejecutar(self,driver,ts):
         pass
 
     def resetInst(self):
-        if self.instancia>2:
+        if self.instancia==2:
             self.instancia=0
             self.value=None
             self.tipo=None

@@ -19,11 +19,10 @@ class Remove(Expresion):
         self.getValor(driver,ts);
     def getValor(self, driver, ts):
         self.instancia+=1
-        self.resetInst()
         if self.value==self.tipo==None:
             symbol = ts.buscar(self.id)
-            v_index = self.index.getValor(driver, ts)
             t_index = self.index.getTipo(driver, ts)
+            v_index = self.index.getValor(driver, ts)
             if symbol != None:  # si existe el vector, si ya fue declarado
                 if symbol.mut == True:
                     if symbol.tsimbolo == Symbols.VECTOR:  # si lo que se llamo fue un vector
@@ -46,11 +45,14 @@ class Remove(Expresion):
         return self.value
 
     def getTipo(self, driver, ts):
+        self.resetInst()
         if self.value==self.tipo==None:
             self.getValor(driver,ts)
+        else:
+            self.instancia+=1
         return self.tipo
     def resetInst(self):
-        if self.instancia>2:
+        if self.instancia==2:
             self.instancia=0
             self.value=None
             self.tipo=None

@@ -18,10 +18,14 @@ class Call(Instruccion):
         self.column=column
         self.instancia=0
     def ejecutar(self, driver: Driver, ts: Enviroment):
-        self.getValor(driver,ts);
+        self.value=None
+        self.tipo=None
+        self.instancia = 0
+        self.getTipo(driver, ts)
+        self.getValor(driver,ts)
+
     def getValor(self, driver: Driver, ts: Enviroment):
         self.instancia+=1
-        self.resetInst()
         if self.value==None and self.tipo==None:
             newts=Enviroment(ts,"Funcion")
             newts2=Enviroment(newts,"BloqueFuncion")
@@ -68,6 +72,7 @@ class Call(Instruccion):
                             self.tipo=Tipos.ERROR
                         else: #FUCIONES QUE RETORNAN VALORES-----------------------------------------------
                             for instruccion in instFun:
+
                                 if isinstance(instruccion, Return):
                                     exp=instruccion.ejecutar(driver,newts2)
                                     if exp== None:
@@ -78,14 +83,17 @@ class Call(Instruccion):
                                         valor=exp.getValor(driver,newts2)
                                         if self.tipo==symbol.tipo:  #la funcion debe de retornar un valor del mismo tipo el que fue declarada
                                             self.value=valor
+                                            break
                                         elif symbol.tipo==Tipos.ARREGLO and type(valor)==list: #symbol.tipo tipo del valor de la funcion a retornar
                                             self.value = valor
+                                            break
                                         else:
                                             print("La funcion no esta retornando un valor del mismo tipo que esta")
                                             return
                                 elif isinstance(instruccion, Continue) or isinstance(instruccion, Break):
                                     print("Error se esta intentado usar Break o Continue en una funcion")
                                     return
+                                print(f"-----------------------{self.id if self.id!=None else 2}")
                                 rInst = instruccion.ejecutar(driver,newts2)
 
                                 if isinstance(rInst, Return):
@@ -95,8 +103,14 @@ class Call(Instruccion):
                                         return
                                     else:
                                         self.tipo = exp.getTipo(driver, newts2)
+                                        valor=exp.getValor(driver, newts2)
                                         if self.tipo == symbol.tipo:
-                                            self.value = exp.getValor(driver, newts2)
+                                            self.value = valor
+                                            break
+                                            #simbol es un enum que contiene los tipos de variables
+                                        elif symbol.tipo==Tipos.ARREGLO and type(valor)==list: #symbol.tipo tipo del valor de la funcion a retornar
+                                            self.value = valor
+                                            break
                                         else:
                                             print("La funcion no esta retornando un valor del mismo tipo que esta")
                                             return
@@ -113,15 +127,16 @@ class Call(Instruccion):
         return self.value
 
     def getTipo(self,driver,ts):
+        self.resetInst()
         if self.value==None and self.tipo==None :
             self.getValor(driver,ts)  #en get valor se asigna tambien el valor de self.tipo
             if self.value==None: #si despues de eso sigue siendo None ocurrio un error
                 self.tipo=Tipos.ERROR
-            return self.tipo
         else:
-            return self.tipo
+            self.instancia+=1
+        return self.tipo
     def resetInst(self):
-        if self.instancia>2:
+        if self.instancia>1:
             self.instancia=0
             self.value=None
             self.tipo=None

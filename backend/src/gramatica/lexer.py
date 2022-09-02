@@ -144,7 +144,7 @@ def t_id(t):
 def t_ignorar_comentarios(t):
     r'\/\/.*'
 def t_comentarios_multilinea(t):
-    r"""[/][*]([\n]|[^\*\/]|\*|\/)*[*][/]"""
+    r"""\/\*([\n]|[^(\*\/)]|\S|\]\[|\*|\/)*\*\/"""
 # Ignora y hace una accion
 def t_ignorar_salto(t):
     r'\n+'

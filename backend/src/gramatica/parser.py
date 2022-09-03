@@ -608,7 +608,7 @@ def p_parametro4(p):
     if p[1]!="mut":
         p[0] = DecVector(mut=False, id=p[1], tipo=p[3], vecI=None, capacity=None, line=p.lineno(1), column=0)
     else:
-        p[0] = DecVector(mut=True, id=p[1], tipo=p[4], vecI=None, capacity=None, line=p.lineno(1), column=0)
+        p[0] = DecVector(mut=True, id=p[2], tipo=p[4], vecI=None, capacity=None, line=p.lineno(1), column=0)
 
 #Call
 def p_call(p):

@@ -24,6 +24,7 @@ class DecVector(Instruccion):
                 tvec = self.vecI.getTipo(driver, ts)
                 v_vec=self.vecI.getValor(driver,ts)
                 if tvec!=Tipos.ERROR and v_vec!=None:
+
                     if self.tipo==None:
                         newVec=Vector(vec=v_vec,stateCap=False,capacity=0)
                         symbol=Symbol(mut=self.mut,id=self.id,value=newVec,tipo_simbolo=3,tipo=tvec,line=self.line,

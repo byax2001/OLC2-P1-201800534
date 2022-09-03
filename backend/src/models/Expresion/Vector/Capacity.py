@@ -20,6 +20,8 @@ class Capacity(Expresion):
         if symbol != None:  # si existe el vector, si ya fue declarado
             if symbol.tsimbolo == Symbols.VECTOR:  # si lo que se llamo fue un vector
                 vector = symbol.value
+                print("vector--------------------------------")
+                print(vector.rcapacity())
                 self.value = vector.rcapacity()
             else:
                 print(f"Error Intento de Contain en una variable no vectorial  linea:{self.line} ")

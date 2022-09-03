@@ -29,6 +29,13 @@ class Id(Expresion):
             return self.value
         else:
             return None
+    def getVector(self,driver,ts:Enviroment):
+        symbol = ts.buscar(self.id);
+        if symbol != None:
+            self.value = symbol.value
+            return self.value
+        else:
+            return None
     def getSymbol(self,driver,ts:Enviroment):
         symbol = ts.buscar(self.id);
         if symbol != None:

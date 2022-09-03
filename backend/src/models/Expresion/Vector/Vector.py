@@ -55,6 +55,8 @@ class Vector:
     def rcapacity(self):
         if self.stateCap==False:
             self.capacity=len(self.vector)+1
+        print("JIJOOOOOOOOOOOOOOOOOOOOOOOO")
+        print(self.capacity)
         return self.capacity
 
     def acces(self,cIndex:[]):

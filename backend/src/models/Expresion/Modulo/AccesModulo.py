@@ -23,6 +23,9 @@ class AccesModulo(Expresion):
             if modulo!=None:
                 if modulo.tipo==Tipos.MODULO:
                     v_mod=modulo.value
+                    v_mod.tabla.update(ts.tabla)  #el contenido de los enviroments mod deben de ser actualizados con el enviroment
+                                                  #principal cada vez que se usan pues estos no se actualian automaticamente
+                                                  #como si lo hace el enviroment principal
                     for x in range(len(self.cId)-1): #se recorre hasta llegar el penultimo id
                         v_mod=v_mod.buscar(self.cId[x])
                         if v_mod!=None:

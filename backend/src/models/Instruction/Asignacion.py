@@ -19,6 +19,7 @@ class Asignacion(Instruccion):
                 if type(self.exp)!=list:
                     t_exp = self.exp.getTipo(driver, ts)
                     v_exp=self.exp.getValor(driver,ts)
+                    print("---------------------")
                     if v_exp!=None:
                         t_exp=self.auxTipos(Symbol.tipo,v_exp,t_exp)  #para poder poder asignar aun si los tipos no son los mismos
                                                                       #pero son los correctos, como un usize en un entero o viceversa y que el valor sea mayor o igual a 0
@@ -26,8 +27,9 @@ class Asignacion(Instruccion):
                                                                       #el tipo de expresion a como el simbolo requiere por ejemplo
 
                         if Symbol.tipo == t_exp or Symbol.tipo==Tipos.STRUCT:
-                            if len(self.cIndex)==0: #si es una asignacion normal
+                            if len(self.cIndex)==0 and type(v_exp)!=list: #si es una asignacion normal
                                 ts.actualizar(self.id,v_exp)
+                                print("XXXXXXXXXXXXXXXXXXXX")
                             else: # si es la asignacion de un vector
                                 if Symbol.tsimbolo==Symbols.ARREGLO or Symbol.tsimbolo==Symbols.VECTOR:
                                     vecIndex=[]
@@ -40,8 +42,8 @@ class Asignacion(Instruccion):
                                             print(f"Error: uno de los index no es un entero {self.line}")
                                             return
                                     if len(self.cIds)==0:    # arreglo[0]= "hola"
-
-                                        Symbol.value.updateVector(cIndex=vecIndex,valor=v_exp)
+                                        l=Symbol.value.updateVector(cIndex=vecIndex,valor=v_exp)
+                                        print(l)
                                     else: #arreglo[0].palabra= "hola"
                                         Symbol.value.updateVectorStruct(cIndex=vecIndex,cIds=self.cIds,valor=v_exp,tipo_val=t_exp)
                                 else:
@@ -59,7 +61,7 @@ class Asignacion(Instruccion):
                         else:
                             t_cap=self.exp[0].getTipo(driver,ts)
                             valor=self.exp[0].getValor(driver,ts)
-                            newVector = Vector(vec=[], stateCap=True, capacity=t_cap)
+                            newVector = Vector(vec=[], stateCap=True, capacity=valor)
                             Symbol.value=newVector
                     else:
                         print("Esta variable no es un array o vector para poder asignarle dicho valor")

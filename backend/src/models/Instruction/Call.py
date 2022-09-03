@@ -6,6 +6,7 @@ from models.TablaSymbols.Tipos import Tipos
 from models.Instruction.Return import Return
 from models.Instruction.Continue import Continue
 from models.Instruction.Break import Break
+from models.Expresion.Id import Id
 from models import Driver
 
 class Call(Instruccion):
@@ -47,7 +48,6 @@ class Call(Instruccion):
                             for declaracion in paramsFun:
                                 declaracion.ejecutar(driver,newts)
                         except Exception as e:
-                            print(str(e)+"*********************")
                             print("Ocurrio un error  a la hora de declarar las variables para esta funcion")
                         #bloque de la funcion -----------------------------------------
                         if symbol.tipo==Tipos.VOID:
@@ -83,13 +83,13 @@ class Call(Instruccion):
                                         valor=exp.getValor(driver,newts2)
                                         if self.tipo==symbol.tipo:  #la funcion debe de retornar un valor del mismo tipo el que fue declarada
                                             self.value=valor
-                                            break
+                                            if isinstance(exp,Id) and type(valor)==list:
+                                                self.value=exp.getVector(driver,newts2)
                                         elif symbol.tipo==Tipos.ARREGLO and type(valor)==list: #symbol.tipo tipo del valor de la funcion a retornar
                                             self.value = valor
-                                            break
                                         else:
                                             print("La funcion no esta retornando un valor del mismo tipo que esta")
-                                            return
+                                        break
                                 elif isinstance(instruccion, Continue) or isinstance(instruccion, Break):
                                     print("Error se esta intentado usar Break o Continue en una funcion")
                                     return
@@ -97,6 +97,7 @@ class Call(Instruccion):
                                 rInst = instruccion.ejecutar(driver,newts2)
 
                                 if isinstance(rInst, Return):
+                                    print(symbol.tipo)
                                     exp = rInst.ejecutar(driver,newts2)
                                     if exp == None:
                                         print("Error no se intenta retornar algo en la funcion que debe retornar")
@@ -108,7 +109,7 @@ class Call(Instruccion):
                                             self.value = valor
                                             break
                                             #simbol es un enum que contiene los tipos de variables
-                                        elif symbol.tipo==Tipos.ARREGLO and type(valor)==list: #symbol.tipo tipo del valor de la funcion a retornar
+                                        elif symbol.tipo==Tipos.STRUCT and type(valor)==list: #symbol.tipo tipo del valor de la funcion a retornar
                                             self.value = valor
                                             break
                                         else:

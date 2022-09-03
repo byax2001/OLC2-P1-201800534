@@ -434,7 +434,13 @@ def p_asignaciones(p):
         p[0] = Asignacion(id=p[1], cIndex=p[2],cIds=[], exp=p[4], linea=p.lineno(1), columna=0)
     else:
         p[0] = Asignacion(id=p[1], cIndex=p[2],cIds=p[4],exp=p[6], linea=p.lineno(1), columna=0)
-
+def p_asignaciones_vec(p):
+    """ASIGNACION : id igual  Vec dospuntos dospuntos new para parc
+            | id igual Vec dospuntos dospuntos withcapacity para EXPRESION parc"""
+    if len(p)==9:
+        p[0] = Asignacion(id=p[1], cIndex=[], cIds=[], exp=[], linea=p.lineno(1), columna=0)
+    else:
+        p[0] = Asignacion(id=p[1], cIndex=[], cIds=[], exp=[p[8]], linea=p.lineno(1), columna=0)
 #If=====================================================================================
 def p_if(p):
     """
@@ -636,18 +642,30 @@ def p_defvector_2(p):
 
 def p_devector_3(p):
     """DECVECTOR : let id dospuntos VEC igual Vec dospuntos dospuntos FUNCVEC
-                | let mut id dospuntos VEC igual Vec dospuntos dospuntos FUNCVEC"""
+                | let mut id dospuntos VEC igual Vec dospuntos dospuntos FUNCVEC
+                | let id igual Vec dospuntos dospuntos FUNCVEC
+                | let mut id igual Vec dospuntos dospuntos FUNCVEC"""
     if p[2]!="mut":
-        p[0] = DecVector(mut=False,id=p[2],tipo=p[4], vecI=None, capacity=p[9], line=p.lineno(1), column=0)
+        if len(p)==10:  #con vec < tipovar >
+            p[0] = DecVector(mut=False,id=p[2],tipo=p[4], vecI=None, capacity=p[9], line=p.lineno(1), column=0)
+        else:
+            p[0] = DecVector(mut=False, id=p[2], tipo=None, vecI=None, capacity=p[7], line=p.lineno(1), column=0)
     else:
-        p[0] = DecVector(mut=True,id=p[3],tipo=p[5],  vecI=None, capacity=p[10], line=p.lineno(1), column=0)
+        if len(p)==11:  #con vec < tipovar >
+            p[0] = DecVector(mut=True,id=p[3],tipo=p[5],  vecI=None, capacity=p[10], line=p.lineno(1), column=0)
+        else:
+            p[0] = DecVector(mut=True, id=p[3], tipo=None, vecI=None, capacity=p[8], line=p.lineno(1), column=0)
+
 def p_dimensional_vector_recur(p):
     """VEC : Vec menor VEC mayor"""
     p[0]=p[3]
 def p_dimensional_vector(p):
-    """VEC : Vec menor TIPOVAR mayor
-           | Vec menor id mayor"""
+    """VEC : Vec menor TIPOVAR mayor"""
     p[0]=p[3]
+def p_dimensional_vetor2(p):
+    """VEC : Vec menor CONJ_ACCES_MOD mayor """  #Aqui va tanto los vectores tipo id (que almacenan structs) y los id::id:id que almacenan structs de modulos
+    p[0]=p[3][len(p[3])-1]
+
 
 def p_vectori(p):
     #veci  =   vec!
@@ -798,7 +816,9 @@ def p_struc_content_u(p):
     """CONTENT_STRUCT : ELSTRUCT"""
     p[0] = [p[1]]
 def p_elemento_struct(p):
-    """ELSTRUCT : id dospuntos TIPOVAR"""
+    """ELSTRUCT : id dospuntos TIPOVAR
+                | id dospuntos id"""
+                #el ultimo es para los elementos de tipo struct
     p[0]=Declaracion(mut=True,id=p[1],tipo=p[3],exp=None,linea=p.lineno(1), columna=0)
 #declaracion de variables structs
 def p_dec_var_struct(p):

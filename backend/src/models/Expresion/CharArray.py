@@ -35,7 +35,7 @@ class CharArray(Expresion):
         pass
 
     def resetInst(self):
-        if self.instancia==2:
+        if self.instancia>1:
             self.instancia=0
             self.value=None
             self.tipo=None

@@ -21,7 +21,7 @@ class Declaracion(Instruccion):
             if t_exp != Tipos.ERROR:
                 existe=ts.buscarActualTs(self.id);
                 if(existe==None):
-                    if(self.tipoVar==None): #si no se declaro el tipo de variable
+                    if self.tipoVar==None: #si no se declaro el tipo de variable
                         if t_exp==Tipos.STRUCT:
                             newVar = Symbol(mut=self.mut, id=self.id, value=v_exp, tipo_simbolo=4, tipo=t_exp,
                                             line=self.linea, column=self.columna)

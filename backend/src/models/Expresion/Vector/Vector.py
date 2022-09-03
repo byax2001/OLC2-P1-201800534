@@ -11,10 +11,11 @@ class Vector:
             if self.ocupado==self.capacity:
                 self.capacity=self.capacity*2
 
-
         self.vector.append(valor)
         if self.stateCap == True:
             self.ocupado += 1
+        #capacity en vectores no declarados con with capacity retornarian el numero maximo de elementos que albergaron
+        # mas uno, aun no se coloco esto aca
 
     def insert(self,index:int,valor):
         if index<len(self.vector):
@@ -38,7 +39,6 @@ class Vector:
     def remove(self,index:int):
         if index<len(self.vector):
             valor=self.vector.pop(index)["valor"]
-
             if self.stateCap == True:
                 self.ocupado -= 1
             return valor

@@ -21,8 +21,8 @@ class DecVector(Instruccion):
         existe=ts.buscarActualTs(self.id)
         if existe==None:
             if self.vecI!=None and self.capacity==None:  #se creo el vector con vec!----------
+                tvec = self.vecI.getTipo(driver, ts)
                 v_vec=self.vecI.getValor(driver,ts)
-                tvec=self.vecI.getTipo(driver,ts)
                 if tvec!=Tipos.ERROR and v_vec!=None:
                     if self.tipo==None:
                         newVec=Vector(vec=v_vec,stateCap=False,capacity=0)
@@ -43,8 +43,8 @@ class DecVector(Instruccion):
                 else:
                     print("declaracion vec! dio error")
             elif self.capacity!=None:  #con capacity-------------------------------------------
+                tcap = self.capacity.getTipo(driver, ts)
                 cap=self.capacity.getValor(driver,ts)
-                tcap=self.capacity.getTipo(driver,ts)
                 if tcap==Tipos.INT64 or tcap==Tipos.USIZE:
                     vec=[]
                     newVec=Vector(vec=vec,stateCap=True,capacity=cap)

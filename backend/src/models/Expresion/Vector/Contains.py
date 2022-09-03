@@ -18,8 +18,8 @@ class Contains(Expresion):
         self.getValor(driver,ts);
     def getValor(self, driver, ts):
         symbol = ts.buscar(self.id)
-        v_exp = self.index.getValor(driver, ts)
         t_exp = self.index.getTipo(driver, ts)
+        v_exp = self.index.getValor(driver, ts)
         if symbol != None:  # si existe el vector, si ya fue declarado
             if symbol.tsimbolo == Symbols.VECTOR or symbol.tsimbolo==Symbols.ARREGLO:  # si lo que se llamo fue un vector o arreglo
                 if t_exp != Tipos.ERROR and v_exp != None:

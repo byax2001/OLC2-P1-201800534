@@ -3,6 +3,7 @@ from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Symbols
 from models.Expresion.Vector.Vector import Vector
+from models.TablaSymbols.Enviroment import Enviroment
 class Asignacion(Instruccion):
     def __init__(self,id:str,cIndex:[Expresion],cIds:[str],exp: Expresion, linea:int, columna:int):
         self.id=id
@@ -19,7 +20,6 @@ class Asignacion(Instruccion):
                 if type(self.exp)!=list:
                     t_exp = self.exp.getTipo(driver, ts)
                     v_exp=self.exp.getValor(driver,ts)
-                    print("---------------------")
                     if v_exp!=None:
                         t_exp=self.auxTipos(Symbol.tipo,v_exp,t_exp)  #para poder poder asignar aun si los tipos no son los mismos
                                                                       #pero son los correctos, como un usize en un entero o viceversa y que el valor sea mayor o igual a 0
@@ -29,7 +29,6 @@ class Asignacion(Instruccion):
                         if Symbol.tipo == t_exp or Symbol.tipo==Tipos.STRUCT:
                             if len(self.cIndex)==0 and type(v_exp)!=list: #si es una asignacion normal
                                 ts.actualizar(self.id,v_exp)
-                                print("XXXXXXXXXXXXXXXXXXXX")
                             else: # si es la asignacion de un vector
                                 if Symbol.tsimbolo==Symbols.ARREGLO or Symbol.tsimbolo==Symbols.VECTOR:
                                     vecIndex=[]

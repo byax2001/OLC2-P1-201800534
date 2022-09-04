@@ -617,7 +617,9 @@ def p_parametro4(p):
         p[0] = DecVector(mut=False, id=p[1], tipo=p[3], vecI=None, capacity=None, line=p.lineno(1), column=0)
     else:
         p[0] = DecVector(mut=True, id=p[2], tipo=p[4], vecI=None, capacity=None, line=p.lineno(1), column=0)
-
+def p_parametro5(p):
+    """PARAMETRO : id dospuntos ampersand mut id"""
+    p[0]=DecStruct(mut=True,id=p[1],exp=None, line=p.lineno(1), column=0)
 #Call
 def p_call(p):
     """CALL : id para CONJEXP parc
@@ -705,7 +707,8 @@ def p_func_vec(p):
         p[0]=p[3]
 def p_instv_push(p):
     """PUSH : id punto push para EXPRESION parc
-            |  id punto push para VECI parc"""
+            |  id punto push para VECI parc
+            | id punto push para STRUCT_EXP parc"""
     p[0] = Push(id=p[1],exp=p[5],line=p.lineno(1), column=0)
 def p_instv_insert(p):
     """INSERT : id punto insert para EXPRESION coma EXPRESION parc """
@@ -859,7 +862,8 @@ def p_conjexp_struc_u(p):
     p[0] = [p[1]]
 def p_exstruct(p):
     # Structname { var1:valor,var2:valor  }    expresion struct: var1 : valor
-    """EXSTRUCT : id dospuntos EXPRESION"""
+    """EXSTRUCT : id dospuntos EXPRESION
+                | id dospuntos STRUCT_EXP """
     p[0]=ExpStruct(id=p[1],exp1=p[3],line=p.lineno(1), column=0)
     #{id:id expresion:expresion}
 #Acceso struct

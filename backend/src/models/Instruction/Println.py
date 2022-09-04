@@ -68,7 +68,6 @@ class Println(Instruccion):
                             v_exp=v_exp.replace("{}",str(valorCexp),1) #si es un primitivo u otro dato se reemplaza de forma comun
                     driver.append(v_exp+"\n") #se copia a la consola la cadena resultante
                 else:
-                    print("---------------------------------PRINT-------------------------------")
                     for element in self.cExp:
 
                         tipo = element.getTipo(driver, ts)

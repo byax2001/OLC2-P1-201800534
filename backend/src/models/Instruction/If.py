@@ -18,7 +18,6 @@ class If(Instruccion):
         t_exp = self.exp.getTipo(driver, ts);
         v_exp=self.exp.getValor(driver,ts); # con el ts anterior
         new_ts=Enviroment(ts,"IF"); #ejecutar resto de instrucciones con el nuevo ts
-        print("IF")
         if(v_exp is not None):
             if t_exp ==Tipos.BOOLEAN:
                 if v_exp==True:

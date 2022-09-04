@@ -6,9 +6,6 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
     #ARITMETICAS TIENE UN CONSTRUCTOR HEREDADO POR "OPERACION"
     def getTipo(self, driver, ts):
         self.resetInst()
-        print(self.value)
-        print(self.tipo)
-        print(self.instancia)
         if self.tipo==None and self.value==None:
             self.getValor(driver,ts)
             if self.value==None:

@@ -22,6 +22,7 @@ class DecStruct(Instruccion):
     def ejecutar(self, driver: Driver, ts: Enviroment):
         existe=ts.buscarActualTs(self.id)
         if existe==None:
+
             t_exp = self.exp.getTipo(driver, ts)
             v_exp=self.exp.getValor(driver,ts)
             if t_exp==Tipos.STRUCT:
@@ -34,5 +35,7 @@ class DecStruct(Instruccion):
                 print("Error el struct a declarar da error")
         else:
             print("Error la variable ya ha sido declarada")
+    def changeExp(self,exp:Expresion):
+        self.exp=exp
     def changeAcces(self,acceso:int):
         self.tacceso=acceso

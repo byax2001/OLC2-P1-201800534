@@ -16,7 +16,7 @@ header{
   display: none;
   position: absolute;
   background-color: #969B9C ;
-  min-width: 160px;
+  min-width: 210px;
   z-index: 1;
 }
 
@@ -65,6 +65,19 @@ header{
   resize: none;
   font-family: Arial, Helvetica, sans-serif;
   padding: 5px;
+  font-size: medium;
   /*
   */
+}
+
+/*TABLA DE ERRORES*/
+#BtnHome {
+  position:absolute;
+  top: 10px;
+  right: 15px;
+}
+#showTabla{
+  position:absolute;
+  top: 10px;
+  left: 15px;
 }

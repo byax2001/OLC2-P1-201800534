@@ -26,6 +26,3 @@ else:
     print("Error no existe main en el archivo")
 print("OUTPUT:")
 print(driver.console)
-
-print(l.rLerrores())
-print(l.rtime())

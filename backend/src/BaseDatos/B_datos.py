@@ -2,7 +2,6 @@ import time
 
 class B_datos(object):
     instance=None
-    consola=""
     prueba=[]
     Lerrores=[]
     Lts=[]
@@ -21,10 +20,14 @@ class B_datos(object):
         B_datos.Ltablas_Bdatos=[]
 
     def appendVar(self,id,t_simbolo,t_dato,ambito,fila,columna):
+        if ambito!="Global":
+            ambito="Local"
         variable={"nombre":id,"tiposimbolo":t_simbolo,"tipodato":t_dato,"ambito":ambito,"fila":fila,"columna":columna}
         B_datos.Lts.append(variable)
 
     def appendE(self,descripcion,ambito,linea,columna):
+        if ambito!="Global":
+            ambito="Local"
         nerror=len(B_datos.Lerrores)
         tiempo=str(time.strftime("%d/%m/%y"))+" "+str(time.strftime("%I:%M"))
         error={"No":nerror,"descripcion":descripcion,"ambito":ambito,"linea":linea,"columna":columna,"tiempo":tiempo}
@@ -40,9 +43,6 @@ class B_datos(object):
         T_bdatos={"No":ntablas,"nombre":id,"nameBd":BdatosSuperior,"linea":linea}
         B_datos.Ltablas_Bdatos.append(T_bdatos)
 
-    def appendConsola(self,content:str):
-        B_datos.consola=content
-    
     def rtime(self):
         return str(time.strftime("%d/%m/%y"))+" "+str(time.strftime("%I:%M"))
 
@@ -58,5 +58,3 @@ class B_datos(object):
     def rL_tBdatos(self):
         return B_datos.Ltablas_Bdatos
 
-    def rConsola(self):
-        return B_datos.consola

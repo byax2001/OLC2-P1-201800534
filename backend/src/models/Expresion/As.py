@@ -16,7 +16,7 @@ class As(Expresion):
                 return int(valor)
             elif self.tipo==Tipos.FLOAT64:
                 return float(valor)
-            elif self.tip==Tipos.USIZE:
+            elif self.tipo==Tipos.USIZE:
                 return abs(int(valor))
             else:
                 print("Casteo \"as\" no valido ")

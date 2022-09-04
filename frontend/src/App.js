@@ -9,13 +9,16 @@ import '../node_modules/bootstrap/dist/js/bootstrap.js';
 import CodeMirror from '@uiw/react-codemirror';
 //PAGINAS WEB
 import Principal from './components/Principal';
-
+import TablaErrores from './components/TablaErrores';
+import Acercade from './components/Acercade'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
       <Route path="/" exact element={<Principal />} />
+      <Route path="/terrores" element={<TablaErrores/>}/>
+      <Route path="/acercade" element={<Acercade/>}/>
       </Routes>
     </BrowserRouter>
     

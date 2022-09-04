@@ -823,6 +823,10 @@ def p_struct_content(p):
 def p_struc_content_u(p):
     """CONTENT_STRUCT : ELSTRUCT"""
     p[0] = [p[1]]
+def p_element_pub_struc(p):
+    """ELSTRUCT : pub ELSTRUCT"""
+    p[2].changeAcces(1)
+    p[0]=p[2]
 def p_elemento_struct(p):
     """ELSTRUCT : id dospuntos TIPOVAR
                 | id dospuntos id"""

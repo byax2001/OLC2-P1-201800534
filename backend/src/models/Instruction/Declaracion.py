@@ -12,7 +12,7 @@ class Declaracion(Instruccion):
         self.exp = exp
         self.linea = linea
         self.columna = columna
-
+        self.tacceso = 0
 
     def ejecutar(self, driver, ts):
         if (self.exp != None):
@@ -24,11 +24,12 @@ class Declaracion(Instruccion):
                     if self.tipoVar==None: #si no se declaro el tipo de variable
                         if t_exp==Tipos.STRUCT:
                             newVar = Symbol(mut=self.mut, id=self.id, value=v_exp, tipo_simbolo=4, tipo=t_exp,
-                                            line=self.linea, column=self.columna)
+                                            line=self.linea, column=self.columna, tacceso=self.tacceso)
                             ts.addVar(self.id, newVar)
                             print("se añadio una variable Struc")
                         elif type(v_exp)!=list:
-                            newVar=Symbol(mut=self.mut,id=self.id,value=v_exp,tipo_simbolo=0,tipo=t_exp,line=self.linea,column=self.columna)
+                            newVar=Symbol(mut=self.mut,id=self.id,value=v_exp,tipo_simbolo=0,tipo=t_exp,
+                                          line=self.linea,column=self.columna, tacceso=self.tacceso)
                             ts.addVar(self.id,newVar)
                             print("se añadio una variable")
                         else:  #si lo que se manda es la parte de un arreglo o vector
@@ -36,24 +37,25 @@ class Declaracion(Instruccion):
                             # let a=p[0] - declaracion normal con una posicion de un arreglo que da un array
                             nvector = Vector(vec=v_exp, stateCap=False, capacity=0)
                             symbol = Symbol(mut=self.mut, id=self.id, value=nvector, tipo_simbolo=1, tipo=t_exp,
-                                            line=self.line, column=self.column)
+                                            line=self.line, column=self.column, tacceso=self.tacceso)
                             ts.addVar(self.id, symbol)
                             print("Arreglo declarado")
                     else: #si si se declaro el tipo de variable
                         if(self.tipoVar==t_exp):#el tipo de variable y la expresion a asignar deben de ser del mismo tipo para que sea posible declararlas
                             if type(v_exp) != list:
-                                newVar = Symbol(mut=self.mut,id=self.id, value=v_exp, tipo_simbolo=0,tipo= t_exp, line= self.linea,column= self.columna)
+                                newVar = Symbol(mut=self.mut,id=self.id, value=v_exp, tipo_simbolo=0,tipo= t_exp,
+                                                line= self.linea,column= self.columna, tacceso=self.tacceso)
                                 ts.addVar(self.id, newVar)
                                 print("se añadio una variable")
                             else: #si lo que se manda es la parte de un arreglo o vector
                                 nvector = Vector(vec=v_exp, stateCap=False, capacity=0)
                                 symbol = Symbol(mut=self.mut, id=self.id, value=nvector, tipo_simbolo=1, tipo=t_exp,
-                                                line=self.line, column=self.column)
+                                                line=self.line, column=self.column, tacceso=self.tacceso)
                                 ts.addVar(self.id, symbol)
                                 print("Arreglo declarado")
                         elif self.tipoVar==Tipos.USIZE and t_exp==Tipos.INT64 and v_exp>=0: #Unica excepcion donde el tipo de variable y tipo de expresion son diferentes y posibles de declarar
                             newVar = Symbol(mut=self.mut, id=self.id, value=v_exp, tipo_simbolo=0, tipo=Tipos.USIZE,
-                                            line=self.linea, column=self.columna)
+                                            line=self.linea, column=self.columna, tacceso=self.tacceso)
                             ts.addVar(self.id, newVar)
                             print("se añadio una variable")
                         else:
@@ -98,3 +100,5 @@ class Declaracion(Instruccion):
         return self.id
     def getExp(self):
         return self.exp
+    def changeAcces(self,acceso:int):
+        self.tacceso=acceso

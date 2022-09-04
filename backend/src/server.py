@@ -35,23 +35,30 @@ def DataAnalisis():
     return JsonF
     
 
-#ENVIA UN JSON
-@app.route("/lfechas",methods=["GET","POST"])
-def Lfechas():
-    jsonE = json.loads(request.data)
-    JsonF={"Contenido":3}
+#Lista de errores
+@app.route("/lerrores",methods=["GET","POST"])
+def ListaErrores():
+    JsonF={"Contenido":B_datos().rLerrores()}
     return JsonF
 
-@app.route("/",methods=["GET","POST"])
-def prueba():
-    if request.method == "POST":
-        l = json.loads(request.data)
-        print(l)
-        x=l[0]["entrada"]
-        print("AAAAAAAAAAAAAAAAAAAAAAA")
-        print(x)
-        JsonF={"Contenido":3}
+#Lista de tabla de simbolos
+@app.route("/ltsimbolos",methods=["GET","POST"])
+def ListaTsimbolos():
+    JsonF={"Contenido":B_datos().rLTsimbolos()}
     return JsonF
+
+#lista de Base de datos
+@app.route("/lbdatos",methods=["GET","POST"])
+def ListaBaseDatos():
+    JsonF={"Contenido":B_datos().rLB_datos()}
+    return JsonF
+
+#lista de tabla de base de datos
+@app.route("/lt_bdatos",methods=["GET","POST"])
+def ListaTablaBaseDatos():
+    JsonF={"Contenido":B_datos().rL_tBdatos()}
+    return JsonF
+
 
 
 

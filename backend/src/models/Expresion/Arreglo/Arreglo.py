@@ -1,6 +1,7 @@
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
-
+from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.Enviroment import Enviroment
 class Arreglo(Expresion):
     def __init__(self,cExp:Expresion,exp:Expresion,multi:Expresion,line:int,column:int):
         self.value=None
@@ -11,7 +12,7 @@ class Arreglo(Expresion):
         self.line=line
         self.column=column
         self.instancia=0
-    def getValor(self, driver, ts):
+    def getValor(self, driver, ts:Enviroment):
         self.instancia += 1
         vector=[]
         if self.tipo==None and self.value==None:
@@ -32,6 +33,8 @@ class Arreglo(Expresion):
                             self.tipo == Tipos.ERROR
                             self.value = None
                             print(f"Error uno de los elementos del arreglo no es del mismo tipo al resto linea: {self.line}")
+                            error = f"Error uno de los elementos del arreglo no es del mismo tipo al resto"
+                            B_datos().appendE(descripcion=error,ambito=ts.env,linea=self.line,columna=self.column)
                             return
                         vector.append({"valor": valor2, "tipo": tipo2})
                 self.value = vector
@@ -49,6 +52,8 @@ class Arreglo(Expresion):
                 else:
                     self.tipo=Tipos.ERROR
                     print(f"Error el numero de veces a multiplicar la expresion no es entero o la expresion causa error {self.line}")
+                    error = f"Error el numero de veces a multiplicar la expresion no es entero o la expresion causa error"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line, columna=self.column)
         return self.value
     def getTipo(self, driver, ts):
         self.resetInst()

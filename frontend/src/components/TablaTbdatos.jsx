@@ -78,23 +78,16 @@ export default class TablaErrores extends Component{
             Data:[]
         })  
     }
-    showTabla=async()=>{
-        const url="http://localhost:5000/lerrores"
-        let config={
-            method:'POST',       //ELEMENTOS A ENVIAR
-            //body:JSON.stringify([{entrada:this.state.entrada}]),  no hay necesidad de mandar nada aqui
-            headers : { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-        }
-    
-        const res= await fetch(url,config)
-        const data =await res.json()
+    showTabla(){
         this.setState({
-            Data:data.Contenido
-        })
-        //esto lo devuelve como una lista {hola: "pureba"}
+            Data: []
+          },
+          () => {
+            this.setState({
+                Data: UpdateTabla()
+              });
+          }
+        );
     }
 
 }

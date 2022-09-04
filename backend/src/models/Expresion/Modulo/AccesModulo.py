@@ -3,7 +3,7 @@ from models.TablaSymbols.Enviroment import Enviroment
 from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Accesos
 from models.Instruction.Call import Call
-
+from BaseDatos.B_datos import B_datos
 
 from models.TablaSymbols.Symbol import Symbols
 class AccesModulo(Expresion):
@@ -32,9 +32,16 @@ class AccesModulo(Expresion):
                             if v_mod.tipo==Tipos.MODULO or v_mod.tipo==Tipos.STRUCT:
                                 v_mod=v_mod.value
                             else:
-                                print("La variable no posee dichos componentes")
+                                error = "La variable no posee dichos componentes"
+                                print(error)
+                                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                  columna=self.column)
                         else:
-                            print("Error: La variable no posee dichos componentes")
+
+                            error="Error: La variable no posee dichos componentes"
+                            print(error)
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                              columna=self.column)
                     element=v_mod.buscar(self.cId[len(self.cId)-1])
                     if element !=None:
                         if element.tacceso!=Accesos.PRIVADO:
@@ -43,15 +50,32 @@ class AccesModulo(Expresion):
                                 self.tipo = callf.getTipo(driver, v_mod)
                                 self.value=callf.getValor(driver,v_mod)
                             else:
-                                print("element de mod no es funcion ")
+                                error="element de mod no es funcion "
+                                print(error)
+                                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                  columna=self.column)
                         else:
-                            print("Error no se puede acceder al elemento pues es privado")
+                            error = "Error no se puede acceder al elemento pues es privado"
+                            print(error)
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                              columna=self.column)
                     else:
-                        print("Error el modulo o submodulo no cuenta con dicho parametro ")
+                        error = "Error el modulo o submodulo no cuenta con dicho parametro "
+                        print(error)
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                 else:
-                    print("la variable a la que se desea acceder como modulo no lo es")
+                    error = "la variable a la que se desea acceder como modulo no lo es"
+                    print(error)
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
+
             else:
-                print("El modulo no ha sido declarado")
+                error = "El modulo no ha sido declarado"
+                print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
+
         return self.value
 
     def getTipo(self, driver, ts):

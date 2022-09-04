@@ -1,6 +1,6 @@
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos,getTipo
-
+from BaseDatos.B_datos import B_datos
 class DimensionalArreglo(Expresion):
     def __init__(self,tipo:str,dimArr:Expresion,Dimensional:Expresion,line:int,column:int):
         self.value=None
@@ -20,7 +20,7 @@ class DimensionalArreglo(Expresion):
             t_dim = self.Dim.getTipo(driver, ts)
             v_dim = self.Dim.getValor(driver, ts)
 
-            if t_dim == Tipos.INT64:
+            if t_dim == Tipos.INT64 or t_dim==Tipos.USIZE:
                 if self.dimArr == None:
                     self.value = [v_dim]
                 else:
@@ -32,6 +32,8 @@ class DimensionalArreglo(Expresion):
                     self.tipo = self.dimArr.getTipo(driver, ts)
             else:
                 print(f"la dimensional debe de ser un entero linea: {self.line}")
+                error = f"la dimensional debe de ser un entero "
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line, columna=self.column)
         return self.value
 
     def getTipo(self, driver, ts):

@@ -22,8 +22,8 @@ class DecStruct(Instruccion):
     def ejecutar(self, driver: Driver, ts: Enviroment):
         existe=ts.buscarActualTs(self.id)
         if existe==None:
+            t_exp = self.exp.getTipo(driver, ts)
             v_exp=self.exp.getValor(driver,ts)
-            t_exp=self.exp.getTipo(driver,ts)
             if t_exp==Tipos.STRUCT:
                     # lo que guardaran los structs son enviroments nuevos donde se podra consultar las variables en posteriores ocasiones
                     symbol = Symbol(mut=self.mut, id=self.mut, value=v_exp, tipo_simbolo=4, tipo=Tipos.STRUCT,

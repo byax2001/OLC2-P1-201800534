@@ -1,87 +1,113 @@
+mod tienda {//Base de datos
 
-fn intercambiar(a: &mut [i64], i: usize, j: usize) {
-    let aux: i64 = a[i];
-    a[i] = a[j];
-    a[j] = aux;
-}
+    pub mod ventas {//Tabla ventas
 
-fn ordIntercambio(arr: &mut [i64]) {
-    let mut i: usize = 0;
-    let mut j: usize = 0;
+        pub struct Venta {
+            total: i64,
+            cliente: String
+        }
 
-    while i < (arr.len() - 1) {
-        j = i + 1;
-        while j < arr.len() {
-            if arr[i] > arr[j] {
-                intercambiar(arr, i, j);
+        // Definición del método de creación de la tabla
+        pub fn crear_tabla(mut _tabla: Vec<Venta>, tamanio: usize) -> Vec<Venta> {
+            _tabla = Vec::with_capacity(tamanio);
+            println!("La tabla ventas ha sido creada");
+            return _tabla;
+        }
+
+
+
+        //Definición de la inserción de datos en la tabla
+        pub fn insertar_tabla(mut _tabla: Vec<Venta>, total: i64, cliente: String) -> Vec<Venta> {
+            if _tabla.len() < _tabla.capacity() {
+                //Insertar un valor nuevo
+                let valor: Venta = Venta {
+                    total: total,
+                    cliente: cliente.to_string()
+                };
+                _tabla.push(valor);
+                println!("Valor nuevo agregado a tabla ventas");
             }
-            j = j + 1;
-        }
-        i = i + 1;
-    }
-}
-
-
-fn ordSeleccion(arr: &mut [i64]) {
-    let mut indiceMenor: usize = 0;
-    let mut i: usize = 0;
-    let mut j: usize = 0;
-    let mut n: usize = arr.len();
-
-    while i < (n - 1) {
-
-        indiceMenor = i;
-      
-        j = i + 1;
-        while j < n {
-            if arr[j] < arr[indiceMenor] {
-                indiceMenor = j;
+            else {
+                println!("La tabla ha llegado a su maxima capacidad");
             }
-            j = j + 1;
+            return _tabla;
         }
 
-        if i != indiceMenor {
-            intercambiar(arr, i, indiceMenor);
+        // Definición de la obtención de un dato según su índice
+        pub fn select_venta_por_id(mut _tabla: &Vec<Venta>, id: usize) {
+            println!("total: {} cliente: {}", _tabla[id].total, _tabla[id].cliente);
         }
 
-        i = i + 1;
+        // Definición de la eliminación de un dato según su índice
+        pub fn eliminar_elemento(mut _tabla: Vec<Venta>, id: usize) -> Vec<Venta> {
+            if id >= 0 {
+                _tabla.remove(id);
+                println!("Valor eliminado: {}", id);
+            }
+            else {
+                println!("El id debe ser mayor o igual a 0");
+            }
+            return _tabla;
+        }
+
+        // Definición de la edición de un dato según su índice
+        pub fn editar_elemento(mut _tabla: Vec<Venta>, id: usize, total: i64, cliente: String) -> Vec<Venta> {
+            if id >= 0 {
+                _tabla[id].total = total;
+                _tabla[id].cliente = cliente;
+            }
+            else {
+                println!("El id debe ser mayor o igual a 0");
+            }
+            return _tabla;
+        }
     }
 }
 
+fn main() {
+    let mut vector: Vec<tienda::ventas::Venta> = Vec::new();
 
-fn ordInsercion(arr: &mut [i64]) {
-    let mut i: usize = 0;
-    let mut j: usize = 0;
-    let mut aux: i64 = 0;
+    //Iniciar la tabla
+    vector = tienda::ventas::crear_tabla(vector,20);
 
-    i = 1;
-    while (i < arr.len()) {
-        j = i;
-        aux = arr[i];
+    //Insertar valores
+    vector = tienda::ventas::insertar_tabla(vector,15,"Hector".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,54,"Andres".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,85,"Luisa".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,223,"Pablo".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,0864,"Roberto".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,12,"Lucia".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,1,"Analu".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,986,"Maria".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,82,"Elizabeth".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,67,"Juan".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,34,"Sergio".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,3,"Lidia".to_string());
+    vector = tienda::ventas::insertar_tabla(vector,8200,"Rony".to_string());
 
-        while j > 0 && aux < arr[j-1] {
-            arr[j] = arr[j - 1];
-            j = j - 1;
-        }
+    tienda::ventas::select_venta_por_id(&vector,0);
+    tienda::ventas::select_venta_por_id(&vector,12);
+    tienda::ventas::select_venta_por_id(&vector,4);
+    tienda::ventas::select_venta_por_id(&vector,10);
+    tienda::ventas::select_venta_por_id(&vector,8);
 
-        arr[j] = aux;
-        i = i + 1;
-    }
+    vector = tienda::ventas::eliminar_elemento(vector,1);
+    vector = tienda::ventas::eliminar_elemento(vector,11);
+
+    tienda::ventas::select_venta_por_id(&vector,0);
+    tienda::ventas::select_venta_por_id(&vector,10);
+    tienda::ventas::select_venta_por_id(&vector,3);
+    tienda::ventas::select_venta_por_id(&vector,9);
+    tienda::ventas::select_venta_por_id(&vector,7);
+
+    vector = tienda::ventas::editar_elemento(vector,3,7*3,"Haroldo".to_string());
+    vector = tienda::ventas::editar_elemento(vector,2,1234,"Sara".to_string());
+
+    tienda::ventas::select_venta_por_id(&vector,3);
+    tienda::ventas::select_venta_por_id(&vector,2);
+    tienda::ventas::select_venta_por_id(&vector,5);
+    tienda::ventas::select_venta_por_id(&vector,6);
+
 }
 
-fn main () {
 
-    let mut arr1: [i64; 4] = [8, 4, 6, 2];
-    ordIntercambio(&mut arr1);
-    println!("{:?}", arr1);
-
-
-    let mut arr2: [i64; 6] = [40, 21, 1, 3, 14, 4];
-    ordSeleccion(&mut arr2);
-    println!("{:?}", arr2);
-
-
-    let mut arr3: [i64; 6] = [90, 3, 40, 10, 8, 5];
-    ordInsercion(&mut arr3);
-    println!("{:?}", arr3);
-}

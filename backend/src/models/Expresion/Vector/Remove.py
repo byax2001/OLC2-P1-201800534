@@ -16,6 +16,7 @@ class Remove(Expresion):
 
 
     def ejecutar(self, driver: Driver, ts: Enviroment):
+        self.getTipo(driver,ts)
         self.getValor(driver,ts);
     def getValor(self, driver, ts):
         self.instancia+=1
@@ -26,7 +27,7 @@ class Remove(Expresion):
             if symbol != None:  # si existe el vector, si ya fue declarado
                 if symbol.mut == True:
                     if symbol.tsimbolo == Symbols.VECTOR:  # si lo que se llamo fue un vector
-                        if t_index == Tipos.INT64:  # el index es un entero
+                        if t_index == Tipos.INT64 or t_index==Tipos.USIZE:  # el index es un entero
                             vector = symbol.value
                             self.value=vector.remove(v_index)
 

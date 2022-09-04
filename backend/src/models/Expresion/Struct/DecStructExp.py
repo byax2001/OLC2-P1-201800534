@@ -27,6 +27,7 @@ class DecStructExp(Expresion):
             if struct != None:
                 if struct.tipo == Tipos.STRUCT:
                     st: Struct = struct.value
+                    st.clearDecs()
                     if len(self.cExp) == st.getSize():
                         for exp in self.cExp:
                             changeExp = st.changeExp(exp.id, exp.exp)

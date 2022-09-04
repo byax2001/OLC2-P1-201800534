@@ -135,6 +135,7 @@ def p_instruccion(p):
         | STRUCT
         | DECSTRUCT puntoycoma
         | MOD_VAR_STRUCT puntoycoma
+        | REMOVE puntoycoma
         | MODULO
         | ACCESO_MOD puntoycoma
     """
@@ -229,7 +230,9 @@ def p_cexp_list(p):
 def p_cexp(p):
     """CONJEXP : ELCONJ"""
     p[0] = [p[1]]
-
+def p_element_cexp(p):
+    """ELCONJ : ampersand ELCONJ"""
+    p[0]=p[2]
 def p_elementcexp(p):
     """ELCONJ : EXPRESION
             | VECI
@@ -598,8 +601,13 @@ def p_parametro2(p):
     elif len(p)==6:
         p[0] = DecArreglo(mut=True, id=p[1], arrDimensional=p[5], array=None, line=p.lineno(1), column=0)
 def p_parametro3(p):
-    """PARAMETRO : id dospuntos ampersand mut VEC"""
-    p[0]=DecVector(mut=True,id=p[1],tipo=p[5],vecI=None,capacity=None,line=p.lineno(1),column=0)
+    """PARAMETRO : id dospuntos ampersand mut VEC
+                | mut id dospuntos ampersand VEC"""
+    if p[4]=="mut":
+        p[0]=DecVector(mut=True,id=p[1],tipo=p[5],vecI=None,capacity=None,line=p.lineno(1),column=0)
+    else:
+        p[0] = DecVector(mut=False, id=p[2], tipo=p[5], vecI=None, capacity=None, line=p.lineno(1), column=0)
+
 
 def p_parametro4(p):
     """PARAMETRO : id dospuntos VEC

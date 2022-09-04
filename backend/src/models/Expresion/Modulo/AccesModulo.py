@@ -40,8 +40,8 @@ class AccesModulo(Expresion):
                         if element.tacceso!=Accesos.PRIVADO:
                             if element.tsimbolo == Symbols.FUNCION:
                                 callf=Call(id=self.cId[len(self.cId)-1],cExp=self.params,line=self.line,column=self.column)
+                                self.tipo = callf.getTipo(driver, v_mod)
                                 self.value=callf.getValor(driver,v_mod)
-                                self.tipo=callf.getTipo(driver,v_mod)
                             else:
                                 print("element de mod no es funcion ")
                         else:
@@ -64,6 +64,7 @@ class AccesModulo(Expresion):
             self.instancia+=1
         return self.tipo
     def ejecutar(self,driver,ts):
+        self.getTipo(driver,ts)
         self.getValor(driver,ts)
 
     def resetInst(self):

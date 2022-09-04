@@ -4,7 +4,9 @@ class Struct:
     def __init__(self,cDec:[Declaracion]):
         self.nDec:[Declaracion]=cDec
         self.size=len(cDec)
-
+    def clearDecs(self):
+        for dec in self.nDec:
+            dec.changeExp(None)
     def changeExp(self,id,exp):
         for dec in self.nDec:
             if dec.getId()==id and dec.exp==None:

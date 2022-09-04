@@ -1,3 +1,5 @@
+from BaseDatos.B_datos import B_datos
+
 from models.Instruction.Instruction import Instruccion
 from models.Expresion.Expresion import Expresion
 from models.Expresion.Primitivo import Primitivo
@@ -8,6 +10,7 @@ from models.Expresion.Id import Id
 from models.Expresion.Vector.vecI import vecI
 from models.Expresion.Arreglo.Arreglo import Arreglo
 
+
 class Println(Instruccion):
 
     def __init__(self, exp: Expresion,cExp:[Expresion], linea, columna):
@@ -17,6 +20,7 @@ class Println(Instruccion):
         self.cExp=cExp
 
     def ejecutar(self, driver, ts):
+        #B_datos().appendE("JIJOOOOOOOOOOOOO")
         if len(self.cExp)==0:
             if isinstance(self.exp,Primitivo):
                 driver.append(str(self.exp.getValor(driver, ts))+"\n")

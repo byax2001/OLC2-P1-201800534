@@ -3,6 +3,11 @@ from models.TablaSymbols.Enviroment import Enviroment
 from models.Driver import Driver
 from models.Ast.Ast import Ast
 from models.Instruction.Call import Call
+from BaseDatos.B_datos import B_datos
+
+
+B_datos()
+l=B_datos()
 
 f = open("./entrada.txt", "r")
 input = f.read()
@@ -21,3 +26,6 @@ else:
     print("Error no existe main en el archivo")
 print("OUTPUT:")
 print(driver.console)
+
+print(l.rLerrores())
+print(l.rtime())

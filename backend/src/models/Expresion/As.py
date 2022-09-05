@@ -1,6 +1,7 @@
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import getTipo,Tipos,definirTipo
 from models.TablaSymbols.Enviroment import Enviroment
+from BaseDatos.B_datos import B_datos
 
 class As(Expresion):
     def __init__(self, exp:Expresion,tipocast:str, line: int, column: int):
@@ -20,9 +21,15 @@ class As(Expresion):
                 return abs(int(valor))
             else:
                 print("Casteo \"as\" no valido ")
+                error = "Casteo \"as\" no valido "
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
                 return None
         else:
             print("Error, intento de casteo \"as\" para un valor no float o int ")
+            error = "Error, intento de casteo \"as\" para un valor no float o int "
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
     def getTipo(self, driver, ts):
         tipo=definirTipo(self.getValor(driver, ts))
         if self.tipo==Tipos.USIZE:

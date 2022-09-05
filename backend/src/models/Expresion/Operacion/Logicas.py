@@ -1,6 +1,6 @@
 from models.Expresion.Operacion.OperacionLog import OperacionLog, OperadorLog, getOperador
 from models.TablaSymbols.Tipos import Tipos,definirTipo
-
+from BaseDatos.B_datos import B_datos
 class Logicas(OperacionLog): #de esta forma se esta indicando que aritmeticas hereda de Operacion
     #var Operacion: exp1: Expresion, operador, exp2: Expresion, linea, columna, expU
     def getTipo(self, driver, ts):
@@ -42,12 +42,18 @@ class Logicas(OperacionLog): #de esta forma se esta indicando que aritmeticas he
                         self.tipo = Tipos.BOOLEAN
                 else:
                     print("Ambos datos a comparar deben de ser valores booleanos")
+                    error = "Ambos datos a comparar deben de ser valores booleanos "
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                      columna=self.columna)
             elif t_nodoIzq==Tipos.BOOLEAN and t_nodoDer==None:
                 if self.operador == OperadorLog.NOT:
                     self.value = not (self.exp1.getValor(driver, ts))
                     self.tipo = Tipos.BOOLEAN
             else:
                 print("Se intenta hacer una operacion Logica con uno o dos nodos no Booleanos")
+                error = "Se intenta hacer una operacion Logica con uno o dos nodos no Booleanos "
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
         return self.value
     def ejecutar(self, driver, ts):
         """En la mayoria de expresiones no realiza nada"""

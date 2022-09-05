@@ -3,6 +3,7 @@ from models.TablaSymbols.Enviroment import Enviroment
 from models.Driver import Driver
 from models.TablaSymbols.Symbol import Symbols
 from models.TablaSymbols.Tipos import Tipos,definirTipo
+from BaseDatos.B_datos import B_datos
 
 class Contains(Expresion):
     def __init__(self, id: str, exp: Expresion, line: int, column: int):
@@ -27,10 +28,19 @@ class Contains(Expresion):
                     self.value = vector.contains(v_exp)
                 else:
                     print(f"La expresion a analizar da error: {self.line}")
+                    error = "La expresion a analizar da error "
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
             else:
                 print(f"Error Intento de Contain en una variable no vectorial o Arreglo  linea:{self.line} ")
+                error = "Error Intento de Contain en una variable no vectorial o Arreglo "
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         else:
             print(f"Error Contain en vector o Arreglo no declarado linea:{self.line} ")
+            error = "Error Contain en vector o Arreglo no declarado linea "
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         return self.value
 
     def getTipo(self, driver, ts):

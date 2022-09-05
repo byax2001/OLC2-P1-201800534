@@ -4,6 +4,7 @@ from models.Driver import Driver
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Expresion.Vector.Vector import Vector
 from models.TablaSymbols.Symbol import Symbol
+from BaseDatos.B_datos import B_datos
 class DecArreglo(Instruccion):
     def __init__(self,mut:bool,id:str,arrDimensional:Expresion,array:Expresion,line:int,column:int):
         self.mut=mut
@@ -31,11 +32,20 @@ class DecArreglo(Instruccion):
                         symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=t_dim,
                                       line=self.line,column=self.column,tacceso=self.tacceso)
                         ts.addVar(self.id,symbol)
+                        B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,
+                                          fila=self.line, columna=self.column)
+
                         print("Arreglo declarado")
                     else:
                         print(f"Error las dimensionales del array y su contenido no concuerdan linea: {self.line}")
+                        error = "Error las dimensionales del array y su contenido no concuerdan"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                 else:
                     print(f"Error el tipo de dimensional y el del array no concuerdan linea: {self.line}")
+                    error = "Error el tipo de dimensional y el del array no concuerdan"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
             else:
                 t_array = self.array.getTipo(driver, ts)
                 v_array = self.array.getValor(driver, ts)
@@ -44,9 +54,14 @@ class DecArreglo(Instruccion):
                                 column=self.column,tacceso=self.tacceso)
                 ts.addVar(self.id, symbol)
                 print("Arreglo declarado")
+
+                B_datos().appendVar(id=self.id,t_simbolo=symbol.tsimbolo,t_dato=symbol.tipo,ambito=ts.env,fila=self.line,columna=self.column)
+
         else:
             print(f"Error el array ya ha sido declarado con anterioridad linea: {self.line}")
-
+            error = "Error el array ya ha sido declarado con anterioridad "
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
 
     def verifyArray(self,arrDim,arrayC):
         arrCorrect=True

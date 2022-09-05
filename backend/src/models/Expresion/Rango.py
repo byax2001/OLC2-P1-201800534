@@ -1,5 +1,6 @@
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
+from BaseDatos.B_datos import B_datos
 class Rango(Expresion):
     def __init__(self, exp1:Expresion,exp2:Expresion,line:int,column:int):
         self.value=None
@@ -24,6 +25,9 @@ class Rango(Expresion):
                 self.tipo=Tipos.INT64
             else:
                 print("Uno o los dos parametros de rango no son enteros o causan conflictos")
+                error = "Uno o los dos parametros de rango no son enteros o causan conflictos"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         return self.value
     def getTipo(self, driver, ts):
         self.resetInst()

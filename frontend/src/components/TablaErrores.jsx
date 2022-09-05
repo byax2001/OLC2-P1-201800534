@@ -2,33 +2,29 @@ import React, { Component,useState,useEffect } from "react"
 import DataTable from 'react-data-table-component'
 import {Link} from 'react-router-dom'
 
-let codigo="";
 
-const datoprueba=[{nombre:"Brandon",tiposimbolo:"Funcion",tipodato:"string",ambito:"Global",fila:12,columna:14},
-{nombre:"Alex",tiposimbolo:"Variable",tipodato:"i64",ambito:"Local",fila:32,columna:71}
+
+const datoprueba=[
 ]
 
 const columnas=[
     {
-        name:'ID',
-        selector: row => row.nombre,
+        name:'No',
+        selector: row => row.No,
         sortable:true
     },
     {
-        name:'Tipo Simbolo',
-        selector: row => row.tiposimbolo,
-        sortable:true
-    },{
-        name:'Tipo Dato',
-        selector: row => row.tipodato,
-        sortable:true
+        name:'Descripcion',
+        selector: row => row.descripcion,
+        sortable:true,
+        grow:3
     },{
         name:'Ambito',
         selector: row => row.ambito,
         sortable:true
     },{
-        name:'Fila',
-        selector: row => row.fila,
+        name:'Linea',
+        selector: row => row.linea,
         sortable:true
     },{
         name:'Columna',

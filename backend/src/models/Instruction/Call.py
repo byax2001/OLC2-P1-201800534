@@ -8,6 +8,7 @@ from models.Instruction.Continue import Continue
 from models.Instruction.Break import Break
 from models.Expresion.Id import Id
 from models import Driver
+from BaseDatos.B_datos import B_datos
 
 class Call(Instruccion):
     def __init__(self,id:str,cExp:[Expresion],line:int,column:int):
@@ -49,25 +50,40 @@ class Call(Instruccion):
                                 declaracion.ejecutar(driver,newts)
                         except Exception as e:
                             print("Ocurrio un error  a la hora de declarar las variables para esta funcion")
+                            error = "Ocurrio un error  a la hora de declarar las variables para esta funcion"
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                              columna=self.column)
                         #bloque de la funcion -----------------------------------------
                         if symbol.tipo==Tipos.VOID:
                             for instruccion in instFun:
                                 if isinstance(instruccion,Return):
                                     if instruccion.ejecutar(driver,newts2)!=None:
                                         print("Error se intenta retornar algo en una funcion Void")
-                                        return
+                                        error = "Error se intenta retornar algo en una funcion Void"
+                                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                          columna=self.column)
+
                                 elif isinstance(instruccion,Continue) or isinstance(instruccion,Break):
                                     print("Error se esta intentado usar Break o Continue en una funcion")
-                                    return
+                                    error = "Error se esta intentado usar Break o Continue en una funcion"
+                                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                      columna=self.column)
+
                                 rInst=instruccion.ejecutar(driver,newts2)
 
                                 if isinstance(rInst,Return):
                                     if rInst.ejecutar(driver,newts2)!=None:
                                         print("Error se intenta retornar algo en una funcion Void")
-                                        return
+                                        error = "Error se intenta retornar algo en una funcion Void"
+                                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                          columna=self.column)
+
                                 elif isinstance(rInst,Continue) or isinstance(rInst,Break):
                                     print("Error se esta intentado usar Break o Continue en una funcion")
-                                    return
+                                    error = "Error se esta intentado usar Break o Continue en una funcion"
+                                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                      columna=self.column)
+
                             self.value=None
                             self.tipo=Tipos.ERROR
                         else: #FUCIONES QUE RETORNAN VALORES-----------------------------------------------
@@ -77,7 +93,10 @@ class Call(Instruccion):
                                     exp=instruccion.ejecutar(driver,newts2)
                                     if exp== None:
                                         print("Error no se intenta retornar algo en la funcion que debe retornar")
-                                        return
+                                        error = "Error no se intenta retornar algo en la funcion que debe retornar"
+                                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                          columna=self.column)
+
                                     else:
                                         self.tipo=exp.getTipo(driver,newts2)
                                         valor=exp.getValor(driver,newts2)
@@ -89,10 +108,16 @@ class Call(Instruccion):
                                             self.value = valor
                                         else:
                                             print("La funcion no esta retornando un valor del mismo tipo que esta")
+                                            error = "La funcion no esta retornando un valor del mismo tipo que esta"
+                                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                              columna=self.column)
                                         break
                                 elif isinstance(instruccion, Continue) or isinstance(instruccion, Break):
                                     print("Error se esta intentado usar Break o Continue en una funcion")
-                                    return
+                                    error = "Error se esta intentado usar Break o Continue en una funcion"
+                                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                      columna=self.column)
+
                                 print(f"-----------------------{self.id if self.id!=None else 2}")
                                 rInst = instruccion.ejecutar(driver,newts2)
 
@@ -101,7 +126,10 @@ class Call(Instruccion):
                                     exp = rInst.ejecutar(driver,newts2)
                                     if exp == None:
                                         print("Error no se intenta retornar algo en la funcion que debe retornar")
-                                        return
+                                        error = "Error no se intenta retornar algo en la funcion que debe retornar"
+                                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                          columna=self.column)
+
                                     else:
                                         self.tipo = exp.getTipo(driver, newts2)
                                         valor=exp.getValor(driver, newts2)
@@ -114,16 +142,31 @@ class Call(Instruccion):
                                             break
                                         else:
                                             print("La funcion no esta retornando un valor del mismo tipo que esta")
-                                            return
+                                            error = "La funcion no esta retornando un valor del mismo tipo que esta"
+                                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                              columna=self.column)
+
                                 elif isinstance(rInst, Continue) or isinstance(rInst, Break):
                                     print("Error se esta intentado usar Break o Continue en una funcion")
-                                    return
+                                    error = "Error se esta intentado usar Break o Continue en una funcion"
+                                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                      columna=self.column)
+
                     else:
                         print("el call no posee la cantidad de parametros adecuados que la funcion requiere ")
+                        error = "el call no posee la cantidad de parametros adecuados que la funcion requiere"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                 else:
                     print("la variable que se intenta ejecutar no es una funcion"+str(self.line))
+                    error = "la variable que se intenta ejecutar no es una funcion"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
             else:
                 print("No ha sido declarada dicha funcion "+str(self.line))
+                error = "No ha sido declarada dicha funcion"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
 
         return self.value
 

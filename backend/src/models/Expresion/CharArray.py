@@ -1,5 +1,6 @@
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
+from BaseDatos.B_datos import B_datos
 class CharArray(Expresion):
     def __init__(self,exp:Expresion,line:int,column:int):
         self.valor=None
@@ -21,6 +22,9 @@ class CharArray(Expresion):
                 self.tipo=Tipos.CHAR
             else:
                 print("Error chars() en un elemento no &str")
+                error = "Error chars() en un elemento no &str"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         return self.valor
     def getTipo(self, driver, ts):
         self.resetInst()

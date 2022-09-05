@@ -3,6 +3,7 @@ from models.TablaSymbols.Tipos import definirTipo,Tipos
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Expresion.Expresion import Expresion
 from models.Instruction.Instruction import Instruccion
+from BaseDatos.B_datos import B_datos
 class If_ternario(Expresion):
     def __init__(self,exp:Expresion,bloque1:[],exp1b:Expresion,bloque2:[],exp2b:Expresion,line:int,column:int):
         self.value=None
@@ -48,8 +49,14 @@ class If_ternario(Expresion):
                         self.value = expR.getValor(driver, newts)
                 else:
                     print("la expresion debe de dar un resultado booleano")
+                    error = "la expresion debe de dar un resultado booleano"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
             else:
                 print("La expresion en el if causa error")
+                error = "La expresion en el if causa error"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         return self.value
 
 

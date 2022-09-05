@@ -7,7 +7,8 @@ from models.Ast.Ast import Ast
 from models.Instruction.Call import Call
 from BaseDatos.B_datos import B_datos
 from gramatica.parser import parser
-
+from models.Expresion.Nothing import Nothing
+from models.TablaSymbols.Symbol import Symbols
 app=Flask(__name__)
 cors=CORS(app)
 app.config['CORS_HEADERS']="Content-Type"
@@ -23,17 +24,45 @@ def DataAnalisis():
         ast: Ast = parser.parse(input)
         ts = Enviroment(None, 'Global')
         driver = Driver()
+        if ast==None:
+            ast=Nothing(line=0,column=0)
 
         ast.ejecutar(driver, ts)
         main = ts.buscar("main")
-        if main != None:
+        if main != None:  #debe de existir obligatoriamente una funcion main
             call = Call("main", [], line=0, column=0);
             call.ejecutar(driver, ts)
+            #verificar que existan modulos
+            nModulos=0
+            elGlobal=ts.tabla
+            for element in elGlobal:
+                symbol=elGlobal[element]
+                if symbol.tsimbolo == Symbols.MOD:
+                    nHijos=moduloshijos(symbol)
+                    B_datos().appendBdatos(id=symbol.id,ntablasC=nHijos,linea=symbol.line)
+                    nModulos+=1
+            if nModulos==0:
+                B_datos().appendE(descripcion="No hay modulos en el archivo",ambito="Global",linea=0,columna=0)
+
         else:
             print("Error no existe main en el archivo")
+
+        print("driver cnsASDF-----------------------------------")
+        print(driver.console)
+        print(B_datos().rLerrores())
         JsonF={"Contenido":driver.console}
     return JsonF
-    
+
+def moduloshijos(symbol):
+    nmodH=0
+    symval=symbol.value
+    envMod=symval.tabla
+    for element in envMod:
+        symbolsub = envMod[element]
+        if symbolsub.tsimbolo == Symbols.MOD:
+            B_datos().appendT_bdatos(id=symbolsub.id,BdatosSuperior=symbol.id,linea=symbolsub.line)
+            nmodH+=1
+    return nmodH
 
 #Lista de errores
 @app.route("/lerrores",methods=["GET","POST"])
@@ -44,6 +73,7 @@ def ListaErrores():
 #Lista de tabla de simbolos
 @app.route("/ltsimbolos",methods=["GET","POST"])
 def ListaTsimbolos():
+
     JsonF={"Contenido":B_datos().rLTsimbolos()}
     return JsonF
 

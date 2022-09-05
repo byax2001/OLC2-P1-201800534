@@ -4,7 +4,7 @@ from models.TablaSymbols.Enviroment import Enviroment
 from models import Driver
 from models.Instruction.Brazo import Brazo
 from models.TablaSymbols.Tipos import Tipos,definirTipo
-
+from BaseDatos.B_datos import B_datos
 class Match(Instruccion):
     def __init__(self,exp:Expresion,lbrazos:[Brazo],default:[Instruccion],line:int,column:int):
         self.exp=exp
@@ -22,6 +22,9 @@ class Match(Instruccion):
             CmpTipos=brazo.CompararTexps(driver,new_ts,t_exp) #Comparar tipos de la exp del match con los tipos de las exp del brazo
             if (not CmpTipos):
                 print("Error: uno de los brazos tiene como expresion un tipo distinto a la expresion del match")
+                error = "Error: uno de los brazos tiene como expresion un tipo distinto a la expresion del match"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
                 return None
 
         for brazo in self.listBrazos:

@@ -3,6 +3,7 @@ from models.TablaSymbols.Enviroment import Enviroment
 from models.Driver import Driver
 from models.TablaSymbols.Symbol import Symbols
 from models.TablaSymbols.Tipos import Tipos,definirTipo
+from BaseDatos.B_datos import B_datos
 
 class Len(Expresion):
     def __init__(self,exp:Expresion,line:int,column:int):
@@ -21,6 +22,9 @@ class Len(Expresion):
             self.value=len(valor)
         else:
             print("Atributo no posee metodo len")
+            error = "Atributo no posee metodo len"
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         return self.value
     def getTipo(self, driver, ts):
         self.tipo=definirTipo(self.getValor(driver,ts))

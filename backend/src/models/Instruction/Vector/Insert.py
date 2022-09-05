@@ -4,6 +4,7 @@ from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Symbols
 from models.Driver import Driver
 from models.TablaSymbols.Enviroment import Enviroment
+from BaseDatos.B_datos import B_datos
 class Insert(Instruccion):
     def __init__(self,id:str,index:Expresion,exp:Expresion,line:int,column:int):
         self.id=id
@@ -27,13 +28,32 @@ class Insert(Instruccion):
                                 vector.insert(v_index,{"valor":v_exp,"tipo":t_exp})
                             else:
                                 print(f"Error Intento de Insert de un valor con un tipo distinto al vector linea:{self.line} ")
+                                error = "Error Intento de Insert de un valor con un tipo distinto al vector"
+                                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                  columna=self.column)
                         else:
                             print(f"Expresion causa error al intentar hacer Insert  linea:{self.line} ")
+                            error = "Expresion causa error al intentar hacer Insert"
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                              columna=self.column)
                     else:
                         print(f"El index debe de ser un entero linea: {self.line}")
+                        error = "El index debe de ser un entero linea"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
+
                 else:
                     print(f"Error Intento de Insert en una variable no vectorial  linea:{self.line} ")
+                    error = "Error Intento de Insert en una variable no vectorial "
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
             else:
                 print(f"Intento de Insert en vector no muteable linea: {self.line}")
+                error = "Intento de Insert en vector no muteable "
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         else:
             print(f"Error Intento de Insert en vector no declarado linea:{self.line} ")
+            error = "Error Intento de Insert en vector no declarado "
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)

@@ -1,6 +1,9 @@
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Enviroment import Enviroment
+from BaseDatos.B_datos import B_datos
+
+
 class AccesStruct(Expresion):
     def __init__(self,idPrincipal:str,cIds:[str],line:int,column:int):
         self.value=None
@@ -32,13 +35,27 @@ class AccesStruct(Expresion):
                                     self.tipo=env.tipo
                                 else:
                                     self.value==None
-                                    print("La variable no posee dichos componentes")
+                                    error = "La variable no posee dichos componentes"
+                                    print(error)
+                                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                      columna=self.column)
+
                         else:
                             print(f"Error dicho parametro no existe en el objeto {self.cId[x]}")
+                            error = "Error dicho parametro no existe en el objeto "
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                              columna=self.column)
                 else:
                     print("Error la variable a usar como objeto struct no lo es")
+                    error = "Error la variable a usar como objeto struct no lo es "
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
             else:
                 print("Error variable a obtener valor no existe")
+                error = "Error variable a obtener valor no existe "
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
+
         return self.value
 
     def getTipo(self, driver, ts):

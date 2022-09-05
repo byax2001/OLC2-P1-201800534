@@ -4,6 +4,7 @@ from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Symbols
 from models.Expresion.Vector.Vector import Vector
 from models.TablaSymbols.Enviroment import Enviroment
+from BaseDatos.B_datos import B_datos
 class Asignacion(Instruccion):
     def __init__(self,id:str,cIndex:[Expresion],cIds:[str],exp: Expresion, linea:int, columna:int):
         self.id=id
@@ -38,7 +39,10 @@ class Asignacion(Instruccion):
                                         if tipo_index == Tipos.INT64 or tipo_index == Tipos.USIZE:  # cIndex= [expresion,expresion,expresion]
                                             vecIndex.append(valor_index)
                                         else:
-                                            print(f"Error: uno de los index no es un entero {self.line}")
+                                            print(f"Error: uno de los index no es un entero {self.linea}")
+                                            error = "Error: uno de los index no es un entero"
+                                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                                              columna=self.columna)
                                             return
                                     if len(self.cIds)==0:    # arreglo[0]= "hola"
                                         l=Symbol.value.updateVector(cIndex=vecIndex,valor=v_exp)
@@ -47,11 +51,21 @@ class Asignacion(Instruccion):
                                         Symbol.value.updateVectorStruct(cIndex=vecIndex,cIds=self.cIds,valor=v_exp,tipo_val=t_exp)
                                 else:
                                     print("intento de hacer asignacion de vector a una variable que no lo es")
+                                    error = "intento de hacer asignacion de vector a una variable que no lo es"
+                                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                                      columna=self.columna)
 
                         else:
                             print("El valor a asignar es de distinto tipo al de la variable")
+                            error = "El valor a asignar es de distinto tipo al de la variable"
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                              columna=self.columna)
+
                     else:
                         print("El valor que se intenta asignar a la variable es None o da error")
+                        error = "El valor que se intenta asignar a la variable es None o da error"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                          columna=self.columna)
                 else:
                     if Symbol.tsimbolo==Symbols.VECTOR or Symbol.tsimbolo==Symbols.ARREGLO:
                         if len(self.exp)==0:
@@ -64,10 +78,19 @@ class Asignacion(Instruccion):
                             Symbol.value=newVector
                     else:
                         print("Esta variable no es un array o vector para poder asignarle dicho valor")
+                        error = "Esta variable no es un array o vector para poder asignarle dicho valor"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                          columna=self.columna)
             else:
                 print("La variable que intenta cambiar no es muteable")
+                error = "La variable que intenta cambiar no es muteable"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
         else:
             print("No ha sido declarada dicha variable")
+            error = "No ha sido declarada dicha variable"
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                              columna=self.columna)
     def auxTipos(self,tipo_sim,valor,t_exp):
         if tipo_sim==Tipos.INT64:
             if t_exp==Tipos.USIZE:

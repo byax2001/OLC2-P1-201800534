@@ -5,7 +5,7 @@ from models.Expresion.Struct.ExpStruct import ExpStruct
 from models.Expresion.Struct.Struct import Struct
 from models.TablaSymbols.Symbol import Symbol,Symbols
 from models.TablaSymbols.Tipos import Tipos
-
+from BaseDatos.B_datos import B_datos
 
 class DecStructExp(Expresion):
     def __init__(self, idStruct: str, expStruct:[ExpStruct], line: int, column: int):
@@ -33,23 +33,38 @@ class DecStructExp(Expresion):
                             changeExp = st.changeExp(exp.id, exp.exp)
                             if changeExp == False:
                                 print("Error al asignar: la variable no existe en el struct solicitado o el tipo de valor no es igual al tipo  de la variable")
+                                error = "Error al asignar: la variable no existe en el struct solicitado o el tipo de valor no es igual al tipo  de la variable"
+                                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                  columna=self.column)
                                 return
                         # mando a ejecutar el metodo en la clase Struct que ejecuta todas sus declaraciones
                         stateDecs = st.ejecutarDecs(driver, newts)
                         if stateDecs != None:  # si devuelve Falso y no None es que ocurrio un error al declarar
                             print("Ocurrio un error al intentar declarar una variable tipo struct")
+                            error = "Ocurrio un error al intentar declarar una variable tipo struct"
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                              columna=self.column)
                             self.value=None
                         # lo que guardara en las variables struct son enviroments nuevos donde se podra consultar las variables declaradas aqui para manipularlas en posteriores ocasiones
                         self.value=newts
                         self.tipo = Tipos.STRUCT
                     else:
                         print("No tiene la cantidad suficiente de variables declaradas para el struct")
+                        error = "No tiene la cantidad suficiente de variables declaradas para el struct"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                         self.value = None
                 else:
                     print("Error el id del struct a declarar en una variable pertenece al id de una variable no struct")
+                    error = "Error el id del struct a declarar en una variable pertenece al id de una variable no struct"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
                     self.value = None
             else:
                 print("Intento de asignacion de un struct inexistente")
+                error = "Intento de asignacion de un struct inexistente"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
                 self.value=None
         return self.value
 

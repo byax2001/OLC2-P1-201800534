@@ -3,6 +3,7 @@ from models.TablaSymbols.Enviroment import Enviroment
 from models.Driver import Driver
 from models.TablaSymbols.Symbol import Symbols
 from models.TablaSymbols.Tipos import Tipos,definirTipo
+from BaseDatos.B_datos import B_datos
 
 class AccesVec(Expresion):
     def __init__(self, id: str,cIndex:[Expresion],cIds:[str], line: int, column: int):
@@ -27,6 +28,9 @@ class AccesVec(Expresion):
                     vecIndex.append(index.getValor(driver,ts))
                 else:
                     print(f"Error: uno de los index no es un entero {self.line}")
+                    error = "Error: uno de los index no es un entero "
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
                     return
 
             if symbol != None:  # si existe el vector, si ya fue declarado
@@ -49,14 +53,23 @@ class AccesVec(Expresion):
                             x += 1
                             if objeto.tipo != Tipos.STRUCT and x != len(self.cIds):
                                 print("Error la variable no cuenta con tantos parametros anidados")
+                                error = "Error la variable no cuenta con tantos parametros anidados"
+                                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                                  columna=self.column)
                                 return
                         self.value=objeto.value
                         self.tipo=objeto.tipo
 
                 else:
-                        print(f"Error Intento de obtener valor en una variable no vectorial  linea:{self.line} ")
+                    print(f"Error Intento de obtener valor en una variable no vectorial  linea:{self.line} ")
+                    error = "Error Intento de obtener valor en una variable no vectorial"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
             else:
                 print(f"Error Intento de Insert en vector no declarado linea:{self.line} ")
+                error = "Error Intento de Insert en vector no declarado linea"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         return self.value
     def getTipo(self, driver, ts):
         self.resetInst()

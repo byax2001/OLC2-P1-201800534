@@ -4,7 +4,7 @@ from models.TablaSymbols.Tipos import Tipos
 from models.Instruction.Break import Break
 from models.Instruction.Continue import Continue
 from models.Instruction.Return import Return
-
+from BaseDatos.B_datos import B_datos
 class Loop(Instruccion):
     def __init__(self,bloque:[Instruccion],line:int,column:int):
         self.tipo=None
@@ -23,6 +23,9 @@ class Loop(Instruccion):
                     break;
                 elif isinstance(instruccion, Return):
                     print("Error, existe return afuera de una funcion")
+                    error = "Error, existe return afuera de una funcion"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
                     return
                 rInst = instruccion.ejecutar(driver,new_ts)
                 if isinstance(rInst, Break):
@@ -31,6 +34,9 @@ class Loop(Instruccion):
                     break;
                 elif isinstance(rInst, Return):
                     print("Error, existe return afuera de una funcion")
+                    error = "Error, existe return afuera de una funcion"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
                     return
     #esto solo se usara cuando se use como expresion
     def getValor(self, driver, ts):
@@ -47,6 +53,9 @@ class Loop(Instruccion):
                         break
                     elif isinstance(instruccion, Return):
                         print("Error, existe return afuera de una funcion")
+                        error = "Error, existe return afuera de una funcion"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                         return
                     rInst = instruccion.ejecutar(driver, ts)
                     if isinstance(rInst, Break):
@@ -57,6 +66,9 @@ class Loop(Instruccion):
                         break
                     elif isinstance(rInst, Return):
                         print("Error, existe return afuera de una funcion")
+                        error = "Error, existe return afuera de una funcion"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                         return
         else:
             return self.value

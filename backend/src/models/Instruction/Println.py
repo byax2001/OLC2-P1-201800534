@@ -9,7 +9,7 @@ from models.Expresion.Id import Id
 #VECTORES Y ARRAYS
 from models.Expresion.Vector.vecI import vecI
 from models.Expresion.Arreglo.Arreglo import Arreglo
-
+from BaseDatos.B_datos import B_datos
 
 class Println(Instruccion):
 
@@ -26,6 +26,9 @@ class Println(Instruccion):
                 driver.append(str(self.exp.getValor(driver, ts))+"\n")
             else:
                 print("Error: forma incorrecta de imprimir")
+                error = "Error: forma incorrecta de imprimir"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
         else:
             #Conteo de {} y {:?} presentes en la variable auxiliar
             c_llaves=0   #llaves necesarias para imprimir
@@ -40,9 +43,15 @@ class Println(Instruccion):
                             c_llavesint+=1
                         elif Symbol.tsimbolo == Symbols.FUNCION:
                             print("Se debe de ejecutar la funcion y no solo colocar id")
+                            error = "Se debe de ejecutar la funcion y no solo colocar id"
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                              columna=self.columna)
                             return
                     else:
                         print("Error una de las expresiones a imprimir es un id no declarado")
+                        error = "Error una de las expresiones a imprimir es un id no declarado"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                          columna=self.columna)
                         return
                 elif isinstance(element,vecI) or isinstance(element,Arreglo):
                     c_llavesint+=1;
@@ -85,8 +94,14 @@ class Println(Instruccion):
                         driver.append(str(v_exp) + "\n")
                     else:
                         print("Error la expresion auxiliar no tiene la cantidad adecuada de {} y/o {:?}")
+                        error = "Error la expresion auxiliar no tiene la cantidad adecuada de {} y/o {:?}"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                          columna=self.columna)
             else:
                 print("Error la expresion auxiliar para imprimir variables no es string")
+                error = "Error la expresion auxiliar para imprimir variables no es string"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
 
     def printArray(self,arrayVec):
         vector="["

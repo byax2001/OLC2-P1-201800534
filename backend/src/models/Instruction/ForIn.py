@@ -9,6 +9,7 @@ from models.TablaSymbols.Tipos import Tipos
 from models.Instruction.Break import Break
 from models.Instruction.Return import Return
 from models.Instruction.Continue import Continue
+from BaseDatos.B_datos import B_datos
 
 class ForIn(Instruccion):
     def __init__(self,id:str,arreglo,cInst:[Instruccion],line:int,column:int):
@@ -35,6 +36,9 @@ class ForIn(Instruccion):
                         break
                     elif isinstance(inst,Break):
                         print("Error hay un return en un for")
+                        error = "Error hay un return en un for"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                         return
                     rInst=inst.ejecutar(driver,new_ts2)
 
@@ -44,7 +48,13 @@ class ForIn(Instruccion):
                         break
                     elif isinstance(rInst, Return):
                         print("Error, existe return afuera de una funcion")
+                        error = "Error, existe return afuera de una funcion"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                         return
         else:
             print("Error intento de for in en un elemento que no es arreglo o rango")
+            error = "Error intento de for in en un elemento que no es arreglo o rango"
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
 

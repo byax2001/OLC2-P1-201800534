@@ -5,7 +5,7 @@ from models.TablaSymbols.Tipos import Tipos
 from models.Instruction.Break import Break
 from models.Instruction.Continue import Continue
 from models.Instruction.Return import Return
-
+from BaseDatos.B_datos import B_datos
 class If(Instruccion):
     def __init__(self,exp:Expresion,bloque1:[Instruccion],bloque2:[Instruccion],line:int,column:int):
         self.exp=exp
@@ -36,5 +36,11 @@ class If(Instruccion):
                             return rInst
             else:
                 print("la expresion debe de dar un resultado booleano")
+                error = "la expresion debe de dar un resultado booleano"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         else:
             print("La expresion en el if causa error")
+            error = "La expresion en el if causa error"
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)

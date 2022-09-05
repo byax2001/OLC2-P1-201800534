@@ -1,6 +1,7 @@
 from models.Instruction.Instruction import Instruccion
 from models.TablaSymbols.Tipos import Tipos,definirTipo
 from models.Expresion.Expresion import Expresion
+from BaseDatos.B_datos import B_datos
 #dec vector vacio
 #  vectorI == vec!
 class vecI(Expresion):
@@ -33,6 +34,9 @@ class vecI(Expresion):
                             self.tipo==Tipos.ERROR
                             self.value=None
                             print(f"Error uno de los elementos del vector no es del mismo tipo que el resto {self.line}")
+                            error = "Error uno de los elementos del vector no es del mismo tipo que el resto"
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                              columna=self.column)
                             return
                         vector.append({"valor": valor2, "tipo": tipo2})
                 self.value=vector
@@ -52,10 +56,19 @@ class vecI(Expresion):
                             self.tipo=tipo
                         else:
                             print(f"el multiplicador para el vector no es un entero {self.line}")
+                            error = "el multiplicador para el vector no es un entero"
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                              columna=self.column)
                     else:
                         print("La expresion a multiplicar en una array da error"+str(self.line))
+                        error = "La expresion a multiplicar en una array da error"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                 else:
                     print("Error el multiplicador no es integer")
+                    error = "Error el multiplicador no es integer"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
         return self.value
 
     def getTipo(self, driver, ts):

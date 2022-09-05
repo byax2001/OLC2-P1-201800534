@@ -65,10 +65,10 @@ export default class Principal extends Component{
                 <div className="dropdown btn btn-secondary">
                 Reportes
                 <div className="dropdown-content">
-                    <Link to="/terrores">Tabla de Simbolos</Link>
+                    <Link to="/tsimbolos">Tabla de Simbolos</Link>
                     <Link to="/terrores">Reporte de Errores</Link>
-                    <Link to="/terrores">Reporte Base de datos existentes</Link>
-                    <Link to="/terrores">Reporte de tabla de base de datos</Link>
+                    <Link to="/tbdatos">Reporte Base de datos existentes</Link>
+                    <Link to="/tt_bdatos">Reporte de tabla de base de datos</Link>
                 </div>
                 </div>
                 <Link to="/acercade"  className="btn btn-secondary">Acerca de</Link>

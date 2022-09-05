@@ -11,13 +11,18 @@ import CodeMirror from '@uiw/react-codemirror';
 import Principal from './components/Principal';
 import TablaErrores from './components/TablaErrores';
 import Acercade from './components/Acercade'
-
+import TablaSimbolos from './components/TablaSimbolos';
+import TablaBasedatos from './components/TablaBasedatos';
+import TablaTbdatos from './components/TablaTbdatos'
 function App() {
   return (
     <BrowserRouter>
       <Routes>
       <Route path="/" exact element={<Principal />} />
       <Route path="/terrores" element={<TablaErrores/>}/>
+      <Route path="/tsimbolos" element={<TablaSimbolos/>}/>
+      <Route path="/tbdatos" element={<TablaBasedatos/>}/>
+      <Route path="/tt_bdatos" element={<TablaTbdatos/>}/>
       <Route path="/acercade" element={<Acercade/>}/>
       </Routes>
     </BrowserRouter>

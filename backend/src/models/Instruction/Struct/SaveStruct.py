@@ -4,6 +4,7 @@ from models.TablaSymbols.Enviroment import Enviroment
 from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Symbol
 from models.Expresion.Struct.Struct import Struct
+from BaseDatos.B_datos import B_datos
 class SaveStruct(Instruccion):
     def __init__(self,id:str,cInst:[Instruccion],line:int,column:int):
         self.id=id
@@ -24,5 +25,8 @@ class SaveStruct(Instruccion):
             print(f"Struct declarado {self.id}")
         else:
             print(f"Error: se intenta declarar un struct con una id ya declarada {self.line}")
+            error = "Error: se intenta declarar un struct con una id ya declarada "
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
     def changeAcces(self,acceso:int):
         self.tacceso=acceso

@@ -3,6 +3,7 @@ from models.TablaSymbols.Enviroment import Enviroment
 from models.Driver import Driver
 from models.TablaSymbols.Symbol import Symbols
 from models.TablaSymbols.Tipos import Tipos
+from BaseDatos.B_datos import B_datos
 
 class Remove(Expresion):
     def __init__(self, id: str, index: Expresion, line: int, column: int):
@@ -37,12 +38,24 @@ class Remove(Expresion):
                                 self.tipo=Tipos.ERROR
                         else:
                             print(f"El index debe de ser un entero linea: {self.line}")
+                            error = "El index debe de ser un entero linea"
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                              columna=self.column)
                     else:
                         print(f"Error Intento de Insert en una variable no vectorial  linea:{self.line} ")
+                        error = "Error Intento de Insert en una variable no vectorial"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                 else:
                     print(f"Intento de Insert en vector no muteable linea: {self.line}")
+                    error = "Intento de Insert en vector no muteable"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
             else:
                 print(f"Error Intento de Insert en vector no declarado linea:{self.line} ")
+                error = "Error Intento de Insert en vector no declarado"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         return self.value
 
     def getTipo(self, driver, ts):

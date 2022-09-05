@@ -1,5 +1,6 @@
 from models.Expresion.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos,definirTipo
+from BaseDatos.B_datos import B_datos
 
 class ToStringOwned(Expresion):
     def __init__(self,exp:Expresion,line:int,column:int):

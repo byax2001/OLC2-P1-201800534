@@ -1,6 +1,6 @@
 from models.Expresion.Operacion.OperacionRel import OperacionRel, OperadorRel, getOperador
 from models.TablaSymbols.Tipos import Tipos,definirTipo
-
+from BaseDatos.B_datos import B_datos
 class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmeticas hereda de Operacion
     #var Operacion: exp1: Expresion, operador, exp2: Expresion, linea, columna, expU
     def getTipo(self, driver, ts):
@@ -29,6 +29,9 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
                 self.tipo = definirTipo(self.value)
             else:
                 print("Las literales a comparar no son del mismo tipo ")
+                error = "Las literales a comparar no son del mismo tipo"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
         return self.value
     def comparar(self,valor1,valor2):
         if self.operador == OperadorRel.MAYORQUE:

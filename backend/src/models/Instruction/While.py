@@ -6,7 +6,7 @@ from models.Instruction.Break import Break
 from models.Instruction.Return import Return
 from models.Instruction.Continue import Continue
 from models.TablaSymbols.Tipos import Tipos,definirTipo
-
+from BaseDatos.B_datos import B_datos
 class While(Instruccion):
     def __init__(self,exp:Expresion,bloque:[Instruccion],line:int,column:int):
         self.exp=exp
@@ -27,6 +27,9 @@ class While(Instruccion):
                         break;
                     elif isinstance(element, Return):
                         print("Error, existe return afuera de una funcion")
+                        error = "Error, existe return afuera de una funcion"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                         return
                     rInst=element.ejecutar(driver,Newts);
 
@@ -37,12 +40,21 @@ class While(Instruccion):
                         break;
                     elif isinstance(rInst, Return):
                         print("Error, existe return afuera de una funcion")
+                        error = "Error, existe return afuera de una funcion"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                         return
                 t_exp = self.exp.getTipo(driver, ts)
                 v_exp=self.exp.getValor(driver,ts)
                 if t_exp == Tipos.ERROR and t_exp != Tipos.BOOLEAN:
                     print("La expresion da error o no es booleana")
+                    error = "La expresion da error o no es booleana"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
                     return
         else:
             print("La expresion da error o no es booleana")
+            error = "La expresion da error o no es booleana"
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
             return

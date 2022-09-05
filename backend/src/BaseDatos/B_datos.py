@@ -1,3 +1,5 @@
+from models.TablaSymbols.Tipos import Tipos
+from models.TablaSymbols.Symbol import Symbols
 import time
 
 class B_datos(object):
@@ -22,6 +24,8 @@ class B_datos(object):
     def appendVar(self,id,t_simbolo,t_dato,ambito,fila,columna):
         if ambito!="Global":
             ambito="Local"
+        t_simbolo=B_datos.tipoVar(t_simbolo)
+        t_dato=B_datos.tipoDato(t_dato)
         variable={"nombre":id,"tiposimbolo":t_simbolo,"tipodato":t_dato,"ambito":ambito,"fila":fila,"columna":columna}
         B_datos.Lts.append(variable)
 
@@ -57,4 +61,52 @@ class B_datos(object):
 
     def rL_tBdatos(self):
         return B_datos.Ltablas_Bdatos
+
+    def tipoVar(tipo:Tipos):
+        stipo = ""
+        if tipo== Symbols.VARIABLE:
+            stipo="variable"
+        elif tipo==  Symbols.ARREGLO:
+            stipo = "arreglo"
+        elif tipo==  Symbols.FUNCION:
+            stipo = "funcion"
+        elif tipo==  Symbols.VECTOR:
+            stipo = "vector"
+        elif tipo==  Symbols.OBJETO:
+            stipo = "objeto"
+        elif tipo==  Symbols.MOD:
+            stipo = "modulo"
+        return stipo
+
+    def tipoDato(tipo:Symbols):
+        stipo=""
+        if tipo==Tipos.INT64:
+            stipo="i64"
+        elif tipo==Tipos.FLOAT64:
+            stipo = "f64"
+        elif tipo==Tipos.STRING:
+            stipo = "String"
+        elif tipo==Tipos.STR:
+            stipo = "str"
+        elif tipo==Tipos.CHAR:
+            stipo = "char"
+        elif tipo==Tipos.BOOLEAN:
+            stipo = "bool"
+        elif tipo==Tipos.ERROR:
+            stipo = "error"
+        elif tipo==Tipos.ID:
+            stipo = "id"
+        elif tipo==Tipos.VOID:
+            stipo = "void"
+        elif tipo==Tipos.USIZE:
+            stipo = "usize"
+        elif tipo==Tipos.STRUCT:
+            stipo = "struct"
+        elif tipo==Tipos.MODULO:
+            stipo = "modulo"
+        elif tipo==Tipos.ARREGLO:
+            stipo = "arreglo"
+        return  stipo
+
+
 

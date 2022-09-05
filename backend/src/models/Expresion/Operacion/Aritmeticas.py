@@ -1,6 +1,7 @@
 from models.Expresion.Operacion.Operacion import Operacion, Operador, getOperacion
 from models.TablaSymbols.Tipos import Tipos,definirTipo
 import math
+from BaseDatos.B_datos import B_datos
 class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas hereda de Operacion
     #var Operacion: exp1: Expresion, operador, exp2: Expresion, linea, columna, expU
     #ARITMETICAS TIENE UN CONSTRUCTOR HEREDADO POR "OPERACION"
@@ -44,6 +45,9 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                 else:
                     print(f'Los nodos no son del mismo valor o no son posible de concatenar o sumar', self.exp2.linea,
                             self.exp2.columna)
+                    error = "Los nodos no son del mismo valor o no son posible de concatenar o sumar"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                      columna=self.columna)
             elif self.operador == Operador.RESTA:
                 if t_nodoIzq == t_nodoDer:
                     if t_nodoIzq in [Tipos.INT64, Tipos.FLOAT64]:
@@ -51,12 +55,17 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                         self.tipo = definirTipo(self.value)
                     else:
                         print(f'Las expresiones para la resta deben de ser un integer, float o usize ', self.exp2.linea, self.exp2.columna)
+                        error = "Las expresiones para la resta deben de ser un integer, float o usize"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                 elif t_nodoIzq in [Tipos.INT64, Tipos.USIZE] and t_nodoDer in [Tipos.INT64, Tipos.USIZE]:
                     self.value= valorizq - valorder
                     self.tipo = definirTipo(self.value)
                 else:
                     print(f'Las expresiones a restar deben de ser del mismo  {self.exp1.linea}')
-
+                    error = "Las expresiones a restar deben de ser del mismo"
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                      columna=self.columna)
             elif self.operador == Operador.MULTI:
                 if t_nodoIzq == t_nodoDer:
                     if t_nodoIzq in [Tipos.INT64, Tipos.FLOAT64]:
@@ -64,11 +73,18 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                         self.tipo = definirTipo(self.value)
                     else:
                         print(f'Las expresiones para la  multiplicacion debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
+                        error = "Las expresiones para la  multiplicacion debe ser un integer o float"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                          columna=self.columna)
                 elif t_nodoIzq in [Tipos.INT64, Tipos.USIZE] and t_nodoDer in [Tipos.INT64, Tipos.USIZE]:
                     self.value= valorizq * valorder
                     self.tipo = definirTipo(self.value)
+
                 else:
                    print(f'Las expresiones a multiplicar deben de ser del mismo tipo')
+                   error = "Las expresiones a multiplicar deben de ser del mismo tipo"
+                   B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                     columna=self.columna)
             elif self.operador == Operador.DIV:
                 if t_nodoIzq == t_nodoDer:
                     v_exp1 = valorizq
@@ -82,8 +98,14 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                             self.tipo = definirTipo(self.value)
                         else:
                             print(f'Las expresiones para la  division debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
+                            error = "Las expresiones para la  division debe ser un integer o float"
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                              columna=self.columna)
                     else:
                         print("Error: Se intenta dividir entre 0")
+                        error = "Error: Se intenta dividir entre 0"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                          columna=self.columna)
                 elif t_nodoIzq in [Tipos.INT64, Tipos.USIZE] and t_nodoDer in [Tipos.INT64, Tipos.USIZE]:
                     v_exp1 = valorizq
                     v_exp2 = valorder
@@ -92,8 +114,14 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                         self.tipo = definirTipo(self.value)
                     else:
                         print("Error: Se intenta dividir entre 0")
+                        error = "Error: Se intenta dividir entre 0"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                          columna=self.columna)
                 else:
                    print(f'Las expresiones a dividir deben de ser del mismo tipo')
+                   error = "Las expresiones a dividir deben de ser del mismo tipo"
+                   B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                     columna=self.columna)
             elif self.operador == Operador.MOD:
                 if t_nodoIzq == t_nodoDer:
                     if t_nodoIzq==Tipos.INT64:
@@ -104,11 +132,17 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                         self.tipo = definirTipo(self.value)
                     else:
                         print(f'Las expresiones para usar el operador modulo debe ser un integer o float ', self.exp2.linea, self.exp2.columna)
+                        error = "Las expresiones para usar el operador modulo debe ser un integer o float"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                          columna=self.columna)
                 elif t_nodoIzq in [Tipos.INT64, Tipos.USIZE] and t_nodoDer in [Tipos.INT64, Tipos.USIZE]:
                     self.value= valorizq % valorder
                     self.tipo = definirTipo(self.value)
                 else:
                    print(f'Las expresiones a hacer mod deben de ser del mismo tipo')
+                   error = "Las expresiones a hacer mod deben de ser del mismo tipo"
+                   B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                     columna=self.columna)
             elif self.operador == Operador.POW:
                 if t_nodoIzq == t_nodoDer:
                     if t_nodoIzq ==Tipos.INT64:
@@ -116,11 +150,17 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                         self.tipo = definirTipo(self.value)
                     else:
                         print(f'Las expresiones para el operador pow debe ser un integer ', self.exp2.linea, self.exp2.columna)
+                        error = "Las expresiones para el operador pow debe ser un integer"
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                          columna=self.columna)
                 elif t_nodoIzq in [Tipos.INT64, Tipos.USIZE] and t_nodoDer in [Tipos.INT64, Tipos.USIZE]:
                     self.value= pow( valorizq, valorder )
                     self.tipo = definirTipo(self.value)
                 else:
                    print(f'Las expresiones a elevar deben de ser del mismo tipo')
+                   error = "Las expresiones a elevar deben de ser del mismo tipo"
+                   B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                     columna=self.columna)
             elif self.operador == Operador.POWF:
                 if t_nodoIzq == t_nodoDer:
                     if t_nodoIzq==Tipos.FLOAT64:
@@ -128,10 +168,20 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                         self.tipo = definirTipo(self.value)
                     else:
                         print(f'Las expresiones para el operador powf deben de ser float ', self.exp2.linea, self.exp2.columna)
+                        error = "Las expresiones para el operador powf deben de ser float "
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                          columna=self.columna)
                 else:
-                   print(f'Las expresiones a elevar deben de ser del mismo tipo')
+                    print(f'Las expresiones a elevar deben de ser del mismo tipo')
+                    error = "Las expresiones a elevar deben de ser del mismo tipo "
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                      columna=self.columna)
             else:
                 print(f'La operacion {self.operador} no es soportado')
+                error = f"La operacion {self.operador} no es soportado"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
+
         return self.value
 
     def resetInst(self):

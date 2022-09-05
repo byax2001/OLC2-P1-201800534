@@ -75,14 +75,15 @@ export default class Principal extends Component{
             </div>
             <div  id="InOutCode" className="container-fluid">
                 <div className="row">
-                    <div className="col-5">
-                        <CodeMirror ref={this.entrada} id="textAnalizar"  height="100%" className="tAreaW" 
+                    <div className="col-6 p-0">
+                        <CodeMirror ref={this.entrada} id="textAnalizar" width="100%"  height="100%" className="tAreaW" 
                         theme = "dark" align="left" 
+                        mode="javascript"
                         onChange={(value) => {this.setState({entrada: value}) }}
                         />
                     </div>
-                    <div className="col-1"></div>
-                    <div className="col-5">
+                    
+                    <div className="col-6 p-0">
                         <textarea id="consoleLfs" className=" tAreaW" value={this.state.consola}
                             onChange={(e)=>{this.setState({consola:e.target.value})}}
                         ></textarea>

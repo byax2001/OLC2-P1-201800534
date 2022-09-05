@@ -30,6 +30,10 @@ const columnas=[
         name:'Columna',
         selector: row => row.columna,
         sortable:true
+    },{
+        name:'Fecha y Hora',
+        selector: row => row.tiempo,
+        sortable:true
     }
 ]
 

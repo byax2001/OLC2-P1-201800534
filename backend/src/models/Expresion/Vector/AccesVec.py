@@ -5,6 +5,7 @@ from models.TablaSymbols.Symbol import Symbols
 from models.TablaSymbols.Tipos import Tipos,definirTipo
 from BaseDatos.B_datos import B_datos
 
+
 class AccesVec(Expresion):
     def __init__(self, id: str,cIndex:[Expresion],cIds:[str], line: int, column: int):
         self.value=None

@@ -1,5 +1,5 @@
-from models.Instruction.Instruction import Instruccion
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Instruction import Instruccion
+from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Symbols
 from models.Driver import Driver

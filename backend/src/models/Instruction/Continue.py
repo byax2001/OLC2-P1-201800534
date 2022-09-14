@@ -1,4 +1,4 @@
-from models.Instruction.Instruction import Instruccion
+from models.Abstract.Instruction import Instruccion
 
 
 class Continue(Instruccion):

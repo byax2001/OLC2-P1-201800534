@@ -1,9 +1,8 @@
-from models.Instruction.Instruction import Instruccion
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Instruction import Instruccion
+from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Enviroment import Enviroment
 from models import Driver
 from models.Instruction.Brazo import Brazo
-from models.TablaSymbols.Tipos import Tipos,definirTipo
 from BaseDatos.B_datos import B_datos
 class Match(Instruccion):
     def __init__(self,exp:Expresion,lbrazos:[Brazo],default:[Instruccion],line:int,column:int):

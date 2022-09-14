@@ -1,5 +1,5 @@
-from models.Expresion.Expresion import Expresion
-from models.TablaSymbols.Tipos import Tipos,getTipo
+from models.Abstract.Expresion import Expresion
+
 
 class ExpStruct(Expresion):
     def __init__(self,id:str,exp1:Expresion,line:int,column:int):

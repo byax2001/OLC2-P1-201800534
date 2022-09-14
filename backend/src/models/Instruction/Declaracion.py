@@ -1,8 +1,11 @@
-from models.Instruction.Instruction import Instruccion
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Instruction import Instruccion
+from models.Abstract.Expresion import Expresion
+from models.TablaSymbols.Enviroment import Enviroment
 from models.TablaSymbols.Tipos import Tipos,getTipo
 from models.TablaSymbols.Symbol import Symbol
+from models.TablaSymbols.SymC3d import SymC3d
 from models.Expresion.Vector.Vector import Vector
+from models.TablaSymbols.ValC3d import ValC3d
 from BaseDatos.B_datos import B_datos
 
 class Declaracion(Instruccion):
@@ -14,6 +17,7 @@ class Declaracion(Instruccion):
         self.linea = linea
         self.columna = columna
         self.tacceso = 0
+        self.sym_c3d=0
 
     def ejecutar(self, driver, ts):
         if (self.exp != None):
@@ -28,13 +32,14 @@ class Declaracion(Instruccion):
                                             line=self.linea, column=self.columna, tacceso=self.tacceso)
                             ts.addVar(self.id, newVar)
                             print("se añadio una variable Struc")
-                            B_datos().appendVar(id=self.id, t_simbolo=newVar.tsimbolo, t_dato=newVar.tipo, ambito=ts.env,
-                                              fila=self.linea,
-                                              columna=self.columna)
+                            B_datos().appendVar(id=self.id, t_simbolo=newVar.tsimbolo, t_dato=newVar.tipo,
+                                                ambito=ts.env, fila=self.linea, columna=self.columna)
                         elif type(v_exp)!=list:
                             newVar=Symbol(mut=self.mut,id=self.id,value=v_exp,tipo_simbolo=0,tipo=t_exp,
                                           line=self.linea,column=self.columna, tacceso=self.tacceso)
-                            ts.addVar(self.id,newVar)
+
+                            self.sym_c3d=ts.addVar(self.id,newVar) #se añadio variable y la funcion devolvio la posicion de la variable en el stack
+
                             print("se añadio una variable")
                             B_datos().appendVar(id=self.id, t_simbolo=newVar.tsimbolo, t_dato=newVar.tipo, ambito=ts.env,
                                               fila=self.linea,
@@ -55,8 +60,10 @@ class Declaracion(Instruccion):
                             if type(v_exp) != list:
                                 newVar = Symbol(mut=self.mut,id=self.id, value=v_exp, tipo_simbolo=0,tipo= t_exp,
                                                 line= self.linea,column= self.columna, tacceso=self.tacceso)
-                                ts.addVar(self.id, newVar)
+
+                                self.sym_c3d=ts.addVar(self.id, newVar)
                                 print("se añadio una variable")
+
                                 B_datos().appendVar(id=self.id, t_simbolo=newVar.tsimbolo, t_dato=newVar.tipo,
                                                   ambito=ts.env,
                                                   fila=self.linea,
@@ -113,6 +120,7 @@ class Declaracion(Instruccion):
 
         #REVISAR SI EN EL PROYECTO HAY DECLARACIONES   let A; let B;
         #EN ESE CASO CREAR METODO QUE DEVUELVA UN VALOR POR DEFAULT EN CADA TIPO DE VARIABLE PARA DARSELOS COMO VALOR
+
     def valueDefault(self, tipo:Tipos):
         if(tipo==Tipos.INT64):
             return 0
@@ -135,3 +143,19 @@ class Declaracion(Instruccion):
         return self.exp
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
+
+    def generarC3d(self,ts:Enviroment):
+        self.exp.generator = self.generator
+
+        newValue: ValC3d = self.exp.generarC3d(ts=ts)
+        temp_var: SymC3d = self.sym_c3d
+        if (self.type != Tipos.BOOLEAN):
+            self.generator.addSetStack(str(temp_var.position), newValue.getValue())
+        else:
+            newLabel = self.generator.newLabel()
+            self.generator.addLabel(newValue.trueLabel)
+            self.generator.addSetStack(str(temp_var.position), '1')
+            self.generator.addGoto(newLabel)
+            self.generator.addLabel(newValue.falseLabel)
+            self.generator.addSetStack(str(temp_var.position), '0')
+            self.generator.addLabel(newLabel)

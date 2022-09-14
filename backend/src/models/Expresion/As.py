@@ -1,6 +1,5 @@
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Tipos import getTipo,Tipos,definirTipo
-from models.TablaSymbols.Enviroment import Enviroment
 from BaseDatos.B_datos import B_datos
 
 class As(Expresion):

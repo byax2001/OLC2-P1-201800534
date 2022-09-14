@@ -1,9 +1,7 @@
-from BaseDatos.B_datos import B_datos
-
-from models.Instruction.Instruction import Instruccion
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Instruction import Instruccion
+from models.Abstract.Expresion import Expresion
 from models.Expresion.Primitivo import Primitivo
-from models.TablaSymbols.Tipos import Tipos,Tipo
+from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Symbols
 from models.Expresion.Id import Id
 #VECTORES Y ARRAYS

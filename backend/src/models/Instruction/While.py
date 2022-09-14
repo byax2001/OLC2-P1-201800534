@@ -1,11 +1,11 @@
-from models.Instruction.Instruction import Instruccion
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Instruction import Instruccion
+from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Enviroment import Enviroment
 from models import Driver
 from models.Instruction.Break import Break
 from models.Instruction.Return import Return
 from models.Instruction.Continue import Continue
-from models.TablaSymbols.Tipos import Tipos,definirTipo
+from models.TablaSymbols.Tipos import Tipos
 from BaseDatos.B_datos import B_datos
 class While(Instruccion):
     def __init__(self,exp:Expresion,bloque:[Instruccion],line:int,column:int):

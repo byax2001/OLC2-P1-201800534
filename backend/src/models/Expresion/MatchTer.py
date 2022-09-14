@@ -1,7 +1,6 @@
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Expresion import Expresion
 from models.Expresion.BrazoTer import BrazoTer
-from models.TablaSymbols.Tipos import definirTipo,Tipos
-from models.TablaSymbols.Enviroment import Enviroment
+from models.TablaSymbols.Tipos import Tipos
 from BaseDatos.B_datos import B_datos
 class MatchTer(Expresion):
     def __init__(self, exp:Expresion,brazos:[BrazoTer],default:[Expresion], line: int, column: int):

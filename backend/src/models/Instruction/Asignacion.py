@@ -1,9 +1,8 @@
-from models.Instruction.Instruction import Instruccion
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Instruction import Instruccion
+from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Symbols
 from models.Expresion.Vector.Vector import Vector
-from models.TablaSymbols.Enviroment import Enviroment
 from BaseDatos.B_datos import B_datos
 class Asignacion(Instruccion):
     def __init__(self,id:str,cIndex:[Expresion],cIds:[str],exp: Expresion, linea:int, columna:int):

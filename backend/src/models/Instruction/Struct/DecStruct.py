@@ -1,10 +1,10 @@
-from models.Instruction.Instruction import Instruccion
+from models.Abstract.Instruction import Instruccion
 from models.Driver import Driver
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Expresion.Struct.ExpStruct import ExpStruct
-from models.TablaSymbols.Symbol import Symbol,Symbols
+from models.TablaSymbols.Symbol import Symbol
 from models.TablaSymbols.Tipos import Tipos
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Expresion import Expresion
 from BaseDatos.B_datos import B_datos
 class DecStruct(Instruccion):
     def __init__(self,mut, id, exp:ExpStruct, line: int, column: int):

@@ -1,13 +1,17 @@
 from models.TablaSymbols.Symbol import Symbol,getSymbol
-
+from models.TablaSymbols.SymC3d import SymC3d
 class Enviroment:
     def __init__(self,anterior,env) -> None:
         self.env=env
         self.anterior=anterior
+        self.size=0
         self.tabla={}
     
     def addVar(self, id: str, simbolo: Symbol):
         self.tabla[id] = simbolo
+        symc3d = SymC3d(id=id,type=simbolo.tipo,position=self.size)
+        self.size = self.size + 1
+        return symc3d
 
     def buscar(self, id: str) -> Symbol:
         ts = self

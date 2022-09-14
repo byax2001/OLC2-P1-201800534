@@ -1,8 +1,6 @@
-from models.Expresion.Expresion import Expresion
-from models.TablaSymbols.Tipos import definirTipo,Tipos
+from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Enviroment import Enviroment
-from models.Expresion.Expresion import Expresion
-from models.Instruction.Instruction import Instruccion
+from models.Abstract.Expresion import Expresion
 from BaseDatos.B_datos import B_datos
 class If_ternario(Expresion):
     def __init__(self,exp:Expresion,bloque1:[],exp1b:Expresion,bloque2:[],exp2b:Expresion,line:int,column:int):

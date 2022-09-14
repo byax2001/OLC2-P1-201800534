@@ -1,4 +1,4 @@
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
 class Nothing(Expresion):
     def __init__(self,line,column):

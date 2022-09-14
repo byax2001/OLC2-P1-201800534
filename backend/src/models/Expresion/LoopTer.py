@@ -1,5 +1,5 @@
-from models.Expresion.Expresion import Expresion
-from models.Instruction.Instruction import Instruccion
+from models.Abstract.Expresion import Expresion
+from models.Abstract.Instruction import Instruccion
 from models.Instruction.Break import Break
 from models.Instruction.Continue import Continue
 from models.Instruction.Return import Return

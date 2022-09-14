@@ -1,4 +1,4 @@
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Enviroment import Enviroment
 from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Accesos

@@ -1,11 +1,10 @@
 #0..4 arreglo del 0 al  4 [1,2,3,4]
 #"hola".char() arreglo ['h','o','l','a']
 # array o vector
-from models.Instruction.Instruction import Instruccion
+from models.Abstract.Instruction import Instruccion
 from models.TablaSymbols.Enviroment import Enviroment
 from models.TablaSymbols.Symbol import Symbol
 from models.Driver import Driver
-from models.TablaSymbols.Tipos import Tipos
 from models.Instruction.Break import Break
 from models.Instruction.Return import Return
 from models.Instruction.Continue import Continue

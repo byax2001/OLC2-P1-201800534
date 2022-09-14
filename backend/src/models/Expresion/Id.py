@@ -1,5 +1,5 @@
-from models.Expresion.Expresion import Expresion
-from models.TablaSymbols.Tipos import definirTipo,Tipos
+from models.Abstract.Expresion import Expresion
+from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Expresion.Vector.Vector import Vector
 

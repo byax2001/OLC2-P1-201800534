@@ -1,4 +1,4 @@
-from models.Instruction.Instruction import Instruccion
+from models.Abstract.Instruction import Instruccion
 from models.Driver import Driver
 from models.TablaSymbols.Enviroment import Enviroment
 from models.TablaSymbols.Tipos import Tipos

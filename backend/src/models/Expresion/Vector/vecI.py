@@ -1,6 +1,5 @@
-from models.Instruction.Instruction import Instruccion
-from models.TablaSymbols.Tipos import Tipos,definirTipo
-from models.Expresion.Expresion import Expresion
+from models.TablaSymbols.Tipos import Tipos
+from models.Abstract.Expresion import Expresion
 from BaseDatos.B_datos import B_datos
 #dec vector vacio
 #  vectorI == vec!

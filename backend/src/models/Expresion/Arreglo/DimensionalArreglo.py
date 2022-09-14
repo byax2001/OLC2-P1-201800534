@@ -1,4 +1,4 @@
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos,getTipo
 from BaseDatos.B_datos import B_datos
 class DimensionalArreglo(Expresion):

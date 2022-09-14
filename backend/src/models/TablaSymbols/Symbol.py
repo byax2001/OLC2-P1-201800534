@@ -34,7 +34,7 @@ def getSymbol(s):
         return Symbols.MOD
     
 class Symbol():
-    def __init__(self,mut:bool,id: str, value, tipo_simbolo: int, tipo: Tipos,line:int,column:int,tacceso:int=0) -> None:
+    def __init__(self,mut:bool,id: str, value, tipo_simbolo: int, tipo: Tipos,line:int,column:int,tacceso:int=0,position:int=0) -> None:
         self.mut=mut
         self.id = id
         self.value = value
@@ -43,3 +43,4 @@ class Symbol():
         self.line=line
         self.column=column
         self.tacceso = getAcceso(tacceso)
+        self.position = position #esto es para hallar la posicion de esta variable en la pila

@@ -1,9 +1,8 @@
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Expresion import Expresion
 from models.Driver import Driver
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Expresion.Struct.ExpStruct import ExpStruct
 from models.Expresion.Struct.Struct import Struct
-from models.TablaSymbols.Symbol import Symbol,Symbols
 from models.TablaSymbols.Tipos import Tipos
 from BaseDatos.B_datos import B_datos
 

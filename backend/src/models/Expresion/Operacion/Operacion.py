@@ -1,5 +1,5 @@
 from enum import Enum
-from models.Expresion.Expresion import Expresion
+from models.Abstract.Expresion import Expresion
 
 
 class Operador(Enum):

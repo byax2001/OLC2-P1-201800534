@@ -47,25 +47,43 @@ class Primitivo(Expresion):
         value = Value(valor=_value, isTemp=True, tipo=self.tipo)
         return value
 
-    def generarC3d(self,ts):
-        # se supone que luego de la primera pasada, la segunda ya tiene un valor self.tipo y self.value
+
+    def generarC3d(self,ts,ptr:int):
+        if self.tipo is None:
+            self.tipo=definirTipo(self.value)
+
         if self.tipo==Tipos.INT64 or self.tipo==Tipos.FLOAT64:
             return ValC3d(valor=str(self.value),isTemp=False,tipo=self.tipo)
         elif self.tipo==Tipos.STR or self.tipo==Tipos.CHAR:
             newTemp = self.generator.newTemp()  #   = tnum
             self.generator.addExpression(newTemp, "H", "", "")   #  en este caso : tnum = H;
             for char in self.value:
-                self.generator.addSetHeap("H", str(ord(char)))  # heap[(int)num]= ascii code
+                self.generator.addSetHeap("H", str(ord(char)))  # heap[(int)num]=   ascii code
                 self.generator.addNextHeap() #H = H + 1
 
             self.generator.addSetHeap("H", "-1") # heap[(int)num]= -1
-            return ValC3d(str(newTemp), True, self.type)
+            return ValC3d(str(newTemp), True, self.tipo)
         elif self.tipo== Tipos.BOOLEAN:
             if self.value==True:
-                valor = ValC3d(valor="1",isTemp=False,tipo=self.tipo);
+                valor = "1"
             else:
-                valor = ValC3d(valor="0", isTemp=True, tipo=self.tipo);
-            return valor
+                valor = "0"
+            val = ValC3d("", False, Tipos.BOOLEAN)
+
+            if (self.trueLabel == ""):
+                self.trueLabel = self.generator.newLabel()  #Ln: (true)
+
+            if (self.falseLabel == ""):
+                self.falseLabel = self.generator.newLabel()  #Ln+1: (false)
+                                  #li   ld   operador
+            self.generator.addIf(valor, "1", "==", self.trueLabel)  # if (valor==1) goto Ln (true)
+            self.generator.addGoto(self.falseLabel) # goto Ln+1 (false)
+
+            val.trueLabel = self.trueLabel
+            val.falseLabel = self.falseLabel
+
+
+            return val
 
 
 def resetInst(self):

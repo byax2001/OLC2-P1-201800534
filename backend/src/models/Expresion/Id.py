@@ -1,7 +1,9 @@
 from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
+from models.TablaSymbols.Symbol import Symbol
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Expresion.Vector.Vector import Vector
+from models.TablaSymbols.ValC3d import ValC3d
 
 class Id(Expresion):    
     def __init__(self, id:str, linea: int, columna: int):
@@ -45,3 +47,27 @@ class Id(Expresion):
     def ejecutar(self, driver, ts):
         """En la mayoria de expresiones no realiza nada"""
         pass
+    def generarC3d(self,ts,ptr:int):
+        symbol:Symbol = ts.buscar(self.id)
+        newTemp = self.generator.newTemp()
+
+        self.generator.addGetStack(newTemp, str(symbol.position))
+
+        if (symbol.tipo != Tipos.BOOLEAN):
+            return ValC3d(valor=newTemp,isTemp= True,tipo= symbol.tipo)
+        else:
+            val = ValC3d(valor="",isTemp= False,tipo= Tipos.BOOLEAN)
+
+            if (self.trueLabel == ""):
+                self.trueLabel = self.generator.newLabel()
+
+            if (self.falseLabel == ""):
+                self.falseLabel = self.generator.newLabel()
+
+            self.generator.addIf(newTemp, "1", "==", self.trueLabel)
+            self.generator.addGoto(self.falseLabel)
+
+            val.trueLabel = self.trueLabel
+            val.falseLabel = self.falseLabel
+
+            return val

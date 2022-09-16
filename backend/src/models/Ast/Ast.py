@@ -9,16 +9,20 @@ class Ast:
             instrucciones = []
         self.instrucciones = instrucciones
 
-    def ejecutar(self, driver, ts, generator):
+    def ejecutar(self, driver, ts):
 
         for instruccion in self.instrucciones:
             try:
                 if isinstance(instruccion,Break) or isinstance(instruccion,Continue) or isinstance(instruccion,Return):
                     print("Error existen breaks, continues y returns en el entorno global")
-                instruccion.generator=generator
                 rInst=instruccion.ejecutar(driver, ts)
                 if isinstance(rInst,Break) or isinstance(rInst,Continue) or isinstance(rInst,Return):
                     print("Error existen Instrucciones que retornan breaks, continues y returns en el entorno global")
             except Exception as e:
                 print(f"hubo un error {e}")
-        return generator.getCode()
+
+    def generarC3d(self,ts,generator):
+        for instruccion in self.instrucciones:
+            instruccion.generator=generator
+            instruccion.generarC3d(ts,ptr=0)
+        return generator

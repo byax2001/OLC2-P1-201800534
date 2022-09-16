@@ -10,6 +10,7 @@ from BaseDatos.B_datos import B_datos
 
 class Declaracion(Instruccion):
     def __init__(self,mut:bool,id:str,tipo:str, exp: Expresion, linea:int, columna:int):
+        super().__init__()
         self.mut=mut
         self.id=id
         self.tipoVar=getTipo(tipo) if tipo!="" else None
@@ -144,17 +145,17 @@ class Declaracion(Instruccion):
         self.tacceso=acceso
 
     def generarC3d(self,ts:Enviroment,ptr:int):
-        symbol=ts.buscar(self.id)
+        symbol=ts.buscarActualTs(self.id)
         if symbol==None:
             self.exp.generator = self.generator
 
-            newValue: ValC3d = self.exp.generarC3d(ts=ts)
+            newValue: ValC3d = self.exp.generarC3d(ts=ts,ptr=ptr)
             newVar = Symbol(mut=self.mut, id=self.id, value=newValue.value, tipo_simbolo=0, tipo=newValue.tipo,
                             line=self.linea, column=self.columna, tacceso=self.tacceso)
 
-            temp_var: SymC3d = ts.addVar(self.id, newVar)
+            temp_var: SymC3d = ts.addVar(self.id, newVar) #----------------------------
 
-            if (self.type != Tipos.BOOLEAN):
+            if (temp_var.tipo != Tipos.BOOLEAN):
                 self.generator.addSetStack(str(temp_var.position), newValue.getValue()) #Stack[(int)pos]= val
             else:
                 #Aqui no estoy añadiendo directamente el valor al hacer el addSetStack

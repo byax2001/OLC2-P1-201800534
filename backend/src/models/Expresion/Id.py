@@ -47,6 +47,7 @@ class Id(Expresion):
     def ejecutar(self, driver, ts):
         """En la mayoria de expresiones no realiza nada"""
         pass
+
     def generarC3d(self,ts,ptr:int):
         symbol:Symbol = ts.buscar(self.id)
         newTemp = self.generator.newTemp()

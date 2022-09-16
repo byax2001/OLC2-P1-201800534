@@ -12,6 +12,7 @@ from BaseDatos.B_datos import B_datos
 
 class Call(Instruccion):
     def __init__(self,id:str,cExp:[Expresion],line:int,column:int):
+        super().__init__()
         self.value=None
         self.tipo=None
         self.id=id
@@ -184,3 +185,12 @@ class Call(Instruccion):
             self.instancia=0
             self.value=None
             self.tipo=None
+
+    def generarC3d(self,ts,ptr:int):
+        if self.id=="main":
+            symbol=ts.buscar(self.id)
+            insts=symbol.value[1]
+            newEnv = Enviroment(anterior=ts,env="Call")
+            for inst in insts:
+                inst.generator = self.generator
+                inst.generarC3d(newEnv,ptr+1)

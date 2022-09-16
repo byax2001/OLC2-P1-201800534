@@ -18,6 +18,7 @@ class Generator:
         tempCode = tempCode + "double STACK[78000];\n"
         tempCode = tempCode + "double P;\n"
         tempCode = tempCode + "double H;\n"
+        tempCode = tempCode + "double ptr=0;\n"
 
         if (len(self.tempList) > 0):
             tempCode = tempCode + "double " + self.getUsedTemps() + ";\n\n"
@@ -95,6 +96,8 @@ class Generator:
     def addSetStack(self, index: str, value: str):
         self.code.append("STACK[(int)" + index + "] = " + value + ";")
 
+    def addptr(self,valor,ope):
+        self.addExpression("ptr","ptr",valor,ope)
 
 
 

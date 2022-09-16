@@ -15,15 +15,18 @@ print(input)
 
 ast: Ast =parser.parse(input)
 ts = Enviroment(None, 'Global')
+ts_c3d = Enviroment(None, 'Global')
 driver = Driver()
 generator: Generator = Generator()
 
-ast.ejecutar(driver, ts, generator)
-
+ast.ejecutar(driver, ts)
+ast.generarC3d(ts=ts_c3d,generator= generator)
 main=ts.buscar("main")
 if main!=None:
     call=Call("main",[],line=0,column=0);
     call.ejecutar(driver,ts)
+    call.generator=generator
+    call.generarC3d(ts=ts_c3d,ptr=0)
 else:
     print("Error no existe main en el archivo")
 print("OUTPUT:")

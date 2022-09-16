@@ -1,4 +1,4 @@
 fn main(){
     let x:i64 =23;
-    let y:f64=15;
+    let y:f64=15.2;
 }

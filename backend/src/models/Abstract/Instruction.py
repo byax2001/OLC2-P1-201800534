@@ -9,5 +9,5 @@ class Instruccion:
         self.generator = Generator()
     def ejecutar(self, driver: Driver, ts: Enviroment):
         pass
-    def generarC3d(self,ts):
+    def generarC3d(self,ts,ptr:int):
         pass

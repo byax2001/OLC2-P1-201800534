@@ -31,3 +31,12 @@ class Funcion(Instruccion):
                               columna=self.column)
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
+    def generarC3d(self,ts,ptr:int):
+        existe = ts.buscarActualTs(self.id)
+        if existe == None:
+            print("Se guardo una funcion")
+            newSymbol = Symbol(mut=False, id=self.id, value=[self.params, self.bloque], tipo_simbolo=2,
+                               tipo=self.tipoFun, line=self.line, column=self.column, tacceso=self.tacceso)
+            ts.addVar(self.id, newSymbol)
+        else:
+            print("Id ya declarado")

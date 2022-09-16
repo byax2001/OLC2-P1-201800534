@@ -60,6 +60,7 @@ class While(Instruccion):
             B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
                               columna=self.column)
             return
+
     def generarC3d(self,ts,ptr:int):
         self.exp.generator = self.generator
 

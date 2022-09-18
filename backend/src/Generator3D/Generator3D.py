@@ -16,16 +16,16 @@ class Generator:
         tempCode = tempCode + '#include <math.h>\n'
         tempCode = tempCode + "double HEAP[1000];\n"
         tempCode = tempCode + "double STACK[78000];\n"
-        tempCode = tempCode + "double P;\n"
+        tempCode = tempCode + "double P;\n"  #p, h y ptr se inicializan con 0 en c++ si no se les asigna nada al declararlos
         tempCode = tempCode + "double H;\n"
-        tempCode = tempCode + "double ptr=0;\n"
+        tempCode = tempCode + "double ptr;\n"
 
         if (len(self.tempList) > 0):
             tempCode = tempCode + "double " + self.getUsedTemps() + ";\n\n"
 
-        tempCode = tempCode + '\nvoid main(){\n'
+        tempCode = tempCode + '\nint main(){\n'
         tempCode = tempCode + "\n".join(self.code)
-        tempCode = tempCode + '\nreturn;\n}\n'
+        tempCode = tempCode + '\nreturn 0;\n}\n'
 
         return tempCode
 

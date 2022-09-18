@@ -1,4 +1,7 @@
 fn main(){
-    let x:i64 =23;
-    let y:f64=15.2;
+    let x:i64 = 23;
+    let y:f64 = 15.2;
+    let z = "hola";
+    let w = true;
+
 }

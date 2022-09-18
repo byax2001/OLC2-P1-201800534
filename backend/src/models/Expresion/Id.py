@@ -50,25 +50,28 @@ class Id(Expresion):
 
     def generarC3d(self,ts,ptr:int):
         symbol:Symbol = ts.buscar(self.id)
-        newTemp = self.generator.newTemp()
+        if symbol!=None:
+            newTemp = self.generator.newTemp()
 
-        self.generator.addGetStack(newTemp, str(symbol.position))
+            self.generator.addGetStack(newTemp, str(symbol.position))
 
-        if (symbol.tipo != Tipos.BOOLEAN):
-            return ValC3d(valor=newTemp,isTemp= True,tipo= symbol.tipo)
+            if (symbol.tipo != Tipos.BOOLEAN):
+                return ValC3d(valor=newTemp,isTemp= True,tipo= symbol.tipo)
+            else:
+                val = ValC3d(valor="",isTemp= False,tipo= Tipos.BOOLEAN)
+
+                if (self.trueLabel == ""):
+                    self.trueLabel = self.generator.newLabel()
+
+                if (self.falseLabel == ""):
+                    self.falseLabel = self.generator.newLabel()
+
+                self.generator.addIf(newTemp, "1", "==", self.trueLabel)
+                self.generator.addGoto(self.falseLabel)
+
+                val.trueLabel = self.trueLabel
+                val.falseLabel = self.falseLabel
+
+                return val
         else:
-            val = ValC3d(valor="",isTemp= False,tipo= Tipos.BOOLEAN)
-
-            if (self.trueLabel == ""):
-                self.trueLabel = self.generator.newLabel()
-
-            if (self.falseLabel == ""):
-                self.falseLabel = self.generator.newLabel()
-
-            self.generator.addIf(newTemp, "1", "==", self.trueLabel)
-            self.generator.addGoto(self.falseLabel)
-
-            val.trueLabel = self.trueLabel
-            val.falseLabel = self.falseLabel
-
-            return val
+            print("no existe dicha id")

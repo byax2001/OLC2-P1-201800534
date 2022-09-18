@@ -150,7 +150,7 @@ class Declaracion(Instruccion):
             self.exp.generator = self.generator
 
             newValue: ValC3d = self.exp.generarC3d(ts=ts,ptr=ptr)
-            newVar = Symbol(mut=self.mut, id=self.id, value=newValue.value, tipo_simbolo=0, tipo=newValue.tipo,
+            newVar = Symbol(mut=self.mut, id=self.id, value=newValue.valor, tipo_simbolo=0, tipo=newValue.tipo,
                             line=self.linea, column=self.columna, tacceso=self.tacceso)
 
             temp_var: SymC3d = ts.addVar(self.id, newVar) #----------------------------
@@ -161,10 +161,10 @@ class Declaracion(Instruccion):
                 #Aqui no estoy añadiendo directamente el valor al hacer el addSetStack
                 # sino escribiendo un if que dependiendo del resultado anterior asignara 1 o 0 a la variable
                 #ejem:  if (valor==True){ var1=1  } else {var1=0}:
-
                     # con el if realizado en anteriores expresiones, se ira al label que asigna 1 o 0 (true o false)
                     # en el stack y no tocara el otro
-                newLabel = self.generator.newLabel()  # metodo que crea y retorna un label  Ln
+
+                newLabel = self.generator.newLabel()  # metodo que crea y retorna un label  Ln, esta es la etiqueta de salida
                 self.generator.addLabel(newValue.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
                 self.generator.addSetStack(str(temp_var.position), '1')   #Stack[(int)num]= 1
                 self.generator.addGoto(newLabel) #goto Ln ;

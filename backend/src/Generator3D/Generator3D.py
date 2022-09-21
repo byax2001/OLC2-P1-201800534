@@ -14,7 +14,7 @@ class Generator:
     def getCode(self) -> str:
         tempCode: str = '#include <stdio.h>\n'
         tempCode = tempCode + '#include <math.h>\n'
-        tempCode = tempCode + "double HEAP[1000];\n"
+        tempCode = tempCode + "double HEAP[10000];\n"
         tempCode = tempCode + "double STACK[78000];\n"
         tempCode = tempCode + "double P;\n"  #p, h y ptr se inicializan con 0 en c++ si no se les asigna nada al declararlos
         tempCode = tempCode + "double H;\n"
@@ -98,6 +98,13 @@ class Generator:
 
     def addptr(self,valor,ope):
         self.addExpression("ptr","ptr",valor,ope)
+
+    def addError(self,error:str):
+        for char in error:
+            self.addPrintf("c",str(ord(char)))
+    def addComment(self,comment:str):
+        self.code.append(f"/* {comment} */")
+
 
 
 

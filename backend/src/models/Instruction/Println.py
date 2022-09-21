@@ -18,7 +18,6 @@ class Println(Instruccion):
         self.cExp=cExp
 
     def ejecutar(self, driver, ts):
-        #B_datos().appendE("JIJOOOOOOOOOOOOO")
         if len(self.cExp)==0:
             if isinstance(self.exp,Primitivo):
                 driver.append(str(self.exp.getValor(driver, ts))+"\n")
@@ -100,6 +99,36 @@ class Println(Instruccion):
                 error = "Error la expresion auxiliar para imprimir variables no es string"
                 B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
                                   columna=self.columna)
+    def generarC3d(self,ts,ptr:int):
+        if len(self.cExp) == 0:
+            if isinstance(self.exp, Primitivo):
+                exp=self.cExp[0].generarC3d(ts,ptr)
+                if exp.tipo in [Tipos.STR,Tipos.STRING,Tipos.CHAR]:
+                    self.printCadenaC3d(posInit=exp.valor)
+                elif exp.tipo in [Tipos.INT64,Tipos.FLOAT64,Tipos.USIZE]:
+                    self.generator.addPrintf(typePrint="d", value=exp.valor)
+                elif exp.tipo== Tipos.BOOLEAN:
+                    newLabel = self.generator.newLabel()  #Lsalida
+                    self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
+                    self.generator.addPrintf(typePrint="c",value=ord("T"))
+                    self.generator.addPrintf(typePrint="c", value=ord("r"))
+                    self.generator.addPrintf(typePrint="c", value=ord("u"))
+                    self.generator.addPrintf(typePrint="c", value=ord("e"))
+                    self.generator.addGoto(newLabel)  # goto Lsalida;
+                    self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
+                    self.generator.addPrintf(typePrint="c", value=ord("F"))
+                    self.generator.addPrintf(typePrint="c", value=ord("a"))
+                    self.generator.addPrintf(typePrint="c", value=ord("l"))
+                    self.generator.addPrintf(typePrint="c", value=ord("s"))
+                    self.generator.addPrintf(typePrint="c", value=ord("e"))
+                    self.generator.addLabel(newLabel)  # Lsalida:
+            else:
+                error = "Error: forma incorrecta de imprimir"
+                print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
+        else:
+            print()
 
     def printArray(self,arrayVec):
         vector="["
@@ -115,3 +144,24 @@ class Println(Instruccion):
             if len(arrayVec)==0:
                 vector=vector+"]"
         return vector
+
+    def printCadenaC3d(self,posInit:str):
+        contador = self.generator.newTemp()
+        self.generator.addExpression(target=contador, left=posInit, right="", operator="")  # Contador = posInit;
+        loop = self.generator.newLabel()  # Loop
+        salida = self.generator.newLabel()  # Lsalida
+        self.trueLabel = self.generator.newLabel()  # Lv
+        self.falseLabel = self.generator.newLabel()  # LF
+
+        self.generator.addLabel(loop)  # Loop:
+        texp = self.generator.newTemp()  # texp
+        self.generator.addGetHeap(texp, contador)  # texp = Heap[contador];
+        self.generator.addIf(left=texp, rigth="-1", operator="!=", label=self.trueLabel)  # if (texp!=-1) goto Lv
+        self.generator.addGoto(self.falseLabel)  # goto Lf
+        self.generator.addLabel(self.trueLabel)  # Lv:
+        self.generator.addPrintf(typePrint="c",value=texp)
+        self.generator.addExpression(target=contador, left=contador, right="1", operator="+")  # contador=contador+1;
+        self.generator.addGoto(loop)  # goto Loop
+        self.generator.addLabel(self.falseLabel)  # Lf:
+
+        self.generator.addLabel(salida)  # Lsalida:

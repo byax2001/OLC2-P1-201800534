@@ -195,7 +195,7 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
         """En la mayoria de expresiones no realiza nada"""
         pass
     def generarC3d(self,ts,ptr:int):
-        newTemp = self.generator.newTemp()  # = tnum
+        newTemp = self.generator.newTemp()  # = tnum Result de esta operacion
         result=ValC3d(valor=newTemp, isTemp=True, tipo=Tipos.ERROR)
         self.exp1.generator = self.generator
         if self.exp2==None and self.expU==True: #Unario: -valor
@@ -218,37 +218,95 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                     self.generator.addExpression(target=newTemp,left=exp1.valor,operator="+",right=exp2.valor)
                     result.tipo = exp1.tipo
                 elif exp1.tipo==Tipos.STRING and exp1.tipo==Tipos.STR:
-                    print()
+                    self.generator.addExpression(target=newTemp,left="H",right="",operator="") #Resultado
+                    self.ConcatenarStrC3d(newTemp=newTemp,posInit=exp1.valor)
+                    self.ConcatenarStrC3d(newTemp=newTemp, posInit=exp2.valor)
+                    # de ultimo añadir al heap un -1 y sumar 1 a H
+                    self.generator.addSetHeap("H","-1") #H
+                    self.generator.addNextHeap() #H=H+1
                     result.tipo==Tipos.STRING
             elif self.operador==Operador.RESTA:
                 if exp1.tipo in [Tipos.FLOAT64, Tipos.FLOAT64]:
                     self.generator.addExpression(target=newTemp, left=exp1.valor, operator="-", right=exp2.valor)
-                    result.tipo = exp1.tipo
                 result.tipo=exp1.tipo
             elif self.operador==Operador.MULTI:
                 if exp1.tipo in [Tipos.FLOAT64, Tipos.FLOAT64]:
                     self.generator.addExpression(target=newTemp, left=exp1.valor, operator="*", right=exp2.valor)
-                    result.tipo = exp1.tipo
                 result.tipo=exp1.tipo
             elif self.operador==Operador.DIV:
-                if exp2.valor!="0" or exp2.valor!="0.0":
-                    if exp1.tipo in [Tipos.FLOAT64, Tipos.FLOAT64]:
-                        self.generator.addExpression(target=newTemp, left=exp1.valor, operator="/", right=exp2.valor)
-                    result.tipo=exp1.tipo
-                else:
-                    print("Error de division entre 0", end="")
-                    print(self.linea)
+                if exp1.tipo in [Tipos.FLOAT64, Tipos.FLOAT64]:
+                    self.divModC3d(exp1,exp2,newTemp,self.operador)
+                result.tipo=exp1.tipo
             elif self.operador==Operador.MOD:
-                if exp1.tipo in [Tipos.FLOAT64,Tipos.FLOAT64]:
-                    self.generator.addExpression(target=newTemp,left=exp1.valor,operator="%",right=exp2.valor)
-                    result.tipo = exp1.tipo
+                self.divModC3d(exp1,exp2,newTemp,self.operador)
+                result.tipo = exp1.tipo
             elif self.operador==Operador.POW:
-                if exp1.tipo in [Tipos.FLOAT64,Tipos.FLOAT64]:
-                    self.generator.addExpression(target=newTemp,left=f"pow({exp1.valor},{exp2.valor})",operator="",right="")
-                    result.tipo = exp1.tipo
+                self.generator.addExpression(target=newTemp,left=f"pow({exp1.valor},{exp2.valor})",operator="",right="")
+                result.tipo = exp1.tipo
             elif self.operador == Operador.POWF:
-                if exp1.tipo in [Tipos.FLOAT64,Tipos.FLOAT64]:
-                    self.generator.addExpression(target=newTemp,left=f"pow({exp1.valor},{exp2.valor})",operator="",right="")
-                    result.tipo = exp1.tipo
-        elif exp1.tipo in [Tipos.INT64,Tipos.FLOAT64] and exp2.tipo in [Tipos.INT64,Tipos.FLOAT64]:
-            print()
+                self.generator.addExpression(target=newTemp,left=f"pow({exp1.valor},{exp2.valor})",operator="",right="")
+                result.tipo = exp1.tipo
+
+        elif exp1.tipo in [Tipos.INT64,Tipos.USIZE] and exp2.tipo in [Tipos.INT64,Tipos.USIZE]:
+            if self.operador == Operador.SUMA:
+                self.generator.addExpression(target=newTemp, left=exp1.valor, operator="+", right=exp2.valor)
+                result.tipo = exp1.tipo
+            elif self.operador == Operador.RESTA:
+                self.generator.addExpression(target=newTemp, left=exp1.valor, operator="-", right=exp2.valor)
+                result.tipo = exp1.tipo
+            elif self.operador == Operador.MULTI:
+                self.generator.addExpression(target=newTemp, left=exp1.valor, operator="*", right=exp2.valor)
+                result.tipo = exp1.tipo
+            elif self.operador == Operador.DIV:
+                self.divModC3d(exp1,exp2,newTemp,self.operador)
+                result.tipo = exp1.tipo
+            elif self.operador == Operador.MOD:
+                self.divModC3d(exp1,exp2,newTemp,self.operador)
+                result.tipo = exp1.tipo
+            elif self.operador == Operador.POW:
+                self.generator.addExpression(target=newTemp, left=f"pow({exp1.valor},{exp2.valor})", operator="",
+                                                 right="")
+                result.tipo = exp1.tipo
+            elif self.operador == Operador.POWF:
+                self.generator.addExpression(target=newTemp, left=f"pow({exp1.valor},{exp2.valor})", operator="",
+                                                 right="")
+                result.tipo = exp1.tipo
+        else:
+            error="Los nodos a operar deben de ser del mismo tipo"
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
+    def divModC3d(self,exp1,exp2,newTemp,operator:str):
+        self.trueLabel = self.generator.newLabel()
+        salida = self.generator.newLabel()
+        self.generator.addIf(left=exp2.valor, rigth=0, operator="!=",
+                             label=self.trueLabel)  # if (exp2!=0) goto Lv
+        self.generator.addError("Math Error!")  # imprime error en c3d
+        self.generator.addExpression(target=newTemp, left="0", right="", operator="")  # tnum=0
+        self.generator.addGoto(salida)  # goto Lsalida
+        self.generator.addLabel(self.trueLabel)  # Lv:
+        self.generator.addExpression(target=newTemp, left=exp1.valor, operator=operator,
+                                     right=exp2.valor)  # tnum= val1/val2
+        self.generator.addLabel(salida)  # Lsalida
+
+    def ConcatenarStrC3d(self,posInit:str):
+        contador = self.generator.newTemp()
+        self.generator.addExpression(target=contador, left=posInit, right="", operator="")  # Contador = posInit;
+        loop = self.generator.newLabel() # Loop
+        self.trueLabel = self.generator.newLabel()  # Lv
+        self.falseLabel = self.generator.newLabel()  # LF
+
+        self.generator.addLabel(loop)  # Loop:
+        texp = self.generator.newTemp()  #texp
+        self.generator.addGetHeap(texp, contador)  # texp = Heap[contador];
+        self.generator.addIf(left=texp, rigth="-1", operator="!=", label=self.trueLabel)  # if (texp!=-1) goto Lv
+        self.generator.addGoto(self.falseLabel)  # goto Lf
+        self.generator.addLabel(self.trueLabel)  # Lv:
+        #vHeap = self.generator.newTemp()  # tvs
+        #self.generator.addGetHeap(vHeap, contador)  # tvs = Heap[contador]
+        self.generator.addSetHeap("H", texp)  # Heap[H]=texp
+        self.generator.addNextHeap()  # H=H+1
+        self.generator.addExpression(target=contador, left=contador, right="1", operator="+")  # contador=contador+1;
+        self.generator.addGoto(loop) # goto Loop
+        self.generator.addLabel(self.falseLabel) #Lf:
+
+

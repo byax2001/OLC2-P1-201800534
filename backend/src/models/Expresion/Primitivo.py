@@ -55,6 +55,7 @@ class Primitivo(Expresion):
         if self.tipo==Tipos.INT64 or self.tipo==Tipos.FLOAT64:
             return ValC3d(valor=str(self.value),isTemp=False,tipo=self.tipo)
         elif self.tipo==Tipos.STR or self.tipo==Tipos.CHAR:
+            self.generator.addComment("Primitivo tipo STR")
             valueCad=Primitivo.limpCad(self.value)
             newTemp = self.generator.newTemp()  #   = tnum
             self.generator.addExpression(newTemp, "H", "", "")   #  en este caso : tnum = H;
@@ -83,8 +84,6 @@ class Primitivo(Expresion):
 
             val.trueLabel = self.trueLabel
             val.falseLabel = self.falseLabel
-
-
             return val
 
 

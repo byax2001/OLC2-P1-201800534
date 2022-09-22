@@ -15,6 +15,7 @@ class ToStringOwned(Expresion):
     def ejecutar(self,driver,ts):
         pass
     def generarC3d(self,ts,ptr:int):
+        self.exp.generator=self.generator
         self.generator.addComment("Metodo ToString o ToOwned")
         exp=self.exp.generarC3d(ts,ptr)
         newTemp=self.generator.newTemp()

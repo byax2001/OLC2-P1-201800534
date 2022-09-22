@@ -1,3 +1,5 @@
+from models.TablaSymbols.ValC3d import ValC3d
+from models.TablaSymbols.Tipos import Tipos
 class Generator:
     def __init__(self) -> None:
         self.generator = None
@@ -53,7 +55,8 @@ class Generator:
 
     def addExpression(self, target: str, left: str, right: str, operator: str):
         self.code.append(target + " = " + left + " " + operator + " " + right + ";")
-
+    def addExpAsign(self, target: str, right: str):
+        self.code.append(target + " = " + right+";")
     def addIf(self, left: str, rigth: str, operator: str, label: str):
         self.code.append("if(" + left + " " + operator + " " + rigth + ") goto " + label + ";")
 
@@ -62,7 +65,7 @@ class Generator:
 
     # Añade un printf
     def addPrintf(self, typePrint: str, value: str):
-        self.code.append("printf(\"%" + typePrint + "\"," + value + ");")
+        self.code.append("printf(\"%" + typePrint + "\"," + str(value) + ");")
 
     # Salto de linea
     def addNewLine(self):
@@ -95,15 +98,19 @@ class Generator:
     # INserta valor al stack
     def addSetStack(self, index: str, value: str):
         self.code.append("STACK[(int)" + index + "] = " + value + ";")
-
+    #Aumenta valor de ptr
     def addptr(self,valor,ope):
         self.addExpression("ptr","ptr",valor,ope)
-
+    #Añade un error a imprimir en c3d
     def addError(self,error:str):
         for char in error:
             self.addPrintf("c",str(ord(char)))
+    #añade un comentario al codigo
     def addComment(self,comment:str):
         self.code.append(f"/* {comment} */")
+    #asignar:    var= var1
+    def addAsign(self):
+        self.code
 
 
 

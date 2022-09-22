@@ -8,6 +8,7 @@ from models.Expresion.Id import Id
 from models.Expresion.Vector.vecI import vecI
 from models.Expresion.Arreglo.Arreglo import Arreglo
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
 
 class Println(Instruccion):
 
@@ -99,37 +100,6 @@ class Println(Instruccion):
                 error = "Error la expresion auxiliar para imprimir variables no es string"
                 B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
                                   columna=self.columna)
-    def generarC3d(self,ts,ptr:int):
-        if len(self.cExp) == 0:
-            if isinstance(self.exp, Primitivo):
-                exp=self.cExp[0].generarC3d(ts,ptr)
-                if exp.tipo in [Tipos.STR,Tipos.STRING,Tipos.CHAR]:
-                    self.printCadenaC3d(posInit=exp.valor)
-                elif exp.tipo in [Tipos.INT64,Tipos.FLOAT64,Tipos.USIZE]:
-                    self.generator.addPrintf(typePrint="d", value=exp.valor)
-                elif exp.tipo== Tipos.BOOLEAN:
-                    newLabel = self.generator.newLabel()  #Lsalida
-                    self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
-                    self.generator.addPrintf(typePrint="c",value=ord("T"))
-                    self.generator.addPrintf(typePrint="c", value=ord("r"))
-                    self.generator.addPrintf(typePrint="c", value=ord("u"))
-                    self.generator.addPrintf(typePrint="c", value=ord("e"))
-                    self.generator.addGoto(newLabel)  # goto Lsalida;
-                    self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
-                    self.generator.addPrintf(typePrint="c", value=ord("F"))
-                    self.generator.addPrintf(typePrint="c", value=ord("a"))
-                    self.generator.addPrintf(typePrint="c", value=ord("l"))
-                    self.generator.addPrintf(typePrint="c", value=ord("s"))
-                    self.generator.addPrintf(typePrint="c", value=ord("e"))
-                    self.generator.addLabel(newLabel)  # Lsalida:
-            else:
-                error = "Error: forma incorrecta de imprimir"
-                print(error)
-                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
-                                  columna=self.columna)
-        else:
-            print()
-
     def printArray(self,arrayVec):
         vector="["
         if type(arrayVec)==list:
@@ -145,11 +115,103 @@ class Println(Instruccion):
                 vector=vector+"]"
         return vector
 
+    def generarC3d(self,ts,ptr:int):
+        if len(self.cExp) == 0:
+            if isinstance(self.exp, Primitivo):
+                self.exp.generator=self.generator
+                exp=self.exp.generarC3d(ts,ptr)
+                if exp.tipo in [Tipos.STR,Tipos.STRING,Tipos.CHAR]:
+                    self.generator.addComment("Print de un String o CHAR")
+                    self.printCadenaC3d(posInit=exp.valor)
+                elif exp.tipo in [Tipos.INT64,Tipos.USIZE]:
+                    self.generator.addComment("Print de un Int o Usize")
+                    self.generator.addPrintf(typePrint="d", value=exp.valor)
+                elif exp.tipo==Tipos.FLOAT64:
+                    self.generator.addComment("Print de un Float")
+                    self.generator.addPrintf(typePrint="f", value=exp.valor)
+                elif exp.tipo== Tipos.BOOLEAN:
+                    self.generator.addComment("Print de un Boolean")
+                    newLabel = self.generator.newLabel()  #Lsalida
+                    self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
+                    self.generator.addPrintf(typePrint="c",value=ord("t"))
+                    self.generator.addPrintf(typePrint="c", value=ord("r"))
+                    self.generator.addPrintf(typePrint="c", value=ord("u"))
+                    self.generator.addPrintf(typePrint="c", value=ord("e"))
+                    self.generator.addGoto(newLabel)  # goto Lsalida;
+                    self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
+                    self.generator.addPrintf(typePrint="c", value=ord("f"))
+                    self.generator.addPrintf(typePrint="c", value=ord("a"))
+                    self.generator.addPrintf(typePrint="c", value=ord("l"))
+                    self.generator.addPrintf(typePrint="c", value=ord("s"))
+                    self.generator.addPrintf(typePrint="c", value=ord("e"))
+                    self.generator.addLabel(newLabel)  # Lsalida:
+            else:
+                error = "Error: forma incorrecta de imprimir"
+                print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
+        else:
+            self.generator.addComment("Instruccion Print")
+            self.exp.generator=self.generator
+            print_aux=self.exp.generarC3d(ts,ptr)    #println!("{}",var)   "{}"=printaux
+
+            taux=self.generator.newTemp()
+
+            #a cada una de las expresiones un exp.generator=self.generator
+            for exp in self.cExp:
+                exp.generator=self.generator
+                c3d_exp = exp.generarC3d(ts, ptr)
+                self.generator.addComment("Para saber donde iniciar a imprimir luego del proceso")
+                self.generator.addExpAsign(target=taux, right="H")
+                contador=self.generator.newTemp() #t1
+                texp=self.generator.newTemp() #texp
+                loop=self.generator.newLabel()
+                loop1=self.generator.newLabel()
+                Lf=self.generator.newLabel()
+                Lv1=self.generator.newLabel()
+                Lf1=self.generator.newLabel()
+                Lsalida=self.generator.newLabel()
+                llavea=str(ord("{")) #ya pasados a ascii
+                llavec=str(ord("}"))
+                self.generator.addComment("Print Complex P.1")
+                self.generator.addExpression(target=contador,left=str(print_aux.valor),right="",operator="") #t1=init1
+                self.generator.addLabel(loop) #Loop:
+                self.generator.addGetHeap(target=texp,index=contador) # texp=Heap[contador]
+                self.generator.addIf(left=texp,rigth="-1",operator="==",label=Lf) #if (texp==-1) goto Lsalida
+                self.generator.addIf(left=texp,rigth=f"(char){llavea}",operator="==",label=Lv1) #if (texp=="{") goto Lv1
+                self.generator.addSetHeap(index="H",value=texp) #Heap[H]=texp
+                self.generator.addNextHeap()#H=H+1
+                self.generator.addExpression(target=contador,left=contador,right="1",operator="+") #cont=cont+1
+                self.generator.addGoto(loop) # goto Loop
+                self.generator.addLabel(Lf) #Lf:
+                self.generator.addGoto(Lsalida) #goto salida
+                self.generator.addComment("Print Complex P.2")
+                self.generator.addLabel(Lv1) #Lv1:
+                self.generator.addExpression(target=contador, left=contador, right="1", operator="+") #para saltarse el "{" de la exp aux
+                self.generator.addLabel(loop1) #loop1:
+                self.generator.addGetHeap(target=texp,index=contador) # texp=Heap[contador]
+                self.generator.addIf(left=texp,rigth=f"(char){llavec}",operator="==",label=Lf1)
+                self.generator.addExpression(target=contador, left=contador, right="1", operator="+")  # cont=cont+1
+                self.generator.addGoto(loop1) #goto loop1
+                self.generator.addComment("Print Complex P.3")
+                self.generator.addLabel(Lf1) #Lf1:
+                self.generator.addExpression(target=contador, left=contador, right="1", operator="+")#para saltarse el "}" de la exp_aux
+                self.addCopyStr(exp=c3d_exp)  #metodo para sustituir un {} o {:?} por una variable
+                self.generator.addGoto(label=loop) #goto Loop
+                self.generator.addComment("Salida print Complex")
+                self.generator.addLabel(Lsalida) #Lsalida:
+                self.generator.addSetHeap(index="H", value="-1")  # Heap[H]==-1
+                self.generator.addNextHeap()  # H=H+1
+                #self.generator.addExpAsign(target=contador,right="H")
+            self.generator.addComment("Impresion")
+            self.printCadenaC3d(posInit=taux)
+
+
+
     def printCadenaC3d(self,posInit:str):
         contador = self.generator.newTemp()
         self.generator.addExpression(target=contador, left=posInit, right="", operator="")  # Contador = posInit;
         loop = self.generator.newLabel()  # Loop
-        salida = self.generator.newLabel()  # Lsalida
         self.trueLabel = self.generator.newLabel()  # Lv
         self.falseLabel = self.generator.newLabel()  # LF
 
@@ -159,9 +221,97 @@ class Println(Instruccion):
         self.generator.addIf(left=texp, rigth="-1", operator="!=", label=self.trueLabel)  # if (texp!=-1) goto Lv
         self.generator.addGoto(self.falseLabel)  # goto Lf
         self.generator.addLabel(self.trueLabel)  # Lv:
-        self.generator.addPrintf(typePrint="c",value=texp)
+        self.generator.addPrintf(typePrint="c",value=f"(char){texp}")  #funcionaria con (char) o con (int)
         self.generator.addExpression(target=contador, left=contador, right="1", operator="+")  # contador=contador+1;
         self.generator.addGoto(loop)  # goto Loop
         self.generator.addLabel(self.falseLabel)  # Lf:
 
-        self.generator.addLabel(salida)  # Lsalida:
+        # copia un string o un valor de una posicion al H libre mas actual como otro string
+
+    def addCopyStr(self, exp: ValC3d):
+        if exp.tipo != Tipos.ARREGLO:
+            if exp.tipo in [Tipos.STR, Tipos.STRING, Tipos.CHAR]:
+                contador = self.generator.newTemp()
+                self.generator.addExpression(target=contador, left=exp.valor, right="",
+                                             operator="")  # Contador = posInit;
+                loop = self.generator.newLabel()  # Loop
+                Lf = self.generator.newLabel()  # LF
+
+                self.generator.addLabel(loop)  # Loop:
+                texp = self.generator.newTemp()  # texp
+                self.generator.addGetHeap(texp, contador)  # texp = Heap[contador];
+                self.generator.addIf(left=texp, rigth="-1", operator="==", label=Lf)  # if (texp==-1) goto Lf
+                self.generator.addSetHeap("H", texp)  # Heap[H]=texp
+                self.generator.addNextHeap()  # H=H+1
+                self.generator.addExpression(target=contador, left=contador, right="1",
+                                             operator="+")  # contador=contador+1;
+                self.generator.addGoto(loop)  # goto Loop
+                self.generator.addLabel(Lf)  # Lf:
+            elif exp.tipo in [Tipos.INT64, Tipos.USIZE]:
+                t1 = self.generator.newTemp()
+                self.generator.addExpAsign(target=t1, right=exp.valor)
+                self.setHeapStrNum(t1)
+            elif exp.tipo==Tipos.FLOAT64:
+                t1 = self.generator.newTemp()
+                t2 = self.generator.newTemp()
+                t3 = self.generator.newTemp()
+                t4 = self.generator.newTemp()
+                self.generator.addExpAsign(target=t1, right=exp.valor)  # t1 = 1245.552
+                self.generator.addExpAsign(target=t2, right=f"(int){t1}")  # t2 = (int)t1
+                self.generator.addExpression(target=t3, left=t1, right=t2, operator="-")  # t3=t1-t2
+                self.generator.addExpression(target=t3, left=t3, right="1000000", operator="*")  # t3=t1-t2
+                self.generator.addExpAsign(target=t4, right=f"round({t3})")
+                self.setHeapStrNum(t2)
+                self.generator.addSetHeap(index="H", value=ord("."))
+                self.generator.addNextHeap()
+                self.setHeapStrNum(t4)
+            elif exp.tipo == Tipos.BOOLEAN:
+                self.generator.addComment("Print de un Boolean")
+                newLabel = self.generator.newLabel()  # Lsalida
+                self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
+                self.generator.addSetHeap(index="H", value=ord("t"))
+                self.generator.addNextHeap()
+                self.generator.addSetHeap(index="H", value=ord("r"))
+                self.generator.addNextHeap()
+                self.generator.addSetHeap(index="H", value=ord("u"))
+                self.generator.addNextHeap()
+                self.generator.addSetHeap(index="H", value=ord("e"))
+                self.generator.addNextHeap()
+                self.generator.addGoto(newLabel)  # goto Lsalida;
+                self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
+                self.generator.addSetHeap(index="H", value=ord("f"))
+                self.generator.addNextHeap()
+                self.generator.addSetHeap(index="H", value=ord("a"))
+                self.generator.addNextHeap()
+                self.generator.addSetHeap(index="H", value=ord("l"))
+                self.generator.addNextHeap()
+                self.generator.addSetHeap(index="H", value=ord("s"))
+                self.generator.addNextHeap()
+                self.generator.addSetHeap(index="H", value=ord("e"))
+                self.generator.addNextHeap()
+                self.generator.addLabel(newLabel)  # Lsalida:
+
+    def setHeapStrNum(self,tvalor):
+        t1=self.generator.newTemp()
+        t2=self.generator.newTemp()
+        t3=self.generator.newTemp()
+        t4=self.generator.newTemp()
+        loop=self.generator.newLabel()
+        Lf=self.generator.newLabel()
+        self.generator.addExpression(target=t1,left=tvalor,right="",operator="") #t1=valor double o int
+        self.generator.addLabel(loop) #Loop
+        self.generator.addExpression(target=t2, left=t1, right="10", operator="/") #t2=t1/10
+        self.generator.addExpAsign(target=t3, right=f"(int){t2}") #t3=(int)t2
+        self.generator.addIf(left=t3,rigth="0",operator="==",label=Lf) #if(t3==0) goto Lf
+        self.generator.addExpression(target=t4,left=t1,right="10",operator="%") # t4=t1%10
+        self.generator.addExpAsign(target=t1,right=t3) #t1=t3
+        self.generator.addSetHeap(index="H",value=f"(char){t4}") #Heap[H]=(char)t4
+        self.generator.addNextHeap() #H=H+1
+        self.generator.addLabel(Lf) # Lf:
+        self.generator.addExpression(target=t4, left=t1, right="10", operator="%") #	t4=t1%10
+        self.generator.addSetHeap(index="H", value=f"(char){t4}") #Heap[H]=(char)t4
+        self.generator.addNextHeap()#H=H+1
+
+
+
+

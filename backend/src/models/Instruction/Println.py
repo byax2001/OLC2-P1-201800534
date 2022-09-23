@@ -158,7 +158,18 @@ class Println(Instruccion):
             #a cada una de las expresiones un exp.generator=self.generator
             for exp in self.cExp:
                 exp.generator=self.generator
+                #----------------------SOLO USADO EN EL CASO QUE LA EXPRESION SEA UN BOOLEANO
+                tbool_str = self.generator.newTemp()  # contendra el indice donde inicia el booleano pasado a string
+                self.generator.addExpAsign(target=tbool_str, right="H")
+                #----------------------------------------------------
                 c3d_exp = exp.generarC3d(ts, ptr)
+                if(c3d_exp.tipo==Tipos.BOOLEAN):
+                    self.addCopyStr(c3d_exp)
+                    self.generator.addSetHeap(index="H",value="-1")
+                    self.generator.addNextHeap()
+                    c3d_exp=ValC3d(valor=tbool_str,isTemp=True,tipo=Tipos.STRING,tipo_aux=Tipos.STRING)
+
+
                 self.generator.addComment("Para saber donde iniciar a imprimir luego del proceso")
                 self.generator.addExpAsign(target=taux, right="H")
                 contador=self.generator.newTemp() #t1
@@ -189,10 +200,12 @@ class Println(Instruccion):
                 self.generator.addIf(left=texp,rigth=f"(char){llavec}",operator="==",label=Lf1)
                 self.generator.addExpression(target=contador, left=contador, right="1", operator="+")  # cont=cont+1
                 self.generator.addGoto(loop2) #goto loop2
+
                 self.generator.addComment("Print Complex P.3")
                 self.generator.addLabel(Lf1) #Lf1:
                 self.generator.addExpression(target=contador, left=contador, right="1", operator="+")#para saltarse el "}" de la exp_aux
                 self.addCopyStr(exp=c3d_exp)  #metodo para sustituir un {} o {:?} por una variable
+
                 self.generator.addComment("Print Complex P.4")
                 self.generator.addLabel(loop4)  # Loop4:
                 self.generator.addGetHeap(target=texp, index=contador)  # texp=Heap[contador]
@@ -238,7 +251,7 @@ class Println(Instruccion):
         # copia un string o un valor de una posicion al H libre mas actual como otro string
     #copiar el valor de una expresion en la pila
     def addCopyStr(self, exp: ValC3d):
-        if exp.tipo != Tipos.ARREGLO:
+        if exp.tipo_aux != Tipos.ARREGLO:
             if exp.tipo in [Tipos.STR, Tipos.STRING, Tipos.CHAR]:
                 contador = self.generator.newTemp()
 
@@ -280,25 +293,25 @@ class Println(Instruccion):
                 self.generator.addComment("Print de un Boolean")
                 newLabel = self.generator.newLabel()  # Lsalida
                 self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
-                self.generator.addSetHeap(index="H", value=ord("t"))
+                self.generator.addSetHeap(index="H", value=str(ord("t")))
                 self.generator.addNextHeap()
-                self.generator.addSetHeap(index="H", value=ord("r"))
+                self.generator.addSetHeap(index="H", value=str(ord("r")))
                 self.generator.addNextHeap()
-                self.generator.addSetHeap(index="H", value=ord("u"))
+                self.generator.addSetHeap(index="H", value=str(ord("u")))
                 self.generator.addNextHeap()
-                self.generator.addSetHeap(index="H", value=ord("e"))
+                self.generator.addSetHeap(index="H", value=str(ord("e")))
                 self.generator.addNextHeap()
                 self.generator.addGoto(newLabel)  # goto Lsalida;
                 self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
-                self.generator.addSetHeap(index="H", value=ord("f"))
+                self.generator.addSetHeap(index="H", value=str(ord("f")))
                 self.generator.addNextHeap()
-                self.generator.addSetHeap(index="H", value=ord("a"))
+                self.generator.addSetHeap(index="H", value=str(ord("a")))
                 self.generator.addNextHeap()
-                self.generator.addSetHeap(index="H", value=ord("l"))
+                self.generator.addSetHeap(index="H", value=str(ord("l")))
                 self.generator.addNextHeap()
-                self.generator.addSetHeap(index="H", value=ord("s"))
+                self.generator.addSetHeap(index="H", value=str(ord("s")))
                 self.generator.addNextHeap()
-                self.generator.addSetHeap(index="H", value=ord("e"))
+                self.generator.addSetHeap(index="H", value=str(ord("e")))
                 self.generator.addNextHeap()
                 self.generator.addLabel(newLabel)  # Lsalida:
     #pasar un numero a string en c++
@@ -342,8 +355,7 @@ class Println(Instruccion):
         self.generator.addExpAsign(target=t1,right=init) #t1=init
         self.generator.addExpAsign(target=t2, right=fin) #t2=finish
         self.generator.addLabel(loop) #Loop:
-        self.generator.addIf(left=t1,rigth=t2,operator="==",label=lsalida)# if t1==t2 goto Lsalida
-        self.generator.addIf(left=t1, rigth=t2, operator=">", label=lsalida)  # if t1>t2 goto Lsalida
+        self.generator.addIf(left=t1,rigth=t2,operator=">=",label=lsalida)# if t1>=t2 goto Lsalida
         self.generator.addGetHeap(target=t3,index=t2)#t3=Heap[t2]
         self.generator.addGetHeap(target=t4,index=t1)#t4=Heap[t1]
         self.generator.addSetHeap(index=t1,value=t3)#Heap[t1]=t3

@@ -67,6 +67,7 @@ class Primitivo(Expresion):
             self.generator.addNextHeap()  #H = H + 1
             return ValC3d(str(newTemp), True, self.tipo)
         elif self.tipo== Tipos.BOOLEAN:
+
             if self.value==True:
                 valor = "1"
             else:

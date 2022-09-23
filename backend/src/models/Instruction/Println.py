@@ -154,9 +154,7 @@ class Println(Instruccion):
             self.generator.addComment("Instruccion Print")
             self.exp.generator=self.generator
             print_aux=self.exp.generarC3d(ts,ptr)    #println!("{}",var)   "{}"=printaux
-
             taux=self.generator.newTemp()
-
             #a cada una de las expresiones un exp.generator=self.generator
             for exp in self.cExp:
                 exp.generator=self.generator
@@ -166,8 +164,8 @@ class Println(Instruccion):
                 contador=self.generator.newTemp() #t1
                 texp=self.generator.newTemp() #texp
                 loop=self.generator.newLabel()
-                loop1=self.generator.newLabel()
-                Lf=self.generator.newLabel()
+                loop2=self.generator.newLabel()
+                loop4=self.generator.newLabel()
                 Lv1=self.generator.newLabel()
                 Lf1=self.generator.newLabel()
                 Lsalida=self.generator.newLabel()
@@ -177,34 +175,45 @@ class Println(Instruccion):
                 self.generator.addExpression(target=contador,left=str(print_aux.valor),right="",operator="") #t1=init1
                 self.generator.addLabel(loop) #Loop:
                 self.generator.addGetHeap(target=texp,index=contador) # texp=Heap[contador]
-                self.generator.addIf(left=texp,rigth="-1",operator="==",label=Lf) #if (texp==-1) goto Lsalida
                 self.generator.addIf(left=texp,rigth=f"(char){llavea}",operator="==",label=Lv1) #if (texp=="{") goto Lv1
                 self.generator.addSetHeap(index="H",value=texp) #Heap[H]=texp
                 self.generator.addNextHeap()#H=H+1
                 self.generator.addExpression(target=contador,left=contador,right="1",operator="+") #cont=cont+1
                 self.generator.addGoto(loop) # goto Loop
-                self.generator.addLabel(Lf) #Lf:
-                self.generator.addGoto(Lsalida) #goto salida
+
                 self.generator.addComment("Print Complex P.2")
                 self.generator.addLabel(Lv1) #Lv1:
                 self.generator.addExpression(target=contador, left=contador, right="1", operator="+") #para saltarse el "{" de la exp aux
-                self.generator.addLabel(loop1) #loop1:
+                self.generator.addLabel(loop2) #loop2:
                 self.generator.addGetHeap(target=texp,index=contador) # texp=Heap[contador]
                 self.generator.addIf(left=texp,rigth=f"(char){llavec}",operator="==",label=Lf1)
                 self.generator.addExpression(target=contador, left=contador, right="1", operator="+")  # cont=cont+1
-                self.generator.addGoto(loop1) #goto loop1
+                self.generator.addGoto(loop2) #goto loop2
                 self.generator.addComment("Print Complex P.3")
                 self.generator.addLabel(Lf1) #Lf1:
                 self.generator.addExpression(target=contador, left=contador, right="1", operator="+")#para saltarse el "}" de la exp_aux
                 self.addCopyStr(exp=c3d_exp)  #metodo para sustituir un {} o {:?} por una variable
-                self.generator.addGoto(label=loop) #goto Loop
+                self.generator.addComment("Print Complex P.4")
+                self.generator.addLabel(loop4)  # Loop4:
+                self.generator.addGetHeap(target=texp, index=contador)  # texp=Heap[contador]
+                self.generator.addIf(left=texp, rigth=f"-1", operator="==",
+                                     label=Lsalida)  # if (texp=="{") goto Lv1
+                self.generator.addSetHeap(index="H", value=texp)  # Heap[H]=texp
+                self.generator.addNextHeap()  # H=H+1
+                self.generator.addExpression(target=contador, left=contador, right="1", operator="+")  # cont=cont+1
+                self.generator.addGoto(loop4)  # goto Loop
+
+
                 self.generator.addComment("Salida print Complex")
                 self.generator.addLabel(Lsalida) #Lsalida:
-                self.generator.addSetHeap(index="H", value="-1")  # Heap[H]==-1
+                self.generator.addSetHeap(index="H", value="-1")  # Heap[H]=-1
                 self.generator.addNextHeap()  # H=H+1
+                print_aux.valor=taux   #para que contador ahora inicie desde la nueva cadena formada:
+                                       #primera iteracion de "{}--{}","hola,"quetal" :   "hola"--{}
+                taux=self.generator.newTemp()
                 #self.generator.addExpAsign(target=contador,right="H")
             self.generator.addComment("Impresion")
-            self.printCadenaC3d(posInit=taux)
+            self.printCadenaC3d(posInit=print_aux.valor)
 
 
 
@@ -227,11 +236,12 @@ class Println(Instruccion):
         self.generator.addLabel(self.falseLabel)  # Lf:
 
         # copia un string o un valor de una posicion al H libre mas actual como otro string
-
+    #copiar el valor de una expresion en la pila
     def addCopyStr(self, exp: ValC3d):
         if exp.tipo != Tipos.ARREGLO:
             if exp.tipo in [Tipos.STR, Tipos.STRING, Tipos.CHAR]:
                 contador = self.generator.newTemp()
+
                 self.generator.addExpression(target=contador, left=exp.valor, right="",
                                              operator="")  # Contador = posInit;
                 loop = self.generator.newLabel()  # Loop
@@ -248,6 +258,7 @@ class Println(Instruccion):
                 self.generator.addGoto(loop)  # goto Loop
                 self.generator.addLabel(Lf)  # Lf:
             elif exp.tipo in [Tipos.INT64, Tipos.USIZE]:
+                self.generator.addComment("Num to String")
                 t1 = self.generator.newTemp()
                 self.generator.addExpAsign(target=t1, right=exp.valor)
                 self.setHeapStrNum(t1)
@@ -262,7 +273,7 @@ class Println(Instruccion):
                 self.generator.addExpression(target=t3, left=t3, right="1000000", operator="*")  # t3=t1-t2
                 self.generator.addExpAsign(target=t4, right=f"round({t3})")
                 self.setHeapStrNum(t2)
-                self.generator.addSetHeap(index="H", value=ord("."))
+                self.generator.addSetHeap(index="H", value=str(ord(".")))
                 self.generator.addNextHeap()
                 self.setHeapStrNum(t4)
             elif exp.tipo == Tipos.BOOLEAN:
@@ -290,28 +301,55 @@ class Println(Instruccion):
                 self.generator.addSetHeap(index="H", value=ord("e"))
                 self.generator.addNextHeap()
                 self.generator.addLabel(newLabel)  # Lsalida:
-
+    #pasar un numero a string en c++
     def setHeapStrNum(self,tvalor):
+        linit=self.generator.newTemp()
         t1=self.generator.newTemp()
         t2=self.generator.newTemp()
         t3=self.generator.newTemp()
         t4=self.generator.newTemp()
         loop=self.generator.newLabel()
         Lf=self.generator.newLabel()
+        self.generator.addExpAsign(target=linit,right="H")#usado para el metodo de reordenar a la inversa
         self.generator.addExpression(target=t1,left=tvalor,right="",operator="") #t1=valor double o int
         self.generator.addLabel(loop) #Loop
         self.generator.addExpression(target=t2, left=t1, right="10", operator="/") #t2=t1/10
         self.generator.addExpAsign(target=t3, right=f"(int){t2}") #t3=(int)t2
         self.generator.addIf(left=t3,rigth="0",operator="==",label=Lf) #if(t3==0) goto Lf
-        self.generator.addExpression(target=t4,left=t1,right="10",operator="%") # t4=t1%10
+        self.generator.addExpAsign(target=t4,right=f"fmod({t1},10)") # t4=fmod(t1,10):  t4=t1%10
+
         self.generator.addExpAsign(target=t1,right=t3) #t1=t3
-        self.generator.addSetHeap(index="H",value=f"(char){t4}") #Heap[H]=(char)t4
+        self.generator.addSetHeap(index="H",value=f"(int){t4} +48") #Heap[H]=(char)t4+48   #EN ASSEMBLER CUANDO SE LE SUMA 30h A UN NUMERO
+                                                                                            #SE CONVIERTE A ASCII, EN ESTE CASO SE SUMAN 48
+                                                                                            #POR QUE 48d==30h
         self.generator.addNextHeap() #H=H+1
+        self.generator.addGoto(loop)
         self.generator.addLabel(Lf) # Lf:
-        self.generator.addExpression(target=t4, left=t1, right="10", operator="%") #	t4=t1%10
-        self.generator.addSetHeap(index="H", value=f"(char){t4}") #Heap[H]=(char)t4
-        self.generator.addNextHeap()#H=H+1
+        self.generator.addSetHeap(index="H", value=f"(int){t1}+48") #Heap[H]=(char)t4
+        self.generator.addNextHeap()  # H=H+1
+        self.sort_reverse(init=linit,fin="H-1")
 
 
-
+    #metodo para colocar al reves un string en la pila
+    def sort_reverse(self,init,fin):
+        self.generator.addComment("sort_revers")
+        t1=self.generator.newTemp()
+        t2=self.generator.newTemp()
+        t3=self.generator.newTemp()
+        t4=self.generator.newTemp()
+        loop=self.generator.newLabel()
+        lsalida=self.generator.newLabel()
+        self.generator.addExpAsign(target=t1,right=init) #t1=init
+        self.generator.addExpAsign(target=t2, right=fin) #t2=finish
+        self.generator.addLabel(loop) #Loop:
+        self.generator.addIf(left=t1,rigth=t2,operator="==",label=lsalida)# if t1==t2 goto Lsalida
+        self.generator.addIf(left=t1, rigth=t2, operator=">", label=lsalida)  # if t1>t2 goto Lsalida
+        self.generator.addGetHeap(target=t3,index=t2)#t3=Heap[t2]
+        self.generator.addGetHeap(target=t4,index=t1)#t4=Heap[t1]
+        self.generator.addSetHeap(index=t1,value=t3)#Heap[t1]=t3
+        self.generator.addSetHeap(index=t2, value=t4)#Heap[t2]=t4
+        self.generator.addExpression(target=t1,left=t1,right="1",operator="+")#t1=t1+1
+        self.generator.addExpression(target=t2, left=t2, right="1", operator="-")#t2=t2-1
+        self.generator.addGoto(loop)#goto Loop
+        self.generator.addLabel(lsalida)#Lsalida:
 

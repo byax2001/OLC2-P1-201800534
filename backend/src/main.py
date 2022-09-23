@@ -11,7 +11,7 @@ l=B_datos()
 
 f = open("./entrada.txt", "r")
 input = f.read()
-print(input)
+
 
 ast: Ast =parser.parse(input)
 ts = Enviroment(None, 'Global')
@@ -33,4 +33,7 @@ print("OUTPUT:")
 print(driver.console)
 print("\n CODIGO 3D: ")
 print(generator.getCode())
+#salida
+f2 = open("./salida.txt","w")
+f2.write(generator.getCode())
 #Generator.getCode() para obtener el string de lo generado

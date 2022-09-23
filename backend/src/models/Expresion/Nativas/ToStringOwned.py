@@ -20,7 +20,7 @@ class ToStringOwned(Expresion):
         exp=self.exp.generarC3d(ts,ptr)
         newTemp=self.generator.newTemp()
         if exp.tipo == Tipos.STR or exp.tipo == Tipos.CHAR:
-            self.generator.addExpression(target=newTemp,left=exp.valor,right="",operator="")
+            self.generator.addExpAsign(target=newTemp,right=exp.valor)
             return ValC3d(valor=newTemp,isTemp=True,tipo=Tipos.STRING)
         else:
             cadena=str(exp.valor)

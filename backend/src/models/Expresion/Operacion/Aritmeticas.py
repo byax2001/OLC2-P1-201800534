@@ -194,7 +194,9 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
     def ejecutar(self, driver, ts):
         """En la mayoria de expresiones no realiza nada"""
         pass
+
     def generarC3d(self,ts,ptr:int):
+        self.generator.addComment("Aritmeticas")
         newTemp = self.generator.newTemp()  # = tnum Result de esta operacion
         result=ValC3d(valor=newTemp, isTemp=True, tipo=Tipos.ERROR)
         self.exp1.generator = self.generator
@@ -212,19 +214,24 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
         self.exp2.generator = self.generator
         exp1=self.exp1.generarC3d(ts,ptr)
         exp2=self.exp2.generarC3d(ts,ptr)
+
+        if exp1.tipo == Tipos.STRING and exp2.tipo == Tipos.STR and self.operador==Operador.SUMA:
+            self.generator.addComment("Concatenacion de cadenas")
+            self.generator.addExpAsign(target=newTemp,right="H")# Resultado
+            self.ConcatenarStrC3d(posInit=exp1.valor)
+            self.ConcatenarStrC3d(posInit=exp2.valor)
+            # de ultimo añadir al heap un -1 y sumar 1 a H
+            self.generator.addSetHeap("H", "-1")  # H
+            self.generator.addNextHeap()  # H=H+1
+
+            result.tipo = Tipos.STRING
+            return result
+
         if exp1.tipo==exp2.tipo:
             if self.operador==Operador.SUMA:
                 if exp1.tipo in [Tipos.FLOAT64,Tipos.FLOAT64]:
                     self.generator.addExpression(target=newTemp,left=exp1.valor,operator="+",right=exp2.valor)
                     result.tipo = exp1.tipo
-                elif exp1.tipo==Tipos.STRING and exp1.tipo==Tipos.STR:
-                    self.generator.addExpression(target=newTemp,left="H",right="",operator="") #Resultado
-                    self.ConcatenarStrC3d(newTemp=newTemp,posInit=exp1.valor)
-                    self.ConcatenarStrC3d(newTemp=newTemp, posInit=exp2.valor)
-                    # de ultimo añadir al heap un -1 y sumar 1 a H
-                    self.generator.addSetHeap("H","-1") #H
-                    self.generator.addNextHeap() #H=H+1
-                    result.tipo==Tipos.STRING
             elif self.operador==Operador.RESTA:
                 if exp1.tipo in [Tipos.FLOAT64, Tipos.FLOAT64]:
                     self.generator.addExpression(target=newTemp, left=exp1.valor, operator="-", right=exp2.valor)
@@ -275,7 +282,8 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
             error="Los nodos a operar deben de ser del mismo tipo"
             B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
                                   columna=self.columna)
-    def divModC3d(self,exp1,exp2,newTemp,operator:str):
+        return result
+    def divModC3d(self,exp1,exp2,newTemp,operador):
         self.trueLabel = self.generator.newLabel()
         salida = self.generator.newLabel()
         self.generator.addIf(left=exp2.valor, rigth=0, operator="!=",
@@ -284,8 +292,11 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
         self.generator.addExpression(target=newTemp, left="0", right="", operator="")  # tnum=0
         self.generator.addGoto(salida)  # goto Lsalida
         self.generator.addLabel(self.trueLabel)  # Lv:
-        self.generator.addExpression(target=newTemp, left=exp1.valor, operator=operator,
+        if self.operador==Operador.DIV:
+            self.generator.addExpression(target=newTemp, left=exp1.valor, operator="/",
                                      right=exp2.valor)  # tnum= val1/val2
+        else:
+            self.generator.addExpAsign(target=newTemp,right=f"fmod({exp1.valor},{exp2.valor})")
         self.generator.addLabel(salida)  # Lsalida
 
     def ConcatenarStrC3d(self,posInit:str):

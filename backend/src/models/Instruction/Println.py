@@ -133,18 +133,19 @@ class Println(Instruccion):
                     self.generator.addComment("Print de un Boolean")
                     newLabel = self.generator.newLabel()  #Lsalida
                     self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
-                    self.generator.addPrintf(typePrint="c",value=ord("t"))
-                    self.generator.addPrintf(typePrint="c", value=ord("r"))
-                    self.generator.addPrintf(typePrint="c", value=ord("u"))
-                    self.generator.addPrintf(typePrint="c", value=ord("e"))
+                    self.generator.addPrintf(typePrint="c",value=str(ord("t")))
+                    self.generator.addPrintf(typePrint="c", value=str(ord("r")))
+                    self.generator.addPrintf(typePrint="c", value=str(ord("u")))
+                    self.generator.addPrintf(typePrint="c", value=str(ord("e")))
                     self.generator.addGoto(newLabel)  # goto Lsalida;
                     self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
-                    self.generator.addPrintf(typePrint="c", value=ord("f"))
-                    self.generator.addPrintf(typePrint="c", value=ord("a"))
-                    self.generator.addPrintf(typePrint="c", value=ord("l"))
-                    self.generator.addPrintf(typePrint="c", value=ord("s"))
-                    self.generator.addPrintf(typePrint="c", value=ord("e"))
+                    self.generator.addPrintf(typePrint="c", value=str(ord("f")))
+                    self.generator.addPrintf(typePrint="c", value=str(ord("a")))
+                    self.generator.addPrintf(typePrint="c", value=str(ord("l")))
+                    self.generator.addPrintf(typePrint="c", value=str(ord("s")))
+                    self.generator.addPrintf(typePrint="c", value=str(ord("e")))
                     self.generator.addLabel(newLabel)  # Lsalida:
+                self.generator.addNewLine()
             else:
                 error = "Error: forma incorrecta de imprimir"
                 print(error)
@@ -159,6 +160,7 @@ class Println(Instruccion):
             for exp in self.cExp:
                 exp.generator=self.generator
                 #----------------------SOLO USADO EN EL CASO QUE LA EXPRESION SEA UN BOOLEANO
+                self.generator.addComment("Por si la expresiona imprimir es booleana")
                 tbool_str = self.generator.newTemp()  # contendra el indice donde inicia el booleano pasado a string
                 self.generator.addExpAsign(target=tbool_str, right="H")
                 #----------------------------------------------------
@@ -227,6 +229,7 @@ class Println(Instruccion):
                 #self.generator.addExpAsign(target=contador,right="H")
             self.generator.addComment("Impresion")
             self.printCadenaC3d(posInit=print_aux.valor)
+            self.generator.addNewLine()
 
 
 

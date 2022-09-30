@@ -1,5 +1,6 @@
 from models.Expresion.Operacion.OperacionLog import OperacionLog, OperadorLog, getOperador
 from models.TablaSymbols.Tipos import Tipos,definirTipo
+from models.TablaSymbols.ValC3d import ValC3d
 from BaseDatos.B_datos import B_datos
 class Logicas(OperacionLog): #de esta forma se esta indicando que aritmeticas hereda de Operacion
     #var Operacion: exp1: Expresion, operador, exp2: Expresion, linea, columna, expU
@@ -64,3 +65,51 @@ class Logicas(OperacionLog): #de esta forma se esta indicando que aritmeticas he
             self.instancia=0
             self.value=None
             self.tipo=None
+    def generarC3d(self,ts,ptr:int):
+        if (self.trueLabel == ""):
+            self.trueLabel = self.generator.newLabel()  # Ln: (true)
+
+        if (self.falseLabel == ""):
+            self.falseLabel = self.generator.newLabel()  # Ln+1: (false)   pag  404
+
+        self.exp1.generator=self.generator
+        if self.exp2 != None:
+            self.exp2.generator=self.generator
+        val:ValC3d = ValC3d(valor="",isTemp=False,tipo=Tipos.BOOLEAN,tipo_aux=Tipos.BOOLEAN)
+        if self.operador==OperadorLog.AND:
+            # B -> B1 && B2  |  B1.true = B.nuevaetiqueta()
+            #                |  B1.false = false
+            #                |  B2.true = B.true
+            #                |  B2.false = B.false
+            #                |  B.codigo = B1.codigo +  etiqueta(B1.true) + B2.codigo
+            self.exp1.trueLabel=self.generator.newLabel()
+            self.exp1.falseLabel=self.falseLabel
+            self.exp2.trueLabel=self.trueLabel
+            self.exp2.falseLabel=self.falseLabel
+            izq_r:ValC3d=self.exp1.generarC3d(ts,ptr)
+            self.generator.addLabel(izq_r.trueLabel)
+            self.exp2.generarC3d(ts,ptr)
+            val.trueLabel=self.trueLabel
+            val.falseLabel=self.falseLabel
+        elif self.operador==OperadorLog.OR:
+            # B -> B1 || B2  |  B1.true = B.true
+            #                |  B1.false = nuevaetiqueta()
+            #                |  B2.true = B.true
+            #                |  B2.false = B.false
+            #                |  B.codigo = B1.codigo +  etiqueta(B1.false) + B2.codigo
+            self.exp1.trueLabel = self.trueLabel
+            self.exp1.falseLabel = self.generator.newLabel()
+            self.exp2.trueLabel = self.trueLabel
+            self.exp2.falseLabel = self.falseLabel
+            izq_r: ValC3d = self.exp1.generarC3d(ts, ptr)
+            self.generator.addLabel(izq_r.falseLabel)
+            self.exp2.generarC3d(ts, ptr)
+            val.trueLabel = self.trueLabel
+            val.falseLabel = self.falseLabel
+        elif self.operador==OperadorLog.NOT:
+            self.exp1.trueLabel=self.falseLabel
+            self.exp1.falseLabel=self.trueLabel
+            self.exp1.generarC3d(ts,ptr)
+            val.trueLabel = self.trueLabel
+            val.falseLabel = self.falseLabel
+        return val

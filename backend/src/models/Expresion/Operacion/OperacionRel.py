@@ -10,6 +10,19 @@ class OperadorRel(Enum):
     IGUALQUE=5
     DIFERENTEQUE=6
 
+def strOperador(tipo:OperadorRel):
+    if tipo==OperadorRel.IGUALQUE:
+        return "=="
+    elif tipo==OperadorRel.DIFERENTEQUE:
+        return "!="
+    elif tipo==OperadorRel.MENORQUE:
+        return  "<"
+    elif tipo==OperadorRel.MAYORQUE:
+        return ">"
+    elif tipo==OperadorRel.MENORIGUALQUE:
+        return "<="
+    elif tipo==OperadorRel.MAYORIGUALQUE:
+        return ">="
 
 def getOperador(op) -> OperadorRel:
     if op == '>':

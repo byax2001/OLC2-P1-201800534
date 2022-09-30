@@ -1,5 +1,6 @@
-from models.Expresion.Operacion.OperacionRel import OperacionRel, OperadorRel, getOperador
+from models.Expresion.Operacion.OperacionRel import OperacionRel, OperadorRel, strOperador
 from models.TablaSymbols.Tipos import Tipos,definirTipo
+from models.TablaSymbols.ValC3d import ValC3d
 from BaseDatos.B_datos import B_datos
 class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmeticas hereda de Operacion
     #var Operacion: exp1: Expresion, operador, exp2: Expresion, linea, columna, expU
@@ -55,3 +56,50 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
             self.instancia=0
             self.value=None
             self.tipo=None
+    def generarC3d(self,ts,ptr:int):
+        self.exp1.generator=self.generator
+        self.exp2.generator=self.generator
+        val1:ValC3d=self.exp1.generarC3d(ts,ptr)
+        val2:ValC3d=self.exp2.generarC3d(ts,ptr)
+        if val1.tipo==val2.tipo:
+            valor = ValC3d(valor="", isTemp=False, tipo=Tipos.BOOLEAN, tipo_aux=Tipos.BOOLEAN)
+            if val1.tipo in [Tipos.STR,Tipos.STRING]:
+                self.cmpStrC3d(i_str1=val1.valor,i_str2=val2.valor)
+                valor.trueLabel=self.trueLabel
+                valor.falseLabel=self.falseLabel
+            else:
+                self.generator.addIf(left=val1.valor,rigth=val2.valor,operator=strOperador(self.operador),label=self.trueLabel)
+                self.generator.addGoto(label=self.falseLabel)
+                valor.trueLabel=self.trueLabel
+                valor.falseLabel=self.falseLabel
+            return valor
+        else:
+            error="Las literales a comparar no son del mismo tipo"
+            print(error)
+
+
+    def cmpStrC3d(self,i_str1,i_str2):
+        t1= self.generator.newTemp()
+        t2= self.generator.newTemp()
+        t3=self.generator.newTemp()
+        t4=self.generator.newTemp()
+        loop=self.generator.newLabel()
+        Lf1=self.generator.newLabel()
+        Lv1=self.generator.newLabel()
+        lim1=self.generator.newLabel()
+        self.generator.addExpAsign(target=t1,right=i_str1) #    t1 = init1
+        self.generator.addExpAsign(target=t2, right=i_str2)#    t2 = init2
+        self.generator.addLabel(label=loop)                #    loop:
+        self.generator.addGetHeap(target=t3,index=t1)      #    t3 = Stack[t1]
+        self.generator.addGetHeap(target=t4, index=t2)     #    t4 = Stack[t2]
+        self.generator.addExpression(target=t1,left=t1,right="1",operator="+")# t1 = t1 + 1
+        self.generator.addExpression(target=t2, left=t2, right="1", operator="+")# t2 = t2 + 1
+        self.generator.addIf(left=t3,rigth="-1",operator="==",label=lim1)       # if (t3 == -1) goto Lim1
+        self.generator.addIf(left=t4, rigth="-1", operator="==", label=self.falseLabel) #if (t4 == -1) goto LF
+        self.generator.addIf(left=t3, rigth=t4, operator="==", label=loop)    #if (t3 == t4) goto Loop
+        self.generator.addGoto(self.falseLabel)   #goto LF
+        self.generator.addLabel(lim1) #Lim1:
+        self.generator.addIf(left=t4, rigth="-1", operator="==", label=self.trueLabel)  # goto LV
+        self.generator.addGoto(self.falseLabel)  # goto LF
+
+

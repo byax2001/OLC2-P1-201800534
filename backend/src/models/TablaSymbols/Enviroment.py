@@ -1,7 +1,9 @@
 from models.TablaSymbols.Symbol import Symbol,getSymbol
+from Generator3D.Generator3D import Generator
 from models.TablaSymbols.SymC3d import SymC3d
 class Enviroment:
     def __init__(self,anterior,env) -> None:
+        self.generator=Generator()
         self.env=env
         self.anterior=anterior
         self.size=0
@@ -9,7 +11,7 @@ class Enviroment:
     
     def addVar(self, id: str, simbolo: Symbol):
         self.tabla[id] = simbolo
-        symc3d = SymC3d(id=id,type=simbolo.tipo,position=self.size)
+        symc3d = SymC3d(id=id,type=simbolo.tipo,position=self.size,valor=simbolo.value)
         self.size = self.size + 1
         return symc3d
 
@@ -23,6 +25,18 @@ class Enviroment:
             ts = ts.anterior
 
         return None
+
+    def buscarC3d(self,id:str,tmp_aux):
+        ts = self
+        while ts is not None:
+            exist = ts.tabla.get(id)
+
+            if exist is not None:
+                return exist
+            ts = ts.anterior
+            self.generator.addExpression(target=tmp_aux,left=tmp_aux,right=str(ts.size),operator="+") #variable auxiliar que servira para volver a colocar el enviroment en su lugar  luego del proceso
+        return None
+
     def actualizar(self,id:str,value):
         ts=self
         while ts is not None:

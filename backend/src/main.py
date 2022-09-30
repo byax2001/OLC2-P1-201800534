@@ -24,7 +24,7 @@ ast.generarC3d(ts=ts_c3d,generator= generator)
 main=ts.buscar("main")
 if main!=None:
     call=Call("main",[],line=0,column=0);
-    call.ejecutar(driver,ts)
+    #call.ejecutar(driver,ts)
     call.generator=generator
     call.generarC3d(ts=ts_c3d,ptr=0)
 else:

@@ -67,21 +67,19 @@ class Primitivo(Expresion):
             self.generator.addNextHeap()  #H = H + 1
             return ValC3d(str(newTemp), True, self.tipo)
         elif self.tipo== Tipos.BOOLEAN:
-
-            if self.value==True:
-                valor = "1"
-            else:
-                valor = "0"
-            val = ValC3d("", False, Tipos.BOOLEAN)
-
+            val = ValC3d("", False, Tipos.BOOLEAN,Tipos.BOOLEAN)
             if (self.trueLabel == ""):
-                self.trueLabel = self.generator.newLabel()  #Ln: (true)
+                self.trueLabel = self.generator.newLabel()  # Ln: (true)
 
             if (self.falseLabel == ""):
-                self.falseLabel = self.generator.newLabel()  #Ln+1: (false)
-                                  #li   ld   operador
-            self.generator.addIf(valor, "1", "==", self.trueLabel)  # if (valor==1) goto Ln (true)
-            self.generator.addGoto(self.falseLabel) # goto Ln+1 (false)
+                self.falseLabel = self.generator.newLabel()  # Ln+1: (false)
+
+            if self.value==True:
+                self.generator.addGoto(label=self.trueLabel)
+            else:
+                self.generator.addGoto(label=self.falseLabel)
+
+
 
             val.trueLabel = self.trueLabel
             val.falseLabel = self.falseLabel

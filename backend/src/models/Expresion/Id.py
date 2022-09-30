@@ -48,17 +48,20 @@ class Id(Expresion):
         """En la mayoria de expresiones no realiza nada"""
         pass
 
-    def generarC3d(self,ts,ptr:int):
-        symbol:Symbol = ts.buscar(self.id)
+    def generarC3d(self,ts:Enviroment,ptr:int):
+        self.generator.addComment(f"ID EXPRESION: {self.id}")
+        tmp_aux = self.generator.newTemp() #para volver al enviroment actual de la pila luego del proceso de busqueda, y resta de SP
+        symbol:Symbol = ts.buscarC3d(self.id,tmp_aux)
+        self.generator.addBackStack(index=tmp_aux)  # para retroceder entre enviroments
         if symbol!=None:
             newTemp = self.generator.newTemp()
-
-            self.generator.addGetStack(newTemp, str(symbol.position))
-
+            index = self.generator.newTemp()
+            self.generator.addExpression(target=index,left="SP",right=str(symbol.position),operator="+")
+            self.generator.addGetStack(target=newTemp, index=index)
             if (symbol.tipo != Tipos.BOOLEAN):
-                return ValC3d(valor=newTemp,isTemp= True,tipo= symbol.tipo)
+                valor_r=ValC3d(valor=newTemp,isTemp=True, tipo= symbol.tipo)
             else:
-                val = ValC3d(valor="",isTemp= False,tipo= Tipos.BOOLEAN)
+                valor_r = ValC3d(valor="",isTemp= False,tipo= Tipos.BOOLEAN)
 
                 if (self.trueLabel == ""):
                     self.trueLabel = self.generator.newLabel()
@@ -69,9 +72,9 @@ class Id(Expresion):
                 self.generator.addIf(newTemp, "1", "==", self.trueLabel)
                 self.generator.addGoto(self.falseLabel)
 
-                val.trueLabel = self.trueLabel
-                val.falseLabel = self.falseLabel
-
-                return val
+                valor_r.trueLabel = self.trueLabel
+                valor_r.falseLabel = self.falseLabel
+            self.generator.addNextStack(tmp_aux) #volver al enviroment actual de la pila
+            return valor_r
         else:
             print("no existe dicha id")

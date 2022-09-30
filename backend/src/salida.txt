@@ -2,105 +2,136 @@
 #include <math.h>
 double HEAP[10000];
 double STACK[78000];
-double P;
+double SP;
 double H;
 double ptr;
-double t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11;
+double t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23;
 
 
 int main(){
+/* Declaracion var: x */
+t0 = SP + 0;
+STACK[(int)t0] = 3;
+/* Declaracion var: y */
+goto L0;
+L0:
+t1 = SP + 1;
+STACK[(int)t1] = 1;
+goto L2;
+L1:
+t1 = SP + 1;
+STACK[(int)t1] = 0;
+L2:
+/* Declaracion var: z */
+t2 = SP + 2;
+STACK[(int)t2] = 4;
 /* Instruccion Print */
 /* Primitivo tipo STR */
-t0 = H  ;
+t3 = H  ;
 HEAP[(int)H] = 123;
 H = H + 1;
 HEAP[(int)H] = 125;
 H = H + 1;
-HEAP[(int)H] = -1;
+HEAP[(int)H] = 32;
 H = H + 1;
-t2 = H;
-/* Metodo ToString o ToOwned */
-t3 = H;
-if(1 == 1) goto L0;
-goto L1;
-/* Boolean to string */
-L0:
-HEAP[(int)H] = 116;
-H = H + 1;
-HEAP[(int)H] = 114;
-H = H + 1;
-HEAP[(int)H] = 117;
-H = H + 1;
-HEAP[(int)H] = 101;
-H = H + 1;
-goto L2;
-L1:
-HEAP[(int)H] = 102;
+HEAP[(int)H] = 118;
 H = H + 1;
 HEAP[(int)H] = 97;
 H = H + 1;
-HEAP[(int)H] = 108;
+HEAP[(int)H] = 114;
 H = H + 1;
-HEAP[(int)H] = 115;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 98;
+H = H + 1;
+HEAP[(int)H] = 108;
 H = H + 1;
 HEAP[(int)H] = 101;
 H = H + 1;
-L2:
 HEAP[(int)H] = -1;
 H = H + 1;
+t5 = H;
+/* ID EXPRESION: x */
+SP = SP - t6;
+t8 = SP + 0;
+t7 = STACK[(int)t8];
+SP = SP + t6;
 /* Para saber donde iniciar a imprimir luego del proceso */
-t1 = H;
+t4 = H;
 /* Print Complex P.1 */
-t5 = t0  ;
+t9 = t3  ;
 L3:
-t6 = HEAP[(int)t5 ];
-if(t6 == (char)123) goto L6;
-HEAP[(int)H] = t6;
+t10 = HEAP[(int)t9 ];
+if(t10 == (char)123) goto L6;
+HEAP[(int)H] = t10;
 H = H + 1;
-t5 = t5 + 1;
+t9 = t9 + 1;
 goto L3;
 /* Print Complex P.2 */
 L6:
-t5 = t5 + 1;
+t9 = t9 + 1;
 L4:
-t6 = HEAP[(int)t5 ];
-if(t6 == (char)125) goto L7;
-t5 = t5 + 1;
+t10 = HEAP[(int)t9 ];
+if(t10 == (char)125) goto L7;
+t9 = t9 + 1;
 goto L4;
 /* Print Complex P.3 */
 L7:
-t5 = t5 + 1;
-t7 = t3  ;
+t9 = t9 + 1;
+/* Num to String */
+t11 = t7;
+t12 = H;
+t13 = t11  ;
 L9:
-t8 = HEAP[(int)t7 ];
-if(t8 == -1) goto L10;
-HEAP[(int)H] = t8;
+t14 = t13 / 10;
+t15 = (int)t14;
+if(t15 == 0) goto L10;
+t16 = fmod(t13,10);
+t13 = t15;
+HEAP[(int)H] = (int)t16 +48;
 H = H + 1;
-t7 = t7 + 1;
 goto L9;
 L10:
+HEAP[(int)H] = (int)t13+48;
+H = H + 1;
+/* sort_revers */
+t17 = t12;
+t18 = H-1;
+L11:
+if(t17 >= t18) goto L12;
+t19 = HEAP[(int)t18 ];
+t20 = HEAP[(int)t17 ];
+HEAP[(int)t17] = t19;
+HEAP[(int)t18] = t20;
+t17 = t17 + 1;
+t18 = t18 - 1;
+goto L11;
+L12:
 /* Print Complex P.4 */
 L5:
-t6 = HEAP[(int)t5 ];
-if(t6 == -1) goto L8;
-HEAP[(int)H] = t6;
+t10 = HEAP[(int)t9 ];
+if(t10 == -1) goto L8;
+HEAP[(int)H] = t10;
 H = H + 1;
-t5 = t5 + 1;
+t9 = t9 + 1;
 goto L5;
 /* Salida print Complex */
 L8:
 HEAP[(int)H] = -1;
 H = H + 1;
 /* Impresion */
-t10 = t1  ;
-L11:
-t11 = HEAP[(int)t10 ];
-if(t11 != -1) goto L12;
-goto L13;
-L12:
-printf("%c",(char)t11);
-t10 = t10 + 1;
-goto L11;
+t22 = t4  ;
 L13:
+t23 = HEAP[(int)t22 ];
+if(t23 != -1) goto L14;
+goto L15;
+L14:
+printf("%c",(char)t23);
+t22 = t22 + 1;
+goto L13;
+L15:
+printf("%c",10);
 return 0;
 }

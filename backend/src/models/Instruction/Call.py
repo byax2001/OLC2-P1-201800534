@@ -186,11 +186,28 @@ class Call(Instruccion):
             self.value=None
             self.tipo=None
 
-    def generarC3d(self,ts,ptr:int):
+    def generarC3d(self,ts:Enviroment,ptr:int):
         if self.id=="main":
-            symbol=ts.buscar(self.id)
+            symbol = ts.buscar(self.id)
             insts=symbol.value[1]
             newEnv = Enviroment(anterior=ts,env="Call")
             for inst in insts:
                 inst.generator = self.generator
                 inst.generarC3d(newEnv,ptr+1)
+        else:
+            symbol = ts.buscar(self.id)
+            if symbol!=None:
+                self.generator.addComment(f"Llamada a funcion: {self.id}")
+                newts = Enviroment(ts, "Funcion")
+                newts.size=1
+                newts.generator=ts.generator
+                puntero_newEnv=ts.generator.newTemp()
+                self.generator.addExpression(target=puntero_newEnv,left="P",right=ts.size,operator="+")
+
+                self.generator.addNextStack(index=str(ts.size))
+                self.generator.addCallFunc(self.id)
+                self.generator.addBackStack(index=str(ts.size))
+            else:
+                print("No ha sido declarada dicha funcion " + str(self.line))
+                error = "No ha sido declarada dicha funcion"
+

@@ -5,6 +5,7 @@ class Generator:
         self.generator = None
         self.temporal = 0
         self.label = 0
+        self.funcs = []
         self.code = []
         self.tempList = []
 
@@ -18,7 +19,7 @@ class Generator:
         tempCode = tempCode + '#include <math.h>\n'
         tempCode = tempCode + "double HEAP[10000];\n"
         tempCode = tempCode + "double STACK[78000];\n"
-        tempCode = tempCode + "double P;\n"  #p, h y ptr se inicializan con 0 en c++ si no se les asigna nada al declararlos
+        tempCode = tempCode + "double SP;\n"  #p, h y ptr se inicializan con 0 en c++ si no se les asigna nada al declararlos
         tempCode = tempCode + "double H;\n"
         tempCode = tempCode + "double ptr;\n"
 
@@ -77,11 +78,11 @@ class Generator:
 
     # Se mueve hacia la posicion siguiente del stack
     def addNextStack(self, index: str):
-        self.code.append("P = P + " + index + ";")
+        self.code.append("SP = SP + " + index + ";")
 
     # Se mueve hacia la posicion anterior del stack
     def addBackStack(self, index: str):
-        self.code.append("P = P - " + index + ";")
+        self.code.append("SP = SP - " + index + ";")
 
     # Obtiene el valor del heap en cierta posicion
     def addGetHeap(self, target: str, index: str):
@@ -98,9 +99,8 @@ class Generator:
     # INserta valor al stack
     def addSetStack(self, index: str, value: str):
         self.code.append("STACK[(int)" + index + "] = " + value + ";")
-    #Aumenta valor de ptr
-    def addptr(self,valor,ope):
-        self.addExpression("ptr","ptr",valor,ope)
+
+
     #Añade un error a imprimir en c3d
     def addError(self,error:str):
         for char in error:

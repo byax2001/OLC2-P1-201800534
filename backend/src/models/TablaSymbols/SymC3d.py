@@ -1,6 +1,7 @@
 class SymC3d:
     #Nuestros simbolos poseen un id, un valor y un tipo
-    def __init__(self, id: str, type, position):
+    def __init__(self, id: str, type, position,valor):
+        self.valor=valor
         self.id = id
         self.tipo = type
         self.position = position
@@ -9,7 +10,7 @@ class SymC3d:
         return self.id
 
     def getValue(self):
-        return self.value
+        return self.valor
 
     def getType(self):
         return self.type

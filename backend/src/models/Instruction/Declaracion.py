@@ -19,6 +19,10 @@ class Declaracion(Instruccion):
         self.columna = columna
         self.tacceso = 0
 
+        # cambio de entorno
+        self.puntero_entorno_nuevo=""
+        self.en_funcion=False
+
     def ejecutar(self, driver, ts):
         if (self.exp != None):
             t_exp=self.exp.getTipo(driver,ts)
@@ -145,40 +149,55 @@ class Declaracion(Instruccion):
         self.tacceso=acceso
 
     def generarC3d(self,ts:Enviroment,ptr:int):
+        self.generator.addComment(f"Declaracion var: {self.id}")
         symbol=ts.buscarActualTs(self.id)
         if symbol==None:
             self.exp.generator = self.generator
-
-            newValue: ValC3d = self.exp.generarC3d(ts=ts,ptr=ptr)
-            newVar = Symbol(mut=self.mut, id=self.id, value=newValue.valor, tipo_simbolo=0, tipo=newValue.tipo,
-                            line=self.linea, column=self.columna, tacceso=self.tacceso)
-
-            temp_var: SymC3d = ts.addVar(self.id, newVar) #----------------------------
-
-            if (temp_var.tipo != Tipos.BOOLEAN):
-                self.generator.addSetStack(str(temp_var.position), newValue.getValue()) #Stack[(int)pos]= val
+            exp_dec: ValC3d = self.exp.generarC3d(ts=ts, ptr=ptr)
+            if self.tipoVar == None:
+                self.declarar_c3d(ts,ptr,exp_dec)
             else:
-                #Aqui no estoy añadiendo directamente el valor al hacer el addSetStack
-                # sino escribiendo un if que dependiendo del resultado anterior asignara 1 o 0 a la variable
-                #ejem:  if (valor==True){ var1=1  } else {var1=0}:
-                    # con el if realizado en anteriores expresiones, se ira al label que asigna 1 o 0 (true o false)
-                    # en el stack y no tocara el otro
-
-                newLabel = self.generator.newLabel()  # metodo que crea y retorna un label  Ln, esta es la etiqueta de salida
-                self.generator.addLabel(newValue.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
-                self.generator.addSetStack(str(temp_var.position), '1')   #Stack[(int)num]= 1
-                self.generator.addGoto(newLabel) #goto Ln ;
-                self.generator.addLabel(newValue.falseLabel) # añade Ln:  ya existente al codigo principal (false)
-                self.generator.addSetStack(str(temp_var.position), '0')  #Stack[(int)num]= 0
-                self.generator.addLabel(newLabel) # añade Ln:  ya existente al codigo principal
-
-                # if var==1 goto L1
-                # goto L2
-                # L1:
-                #  var1= 1
-                # goto   LnewLabel
-                # L2:
-                #   var1= 0
-                # LnewLabel:
+                if self.tipoVar==exp_dec.tipo:
+                    self.declarar_c3d(ts,ptr,exp_dec)
+                else:
+                    error="Tipo de variable no corresponde con el valor a declarar"
+                    print(error)
         else:
             print("Variable ya declarada")
+
+    def declarar_c3d(self,ts,ptr,exp:ValC3d):
+
+        newVar = Symbol(mut=self.mut, id=self.id, value=exp.valor, tipo_simbolo=0, tipo=exp.tipo,
+                        line=self.linea, column=self.columna, tacceso=self.tacceso)
+
+        temp_var: SymC3d = ts.addVar(self.id, newVar)  # ----------------------------
+        aux_index = self.generator.newTemp()  # tendra el index
+
+        if (temp_var.tipo != Tipos.BOOLEAN):
+            self.generator.addExpression(target=aux_index, left="SP", right=str(temp_var.position), operator="+")
+            self.generator.addSetStack(index=aux_index, value=temp_var.valor)  # Stack[(int)pos]= val
+        else:
+            # Aqui no estoy añadiendo directamente el valor al hacer el addSetStack
+            # sino escribiendo un if que dependiendo del resultado anterior asignara 1 o 0 a la variable
+            # ejem:  if (valor==True){ var1=1  } else {var1=0}:
+            # con el if realizado en anteriores expresiones, se ira al label que asigna 1 o 0 (true o false)
+            # en el stack y no tocara el otro
+
+            newLabel = self.generator.newLabel()  # metodo que crea y retorna un label  Ln, esta es la etiqueta de salida
+            self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
+            self.generator.addExpression(target=aux_index, left="SP", right=str(temp_var.position), operator="+")
+            self.generator.addSetStack(index=aux_index, value='1')  # Stack[(int)num]= 1
+            self.generator.addGoto(newLabel)  # goto Ln ;
+            self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
+            self.generator.addExpression(target=aux_index, left="SP", right=str(temp_var.position), operator="+")
+            self.generator.addSetStack(index=aux_index, value='0')  # Stack[(int)num]= 0
+            self.generator.addLabel(newLabel)  # añade Ln:  ya existente al codigo principal
+
+            # if var==1 goto L1
+            # goto L2
+            # L1:
+            #  var1= 1
+            # goto   LnewLabel
+            # L2:
+            #   var1= 0
+            # LnewLabel:

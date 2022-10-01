@@ -9,6 +9,7 @@ from models.Instruction.Break import Break
 from models.Expresion.Id import Id
 from models import Driver
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
 
 class Call(Instruccion):
     def __init__(self,id:str,cExp:[Expresion],line:int,column:int):
@@ -202,12 +203,60 @@ class Call(Instruccion):
                 newts.size=1
                 newts.generator=ts.generator
                 puntero_newEnv=ts.generator.newTemp()
-                self.generator.addExpression(target=puntero_newEnv,left="P",right=ts.size,operator="+")
-
+                self.generator.addExpression(target=puntero_newEnv,left="SP",right=str(ts.size),operator="+")
+                #change expresion
+                paramsFun = symbol.value[0]  # parametros de la funcion
+                instFun = symbol.value[1]  # instrucciones de la funcion
+                if len(self.cExp) == len(symbol.value[0]):  # el numero de parametros mandados
+                    # por el call y los que necesita la funcion deben de ser iguales
+                    x = 0
+                    # ==============================Asignacion de expresiones para las declaraciones de la funcion=======================
+                    for exp in self.cExp:  # expresiones enviados en el call
+                        paramsFun[x].changeExp(exp)
+                        x += 1
+                    # ==============================Declaracion de parametros=======================
+                    for declaracion in paramsFun:
+                        declaracion.generarC3d(newts,ptr)
+                else:
+                    return ValC3d(valor="0",isTemp=False,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
+                #crear funcion en c3d si no ha sido creada
+                if symbol.func_create==False:
+                    self.crear_funcC3d(instructions=instFun,ts=newts,ptr=ptr)
+                    symbol.func_create=True
+                    newts.actualizar(id=self.id,value=symbol)
+                #LLAMADA
                 self.generator.addNextStack(index=str(ts.size))
                 self.generator.addCallFunc(self.id)
                 self.generator.addBackStack(index=str(ts.size))
+                #VALOR RETURN
+                tmp_aux=self.generator.newTemp() #indice donde se encuentra el resultado del metodo
+                tmp_return=self.generator.newTemp() #resultado del metodo
+                self.generator.addExpression(target=tmp_aux,left="SP",right=str(ts.size),operator="+")
+                self.generator.addGetStack(target=tmp_return,index=tmp_aux)
+                return ValC3d(valor=tmp_return,isTemp=True,tipo=self.tipo,tipo_aux=self.tipo)
             else:
                 print("No ha sido declarada dicha funcion " + str(self.line))
                 error = "No ha sido declarada dicha funcion"
+
+
+    def crear_funcC3d(self,instructions,ts,ptr):
+        exit_return=self.generator.newLabel()
+        #CREACION DE LA FUNCION EN C3D
+        code_func="void "+self.id + "(){{\n"
+        i_aux1=len(self.generator.code)
+        for inst in instructions:
+            inst.generator=self.generator
+            inst.generarC3d(ts,ptr)
+        i_aux2=len(self.generator.code)
+        #copiar lo que se almaceno en el arreglo code al string actual
+        for i in range(i_aux1,i_aux2):
+            code_func+=(self.generator.code[i]+"\n")
+        #limpiar el arreglo code quitando el codigo que pertenece a la funcion
+        for i in reversed(range(i_aux1,i_aux2)):  # reversed es para usar un rango a la inversa de n a 0
+            self.generator.code.pop(i)
+        code_func=code_func.replace("return_i",exit_return)
+        code_func+=exit_return+":\n"
+        code_func += f"return; \n"
+        code_func += f"}}\n"
+        self.generator.addCodeFunc(code=code_func)
 

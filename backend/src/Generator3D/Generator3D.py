@@ -25,7 +25,7 @@ class Generator:
 
         if (len(self.tempList) > 0):
             tempCode = tempCode + "double " + self.getUsedTemps() + ";\n\n"
-
+        tempCode = tempCode + "\n".join(self.funcs) #para las funciones
         tempCode = tempCode + '\nint main(){\n'
         tempCode = tempCode + "\n".join(self.code)
         tempCode = tempCode + '\nreturn 0;\n}\n'
@@ -111,7 +111,12 @@ class Generator:
     #asignar:    var= var1
     def addAsign(self):
         self.code
-
+    #metodo auxiliar para agregar elementos extra al codigo
+    def addCodeFunc(self,code:str):
+        self.funcs.append(code)
+    #auxiliar para introducir cualquier codigo en el c3d
+    def addCode(self,code:str):
+        self.code.append(code)
 
 
 

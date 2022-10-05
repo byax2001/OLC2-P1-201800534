@@ -326,14 +326,14 @@ def p_matchTer(p):
 def p_brazosTer_list(p):
     """
     BRAZOS_TER : BRAZOS_TER BRAZO_TER
+        | BRAZO_TER
     """
-    p[1].append(p[2])
-    p[0] = p[1]
-def p_brazosTer_brazo(p):
-    """
-    BRAZOS_TER : BRAZO_TER
-    """
-    p[0]=[p[1]]
+    if len(p)==3:
+        p[1].append(p[2])
+        p[0] = p[1]
+    elif len(p)==2:
+        p[0] = [p[1]]
+
 def p_brazoTer(p):
     """
     BRAZO_TER : CONJEXPM igual mayor EXPRESION coma

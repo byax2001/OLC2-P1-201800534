@@ -13,6 +13,7 @@ from models.TablaSymbols.ValC3d import ValC3d
 class Println(Instruccion):
 
     def __init__(self, exp: Expresion,cExp:[Expresion], linea, columna):
+        super().__init__()
         self.columna = columna
         self.linea = linea
         self.exp = exp

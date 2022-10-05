@@ -7,6 +7,7 @@ from models.TablaSymbols.ValC3d import ValC3d
 
 class Id(Expresion):    
     def __init__(self, id:str, linea: int, columna: int):
+        super().__init__()
         self.tipo=None
         self.value=None
         self.id = id

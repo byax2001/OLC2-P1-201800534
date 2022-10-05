@@ -9,6 +9,7 @@ from BaseDatos.B_datos import B_datos
 from models.TablaSymbols.ValC3d import ValC3d
 class If(Instruccion):
     def __init__(self,exp:Expresion,bloque1:[Instruccion],bloque2:[Instruccion],line:int,column:int):
+        super().__init__()
         self.exp=exp
         self.bloque1=bloque1
         self.bloque2=bloque2
@@ -47,6 +48,7 @@ class If(Instruccion):
                               columna=self.column)
 
     def generarC3d(self,ts,ptr:int):
+        newts=Enviroment(ts,"If TErnario")
         truelabel=self.generator.newLabel()
         falselabel=self.generator.newLabel()
         lsalida=self.generator.newLabel()
@@ -58,13 +60,13 @@ class If(Instruccion):
             self.generator.addLabel(truelabel)
             for ins in self.bloque1:
                 ins.generator=self.generator
-                ins.generarC3d(ts,ptr)
+                ins.generarC3d(newts,ptr)
 
             self.generator.addGoto(lsalida)
             self.generator.addLabel(falselabel)
             for ins in self.bloque2:
                 ins.generator = self.generator
-                ins.generarC3d(ts, ptr)
+                ins.generarC3d(newts, ptr)
             self.generator.addLabel(lsalida)
         else:
             error="La expresion debe de ser de tipo booleano"

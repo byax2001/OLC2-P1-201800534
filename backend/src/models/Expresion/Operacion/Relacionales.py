@@ -59,6 +59,8 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
     def generarC3d(self,ts,ptr:int):
         self.exp1.generator=self.generator
         self.exp2.generator=self.generator
+        self.exp1.trueLabel=self.exp2.trueLabel=self.trueLabel
+        self.exp1.falseLabel=self.exp2.falseLabel=self.falseLabel
         val1:ValC3d=self.exp1.generarC3d(ts,ptr)
         val2:ValC3d=self.exp2.generarC3d(ts,ptr)
         if val1.tipo==val2.tipo:
@@ -67,6 +69,20 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
                 self.cmpStrC3d(i_str1=val1.valor,i_str2=val2.valor)
                 valor.trueLabel=self.trueLabel
                 valor.falseLabel=self.falseLabel
+            elif val1.tipo==Tipos.BOOLEAN:
+                gotov2:str=self.generator.code.pop()
+                gotov1:str=self.generator.code.pop()
+                v2 = "0"
+                v1 = "0"
+                if self.trueLabel in gotov2:
+                    v2="1"
+                if self.trueLabel in gotov1:
+                    v1="1"
+                self.generator.addIf(left=v1, rigth=v2, operator=strOperador(self.operador),
+                                     label=self.trueLabel)
+                self.generator.addGoto(label=self.falseLabel)
+                valor.trueLabel = self.trueLabel
+                valor.falseLabel = self.falseLabel
             else:
                 self.generator.addIf(left=val1.valor,rigth=val2.valor,operator=strOperador(self.operador),label=self.trueLabel)
                 self.generator.addGoto(label=self.falseLabel)
@@ -76,7 +92,8 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
         else:
             error="Las literales a comparar no son del mismo tipo"
             print(error)
-
+    def cmpBoolC3d(self):
+        print()
 
     def cmpStrC3d(self,i_str1,i_str2):
         t1= self.generator.newTemp()

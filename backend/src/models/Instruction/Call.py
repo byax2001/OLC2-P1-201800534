@@ -200,7 +200,7 @@ class Call(Instruccion):
             if symbol!=None:
                 self.generator.addComment(f"Llamada a funcion: {self.id}")
                 newts = Enviroment(ts, "Funcion")
-                newts.size=1
+                newts.size=1 #para saltarse la primera posicion, pues ahi estara el valor del return
                 newts.generator=ts.generator
                 puntero_newEnv=ts.generator.newTemp()
                 self.generator.addExpression(target=puntero_newEnv,left="SP",right=str(ts.size),operator="+")

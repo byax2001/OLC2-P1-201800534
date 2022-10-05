@@ -5,51 +5,27 @@ double STACK[78000];
 double SP;
 double H;
 double ptr;
-double t0,t1,t2,t3,t4;
+double t0,t1;
 
-void prueba(){{
-/* Primitivo tipo STR */
-t0 = H  ;
-HEAP[(int)H] = 65;
-H = H + 1;
-HEAP[(int)H] = 65;
-H = H + 1;
-HEAP[(int)H] = 65;
-H = H + 1;
-HEAP[(int)H] = 65;
-H = H + 1;
-HEAP[(int)H] = 65;
-H = H + 1;
-HEAP[(int)H] = 65;
-H = H + 1;
-HEAP[(int)H] = 65;
-H = H + 1;
-HEAP[(int)H] = 65;
-H = H + 1;
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Print de un String o CHAR */
-t1 = t0  ;
-L1:
-t2 = HEAP[(int)t1 ];
-if(t2 != -1) goto L2;
-goto L3;
-L2:
-printf("%c",(char)t2);
-t1 = t1 + 1;
-goto L1;
-L3:
-printf("%c",10);
-L0:
-return; 
-}
+
 int main(){
-/* Llamada a funcion: prueba */
-t0 = SP + 0;
-SP = SP + 0;
-prueba();
-SP = SP - 0;
-t3 = SP + 0;
-t4 = STACK[(int)t3];
+/* Declaracion var: x */
+if(3 == 4) goto L1;
+if(3 == 2) goto L2;
+if(3 == 3) goto L3;
+t0 = 10;
+goto L0;
+L1:
+t0 = 3;
+goto L0;
+L2:
+t0 = 4;
+goto L0;
+L3:
+t0 = 9;
+goto L0;
+L0:
+t1 = SP + 0;
+STACK[(int)t1] = t0;
 return 0;
 }

@@ -6,6 +6,7 @@ from models.Instruction.Brazo import Brazo
 from BaseDatos.B_datos import B_datos
 class Match(Instruccion):
     def __init__(self,exp:Expresion,lbrazos:[Brazo],default:[Instruccion],line:int,column:int):
+        super().__init__()
         self.exp=exp
         self.listBrazos=lbrazos
         self.default=default
@@ -25,7 +26,6 @@ class Match(Instruccion):
                 B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
                                   columna=self.column)
                 return None
-
         for brazo in self.listBrazos:
             CmpValores = brazo.CompararVexps(driver, new_ts,v_exp) #si alguno de los brazos tiene como cabecera la expresion solicitada en el match
             if(CmpValores):
@@ -35,3 +35,21 @@ class Match(Instruccion):
         for instruccion in self.default:
             instruccion.ejecutar(driver,new_ts)
         return None
+    def generarC3d(self,ts,ptr:int):
+        lsalida=self.generator.newLabel()
+        labels=[]
+        expM=self.exp.generarC3d(ts,ptr)
+        for brazo in self.listBrazos:
+            brazo.generator=self.generator
+            Lainst=self.generator.newLabel() #label con las instrucciones a ejecutar del brazo
+            brazo.CmpExpB(expM=expM,Lainst=Lainst,ts=ts,ptr=ptr)
+            labels.append(Lainst)
+        for x in range(len(self.listBrazos)):
+            self.generator.addLabel(labels[x])
+            self.listBrazos[x].generarC3d(ts,ptr)
+            self.generator.addGoto(lsalida)
+        for ins in self.default:
+            ins.generator=self.generator
+            ins.generarC3d(ts,ptr)
+        self.generator.addLabel(lsalida)
+

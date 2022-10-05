@@ -1,8 +1,16 @@
 fn main(){
 
-    prueba();
+   let x= match 3 {
+            4=> 3,
+            2=>4,
+            3=>9,
+            _=>10,
+        };
+
+
 }
 
 fn prueba(){
-    println!("AAAAAAAA");
+    let x= if(3==3){true}else{false};
+    println!("if ter: {}",x);
 }

@@ -2,8 +2,10 @@ from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Abstract.Expresion import Expresion
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
 class If_ternario(Expresion):
     def __init__(self,exp:Expresion,bloque1:[],exp1b:Expresion,bloque2:[],exp2b:Expresion,line:int,column:int):
+        super().__init__()
         self.value=None
         self.tipo=None
         self.exp=exp
@@ -43,7 +45,7 @@ class If_ternario(Expresion):
                         for inst in self.bloque2:
                             inst.ejecutar(driver, newts)
                         expR = self.exp2b
-                        self.tipo = expR.getTipo(driver, newts)
+                        self.tipo = expR.getTipo(driver, newts) #los ifs anidados son expresiones
                         self.value = expR.getValor(driver, newts)
                 else:
                     print("la expresion debe de dar un resultado booleano")
@@ -66,3 +68,50 @@ class If_ternario(Expresion):
     def ejecutar(self, driver, ts):
         """En la mayoria de expresiones no realiza nada aqui"""
         pass
+    def generarC3d(self,ts,ptr:int):
+        newts=Enviroment(ts,"If ternario")
+        trueL = self.generator.newLabel()
+        falseL = self.generator.newLabel()
+        exitL = self.generator.newLabel()
+        tmp_r=self.generator.newTemp()
+        falseLr=self.generator.newLabel()
+        trueLr=self.generator.newLabel()
+        exp_r: ValC3d=ValC3d(valor=tmp_r,isTemp=True,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
+        self.exp.generator = self.generator
+
+        self.exp2b.generator=self.generator
+        self.exp.falseLabel=falseL
+        self.exp.trueLabel=trueL
+        exp:ValC3d=self.exp.generarC3d(ts,ptr)
+        if exp.tipo==Tipos.BOOLEAN:
+            self.generator.addLabel(trueL)
+            for ins in self.bloque1:
+                ins.generator=self.generator
+                ins.generarC3d(ts,ptr)
+            self.exp1b.generator = self.generator
+            self.exp1b.trueLabel=trueLr
+            self.exp1b.falseLabel=falseLr
+            e_aux=self.exp1b.generarC3d(newts,ptr)
+            # ESTO SOLO SE HACE UNA VEZ, YA QUE EL IF TERNARIO DEBE DE CONTENER SOLO VALORES DEL MISMO TIPO
+            exp_r.tipo=e_aux.tipo
+            exp_r.tipo_aux=e_aux.tipo_aux
+            exp_r.trueLabel=trueLr
+            exp_r.falseLabel=falseLr
+            if e_aux.valor!="":
+                self.generator.addExpAsign(target=tmp_r,right=e_aux.valor)
+            self.generator.addGoto(exitL)
+            self.generator.addLabel(falseL)
+            for ins in self.bloque2:
+                ins.generator = self.generator
+                ins.generarC3d(newts, ptr)
+            self.exp2b.generator = self.generator
+            self.exp2b.trueLabel = trueLr
+            self.exp2b.falseLabel = falseLr
+            e_aux = self.exp2b.generarC3d(ts, ptr)
+            if e_aux.valor != "":
+                self.generator.addExpAsign(target=tmp_r, right=e_aux.valor)
+            self.generator.addLabel(exitL)
+            return exp_r
+        else:
+            error="La expresion del if debe de ser una expresion booleana"
+            print(error)

@@ -437,6 +437,7 @@ def p_asignaciones(p):
         p[0] = Asignacion(id=p[1], cIndex=p[2],cIds=[], exp=p[4], linea=p.lineno(1), columna=0)
     else:
         p[0] = Asignacion(id=p[1], cIndex=p[2],cIds=p[4],exp=p[6], linea=p.lineno(1), columna=0)
+
 def p_asignaciones_vec(p):
     """ASIGNACION : id igual  Vec dospuntos dospuntos new para parc
             | id igual Vec dospuntos dospuntos withcapacity para EXPRESION parc"""

@@ -30,11 +30,27 @@ class Enviroment:
         ts = self
         while ts is not None:
             exist = ts.tabla.get(id)
-
             if exist is not None:
                 return exist
             ts = ts.anterior
             self.generator.addExpression(target=tmp_aux,left=tmp_aux,right=str(ts.size),operator="+") #variable auxiliar que servira para volver a colocar el enviroment en su lugar  luego del proceso
+        return None
+
+    def actualizarC3d(self,id:str,value):
+        ts = self
+        while ts is not None:
+            symbol:Symbol = ts.tabla.get(id)
+
+            if symbol is not None:
+                symbol.value = value
+                tmp_i = self.generator.newTemp()
+                self.generator.addExpression(target=tmp_i, left="SP", right=str(symbol.position), operator="+")
+                self.generator.addSetStack(index=tmp_i,value=str(value))
+                ts.tabla.update({id: symbol})
+
+                return True
+            ts = ts.anterior
+
         return None
 
     def actualizar(self,id:str,value):

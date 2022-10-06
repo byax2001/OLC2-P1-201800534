@@ -47,27 +47,45 @@ class If(Instruccion):
             B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
                               columna=self.column)
 
-    def generarC3d(self,ts,ptr:int):
-        newts=Enviroment(ts,"If TErnario")
+    def generarC3d(self,ts:Enviroment,ptr:int,lsalida="",aux=0):
+        self.generator.addComment("If instruction")
+        newts=Enviroment(ts,"If")
+        newts.generator=self.generator
         truelabel=self.generator.newLabel()
         falselabel=self.generator.newLabel()
-        lsalida=self.generator.newLabel()
+        if lsalida=="":
+            lsalida=self.generator.newLabel()
         self.exp.trueLabel=truelabel
         self.exp.falseLabel=falselabel
         self.exp.generator=self.generator
         r_exp:ValC3d=self.exp.generarC3d(ts,ptr)
+
         if r_exp.tipo==Tipos.BOOLEAN:
             self.generator.addLabel(truelabel)
+            self.generator.addNextStack(index=str(ts.size))
             for ins in self.bloque1:
+                if isinstance(ins,Break):
+                    self.generator.addBackStack("1")
                 ins.generator=self.generator
                 ins.generarC3d(newts,ptr)
 
             self.generator.addGoto(lsalida)
             self.generator.addLabel(falselabel)
+            if len(self.bloque2)!=0:
+                if not isinstance(self.bloque2[0],If):
+                    self.generator.addNextStack(index=str(ts.size))
+                    newts = Enviroment(ts, "If")
             for ins in self.bloque2:
-                ins.generator = self.generator
-                ins.generarC3d(newts, ptr)
-            self.generator.addLabel(lsalida)
+                if isinstance(ins,If):
+                    ins.generator = self.generator
+                    ins.generarC3d(newts, ptr,lsalida,1)
+                else:
+                    ins.generator = self.generator
+                    ins.generarC3d(newts, ptr)
         else:
             error="La expresion debe de ser de tipo booleano"
             print(error)
+        if aux==0:
+            self.generator.addLabel(lsalida)
+            self.generator.addBackStack("1")
+            self.generator.addComment("End If")

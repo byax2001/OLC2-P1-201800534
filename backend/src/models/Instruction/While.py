@@ -11,6 +11,7 @@ from models.TablaSymbols.ValC3d import ValC3d
 
 class While(Instruccion):
     def __init__(self,exp:Expresion,bloque:[Instruccion],line:int,column:int):
+        super().__init__()
         self.exp=exp
         self.bloque=bloque
         self.line=line

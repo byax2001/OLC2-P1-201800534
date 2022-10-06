@@ -7,6 +7,7 @@ from models.Instruction.Return import Return
 from BaseDatos.B_datos import B_datos
 class Loop(Instruccion):
     def __init__(self,bloque:[Instruccion],line:int,column:int):
+        super().__init__()
         self.tipo=None
         self.value=None
         self.bloque=bloque
@@ -85,3 +86,26 @@ class Loop(Instruccion):
             self.instancia=0
             self.value=None
             self.tipo=None
+    def generarC3d(self,ts,ptr:int):
+        self.generator.addComment("Loop Instruction")
+        # Loop:
+        # 	<Instrucciones>
+        # 	goto Loop
+        # Salida:
+        loop=self.generator.newLabel()
+        lexit=self.generator.newLabel()
+        self.generator.addLabel(loop)
+        init_code=len(self.generator.code)
+        for ins in self.bloque:
+            ins.generator=self.generator
+            ins.generarC3d(ts,ptr)
+        f_code = len(self.generator.code)
+        code=""
+        for x in range(init_code,f_code):
+            code+=self.generator.code[x]+"\n"
+        for x in reversed(range(init_code,f_code)):
+            self.generator.code.pop(x)
+        code=code.replace("break_i",f"goto {lexit};")
+        self.generator.addCode(code)
+        self.generator.addGoto(loop)
+        self.generator.addLabel(lexit)

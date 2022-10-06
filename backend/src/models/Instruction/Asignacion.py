@@ -4,8 +4,12 @@ from models.TablaSymbols.Tipos import Tipos
 from models.TablaSymbols.Symbol import Symbols
 from models.Expresion.Vector.Vector import Vector
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
+from models.TablaSymbols.Enviroment import Enviroment
+
 class Asignacion(Instruccion):
     def __init__(self,id:str,cIndex:[Expresion],cIds:[str],exp: Expresion, linea:int, columna:int):
+        super().__init__()
         self.id=id
         self.cIndex=cIndex
         self.cIds=cIds
@@ -99,4 +103,20 @@ class Asignacion(Instruccion):
                 return Tipos.USIZE
         return t_exp
 
+    def generarC3d(self,ts:Enviroment,ptr:int):
+        self.generator.addComment("Asignacion")
+        tmpaux=self.generator.newTemp()
+        symbol=ts.buscarC3d(self.id,tmp_aux=tmpaux)
+        if symbol!=None:
+            self.exp.generator=self.generator
+            exp:ValC3d=self.exp.generarC3d(ts,ptr)
+            if symbol.tipo==exp.tipo:
+                self.generator.addBackStack(index=tmpaux)
+                ts.generator=self.generator
+                ts.actualizarC3d(id=self.id,value=exp.valor)
+                self.generator.addNextStack(index=tmpaux)
+        else:
+            error="dicha variable no existe"
+            print(error)
+        self.generator.addComment("End Asignacion")
 

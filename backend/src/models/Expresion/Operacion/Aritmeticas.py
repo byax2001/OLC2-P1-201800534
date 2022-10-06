@@ -229,29 +229,32 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
 
         if exp1.tipo==exp2.tipo:
             if self.operador==Operador.SUMA:
-                if exp1.tipo in [Tipos.FLOAT64,Tipos.FLOAT64]:
+                if exp1.tipo in [Tipos.FLOAT64,Tipos.INT64]:
                     self.generator.addExpression(target=newTemp,left=exp1.valor,operator="+",right=exp2.valor)
                     result.tipo = exp1.tipo
             elif self.operador==Operador.RESTA:
-                if exp1.tipo in [Tipos.FLOAT64, Tipos.FLOAT64]:
+                if exp1.tipo in [Tipos.FLOAT64, Tipos.INT64]:
                     self.generator.addExpression(target=newTemp, left=exp1.valor, operator="-", right=exp2.valor)
                 result.tipo=exp1.tipo
             elif self.operador==Operador.MULTI:
-                if exp1.tipo in [Tipos.FLOAT64, Tipos.FLOAT64]:
+                if exp1.tipo in [Tipos.FLOAT64, Tipos.INT64]:
                     self.generator.addExpression(target=newTemp, left=exp1.valor, operator="*", right=exp2.valor)
                 result.tipo=exp1.tipo
             elif self.operador==Operador.DIV:
-                if exp1.tipo in [Tipos.FLOAT64, Tipos.FLOAT64]:
+                if exp1.tipo in [Tipos.FLOAT64, Tipos.INT64]:
                     self.divModC3d(exp1,exp2,newTemp,self.operador)
                 result.tipo=exp1.tipo
             elif self.operador==Operador.MOD:
-                self.divModC3d(exp1,exp2,newTemp,self.operador)
+                if exp1.tipo in [Tipos.FLOAT64, Tipos.INT64]:
+                    self.divModC3d(exp1,exp2,newTemp,self.operador)
                 result.tipo = exp1.tipo
             elif self.operador==Operador.POW:
-                self.generator.addExpression(target=newTemp,left=f"pow({exp1.valor},{exp2.valor})",operator="",right="")
+                if exp1.tipo in [Tipos.FLOAT64, Tipos.INT64]:
+                    self.generator.addExpression(target=newTemp,left=f"pow({exp1.valor},{exp2.valor})",operator="",right="")
                 result.tipo = exp1.tipo
             elif self.operador == Operador.POWF:
-                self.generator.addExpression(target=newTemp,left=f"pow({exp1.valor},{exp2.valor})",operator="",right="")
+                if exp1.tipo in [Tipos.FLOAT64, Tipos.INT64]:
+                    self.generator.addExpression(target=newTemp,left=f"pow({exp1.valor},{exp2.valor})",operator="",right="")
                 result.tipo = exp1.tipo
 
         elif exp1.tipo in [Tipos.INT64,Tipos.USIZE] and exp2.tipo in [Tipos.INT64,Tipos.USIZE]:

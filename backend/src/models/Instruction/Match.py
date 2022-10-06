@@ -36,6 +36,7 @@ class Match(Instruccion):
             instruccion.ejecutar(driver,new_ts)
         return None
     def generarC3d(self,ts,ptr:int):
+        self.generator.addComment("Match Instruction")
         lsalida=self.generator.newLabel()
         labels=[]
         expM=self.exp.generarC3d(ts,ptr)
@@ -44,12 +45,16 @@ class Match(Instruccion):
             Lainst=self.generator.newLabel() #label con las instrucciones a ejecutar del brazo
             brazo.CmpExpB(expM=expM,Lainst=Lainst,ts=ts,ptr=ptr)
             labels.append(Lainst)
+        self.generator.addComment("Default")
+        for ins in self.default:
+            ins.generator=self.generator
+            ins.generarC3d(ts,ptr)
+        self.generator.addComment("End default")
+        self.generator.addGoto(lsalida)
         for x in range(len(self.listBrazos)):
             self.generator.addLabel(labels[x])
             self.listBrazos[x].generarC3d(ts,ptr)
             self.generator.addGoto(lsalida)
-        for ins in self.default:
-            ins.generator=self.generator
-            ins.generarC3d(ts,ptr)
+
         self.generator.addLabel(lsalida)
 

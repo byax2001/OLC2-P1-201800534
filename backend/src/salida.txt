@@ -5,27 +5,50 @@ double STACK[78000];
 double SP;
 double H;
 double ptr;
-double t0,t1;
+double t0,t1,t2,t3,t4,t5,t6,t7,t8,t9;
 
 
 int main(){
 /* Declaracion var: x */
-if(3 == 4) goto L1;
-if(3 == 2) goto L2;
-if(3 == 3) goto L3;
-t0 = 10;
+t0 = SP + 0;
+STACK[(int)t0] = 0;
+/* Loop Instruction */
+L0:
+/* Print de un Int o Usize */
+printf("%d",2);
+printf("%c",10);
+/* Asignacion */
+/* Aritmeticas */
+/* ID EXPRESION: x */
+SP = SP - t3;
+t5 = SP + 0;
+t4 = STACK[(int)t5];
+SP = SP + t3;
+t2 = t4 + 1;
+SP = SP - t1;
+t6 = SP + 0;
+STACK[(int)t6] = t2;
+SP = SP + t1;
+/* End Asignacion */
+/* If instruction */
+/* ID EXPRESION: x */
+SP = SP - t7;
+t9 = SP + 0;
+t8 = STACK[(int)t9];
+SP = SP + t7;
+if(t8 == 2) goto L2;
+goto L3;
+L2:
+SP = SP + 1;
+SP = SP - 1;
+goto L1;
+goto L4;
+L3:
+L4:
+SP = SP - 1;
+/* End If */
+
 goto L0;
 L1:
-t0 = 3;
-goto L0;
-L2:
-t0 = 4;
-goto L0;
-L3:
-t0 = 9;
-goto L0;
-L0:
-t1 = SP + 0;
-STACK[(int)t1] = t0;
 return 0;
 }

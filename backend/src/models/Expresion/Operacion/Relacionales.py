@@ -59,8 +59,14 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
     def generarC3d(self,ts,ptr:int):
         self.exp1.generator=self.generator
         self.exp2.generator=self.generator
+        if self.trueLabel=="":
+            self.trueLabel=self.generator.newLabel()
+        if self.falseLabel=="":
+            self.falseLabel=self.generator.newLabel()
+
         self.exp1.trueLabel=self.exp2.trueLabel=self.trueLabel
         self.exp1.falseLabel=self.exp2.falseLabel=self.falseLabel
+
         val1:ValC3d=self.exp1.generarC3d(ts,ptr)
         val2:ValC3d=self.exp2.generarC3d(ts,ptr)
         if val1.tipo==val2.tipo:
@@ -70,6 +76,8 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
                 valor.trueLabel=self.trueLabel
                 valor.falseLabel=self.falseLabel
             elif val1.tipo==Tipos.BOOLEAN:
+                #para ==  seria literalmente un and:    true && true por ejemplo
+                # para !=  seria literalmente un:  true &&  !true
                 gotov2:str=self.generator.code.pop()
                 gotov1:str=self.generator.code.pop()
                 v2 = "0"
@@ -92,6 +100,7 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
         else:
             error="Las literales a comparar no son del mismo tipo"
             print(error)
+
     def cmpBoolC3d(self):
         print()
 

@@ -63,22 +63,28 @@ class While(Instruccion):
             return
 
     def generarC3d(self,ts,ptr:int):
+        self.generator.addComment("While Instruction")
         self.exp.generator = self.generator
+        loop = self.generator.newLabel()
+        trueLabel=self.generator.newLabel()
+        falseLabel=self.generator.newLabel()
+        self.exp.trueLabel = trueLabel
+        self.exp.falseLabel = falseLabel
 
-        newLabel = self.generator.newLabel()
-        self.generator.addLabel(newLabel)
-
-        vCondicion:ValC3d = self.exp.generarC3d(ts)
+        self.generator.addLabel(loop)
+        vCondicion:ValC3d = self.exp.generarC3d(ts,ptr)
 
         if (vCondicion.tipo == Tipos.BOOLEAN):
             self.generator.addLabel(vCondicion.trueLabel)
 
-            newEnv = Enviroment(ts)
-            for ins in self.block:
+            newEnv = Enviroment(ts,"While Bloque")
+            self.generator.addNextStack(index=str(ts.size))
+            for ins in self.bloque:
                 ins.generator = self.generator
-                ins.generarC3d(newEnv)
-
-            self.generator.addGoto(newLabel)
+                ins.generarC3d(newEnv,ptr)
+            self.generator.addBackStack(index=str(ts.size))
+            self.generator.addGoto(loop)
             self.generator.addLabel(vCondicion.falseLabel)
         else:
             print("La expresion no es booleana")
+        self.generator.addComment("End While")

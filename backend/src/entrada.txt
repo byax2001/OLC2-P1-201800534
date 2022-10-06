@@ -1,13 +1,6 @@
 fn main(){
-    let x=0;
-    loop{
-        println!(2);
-        x=x+1;
-        if x==2 {
-            break;
-        }
-
-    }
+    let x= i64::pow(2,3);
+    println!("{}",x);
 
 }
 

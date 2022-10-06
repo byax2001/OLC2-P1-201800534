@@ -16,12 +16,10 @@ class Generator:
     # Obtener el codigo generado
     def getCode(self) -> str:
         tempCode: str = '#include <stdio.h>\n'
-        tempCode = tempCode + '#include <math.h>\n'
         tempCode = tempCode + "double HEAP[10000];\n"
         tempCode = tempCode + "double STACK[78000];\n"
         tempCode = tempCode + "double SP;\n"  #p, h y ptr se inicializan con 0 en c++ si no se les asigna nada al declararlos
         tempCode = tempCode + "double H;\n"
-        tempCode = tempCode + "double ptr;\n"
 
         if (len(self.tempList) > 0):
             tempCode = tempCode + "double " + self.getUsedTemps() + ";\n\n"

@@ -203,7 +203,7 @@ class Call(Instruccion):
                 newts.size=1 #para saltarse la primera posicion, pues ahi estara el valor del return
                 newts.generator=ts.generator
                 puntero_newEnv=ts.generator.newTemp()
-                self.generator.addExpression(target=puntero_newEnv,left="SP",right=str(ts.size),operator="+")
+                self.generator.addExpression(target=puntero_newEnv,left="P",right=str(ts.size),operator="+")
                 #change expresion
                 paramsFun = symbol.value[0]  # parametros de la funcion
                 instFun = symbol.value[1]  # instrucciones de la funcion
@@ -231,7 +231,7 @@ class Call(Instruccion):
                 #VALOR RETURN
                 tmp_aux=self.generator.newTemp() #indice donde se encuentra el resultado del metodo
                 tmp_return=self.generator.newTemp() #resultado del metodo
-                self.generator.addExpression(target=tmp_aux,left="SP",right=str(ts.size),operator="+")
+                self.generator.addExpression(target=tmp_aux,left="P",right=str(ts.size),operator="+")
                 self.generator.addGetStack(target=tmp_return,index=tmp_aux)
                 return ValC3d(valor=tmp_return,isTemp=True,tipo=self.tipo,tipo_aux=self.tipo)
             else:

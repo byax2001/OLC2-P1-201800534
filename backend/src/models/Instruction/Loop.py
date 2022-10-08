@@ -5,6 +5,7 @@ from models.Instruction.Break import Break
 from models.Instruction.Continue import Continue
 from models.Instruction.Return import Return
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
 class Loop(Instruccion):
     def __init__(self,bloque:[Instruccion],line:int,column:int):
         super().__init__()
@@ -88,6 +89,8 @@ class Loop(Instruccion):
             self.tipo=None
     def generarC3d(self,ts,ptr:int):
         self.generator.addComment("Loop Instruction")
+        tn_rloop=self.generator.newTemp()
+        rloop=ValC3d(valor=tn_rloop,isTemp=True,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
         # Loop:
         # 	<Instrucciones>
         # 	goto Loop
@@ -98,14 +101,23 @@ class Loop(Instruccion):
         init_code=len(self.generator.code)
         for ins in self.bloque:
             ins.generator=self.generator
-            ins.generarC3d(ts,ptr)
+            result=ins.generarC3d(ts,ptr=tn_rloop)
+            if result!=None:
+                rloop.tipo = result.tipo
+                rloop.tipo_aux = result.tipo
+                rloop.trueLabel = result.trueLabel
+                rloop.falseLabel = result.falseLabel
         f_code = len(self.generator.code)
         code=""
         for x in range(init_code,f_code):
-            code+=self.generator.code[x]+"\n"
+            if x!=f_code-1:
+                code+=self.generator.code[x]+"\n"
+            else:
+                code += self.generator.code[x]
         for x in reversed(range(init_code,f_code)):
             self.generator.code.pop(x)
         code=code.replace("break_i",f"goto {lexit};")
         self.generator.addCode(code)
         self.generator.addGoto(loop)
         self.generator.addLabel(lexit)
+        return rloop

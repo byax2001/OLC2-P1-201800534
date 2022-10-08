@@ -20,5 +20,5 @@ class Expresion:
     def ejecutar(self,driver,ts):
         """por si fuera necesario ejecutar algo"""
         pass
-    def generarC3d(self,ts,ptr:int):
+    def generarC3d(self,ts,ptr):
         pass

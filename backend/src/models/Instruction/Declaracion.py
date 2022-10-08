@@ -174,7 +174,7 @@ class Declaracion(Instruccion):
         aux_index = self.generator.newTemp()  # tendra el index
 
         if (temp_var.tipo != Tipos.BOOLEAN):
-            self.generator.addExpression(target=aux_index, left="SP", right=str(temp_var.position), operator="+")
+            self.generator.addExpression(target=aux_index, left="P", right=str(temp_var.position), operator="+")
             self.generator.addSetStack(index=aux_index, value=temp_var.valor)  # Stack[(int)pos]= val
         else:
             # Aqui no estoy añadiendo directamente el valor al hacer el addSetStack
@@ -185,11 +185,11 @@ class Declaracion(Instruccion):
 
             newLabel = self.generator.newLabel()  # metodo que crea y retorna un label  Ln, esta es la etiqueta de salida
             self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
-            self.generator.addExpression(target=aux_index, left="SP", right=str(temp_var.position), operator="+")
+            self.generator.addExpression(target=aux_index, left="P", right=str(temp_var.position), operator="+")
             self.generator.addSetStack(index=aux_index, value='1')  # Stack[(int)num]= 1
             self.generator.addGoto(newLabel)  # goto Ln ;
             self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
-            self.generator.addExpression(target=aux_index, left="SP", right=str(temp_var.position), operator="+")
+            self.generator.addExpression(target=aux_index, left="P", right=str(temp_var.position), operator="+")
             self.generator.addSetStack(index=aux_index, value='0')  # Stack[(int)num]= 0
             self.generator.addLabel(newLabel)  # añade Ln:  ya existente al codigo principal
 

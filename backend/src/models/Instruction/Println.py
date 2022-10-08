@@ -166,8 +166,8 @@ class Println(Instruccion):
                 self.generator.addExpAsign(target=tbool_str, right="H")
                 #----------------------------------------------------
                 c3d_exp = exp.generarC3d(ts, ptr)
-                if(c3d_exp.tipo==Tipos.BOOLEAN):
-                    self.addCopyStr(c3d_exp)
+                if(c3d_exp.tipo==Tipos.BOOLEAN):#SI ES BOOLEANA ANTES DE CUALQUIER PROCEDIMIENTO, CONVERTIR EL RESULTADO EN STRING
+                    self.addCopyStr(c3d_exp)    # EN LOS OTROS CASOS ESO ES PRESCINDIBLE
                     self.generator.addSetHeap(index="H",value="-1")
                     self.generator.addNextHeap()
                     c3d_exp=ValC3d(valor=tbool_str,isTemp=True,tipo=Tipos.STRING,tipo_aux=Tipos.STRING)
@@ -285,10 +285,11 @@ class Println(Instruccion):
                 t3 = self.generator.newTemp()
                 t4 = self.generator.newTemp()
                 self.generator.addExpAsign(target=t1, right=exp.valor)  # t1 = 1245.552
-                self.generator.addExpAsign(target=t2, right=f"(int){t1}")  # t2 = (int)t1
+                self.generator.addExpAsign(target=t2, right=f"(int){t1}")  # t2 = (int)t1    : 1245
                 self.generator.addExpression(target=t3, left=t1, right=t2, operator="-")  # t3=t1-t2
                 self.generator.addExpression(target=t3, left=t3, right="1000000", operator="*")  # t3=t1-t2
-                self.generator.addExpAsign(target=t4, right=f"round({t3})")
+                self.generator.addExpAsign(target=t4, right=f"(int){t3}") #parte decimal del numero
+
                 self.setHeapStrNum(t2)
                 self.generator.addSetHeap(index="H", value=str(ord(".")))
                 self.generator.addNextHeap()
@@ -318,6 +319,7 @@ class Println(Instruccion):
                 self.generator.addSetHeap(index="H", value=str(ord("e")))
                 self.generator.addNextHeap()
                 self.generator.addLabel(newLabel)  # Lsalida:
+
     #pasar un numero a string en c++
     def setHeapStrNum(self,tvalor):
         linit=self.generator.newTemp()
@@ -333,7 +335,7 @@ class Println(Instruccion):
         self.generator.addExpression(target=t2, left=t1, right="10", operator="/") #t2=t1/10
         self.generator.addExpAsign(target=t3, right=f"(int){t2}") #t3=(int)t2
         self.generator.addIf(left=t3,rigth="0",operator="==",label=Lf) #if(t3==0) goto Lf
-        self.generator.addExpAsign(target=t4,right=f"fmod({t1},10)") # t4=fmod(t1,10):  t4=t1%10
+        self.generator.addExpAsign(target=t4,right=f"(int){t1}%10") # t4=(int)t1%10:  t4=t1%10
 
         self.generator.addExpAsign(target=t1,right=t3) #t1=t3
         self.generator.addSetHeap(index="H",value=f"(int){t4} +48") #Heap[H]=(char)t4+48   #EN ASSEMBLER CUANDO SE LE SUMA 30h A UN NUMERO

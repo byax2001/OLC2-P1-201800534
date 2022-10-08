@@ -16,13 +16,13 @@ class Generator:
     # Obtener el codigo generado
     def getCode(self) -> str:
         tempCode: str = '#include <stdio.h>\n'
-        tempCode = tempCode + "double HEAP[10000];\n"
-        tempCode = tempCode + "double STACK[78000];\n"
-        tempCode = tempCode + "double SP;\n"  #p, h y ptr se inicializan con 0 en c++ si no se les asigna nada al declararlos
-        tempCode = tempCode + "double H;\n"
+        tempCode = tempCode + "float HEAP[78000];\n"  #tambien pudo haber sido double HEP[10000]
+        tempCode = tempCode + "float STACK[10000];\n"
+        tempCode = tempCode + "float P;\n"  #p, h y ptr se inicializan con 0 en c++ si no se les asigna nada al declararlos
+        tempCode = tempCode + "float H;\n"
 
         if (len(self.tempList) > 0):
-            tempCode = tempCode + "double " + self.getUsedTemps() + ";\n\n"
+            tempCode = tempCode + "float " + self.getUsedTemps() + ";\n\n"
         tempCode = tempCode + "\n".join(self.funcs) #para las funciones
         tempCode = tempCode + '\nint main(){\n'
         tempCode = tempCode + "\n".join(self.code)
@@ -76,11 +76,11 @@ class Generator:
 
     # Se mueve hacia la posicion siguiente del stack
     def addNextStack(self, index: str):
-        self.code.append("SP = SP + " + index + ";")
+        self.code.append("P = P + " + index + ";")
 
     # Se mueve hacia la posicion anterior del stack
     def addBackStack(self, index: str):
-        self.code.append("SP = SP - " + index + ";")
+        self.code.append("P = P - " + index + ";")
 
     # Obtiene el valor del heap en cierta posicion
     def addGetHeap(self, target: str, index: str):

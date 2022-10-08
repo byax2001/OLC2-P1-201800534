@@ -20,5 +20,5 @@ class Return(Instruccion):
         if self.exp!=None:
             self.exp.generator=self.generator
             exp:ValC3d=self.exp.generarC3d(ts,ptr)
-            self.generator.addExpression(target=tmp_index, left="SP", right="0", operator="+")
+            self.generator.addExpression(target=tmp_index, left="P", right="0", operator="+")
             self.generator.addSetStack(index=tmp_index, value=exp.valor)

@@ -44,7 +44,7 @@ class Enviroment:
             if symbol is not None:
                 symbol.value = value
                 tmp_i = self.generator.newTemp()
-                self.generator.addExpression(target=tmp_i, left="SP", right=str(symbol.position), operator="+")
+                self.generator.addExpression(target=tmp_i, left="P", right=str(symbol.position), operator="+")
                 self.generator.addSetStack(index=tmp_i,value=str(value))
                 ts.tabla.update({id: symbol})
 

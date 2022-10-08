@@ -47,8 +47,10 @@ class If(Instruccion):
             B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
                               columna=self.column)
 
-    def generarC3d(self,ts:Enviroment,ptr:int,lsalida="",aux=0):
+    def generarC3d(self,ts:Enviroment,ptr,lsalida="",aux=0):
         self.generator.addComment("If instruction")
+        tn_rif=self.generator.newTemp()
+        result_if=ValC3d(valor=tn_rif,isTemp=True,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
         newts=Enviroment(ts,"If")
         newts.generator=self.generator
         truelabel=self.generator.newLabel()
@@ -67,7 +69,12 @@ class If(Instruccion):
                 if isinstance(ins,Break):
                     self.generator.addBackStack("1")
                 ins.generator=self.generator
-                ins.generarC3d(newts,ptr)
+                result=ins.generarC3d(newts,ptr)
+                if result!=None:
+                    result_if.tipo=result.tipo
+                    result_if.tipo_aux=result.tipo
+                    result_if.trueLabel=result.trueLabel
+                    result_if.falseLabel=result.falseLabel
 
             self.generator.addGoto(lsalida)
             self.generator.addLabel(falselabel)
@@ -81,7 +88,12 @@ class If(Instruccion):
                     ins.generarC3d(newts, ptr,lsalida,1)
                 else:
                     ins.generator = self.generator
-                    ins.generarC3d(newts, ptr)
+                    result=ins.generarC3d(newts, ptr)
+                    if result != None:
+                        result_if.tipo = result.tipo
+                        result_if.tipo_aux = result.tipo
+                        result_if.trueLabel = result.trueLabel
+                        result_if.falseLabel = result.falseLabel
         else:
             error="La expresion debe de ser de tipo booleano"
             print(error)
@@ -89,3 +101,4 @@ class If(Instruccion):
             self.generator.addLabel(lsalida)
             self.generator.addBackStack("1")
             self.generator.addComment("End If")
+

@@ -51,13 +51,13 @@ class Id(Expresion):
 
     def generarC3d(self,ts:Enviroment,ptr:int):
         self.generator.addComment(f"ID EXPRESION: {self.id}")
-        tmp_aux = self.generator.newTemp() #para volver al enviroment actual de la pila luego del proceso de busqueda, y resta de SP
+        tmp_aux = self.generator.newTemp() #para volver al enviroment actual de la pila luego del proceso de busqueda, y resta de P
         symbol:Symbol = ts.buscarC3d(self.id,tmp_aux)
         self.generator.addBackStack(index=tmp_aux)  # para retroceder entre enviroments
         if symbol!=None:
             newTemp = self.generator.newTemp()
             index = self.generator.newTemp()
-            self.generator.addExpression(target=index,left="SP",right=str(symbol.position),operator="+")
+            self.generator.addExpression(target=index,left="P",right=str(symbol.position),operator="+")
             self.generator.addGetStack(target=newTemp, index=index)
             if (symbol.tipo != Tipos.BOOLEAN):
                 valor_r=ValC3d(valor=newTemp,isTemp=True, tipo= symbol.tipo)

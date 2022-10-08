@@ -1,7 +1,6 @@
 fn main(){
-    let x= i64::pow(2,3);
-    println!("{}",x);
-
+    let x:i64 = 0;
+    let z=loop{ if 3==3 {break 4;}};
 }
 
 fn prueba(){

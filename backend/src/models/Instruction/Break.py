@@ -17,11 +17,16 @@ class Break(Instruccion):
         return self.exp.getValor(driver,ts);
     def getTipo (self,driver,ts):
         return self.exp.getTipo(driver,ts)
-    def generarC3d(self,ts,ptr):
+    def generarC3d(self,ts:Enviroment,ptr):
         result=ValC3d(valor="0",isTemp=False,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
         if self.exp!=None:
             self.exp.generator=self.generator
             result:ValC3d=self.exp.generarC3d(ts,ptr)
-            self.generator.addExpAsign(target=ptr,right=result.valor)
+
+        if ts.env=="If":
+            self.generator.addExpAsign(target=ptr['tmpR'], right=result.valor)#tmp: temporal resultante
+            self.generator.addBackStack(str(ptr['envAnt']))
+        else:
+            self.generator.addExpAsign(target=ptr, right=result.valor)
         self.generator.addCode("break_i")
         return result

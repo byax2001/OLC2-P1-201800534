@@ -2,8 +2,10 @@ from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
 from BaseDatos.B_datos import B_datos
 from models.TablaSymbols.Enviroment import Enviroment
+from models.TablaSymbols.ValC3d import ValC3d
 class Arreglo(Expresion):
     def __init__(self,cExp:Expresion,exp:Expresion,multi:Expresion,line:int,column:int):
+        super().__init__()
         self.value=None
         self.tipo=None
         self.cExp=cExp # ["hola","hola","hola"]
@@ -71,3 +73,80 @@ class Arreglo(Expresion):
             self.instancia=0
             self.value=None
             self.tipo=None
+
+       #REVISAR: QUE EL TIPO DE VARIABLE  DEL ARREGLO SEA IGUAL A TODOS LOS ELEMENTOS QUE CONTIENE
+    def generarC3d(self,ts,ptr):
+        self.generator.addComment("Exp Arreglo")
+        tmpR=self.generator.newTemp()
+        result=ValC3d(valor=tmpR,isTemp=True,tipo=Tipos.ERROR,tipo_aux=Tipos.ARREGLO)
+        lexp=[]
+        if self.exp==None:#si es un arreglo normal y no un [exp;multiplicador]
+            x=0
+            for exp in self.cExp:
+                if x==0:
+                    result.tipo=exp.tipo
+                    x+=1
+                exp.generator=self.generator
+                result:ValC3d=exp.generarC3d(ts,ptr)
+                if result.tipo==result.tipo_aux==Tipos.BOOLEAN:
+                    trbool=self.generator.newTemp()
+                    exit=self.generator.newLabel()
+                    self.generator.addLabel(result.trueLabel)
+                    self.generator.addExpAsign(target=trbool,right="1")
+                    self.generator.addGoto(exit)
+                    self.generator.addLabel(result.falseLabel)
+                    self.generator.addExpAsign(target=trbool,right="0")
+                    self.generator.addLabel(exit)
+                    self.generator.addNextHeap()
+                    lexp.append(trbool)
+                else:
+                    lexp.append(exp.valor)
+            self.generator.addExpAsign(target=tmpR,right="H")
+            self.generator.addSetHeap(index="H",value=str(len(lexp))) #tamaño del arreglo
+            self.generator.addNextHeap()
+            for exp in lexp:
+                self.generator.addSetHeap(index="H",value=exp)
+                self.generator.addNextHeap()
+        else:
+            tcont=self.generator.newTemp()
+            taux=self.generator.newTemp()
+            loop=self.generator.newLabel()
+            lsalida=self.generator.newLabel()
+            self.generator.addExpAsign(target=tcont,right="0") #tcont= 0
+            self.multi.generator=self.generator
+            rmul:ValC3d=self.multi.generarC3d(ts,ptr)
+            if rmul.tipo in [Tipos.INT64,Tipos.USIZE]:
+                self.generator.addExpAsign(target=taux,right=rmul.valor)# taux= valormul
+            else:
+                error="El multiplicador debe de ser un dato entero"
+                print(error)
+                return result
+
+            # tvalor=valor  : tmpR=valor
+            self.exp.generator=self.generator
+            rval=self.exp.generarC3d(ts,ptr)
+            result.tipo=rval.tipo
+            result.tipo_aux=rval.tipo_aux
+            tmpR=self.generator.newTemp()
+            if rval.tipo==rval.tipo_aux==Tipos.BOOLEAN:
+                tmpR= self.generator.newTemp()
+                exit = self.generator.newLabel()
+                self.generator.addLabel(result.trueLabel)
+                self.generator.addExpAsign(target=tmpR, right="1")
+                self.generator.addGoto(exit)
+                self.generator.addLabel(result.falseLabel)
+                self.generator.addExpAsign(target=tmpR, right="0")
+                self.generator.addLabel(exit)
+                self.generator.addNextHeap()
+            else:
+                self.generator.addExpAsign(target=tmpR,right=rval.valor)
+
+            self.generator.addLabel(loop) #Loop:
+            self.generator.addIf(left=tcont,rigth=taux,operator=">=",label=lsalida) ##if(tcont>=taux) goto Lsalida
+            self.generator.addSetHeap(index="H",value=tmpR) #   #Heap[H]=tvalor
+            self.generator.addNextHeap()#    #H=H+1
+            self.generator.addExpression(target=tcont,left=tcont,right="1",operator="+")#tcont=tcont+1;
+            self.generator.addGoto(loop) #goto Loop
+            self.generator.newLabel(lsalida)#Lsalida:
+        return result
+

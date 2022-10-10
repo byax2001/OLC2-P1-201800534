@@ -66,10 +66,8 @@ class If(Instruccion):
             self.generator.addLabel(truelabel)
             self.generator.addNextStack(index=str(ts.size))
             for ins in self.bloque1:
-                if isinstance(ins,Break):
-                    self.generator.addBackStack("1")
                 ins.generator=self.generator
-                result=ins.generarC3d(newts,ptr)
+                result=ins.generarC3d(newts,{"tmpR":ptr,"envAnt":ts.size})
                 if result!=None:
                     result_if.tipo=result.tipo
                     result_if.tipo_aux=result.tipo
@@ -88,7 +86,7 @@ class If(Instruccion):
                     ins.generarC3d(newts, ptr,lsalida,1)
                 else:
                     ins.generator = self.generator
-                    result=ins.generarC3d(newts, ptr)
+                    result=ins.generarC3d(newts, {"tmpR":ptr,"envAnt":ts.size})
                     if result != None:
                         result_if.tipo = result.tipo
                         result_if.tipo_aux = result.tipo
@@ -101,4 +99,5 @@ class If(Instruccion):
             self.generator.addLabel(lsalida)
             self.generator.addBackStack("1")
             self.generator.addComment("End If")
+        return result_if
 

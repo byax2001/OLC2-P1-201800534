@@ -1,6 +1,6 @@
 fn main(){
     let x:i64 = 0;
-    let z=loop{ if 3==3 {break 4;}};
+    let z=loop{ if 3==3 {break 4;} else { break 3;}};
 }
 
 fn prueba(){

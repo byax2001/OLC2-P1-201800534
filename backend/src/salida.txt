@@ -18,11 +18,15 @@ if(3 == 3) goto L2;
 goto L3;
 L2:
 P = P + 1;
-P = P - 1;
 t1 = 4;
+P = P - 1;
 goto L1;
 goto L4;
 L3:
+P = P + 1;
+t1 = 3;
+P = P - 1;
+goto L1;
 L4:
 P = P - 1;
 /* End If */

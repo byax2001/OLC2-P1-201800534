@@ -87,7 +87,7 @@ class Loop(Instruccion):
             self.instancia=0
             self.value=None
             self.tipo=None
-    def generarC3d(self,ts,ptr:int):
+    def generarC3d(self,ts,ptr):
         self.generator.addComment("Loop Instruction")
         tn_rloop=self.generator.newTemp()
         rloop=ValC3d(valor=tn_rloop,isTemp=True,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)

@@ -5,8 +5,11 @@ from models.TablaSymbols.Enviroment import Enviroment
 from models.Expresion.Vector.Vector import Vector
 from models.TablaSymbols.Symbol import Symbol
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
+from models.TablaSymbols.SymC3d import SymC3d
 class DecArreglo(Instruccion):
     def __init__(self,mut:bool,id:str,arrDimensional:Expresion,array:Expresion,line:int,column:int):
+        super().__init__()
         self.mut=mut
         self.id=id
         self.arrDim=arrDimensional
@@ -75,8 +78,34 @@ class DecArreglo(Instruccion):
                 break
             arrayC=arrayC[0]["valor"]
         return arrCorrect
+
+
     def changeExp(self,exp:Expresion):
         self.array=exp
 
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
+    def generarC3d(self,ts:Enviroment,ptr):
+        if ts.buscarActualTs(self.id)==None:
+            if self.arrDim==None:
+                self.array.generator = self.generator
+                array:ValC3d=self.array.generarC3d(ts,ptr)
+                symbol=Symbol(mut=self.mut,id=self.id,value=array.valor,tipo_simbolo=1,tipo=array.tipo,
+                              line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
+                rDec:SymC3d=ts.addVar(self.id, symbol)
+                aux_index=self.generator.newTemp()
+                self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")
+                self.generator.addSetStack(index=aux_index, value=rDec.valor)  # Stack[(int)pos]= val
+            else:
+                self.arrDim.generator= self.array.generator = self.generator
+                arrDim:ValC3d=self.arrDim.generarC3d(ts,ptr)
+                array:ValC3d=self.array.generarC3d(ts,ptr)
+                symbol=Symbol(mut=self.mut,id=self.id,value=array.valor,tipo_simbolo=1,tipo=arrDim.tipo,
+                              line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
+                rDec:SymC3d=ts.addVar(self.id, symbol)
+                aux_index=self.generator.newTemp()
+                self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")
+                self.generator.addSetStack(index=aux_index, value=rDec.valor)  # Stack[(int)pos]= val
+        else:
+            error="variable ya declarada"
+            print(error)

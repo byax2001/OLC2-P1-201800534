@@ -168,7 +168,7 @@ class Declaracion(Instruccion):
     def declarar_c3d(self,ts,ptr,exp:ValC3d):
 
         newVar = Symbol(mut=self.mut, id=self.id, value=exp.valor, tipo_simbolo=0, tipo=exp.tipo,
-                        line=self.linea, column=self.columna, tacceso=self.tacceso)
+                        line=self.linea, column=self.columna, tacceso=self.tacceso,position=ts.size)
 
         temp_var: SymC3d = ts.addVar(self.id, newVar)  # ----------------------------
         aux_index = self.generator.newTemp()  # tendra el index

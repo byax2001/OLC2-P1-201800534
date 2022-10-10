@@ -1,8 +1,11 @@
 from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos,getTipo
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
+
 class DimensionalArreglo(Expresion):
     def __init__(self,tipo:str,dimArr:Expresion,Dimensional:Expresion,line:int,column:int):
+        super().__init__()
         self.value=None
         self.tipo=getTipo(tipo) if tipo!="" else None
         self.Dim=Dimensional
@@ -45,3 +48,41 @@ class DimensionalArreglo(Expresion):
 
     def ejecutar(self, driver, ts):
         pass
+
+    def generarC3d(self,ts,ptr):
+        result=ValC3d(valor="0",isTemp=False,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
+        if self.dimArr==None:
+            self.Dim.generator=self.generator
+            rDim:ValC3d=self.Dim.generarC3d(ts,ptr)
+            if rDim.tipo in [Tipos.INT64,Tipos.USIZE]:
+                tmpU=self.generator.newTemp()
+                self.generator.addExpAsign(target=tmpU,right=rDim.valor)
+                result.tipo=result.tipo_aux=self.tipo
+                result.valor=[tmpU]
+                result.isTemp=True
+                return result
+            else:
+                error="Error: El tamaño de una parte del arreglo no es entero o usize"
+                print(error)
+                return result
+        else:
+            self.dimArr.generator=self.generator
+            self.Dim.generator=self.generator
+            arrDim:ValC3d=self.dimArr.generarC3d(ts,ptr)
+            rDim=self.Dim.generarC3d(ts,ptr)
+            if rDim.tipo in [Tipos.INT64,Tipos.USIZE]:
+                tmpU=self.generator.newTemp()
+                self.generator.addExpAsign(target=tmpU,right=rDim.valor)
+                result.tipo=arrDim.tipo
+                result.tipo_aux = Tipos.ARREGLO
+                result.valor=arrDim.valor.insert(0,tmpU)# Se agregan a la inversa para un mejor control pues por ejemplo
+                # [[&str;2];4] es un array de 4 elementos con dos elementos adentro de cada uno de estos
+                result.isTemp=True
+                return result
+            else:
+                error="Error: El tamaño de una parte del arreglo no es entero o usize"
+                print(error)
+                return result
+
+
+

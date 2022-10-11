@@ -116,6 +116,11 @@ class Generator:
     def addCode(self,code:str):
         self.code.append(code)
 
+    def incVar(self,var):
+        self.code.append(f"{var} = {var} + 1;")
+    def decVar(self,var):
+        self.code.append(f"{var} = {var} - 1;")
+
 
 
 

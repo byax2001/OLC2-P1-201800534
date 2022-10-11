@@ -14,6 +14,7 @@ class Arreglo(Expresion):
         self.line=line
         self.column=column
         self.instancia=0
+        self.profundidad=0
     def getValor(self, driver, ts:Enviroment):
         self.instancia += 1
         vector=[]
@@ -163,5 +164,6 @@ class Arreglo(Expresion):
             self.generator.addExpression(target=tcont,left=tcont,right="1",operator="+")#tcont=tcont+1;
             self.generator.addGoto(loop) #goto Loop
             self.generator.newLabel(lsalida)#Lsalida:
+        result.prof_array=self.profundidad
         return result
 

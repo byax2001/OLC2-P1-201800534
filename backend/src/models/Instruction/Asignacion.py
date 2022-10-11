@@ -1,7 +1,7 @@
 from models.Abstract.Instruction import Instruccion
 from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
-from models.TablaSymbols.Symbol import Symbols
+from models.TablaSymbols.Symbol import Symbols,Symbol
 from models.Expresion.Vector.Vector import Vector
 from BaseDatos.B_datos import B_datos
 from models.TablaSymbols.ValC3d import ValC3d
@@ -106,15 +106,19 @@ class Asignacion(Instruccion):
     def generarC3d(self,ts:Enviroment,ptr:int):
         self.generator.addComment("Asignacion")
         tmpaux=self.generator.newTemp()
-        symbol=ts.buscarC3d(self.id,tmp_aux=tmpaux)
+        symbol:Symbol=ts.buscarC3d(self.id,tmp_aux=tmpaux)
         if symbol!=None:
-            self.exp.generator=self.generator
-            exp:ValC3d=self.exp.generarC3d(ts,ptr)
-            if symbol.tipo==exp.tipo:
-                self.generator.addBackStack(index=tmpaux)
-                ts.generator=self.generator
-                ts.actualizarC3d(id=self.id,value=exp.valor)
-                self.generator.addNextStack(index=tmpaux)
+            if symbol.mut:
+                self.exp.generator=self.generator
+                exp:ValC3d=self.exp.generarC3d(ts,ptr)
+                if symbol.tipo==exp.tipo:
+                    self.generator.addBackStack(index=tmpaux)
+                    ts.generator=self.generator
+                    ts.actualizarC3d(id=self.id,value=exp.valor)
+                    self.generator.addNextStack(index=tmpaux)
+            else:
+                error="La variable no es muteable"
+                print(error)
         else:
             error="dicha variable no existe"
             print(error)

@@ -2,14 +2,17 @@ from models.Abstract.Instruction import Instruccion
 from models.Expresion.Vector.vecI import vecI
 from models.Abstract.Expresion import Expresion
 from models.Expresion.Vector.Vector import Vector
+from models.Expresion.Vector.VectorC3d import VectorC3d
 from models.TablaSymbols.Symbol import Symbol
 from models.TablaSymbols.Tipos import Tipos,getTipo
 from models.Driver import Driver
 from models.TablaSymbols.Enviroment import Enviroment
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
 #dec vector vacio
 class DecVector(Instruccion):
     def __init__(self,mut:bool,id,tipo, vecI:vecI,capacity:Expresion,line:int,column:int):
+        super().__init__()
         self.id=id
         self.mut = mut
         self.vecI=vecI
@@ -115,3 +118,101 @@ class DecVector(Instruccion):
 
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
+    def generarC3d(self,ts,ptr):
+        self.generator.addComment(f"Declaracion de Vector: {self.id}")
+        #con vec!--------------------------------------------------------------------
+        if self.vecI!=None:
+            self.vecI.generator=self.generator
+            vecIr:ValC3d= self.vecI.generarC3d(ts,ptr)
+            if self.tipo==None:
+                newVec = VectorC3d(vec=vecIr.valor, stateCap=False, capacity=0,profundidad=vecIr.prof_array)
+                symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=vecIr.tipo, line=self.line,
+                                column=self.column, tacceso=self.tacceso)
+
+                rDec=ts.addVar(self.id, symbol)
+                aux_index=self.generator.newTemp()
+                self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")#taux=P+pos
+                self.generator.addSetStack(index=aux_index, value=vecIr.valor)  # Stack[(int)pos]= val
+
+                print("Se declaro un vector con \"vec!\"")
+                B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,
+                                    fila=self.line, columna=self.column)
+            else:
+                if self.tipo==vecIr.tipo:
+                    newVec = VectorC3d(vec=vecIr.valor, stateCap=False, capacity=0, profundidad=vecIr.prof_array)
+                    symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=vecIr.tipo,
+                                    line=self.line,
+                                    column=self.column, tacceso=self.tacceso)
+
+                    rDec = ts.addVar(self.id, symbol)
+                    aux_index = self.generator.newTemp()
+                    self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")#taux=P+pos
+                    self.generator.addSetStack(index=aux_index, value=vecIr.valor)  # Stack[(int)pos]= val
+
+                    print("Se declaro un vector con \"vec!\"")
+                    B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,
+                                        fila=self.line, columna=self.column)
+                else:
+                    error="El tipo de arreglo no es igual al tipo de variable que lo guardara"
+                    print(error)
+        elif self.capacity!=None:
+            self.capacity.generator=self.generator
+            vecIr: ValC3d = self.capacity.generarC3d(ts, ptr)
+            if vecIr in [Tipos.INT64,Tipos.USIZE]:
+                tvector=self.generator.newTemp()
+                loop=self.generator.newLabel()
+                tcont=self.generator.newTemp()
+                tvalor=self.generator.newTemp()
+                lsalida=self.generator.newLabel()
+
+                self.generator.addSetHeap(index="H",value=vecIr.valor) # Heap[H]=tam arreglo
+                self.generator.addExpAsign(target=tvector,right="H") # tr=H  (inicio del arreglo)
+                self.generator.addNextHeap() #H=H+1
+
+                self.generator.addExpAsign(target=tvalor,right=vecIr.valor)#tvalor=valor
+                self.generator.addExpAsign(target=tcont,right="0")# tcont=0
+                self.generator.addLabel(loop)#Loop:
+                self.generator.addIf(left=tcont,rigth=tvalor,operator=">=",label=lsalida)#if (tcont>=tvalor) goto Lsalida
+                self.generator.addNextHeap()#H=H+1
+                self.generator.addExpression(target=tcont,left=tcont,right=1,operator="+")#tcont=tcont+1
+                self.generator.addGoto(loop)# goto Loop
+                self.generator.addLabel(lsalida) #Lsalida
+
+                newVec = VectorC3d(vec=tvector, stateCap=True, capacity=vecIr.valor,profundidad=1)
+                symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
+                                line=self.line, column=self.column, tacceso=self.tacceso)
+
+                rDec = ts.addVar(self.id, symbol)
+                aux_index = self.generator.newTemp()
+                self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")
+                self.generator.addSetStack(index=aux_index, value=tvector)  # Stack[(int)pos]= punterVector
+
+                print("Se declaro un vector con \"with_capacity()\"")
+                B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,
+                                    fila=self.line,columna=self.column)
+            else:
+                print(f"Error la capacidad indicada no es un entero linea: {self.line}")
+                error = "Error la capacidad indicada no es un entero"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
+        else:# con new
+            tvector=self.generator.newTemp()
+            self.generator.addExpAsign(target=tvector, right="H")  # tr=H  (inicio del arreglo)
+            self.generator.addComment("tamanio Vector")
+            self.generator.addSetHeap(index="H", value="0")  # Heap[H]=tam arreglo
+            self.generator.addComment("--------------")
+            self.generator.addNextHeap()  # H=H+1
+
+            newVec = VectorC3d(vec=tvector, stateCap=False, capacity="0", profundidad=1)
+            symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
+                            line=self.line, column=self.column, tacceso=self.tacceso)
+
+            rDec = ts.addVar(self.id, symbol)
+            aux_index = self.generator.newTemp()
+            self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")
+            self.generator.addSetStack(index=aux_index, value=tvector)  # Stack[(int)pos]= punterVector
+
+
+            print("Se declaro un vector con \"new()\"")
+            B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,
+                                fila=self.line, columna=self.column)

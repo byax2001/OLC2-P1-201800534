@@ -6,6 +6,7 @@ class ValC3d:
         self.isTemp = isTemp
         self.tipo = tipo
         self.tipo_aux = tipo_aux  #para identificar si es un arreglo o no
+        self.prof_array=0 #profundidad de un arreglo
         self.trueLabel = ""
         self.falseLabel = ""
 

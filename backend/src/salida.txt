@@ -7,19 +7,11 @@ float t0,t1;
 
 
 int main(){
-/* Exp Arreglo */
+/* Declaracion de Vector: x */
 t0 = H;
-/* Tamanio Arreglo */
-HEAP[(int)H] = 4;
-/* --------------- */
-H = H + 1;
-HEAP[(int)H] = 1;
-H = H + 1;
-HEAP[(int)H] = 3;
-H = H + 1;
-HEAP[(int)H] = 4;
-H = H + 1;
-HEAP[(int)H] = 4;
+/* tamanio Vector */
+HEAP[(int)H] = 0;
+/* -------------- */
 H = H + 1;
 t1 = P + 0;
 STACK[(int)t1] = t0;

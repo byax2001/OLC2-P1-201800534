@@ -684,6 +684,8 @@ def p_vectori(p):
             | vecI cora EXPRESION puntoycoma EXPRESION corc"""
     if p[4]!=";":
         p[0]=vecI(cExp=p[3],exp=None,multiplicador=None,line=p.lineno(1), column=0)
+        if isinstance(p[3][0],vecI):
+            p[0].profundidad=p[3][0].profundidad+1
     else:
         p[0]=vecI(cExp=None,exp=p[3],multiplicador=p[5],line=p.lineno(1), column=0)
 
@@ -776,6 +778,8 @@ def p_dimension_arreglo_unidimensional(p):
 def p_arreglo_conj(p):
     """ARREGLO : cora CONT_ARR corc"""
     p[0]=Arreglo(cExp=p[2],exp=None,multi=None,line=p.lineno(1), column=0)
+    if isinstance(p[2][0],Arreglo):
+        p[0].profundidad=p[2][0].profundidad+1
 def p_arreglo_multi(p):
     """ARREGLO : cora EXPRESION puntoycoma EXPRESION corc"""
     p[0]=Arreglo(cExp=None,exp=p[2],multi=p[4],line=p.lineno(1), column=0)
@@ -786,6 +790,7 @@ def p_cont_arreglo(p):
 def p_cont_arreglo_u(p):
     """CONT_ARR : ELARR"""
     p[0]=[p[1]]
+
 def p_elemento_arreglo(p):
     """ELARR : ARREGLO
             | EXPRESION

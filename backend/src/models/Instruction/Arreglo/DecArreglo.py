@@ -3,6 +3,7 @@ from models.Abstract.Expresion import Expresion
 from models.Driver import Driver
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Expresion.Vector.Vector import Vector
+from models.Expresion.Vector.VectorC3d import VectorC3d
 from models.TablaSymbols.Symbol import Symbol
 from BaseDatos.B_datos import B_datos
 from models.TablaSymbols.ValC3d import ValC3d
@@ -86,21 +87,26 @@ class DecArreglo(Instruccion):
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
     def generarC3d(self,ts:Enviroment,ptr):
+        self.generator.addComment(f"Declaracion de arreglo: {self.id}")
         if ts.buscarActualTs(self.id)==None:
             if self.arrDim==None:
+
                 self.array.generator = self.generator
                 array:ValC3d=self.array.generarC3d(ts,ptr)
-                symbol=Symbol(mut=self.mut,id=self.id,value=array.valor,tipo_simbolo=1,tipo=array.tipo,
+                nvector=VectorC3d(vec=array.valor,stateCap=False,capacity=0,profundidad=(array.prof_array+1))
+                print(f"profundidad: {array.prof_array+1}")
+                symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=array.tipo,
                               line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
                 rDec:SymC3d=ts.addVar(self.id, symbol)
                 aux_index=self.generator.newTemp()
                 self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")
-                self.generator.addSetStack(index=aux_index, value=rDec.valor)  # Stack[(int)pos]= val
+                self.generator.addSetStack(index=aux_index, value=array.valor)  # Stack[(int)pos]= val
             else:
                 self.arrDim.generator= self.array.generator = self.generator
                 arrDim:ValC3d=self.arrDim.generarC3d(ts,ptr)
                 array:ValC3d=self.array.generarC3d(ts,ptr)
-                symbol=Symbol(mut=self.mut,id=self.id,value=array.valor,tipo_simbolo=1,tipo=arrDim.tipo,
+                nvector = VectorC3d(vec=array.valor, stateCap=False, capacity=0)
+                symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=arrDim.tipo,
                               line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
                 rDec:SymC3d=ts.addVar(self.id, symbol)
                 aux_index=self.generator.newTemp()

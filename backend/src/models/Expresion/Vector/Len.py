@@ -41,7 +41,6 @@ class Len(Expresion):
         symbol: Symbol = ts.buscarC3d(self.id, auxStack)
         if symbol != None:
             if symbol.tsimbolo == Symbols.VECTOR or symbol.tsimbolo == Symbols.ARREGLO:
-
                 result.tipo = Tipos.INT64
                 result.tipo_aux = Tipos.INT64
                 t_puntero = self.generator.newTemp()
@@ -52,11 +51,11 @@ class Len(Expresion):
                 self.generator.addGetStack(target=t_puntero, index=auxIndex)
                 self.generator.addNextStack(auxStack)
                 self.generator.addGetHeap(target=tmpR, index=t_puntero)  # t_tam=inicioArray
+            elif symbol.tipo == Tipos.STRING:
+                print() #por si acaso es necesario saber el tamaño de un string
             else:
                 error = "Se intenta usar len en un elemento no vector o arreglo"
                 print(error)
-
-
         else:
             error = "No existe dicho arreglo"
             print(error)

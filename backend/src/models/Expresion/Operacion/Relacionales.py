@@ -57,6 +57,7 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
             self.value=None
             self.tipo=None
     def generarC3d(self,ts,ptr:int):
+        self.generator.addComment("Operaciones Relacionales")
         self.exp1.generator=self.generator
         self.exp2.generator=self.generator
         if self.trueLabel=="":
@@ -110,8 +111,6 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
         t3=self.generator.newTemp()
         t4=self.generator.newTemp()
         loop=self.generator.newLabel()
-        Lf1=self.generator.newLabel()
-        Lv1=self.generator.newLabel()
         lim1=self.generator.newLabel()
         self.generator.addExpAsign(target=t1,right=i_str1) #    t1 = init1
         self.generator.addExpAsign(target=t2, right=i_str2)#    t2 = init2
@@ -121,11 +120,26 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
         self.generator.addExpression(target=t1,left=t1,right="1",operator="+")# t1 = t1 + 1
         self.generator.addExpression(target=t2, left=t2, right="1", operator="+")# t2 = t2 + 1
         self.generator.addIf(left=t3,rigth="-1",operator="==",label=lim1)       # if (t3 == -1) goto Lim1
-        self.generator.addIf(left=t4, rigth="-1", operator="==", label=self.falseLabel) #if (t4 == -1) goto LF
-        self.generator.addIf(left=t3, rigth=t4, operator="==", label=loop)    #if (t3 == t4) goto Loop
-        self.generator.addGoto(self.falseLabel)   #goto LF
-        self.generator.addLabel(lim1) #Lim1:
-        self.generator.addIf(left=t4, rigth="-1", operator="==", label=self.trueLabel)  # goto LV
-        self.generator.addGoto(self.falseLabel)  # goto LF
+
+        # --------- si la cadena 2 llego a su limite pero no la 1 entonces no son iguales
+        if self.operador=="==":
+            self.generator.addIf(left=t4, rigth="-1", operator="==", label=self.falseLabel) #if (t4 == -1) goto LF
+            self.generator.addIf(left=t3, rigth=t4, operator="==", label=loop)  # if (t3 == t4) goto Loop
+            self.generator.addGoto(self.falseLabel)  # goto LF
+            self.generator.addLabel(lim1)  # Lim1:
+            self.generator.addIf(left=t4, rigth="-1", operator="==", label=self.trueLabel)  # if (t4==-1) goto LV
+            self.generator.addGoto(self.falseLabel)  # goto LF
+        else:
+            #si las cadenas no son iguales, entonces es verdadero el !=
+            self.generator.addIf(left=t4, rigth="-1", operator="==", label=self.trueLabel)  # if (t4 == -1) goto LV
+            self.generator.addIf(left=t3, rigth=t4, operator="==", label=loop)  # if (t3 == t4) goto Loop
+            self.generator.addGoto(self.trueLabel)  # goto LV   Las cadenas no fueron iguales en algun punto: cumple con !=
+            self.generator.addLabel(lim1)  # Lim1:
+            # if (t4==-1) goto LF ambas cadenas son iguales y terminan donde mismo, entonces no cumplen con el !=
+            self.generator.addIf(left=t4, rigth="-1", operator="==", label=self.falseLabel)   # goto LF
+            # ambas cadenas poseen elementos similares pero no terminan al mismo tiempo, por lo que no son iguales
+            # lo que cumple con !=
+            self.generator.addGoto(self.trueLabel)  # goto LV
+
 
 

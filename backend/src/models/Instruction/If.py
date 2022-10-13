@@ -73,12 +73,13 @@ class If(Instruccion):
                     result_if.tipo_aux=result.tipo
                     result_if.trueLabel=result.trueLabel
                     result_if.falseLabel=result.falseLabel
-
+            self.generator.addBackStack(index=str(ts.size))
             self.generator.addGoto(lsalida)
             self.generator.addLabel(falselabel)
             if len(self.bloque2)!=0:
                 if not isinstance(self.bloque2[0],If):
-                    self.generator.addNextStack(index=str(ts.size))
+                    self.generator.addNextStack(index=str(ts.size)) #para que la pila se mueva el nuevo enviroment
+                                                                    # se debe de sumar el tamaño del anterior
                     newts = Enviroment(ts, "If")
             for ins in self.bloque2:
                 if isinstance(ins,If):
@@ -86,18 +87,21 @@ class If(Instruccion):
                     ins.generarC3d(newts, ptr,lsalida,1)
                 else:
                     ins.generator = self.generator
+                                                 #tmpR: label exit luego de un return o break
+                                                 #envAnt: para retroceder la pila al enviroment anterior
                     result=ins.generarC3d(newts, {"tmpR":ptr,"envAnt":ts.size})
                     if result != None:
                         result_if.tipo = result.tipo
                         result_if.tipo_aux = result.tipo
                         result_if.trueLabel = result.trueLabel
                         result_if.falseLabel = result.falseLabel
+                    self.generator.addBackStack(index=str(ts.size))
         else:
             error="La expresion debe de ser de tipo booleano"
             print(error)
         if aux==0:
             self.generator.addLabel(lsalida)
-            self.generator.addBackStack("1")
+
             self.generator.addComment("End If")
         return result_if
 

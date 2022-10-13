@@ -33,7 +33,8 @@ class Enviroment:
             if exist is not None:
                 return exist
             ts = ts.anterior
-            self.generator.addExpression(target=tmp_aux,left=tmp_aux,right=str(ts.size),operator="+") #variable auxiliar que servira para volver a colocar el enviroment en su lugar  luego del proceso
+            if ts!=None:
+                self.generator.addExpression(target=tmp_aux,left=tmp_aux,right=str(ts.size),operator="+") #variable auxiliar que servira para volver a colocar el enviroment en su lugar  luego del proceso
         return None
 
     def actualizarC3d(self,id:str,value):

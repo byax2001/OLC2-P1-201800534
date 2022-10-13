@@ -3,59 +3,29 @@ float HEAP[78000];
 float STACK[10000];
 float P;
 float H;
-float t0,t1,t2,t3,t4,t5,t6,t7,t8,t9;
+float t0;
 
 
 int main(){
-/* Declaracion de Vector: x */
-/* Exp Vec! */
-t0 = H;
-/* Tamanio Vec! */
-HEAP[(int)H] = 4;
-/* --------------- */
-H = H + 1;
-HEAP[(int)H] = 2;
-H = H + 1;
-HEAP[(int)H] = 3;
-H = H + 1;
-HEAP[(int)H] = 4;
-H = H + 1;
-HEAP[(int)H] = 5;
-H = H + 1;
-t1 = P + 0;
-STACK[(int)t1] = t0;
 /* If instruction */
-/* Contains Vector x */
-P = P - t3;
-t8 = P + 0;
-t4 = STACK[(int)t8];
-P = P + t3;
-t5 = HEAP[(int)t4 ];
-t4 = t4 + 1;
-t7 = 0;
-L3:
-if(t7 >= t5) goto L1;
-t6 = HEAP[(int)t4 ];
-t4 = t4 + 1;
-t7 = t7 + 1;
 /* Operaciones Relacionales */
-t9 = t6;
-if(3 == t9) goto L5;
-goto L6;
-L5:
-goto L0;
-L6:
 goto L3;
-/* END Contains */
+L3:
+goto L0;
 L0:
-P = P + 1;
+P = P + 0;
 /* Print de un Int o Usize */
 printf("%d",1);
 printf("%c",10);
+P = P - 0;
 goto L2;
 L1:
+P = P + 0;
+/* Print de un Int o Usize */
+printf("%d",0);
+printf("%c",10);
+P = P - 0;
 L2:
-P = P - 1;
 /* End If */
 return 0;
 }

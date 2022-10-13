@@ -65,10 +65,33 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
         if self.falseLabel=="":
             self.falseLabel=self.generator.newLabel()
 
-        self.exp1.trueLabel=self.exp2.trueLabel=self.trueLabel
-        self.exp1.falseLabel=self.exp2.falseLabel=self.falseLabel
+        self.exp1.trueLabel = self.generator.newLabel()
+        self.exp1.falseLabel = self.falseLabel
 
         val1:ValC3d=self.exp1.generarC3d(ts,ptr)
+        if val1.tipo==Tipos.BOOLEAN:
+            valor = ValC3d(valor="", isTemp=False, tipo=Tipos.BOOLEAN, tipo_aux=Tipos.BOOLEAN)
+            if self.operador==OperadorRel.IGUALQUE:
+                #TRABAJARLO COMO UNA COMPARACION LOGICA AND (&&)
+                self.exp2.trueLabel = self.trueLabel
+                self.exp2.falseLabel = self.falseLabel
+                self.generator.addLabel(val1.trueLabel)
+                val2: ValC3d = self.exp2.generarC3d(ts, ptr)
+                valor.trueLabel=val2.trueLabel
+                valor.falseLabel=val2.falseLabel
+            else:# true != true DIFERENTE QUE
+                #TRABAJARLO COMO UNA COMPARACION LOGICA  AND NOT  ( val1 && !val2)
+                self.exp2.trueLabel = self.falseLabel
+                self.exp2.falseLabel = self.trueLabel
+                self.generator.addLabel(val1.trueLabel)
+                val2: ValC3d = self.exp2.generarC3d(ts, ptr)
+                valor.trueLabel = val2.trueLabel
+                valor.falseLabel = val2.falseLabel
+            if val2.tipo != Tipos.BOOLEAN:
+                error = "Las variables no son del mismo tipo"
+                print(error)
+            return valor
+
         val2:ValC3d=self.exp2.generarC3d(ts,ptr)
         if val1.tipo==val2.tipo:
             valor = ValC3d(valor="", isTemp=False, tipo=Tipos.BOOLEAN, tipo_aux=Tipos.BOOLEAN)
@@ -76,22 +99,6 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
                 self.cmpStrC3d(i_str1=val1.valor,i_str2=val2.valor)
                 valor.trueLabel=self.trueLabel
                 valor.falseLabel=self.falseLabel
-            elif val1.tipo==Tipos.BOOLEAN:
-                #para ==  seria literalmente un and:    true && true por ejemplo
-                # para !=  seria literalmente un:  true &&  !true
-                gotov2:str=self.generator.code.pop()
-                gotov1:str=self.generator.code.pop()
-                v2 = "0"
-                v1 = "0"
-                if self.trueLabel in gotov2:
-                    v2="1"
-                if self.trueLabel in gotov1:
-                    v1="1"
-                self.generator.addIf(left=v1, rigth=v2, operator=strOperador(self.operador),
-                                     label=self.trueLabel)
-                self.generator.addGoto(label=self.falseLabel)
-                valor.trueLabel = self.trueLabel
-                valor.falseLabel = self.falseLabel
             else:
                 self.generator.addIf(left=val1.valor,rigth=val2.valor,operator=strOperador(self.operador),label=self.trueLabel)
                 self.generator.addGoto(label=self.falseLabel)
@@ -102,8 +109,7 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
             error="Las literales a comparar no son del mismo tipo"
             print(error)
 
-    def cmpBoolC3d(self):
-        print()
+
 
     def cmpStrC3d(self,i_str1,i_str2):
         t1= self.generator.newTemp()
@@ -122,7 +128,7 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
         self.generator.addIf(left=t3,rigth="-1",operator="==",label=lim1)       # if (t3 == -1) goto Lim1
 
         # --------- si la cadena 2 llego a su limite pero no la 1 entonces no son iguales
-        if self.operador=="==":
+        if self.operador==OperadorRel.IGUALQUE:
             self.generator.addIf(left=t4, rigth="-1", operator="==", label=self.falseLabel) #if (t4 == -1) goto LF
             self.generator.addIf(left=t3, rigth=t4, operator="==", label=loop)  # if (t3 == t4) goto Loop
             self.generator.addGoto(self.falseLabel)  # goto LF

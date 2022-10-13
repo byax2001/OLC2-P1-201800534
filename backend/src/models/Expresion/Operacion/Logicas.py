@@ -78,7 +78,7 @@ class Logicas(OperacionLog): #de esta forma se esta indicando que aritmeticas he
         val:ValC3d = ValC3d(valor="",isTemp=False,tipo=Tipos.BOOLEAN,tipo_aux=Tipos.BOOLEAN)
         if self.operador==OperadorLog.AND:
             # B -> B1 && B2  |  B1.true = B.nuevaetiqueta()
-            #                |  B1.false = false
+            #                |  B1.false = B.false
             #                |  B2.true = B.true
             #                |  B2.false = B.false
             #                |  B.codigo = B1.codigo +  etiqueta(B1.true) + B2.codigo

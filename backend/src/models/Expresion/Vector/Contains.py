@@ -21,6 +21,7 @@ class Contains(Expresion):
 
     def ejecutar(self, driver: Driver, ts: Enviroment):
         self.getValor(driver,ts);
+
     def getValor(self, driver, ts):
         symbol = ts.buscar(self.id)
         t_exp = self.exp.getTipo(driver, ts)
@@ -79,7 +80,6 @@ class Contains(Expresion):
                 t_valor = self.generator.newTemp()
                 tcont = self.generator.newTemp()
                 loop = self.generator.newLabel()
-                lsalida = self.generator.newLabel()
                 lv = self.generator.newLabel()
                 lf = self.generator.newLabel()
                 self.generator.addBackStack(auxStack)
@@ -89,6 +89,9 @@ class Contains(Expresion):
                 self.generator.addNextStack(auxStack)
                 self.generator.addGetHeap(target=t_tam, index=t_puntero)  # t_tam=inicioArray
                 self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
+                if symbol.tsimbolo == Symbols.VECTOR:
+                    #PARA PASAR EL CAPACITY
+                    self.generator.incVar(t_puntero)
                 self.generator.addExpAsign(target=tcont, right="0")  # tcont=0
                 self.generator.addLabel(loop)#loop
                 self.generator.addIf(left=tcont,rigth=t_tam,operator=">=",label=self.falseLabel)

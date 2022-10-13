@@ -77,6 +77,7 @@ class Insert(Instruccion):
                         t_tam = self.generator.newTemp()
                         t_tamNew = self.generator.newTemp()
                         t_aux = self.generator.newTemp()
+                        t_capacity = self.generator.newTemp()
                         tcont = self.generator.newTemp()
                         loop = self.generator.newLabel()
                         loopAI = self.generator.newLabel()
@@ -99,9 +100,26 @@ class Insert(Instruccion):
                         self.generator.addNextStack(auxStack)
                         self.generator.addGetHeap(target=t_tam, index=t_puntero)  # t_tam=inicioArray
                         self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
+                        # CAPACITY
+                        self.generator.addGetHeap(target=t_capacity, index=t_puntero)
+                        # DUPLICAR CAPACIDAD DE VECTOR SI SE INGRESA UN ELEMENTO QUE HACE UN TAMAÑO MAYOR A LA CAPACIDAD
+                        LnoDupCapacity = self.generator.newLabel()
+                        capNot0 = self.generator.newLabel()
+                        self.generator.addComment("Si la capacidad es 0")
+                        self.generator.addIf(left=t_capacity, rigth="0", operator="!=", label=capNot0)
+                        self.generator.addExpAsign(target=t_capacity,right="4")
+                        self.generator.addLabel(capNot0)
+                        self.generator.addComment("Si el tamanio es igual o mayor a capacity")
+                        self.generator.addIf(left=t_tam, rigth=t_capacity, operator="<", label=LnoDupCapacity)
+                        self.generator.addExpression(target=t_capacity, left=t_capacity, right="2", operator="*")
+                        self.generator.addLabel(LnoDupCapacity)
+                        self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
 
-                        self.generator.addIf(left=t_indexInsert,rigth=t_tam,operator=">=",
-                                             label=lerror)#if (tindex>=tam) goto Lerror #Bounds Error
+                        self.generator.addIf(left=t_indexInsert,rigth=t_tam,operator=">",
+                                             label=lerror)#if (tindex>tam) goto Lerror #Bounds Error
+                                                          # si  tindex==tam el insert funcionara como push
+
+
 
                         #INICIO Y NUEVO TAMAÑO DEL NUEVO ARREGLO:
                         self.generator.addExpAsign(target=tcont, right="0")  # tcont=0
@@ -110,10 +128,14 @@ class Insert(Instruccion):
                                                                                # al nuevo array
                         self.generator.addExpression(target=t_tamNew, left=t_tam, right="1",
                                                      operator="+")  # tamnew=tam+1
+                        # nuevo tamaño del nuevo array
+                        self.generator.addComment("New tamanio")
                         self.generator.addSetHeap(index="H",value=t_tamNew)  # Heap[H]=tamnew;
-                                                                             #nuevo tamaño del nuevo array
                         self.generator.addNextHeap()  # H=H+1
-
+                        # CAPACITY
+                        self.generator.addComment("New Capacity")
+                        self.generator.addSetHeap(index="H", value=t_capacity)
+                        self.generator.addNextHeap()  # H=H+1
                         #LOOP 1:
                         self.generator.addLabel(loopAI) #LoopAI:
                         self.generator.addIf(left=tcont,rigth=t_indexInsert, operator=">=",label=linsert) #if (tcont >= tindex) goto Linsert

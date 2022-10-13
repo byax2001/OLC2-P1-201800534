@@ -1,11 +1,13 @@
 from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Driver import Driver
-from models.TablaSymbols.Symbol import Symbols
-from models.TablaSymbols.Tipos import definirTipo
+from models.TablaSymbols.Symbol import Symbols,Symbol
+from models.TablaSymbols.Tipos import definirTipo,Tipos
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
 class Capacity(Expresion):
     def __init__(self, id: str, line: int, column: int):
+        super().__init__()
         self.value=None
         self.tipo=None
         self.id = id
@@ -36,3 +38,26 @@ class Capacity(Expresion):
     def getTipo(self, driver, ts):
         self.tipo=definirTipo(self.getValor(driver,ts))
         return self.tipo
+
+    def generarC3d(self,ts:Enviroment,ptr):
+        tmp_aux=self.generator.newTemp()
+        symbol:Symbol=ts.buscarC3d(self.id,tmp_aux)
+        result=ValC3d(valor="0",isTemp=False,tipo=Tipos.ERROR)
+        if symbol.tsimbolo==Symbols.VECTOR:
+            tmpR=self.generator.newTemp()
+            tindexA=self.generator.newTemp()
+            tpuntero=self.generator.newTemp()
+            self.generator.addBackStack(tmp_aux)
+            self.generator.addExpression(target=tindexA,left="P",right=str(symbol.position),operator="+")
+            self.generator.addNextStack(tmp_aux)
+            self.generator.addGetStack(target=tpuntero,index=tindexA)
+            self.generator.incVar(tpuntero)
+            self.generator.addGetHeap(target=tmpR,index=tpuntero)
+            result.valor=tmpR
+            result.isTemp=True
+            result.tipo=Tipos.INT64
+            result.tipo_aux=Tipos.INT64
+        else:
+            error="Intento de capacity en una variable que no es vector"
+            print(error)
+        return result

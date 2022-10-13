@@ -95,6 +95,7 @@ class Remove(Expresion):
                         t_tam = self.generator.newTemp()
                         t_tamNew = self.generator.newTemp()
                         t_aux = self.generator.newTemp()
+                        t_capacity = self.generator.newTemp()
                         tcont = self.generator.newTemp()
                         loop = self.generator.newLabel()
                         loopAR = self.generator.newLabel()
@@ -116,6 +117,10 @@ class Remove(Expresion):
                         self.generator.addNextStack(auxStack)
                         self.generator.addGetHeap(target=t_tam, index=t_puntero)  # t_tam=inicioArray
                         self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
+                        # CAPACITY
+                        self.generator.addGetHeap(target=t_capacity, index=t_puntero)
+                        self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
+
 
                         self.generator.addIf(left=t_indexRemove, rigth=t_tam, operator=">=",
                                              label=lerror)  # if (tindex>=tam) goto Lerror #Bounds Error
@@ -129,6 +134,10 @@ class Remove(Expresion):
                                                      operator="-")  # tamnew=tam+1
                         self.generator.addSetHeap(index="H", value=t_tamNew)  # Heap[H]=tamnew;
                         # nuevo tamaño del nuevo array
+                        self.generator.addNextHeap()  # H=H+1
+                        # CAPACITY
+                        self.generator.addComment("New Capacity")
+                        self.generator.addSetHeap(index="H", value=t_capacity)
                         self.generator.addNextHeap()  # H=H+1
 
                         # LOOP 1:

@@ -61,6 +61,7 @@ class Push(Instruccion):
                     if symbol.tipo == expR.tipo:
                         t_puntero = self.generator.newTemp()
                         t_tam = self.generator.newTemp()
+                        t_capacity = self.generator.newTemp()
                         t_tamNew = self.generator.newTemp()
                         t_aux = self.generator.newTemp()
                         tcont = self.generator.newTemp()
@@ -72,15 +73,37 @@ class Push(Instruccion):
                         self.generator.addExpression(target=auxIndex,left="P",right=str(symbol.position),operator="+")
                         self.generator.addGetStack(target=t_puntero,index=auxIndex)
                         self.generator.addNextStack(auxStack)
+                        #TAMAÑO
                         self.generator.addGetHeap(target=t_tam,index=t_puntero)# t_tam=inicioArray
                         self.generator.incVar(t_puntero) #tpuntero=tpuntero+1
+                        #CAPACITY
+                        self.generator.addGetHeap(target=t_capacity,index=t_puntero)
+                        #DUPLICAR CAPACIDAD DE VECTOR SI SE INGRESA UN ELEMENTO QUE HACE UN TAMAÑO MAYOR A LA CAPACIDAD
+                        LnoDupCapacity=self.generator.newLabel()
+                        capNot0 = self.generator.newLabel()
+                        self.generator.addComment("Si la capacidad es 0")
+                        self.generator.addIf(left=t_capacity, rigth="0", operator="!=", label=capNot0)
+                        self.generator.addExpAsign(target=t_capacity, right="4")
+                        self.generator.addLabel(capNot0)
+                        self.generator.addComment("Si el tamanio es igual o mayor a capacity")
+                        self.generator.addIf(left=t_tam,rigth=t_capacity,operator="<",label=LnoDupCapacity)
+                        self.generator.addExpression(target=t_capacity,left=t_capacity,right="2",operator="*")
+                        self.generator.addLabel(LnoDupCapacity)
+                        self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
+
                         self.generator.addExpAsign(target=tcont,right="0")# tcont=0
                         #puntero del array ahora en una nueva posicion
                         self.generator.addSetStack(index=auxIndex,value="H")# ahora el puntero anterior apunta
                                                                             # al nuevo array
+                        self.generator.addComment("New Tamanio")
                         self.generator.addExpression(target=t_tamNew,left=t_tam,right="1",operator="+") #tamnew=tam+1
                         self.generator.addSetHeap(index="H",value=t_tamNew)# Heap[H]=tamnew; //nuevo tamaño del nuevo array
                         self.generator.addNextHeap()# H=H+1
+                        #CAPACITY
+                        self.generator.addComment("New Capacity")
+                        self.generator.addSetHeap(index="H", value=t_capacity)
+                        self.generator.addNextHeap()  # H=H+1
+
                         # se copia el contenido del array principal a una nueva posicion
                         self.generator.addLabel(loop)# loop:
                         self.generator.addIf(left=tcont,rigth=t_tam,operator=">=",label=lsalida) #if (tcont>=t_tam) goto Lsalida

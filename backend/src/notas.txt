@@ -10,3 +10,8 @@ se hace lo mismo que con las funciones un cambio a las expresiones de las declar
 *Por default los array se pasan por referencia por las funciones de python de tal modo que si se asigna donde sea
 un arreglo y esta asignacion es modificada, el arreglo es modificado hasta el punto de origen de este
 y todos los lugares donde fue asignado.
+
+
+C3D:
+Los vectores tendran un apartado mas en el heap que los arreglos que sera el capacity: [len,capacity,contenido...]
+                                                                             arreglo:  [len,contenido...]

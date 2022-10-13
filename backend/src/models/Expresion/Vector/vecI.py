@@ -101,6 +101,7 @@ class vecI(Expresion):
                     result.tipo = rexp.tipo
                     x += 1
                 if rexp.tipo == rexp.tipo_aux == Tipos.BOOLEAN:
+                    self.generator.addComment("Exp Bool")
                     trbool = self.generator.newTemp()
                     exit = self.generator.newLabel()
                     self.generator.addLabel(rexp.trueLabel)
@@ -109,15 +110,18 @@ class vecI(Expresion):
                     self.generator.addLabel(rexp.falseLabel)
                     self.generator.addExpAsign(target=trbool, right="0")
                     self.generator.addLabel(exit)
-                    self.generator.addNextHeap()
                     lexp.append(trbool)
                 else:
                     lexp.append(rexp.valor)
             self.generator.addExpAsign(target=tmpR, right="H")
             self.generator.addComment("Tamanio Vec!")
             self.generator.addSetHeap(index="H", value=str(len(lexp)))  # tamaño del arreglo
-            self.generator.addComment("---------------")
             self.generator.addNextHeap()
+            self.generator.addComment("---------------")
+            self.generator.addComment("Capacity del vec")
+            self.generator.addSetHeap(index="H", value=str(len(lexp)))  # capacity del vector
+            self.generator.addNextHeap()
+            self.generator.addComment("---------------")
             for exp in lexp:
                 self.generator.addSetHeap(index="H", value=exp)
                 self.generator.addNextHeap()
@@ -148,9 +152,14 @@ class vecI(Expresion):
                 error = "El multiplicador debe de ser un dato entero"
                 print(error)
                 return result
-            # array[0] tamaño del array
-            self.generator.addSetHeap(index="H", value=taux)
+            self.generator.addComment("Tamanio Vec!")
+            self.generator.addSetHeap(index="H", value=taux) # array[0] tamaño del vector
             self.generator.addNextHeap()
+            self.generator.addComment("---------------")
+            self.generator.addComment("Capacity del vec")
+            self.generator.addSetHeap(index="H", value=taux)  # capacity del vector
+            self.generator.addNextHeap()
+            self.generator.addComment("---------------")
             # tvalor=valor
             self.exp.generator = self.generator
             rval = self.exp.generarC3d(ts, ptr)

@@ -3,29 +3,68 @@ float HEAP[78000];
 float STACK[10000];
 float P;
 float H;
-float t0;
+float t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14;
 
 
 int main(){
-/* If instruction */
-/* Operaciones Relacionales */
-goto L3;
-L3:
+/* Declaracion de Vector: x */
+/* Vector con New */
+t0 = H;
+/* tamanio Vector */
+HEAP[(int)H] = 0;
+H = H + 1;
+/* Capacity Vector */
+HEAP[(int)H] = 0;
+H = H + 1;
+/* -------------- */
+t1 = P + 0;
+STACK[(int)t1] = t0;
+/* Push Vector x */
 goto L0;
-L0:
-P = P + 0;
-/* Print de un Int o Usize */
-printf("%d",1);
-printf("%c",10);
-P = P - 0;
-goto L2;
-L1:
-P = P + 0;
-/* Print de un Int o Usize */
-printf("%d",0);
-printf("%c",10);
-P = P - 0;
+P = P - t2;
+t9 = P + 0;
+t3 = STACK[(int)t9];
+P = P + t2;
+t4 = HEAP[(int)t3 ];
+t3 = t3 + 1;
+t5 = HEAP[(int)t3 ];
+/* Si la capacidad es 0 */
+if(t5 != 0) goto L5;
+t5 = 4;
+L5:
+/* Si el tamanio es igual o mayor a capacity */
+if(t4 < t5) goto L4;
+t5 = t5 * 2;
+L4:
+t3 = t3 + 1;
+t8 = 0;
+STACK[(int)t9] = H;
+/* New Tamanio */
+t6 = t4 + 1;
+HEAP[(int)H] = t6;
+H = H + 1;
+/* New Capacity */
+HEAP[(int)H] = t5;
+H = H + 1;
 L2:
-/* End If */
+if(t8 >= t4) goto L3;
+t7 = HEAP[(int)t3 ];
+HEAP[(int)H] = t7;
+H = H + 1;
+t3 = t3 + 1;
+t8 = t8 + 1;
+goto L2;
+L3:
+HEAP[(int)H] = ;
+H = H + 1;
+/* Declaracion var: y */
+P = P - t10;
+t12 = P + 0;
+P = P + t10;
+t13 = STACK[(int)t12];
+t13 = t13 + 1;
+t11 = HEAP[(int)t13 ];
+t14 = P + 1;
+STACK[(int)t14] = t11;
 return 0;
 }

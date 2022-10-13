@@ -175,7 +175,7 @@ class Declaracion(Instruccion):
 
         if (temp_var.tipo != Tipos.BOOLEAN):
             self.generator.addExpression(target=aux_index, left="P", right=str(temp_var.position), operator="+")
-            self.generator.addSetStack(index=aux_index, value=temp_var.valor)  # Stack[(int)pos]= val
+            self.generator.addSetStack(index=aux_index, value=str(temp_var.valor))  # Stack[(int)pos]= val
         else:
             # Aqui no estoy añadiendo directamente el valor al hacer el addSetStack
             # sino escribiendo un if que dependiendo del resultado anterior asignara 1 o 0 a la variable

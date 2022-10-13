@@ -122,6 +122,7 @@ class DecVector(Instruccion):
         self.generator.addComment(f"Declaracion de Vector: {self.id}")
         #con vec!--------------------------------------------------------------------
         if self.vecI!=None:
+            self.generator.addComment("Vector con vec!")
             self.vecI.generator=self.generator
             vecIr:ValC3d= self.vecI.generarC3d(ts,ptr)
             if self.tipo==None:
@@ -139,7 +140,7 @@ class DecVector(Instruccion):
                                     fila=self.line, columna=self.column)
             else:
                 if self.tipo==vecIr.tipo:
-                    newVec = VectorC3d(vec=vecIr.valor, stateCap=False, capacity=0, profundidad=vecIr.prof_array)
+                    newVec = VectorC3d(vec=vecIr.valor, stateCap=False, capacity="0", profundidad=vecIr.prof_array)
                     symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=vecIr.tipo,
                                     line=self.line,
                                     column=self.column, tacceso=self.tacceso)
@@ -156,6 +157,7 @@ class DecVector(Instruccion):
                     error="El tipo de arreglo no es igual al tipo de variable que lo guardara"
                     print(error)
         elif self.capacity!=None:
+            self.generator.addComment("Vector con Capacity")
             self.capacity.generator=self.generator
             vecIr: ValC3d = self.capacity.generarC3d(ts, ptr)
             if vecIr in [Tipos.INT64,Tipos.USIZE]:
@@ -164,19 +166,23 @@ class DecVector(Instruccion):
                 tcont=self.generator.newTemp()
                 tvalor=self.generator.newTemp()
                 lsalida=self.generator.newLabel()
-
-                self.generator.addSetHeap(index="H",value=vecIr.valor) # Heap[H]=tam arreglo
-                self.generator.addExpAsign(target=tvector,right="H") # tr=H  (inicio del arreglo)
+                self.generator.addExpAsign(target=tvector, right="H")  # tr=H  (inicio del arreglo)
+                self.generator.addComment("Tamanio del arreglo")
+                self.generator.addSetHeap(index="H",value="0") # Heap[H]=tam arreglo
                 self.generator.addNextHeap() #H=H+1
+                self.generator.addComment("Capacity")
+                self.generator.addSetHeap(index="H", value=vecIr.valor)
+                self.generator.addNextHeap()  # H=H+1
+                self.generator.addComment("------------------")
 
-                self.generator.addExpAsign(target=tvalor,right=vecIr.valor)#tvalor=valor
-                self.generator.addExpAsign(target=tcont,right="0")# tcont=0
-                self.generator.addLabel(loop)#Loop:
-                self.generator.addIf(left=tcont,rigth=tvalor,operator=">=",label=lsalida)#if (tcont>=tvalor) goto Lsalida
-                self.generator.addNextHeap()#H=H+1
-                self.generator.addExpression(target=tcont,left=tcont,right=1,operator="+")#tcont=tcont+1
-                self.generator.addGoto(loop)# goto Loop
-                self.generator.addLabel(lsalida) #Lsalida
+                #self.generator.addExpAsign(target=tvalor,right=vecIr.valor)#tvalor=valor
+                #self.generator.addExpAsign(target=tcont,right="0")# tcont=0
+                #self.generator.addLabel(loop)#Loop:
+                #self.generator.addIf(left=tcont,rigth=tvalor,operator=">=",label=lsalida)#if (tcont>=tvalor) goto Lsalida
+                #self.generator.addNextHeap()#H=H+1
+                #self.generator.addExpression(target=tcont,left=tcont,right=1,operator="+")#tcont=tcont+1
+                #self.generator.addGoto(loop)# goto Loop
+                #self.generator.addLabel(lsalida) #Lsalida
 
                 newVec = VectorC3d(vec=tvector, stateCap=True, capacity=vecIr.valor,profundidad=1)
                 symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
@@ -196,12 +202,17 @@ class DecVector(Instruccion):
                 B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
                                   columna=self.column)
         else:# con new
+            self.generator.addComment("Vector con New")
             tvector=self.generator.newTemp()
             self.generator.addExpAsign(target=tvector, right="H")  # tr=H  (inicio del arreglo)
             self.generator.addComment("tamanio Vector")
             self.generator.addSetHeap(index="H", value="0")  # Heap[H]=tam arreglo
-            self.generator.addComment("--------------")
             self.generator.addNextHeap()  # H=H+1
+            self.generator.addComment("Capacity Vector")
+            self.generator.addSetHeap(index="H", value="0")  # Heap[H]=tam arreglo
+            self.generator.addNextHeap()  # H=H+1
+            self.generator.addComment("--------------")
+
 
             newVec = VectorC3d(vec=tvector, stateCap=False, capacity="0", profundidad=1)
             symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,

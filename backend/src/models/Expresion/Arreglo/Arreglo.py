@@ -92,6 +92,7 @@ class Arreglo(Expresion):
                 exp.generator=self.generator
                 rexp:ValC3d=exp.generarC3d(ts,ptr)
                 if rexp.tipo==rexp.tipo_aux==Tipos.BOOLEAN:
+                    self.generator.addComment("Exp Bool")
                     trbool=self.generator.newTemp()
                     exit=self.generator.newLabel()
                     self.generator.addLabel(rexp.trueLabel)
@@ -100,7 +101,6 @@ class Arreglo(Expresion):
                     self.generator.addLabel(rexp.falseLabel)
                     self.generator.addExpAsign(target=trbool,right="0")
                     self.generator.addLabel(exit)
-                    self.generator.addNextHeap()
                     lexp.append(trbool)
                 else:
                     lexp.append(rexp.valor)

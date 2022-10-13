@@ -15,6 +15,7 @@ class Arreglo(Expresion):
         self.column=column
         self.instancia=0
         self.profundidad=0
+
     def getValor(self, driver, ts:Enviroment):
         self.instancia += 1
         vector=[]
@@ -58,6 +59,7 @@ class Arreglo(Expresion):
                     error = f"Error el numero de veces a multiplicar la expresion no es entero o la expresion causa error"
                     B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line, columna=self.column)
         return self.value
+
     def getTipo(self, driver, ts):
         self.resetInst()
         if self.tipo==None and self.value==None:

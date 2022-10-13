@@ -5,6 +5,7 @@ from models.TablaSymbols.Symbol import Symbols,Symbol
 from models.Driver import Driver
 from models.TablaSymbols.Enviroment import Enviroment
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
 class Push(Instruccion):
     def __init__(self,id:str,exp:Expresion,line:int,column:int):
         super().__init__()
@@ -48,26 +49,54 @@ class Push(Instruccion):
             error = "Error Intento de push en vector no declarado "
             B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
                               columna=self.column)
-    def generarC3d(self,ts,ptr):
-        symbol:Symbol = ts.buscar(self.id)
+    def generarC3d(self,ts:Enviroment,ptr):
+        self.generator.addComment(f"Push Vector {self.id}")
+        auxStack = self.generator.newTemp()
+        symbol:Symbol = ts.buscarC3d(self.id,auxStack)
         if symbol != None:
             if symbol.mut == True:
                 if symbol.tsimbolo==Symbols.VECTOR:
-                    print()
-                    # t_tam=inicioArray
-                    # t_index=inicioArray+1 pos;
-                    # tcont=0
-                    # t_inewArr=H  //puntero del nuevo array
-                    # Heap[H]=t_tam+1; //nuevo tamaño del nuevo array
-                    # H=H+1
-                    # loop:
-                    #  if (tcont>=t_tam) goto Lsalida
-                    #   taux=Heap[t_index]
-                    #   Heap[H]=taux
-                    #   H=H+1
-                    #   t_index=t_index+1
-                    #   tcont= tcont+1
-                    # Lsalida:
+                    self.exp.generator=self.generator
+                    expR:ValC3d=self.exp.generarC3d(ts,ptr)
+                    if symbol.tipo == expR.tipo:
+                        t_puntero = self.generator.newTemp()
+                        t_tam = self.generator.newTemp()
+                        t_tamNew = self.generator.newTemp()
+                        t_aux = self.generator.newTemp()
+                        tcont = self.generator.newTemp()
+                        loop = self.generator.newLabel()
+                        lsalida = self.generator.newLabel()
+
+                        self.generator.addBackStack(auxStack)
+                        auxIndex=self.generator.newTemp()
+                        self.generator.addExpression(target=auxIndex,left="P",right=str(symbol.position),operator="+")
+                        self.generator.addGetStack(target=t_puntero,index=auxIndex)
+                        self.generator.addNextStack(auxStack)
+                        self.generator.addGetHeap(target=t_tam,index=t_puntero)# t_tam=inicioArray
+                        self.generator.incVar(t_puntero) #tpuntero=tpuntero+1
+                        self.generator.addExpAsign(target=tcont,right="0")# tcont=0
+                        #puntero del array ahora en una nueva posicion
+                        self.generator.addSetStack(index=auxIndex,value="H")# ahora el puntero anterior apunta
+                                                                            # al nuevo array
+                        self.generator.addExpression(target=t_tamNew,left=t_tam,right="1",operator="+") #tamnew=tam+1
+                        self.generator.addSetHeap(index="H",value=t_tamNew)# Heap[H]=tamnew; //nuevo tamaño del nuevo array
+                        self.generator.addNextHeap()# H=H+1
+                        # se copia el contenido del array principal a una nueva posicion
+                        self.generator.addLabel(loop)# loop:
+                        self.generator.addIf(left=tcont,rigth=t_tam,operator=">=",label=lsalida) #if (tcont>=t_tam) goto Lsalida
+                        self.generator.addGetHeap(target=t_aux,index=t_puntero)#   taux=Heap[t_index]
+                        self.generator.addSetHeap(index="H",value=t_aux)#   Heap[H]=taux
+                        self.generator.addNextHeap()#   H=H+1
+                        self.generator.incVar(t_puntero)#   t_index=t_index+1
+                        self.generator.incVar(tcont)#   tcont= tcont+1
+                        self.generator.addGoto(loop)# goto loop
+                        self.generator.addLabel(lsalida)# Lsalida:
+                        #se copia en la ultima posicion el nuevo valor
+                        self.generator.addSetHeap(index="H",value=expR.valor)
+                        self.generator.addNextHeap()#H=H+1
+                    else:
+                        error="La expresion y el arreglo no son del mismo tipo"
+                        print(error)
                 else:
                     error = "Se intenta hacer push a una variable que no es un vector"
                     print(error)

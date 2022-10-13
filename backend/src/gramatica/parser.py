@@ -724,15 +724,15 @@ def p_instv_contains(p):
     p[0]=Contains(id=p[1],exp=p[6],line=p.lineno(1), column=0)
 def p_instv_len(p):
     """LEN : EXPRESION punto len para parc"""
-    p[0] = Len(exp=p[1],line=p.lineno(1), column=0)
+    p[0] = Len(id="",exp=p[1],line=p.lineno(1), column=0)
 def p_instv_len2(p):
     """LEN : id INDEXS punto len para parc"""
     exp = AccesVec(id=p[1], cIndex=p[2], cIds=[], line=p.lineno(1), column=0)
-    p[0] = Len(exp=exp, line=p.lineno(1), column=0)
+    p[0] = Len(id=p[1],exp=exp, line=p.lineno(1), column=0, cIndex=p[2])
 def p_instv_len3(p):
     """LEN : id punto len para parc """
     exp=Id(p[1],linea=p.lineno(1),columna=0)
-    p[0]=Len(exp=exp,line=p.lineno(1), column=0)
+    p[0]=Len(id=p[1],exp=exp,line=p.lineno(1), column=0)
 
 
 def p_instv_capacity(p):

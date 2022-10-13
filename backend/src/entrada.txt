@@ -1,5 +1,6 @@
 fn main(){
-    let x:Vec<i64> = Vec::new();
+    let mut x:Vec<i64> = vec![2,3,4,5];
+    println!("{}",x.len());
 }
 
 fn prueba(){

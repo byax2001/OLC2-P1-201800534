@@ -61,6 +61,7 @@ class ForIn(Instruccion):
             error = "Error intento de for in en un elemento que no es arreglo o rango"
             B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
                               columna=self.column)
+
     def generarC3d(self,ts:Enviroment,ptr):
         self.generator.addComment("FOR IN")
         self.generator.addNextStack(index=str(ts.size))# P = P + oldTS_SIZE
@@ -69,11 +70,12 @@ class ForIn(Instruccion):
 
         newts = Enviroment(ts,"ForIn")
         for_var = self.generator.newTemp()
-        if array.prof_array == 1:
+
+        if array.prof_array == 0:
             symbol= Symbol(mut=True,id=self.id,value=for_var,tipo_simbolo=0,tipo=array.tipo,line=self.line,
                        column=self.column,tacceso=0,position=newts.size)
         else:
-            nvector = VectorC3d(vec=array.valor, profundidad=(array.prof_array + 1))
+            nvector = VectorC3d(vec=array.valor, profundidad=array.prof_array)
             tsimbolo = 0
             if array.tipo_aux == Tipos.ARREGLO:
                 tsimbolo=1
@@ -81,16 +83,14 @@ class ForIn(Instruccion):
                 tsimbolo=3
             symbol = Symbol(mut=True, id=self.id, value=nvector, tipo_simbolo=tsimbolo, tipo=array.tipo,
                             line=self.line, column=self.column, tacceso=0, position=newts.size)
-        newts.addVar(id=self.id,simbolo=symbol)
-        temp_var: SymC3d = ts.addVar(self.id, symbol)  # ----------------------------
+
+        temp_var: SymC3d = newts.addVar(self.id, symbol)  # ----------------------------
         aux_index = self.generator.newTemp()  # tendra el index
-        #DECLARACION EN EL STACK
-        self.generator.addExpression(target=aux_index, left="P", right=str(temp_var.position), operator="+")
-        self.generator.addSetStack(index=aux_index, value=str(temp_var.valor))  # Stack[(int)pos]= val
 
         t_puntero = self.generator.newTemp()
         t_cont=self.generator.newTemp()
         t_tam=self.generator.newTemp()
+        t_aux = self.generator.newTemp()
         loop = self.generator.newLabel()
         lsalida = self.generator.newLabel()
 
@@ -100,8 +100,24 @@ class ForIn(Instruccion):
         self.generator.addComment("tamanio")
         self.generator.addGetHeap(target=t_tam,index=t_puntero)
         self.generator.incVar(t_puntero)
+        print(array.tipo_aux)
         if array.tipo_aux == Tipos.VECTOR:
             self.generator.incVar(t_puntero)
+        self.generator.addLabel(loop) #LOOP:
+        self.generator.addIf(left=t_cont,rigth=t_tam,operator=">=",label=lsalida)
+        self.generator.addExpression(target=t_aux,left=t_puntero,right=t_cont,operator="+")
+        self.generator.addGetHeap(target=for_var,index=t_aux) #tfor_v = Heap[tpuntero]
+        # DECLARACION EN EL STACK
+        self.generator.addExpression(target=aux_index, left="P", right=str(temp_var.position), operator="+")
+        self.generator.addSetStack(index=aux_index, value=for_var)  # Stack[(int)pos]= val
 
+        self.generator.addComment("Instrucciones For")
+        for ins in self.cInst:
+            ins.generator=self.generator
+            ins.generarC3d(newts,ptr)
 
-        self.generator.addBackStack(index=ts.size)# P = P - oldTS_SIZE
+        self.generator.incVar(t_cont)
+        self.generator.addGoto(loop) #Goto Loop
+        self.generator.addLabel(lsalida) #Lsalida:
+
+        self.generator.addBackStack(index=str(ts.size))# P = P - oldTS_SIZE

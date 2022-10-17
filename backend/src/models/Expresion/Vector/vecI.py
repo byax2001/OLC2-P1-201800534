@@ -113,6 +113,7 @@ class vecI(Expresion):
                     lexp.append(trbool)
                 else:
                     lexp.append(rexp.valor)
+            result.tipo_aux = Tipos.VECTOR
             self.generator.addExpAsign(target=tmpR, right="H")
             self.generator.addComment("Tamanio Vec!")
             self.generator.addSetHeap(index="H", value=str(len(lexp)))  # tamaño del arreglo

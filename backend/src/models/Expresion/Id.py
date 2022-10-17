@@ -1,6 +1,6 @@
 from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Tipos import Tipos
-from models.TablaSymbols.Symbol import Symbol
+from models.TablaSymbols.Symbol import Symbol,Symbols
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Expresion.Vector.Vector import Vector
 from models.TablaSymbols.ValC3d import ValC3d
@@ -53,29 +53,39 @@ class Id(Expresion):
         self.generator.addComment(f"ID EXPRESION: {self.id}")
         tmp_aux = self.generator.newTemp() #para volver al enviroment actual de la pila luego del proceso de busqueda, y resta de P
         symbol:Symbol = ts.buscarC3d(self.id,tmp_aux)
-        self.generator.addBackStack(index=tmp_aux)  # para retroceder entre enviroments
+        result = ValC3d(valor="0",isTemp=False,tipo=Tipos.ERROR)
         if symbol!=None:
-            newTemp = self.generator.newTemp()
+            tmpR= self.generator.newTemp()
             index = self.generator.newTemp()
+            self.generator.addBackStack(index=tmp_aux)  # para retroceder entre enviroments
             self.generator.addExpression(target=index,left="P",right=str(symbol.position),operator="+")
-            self.generator.addGetStack(target=newTemp, index=index)
-            if (symbol.tipo != Tipos.BOOLEAN):
-                valor_r=ValC3d(valor=newTemp,isTemp=True, tipo= symbol.tipo)
+            self.generator.addNextStack(tmp_aux)  # volver al enviroment actual de la pila
+            self.generator.addGetStack(target=tmpR, index=index)
+
+            if symbol.tsimbolo == Symbols.ARREGLO:
+                result.tipo_aux = Tipos.ARREGLO
+                result.prof_array = symbol.value.profundidad
+            elif symbol.tsimbolo == Symbols.VECTOR:
+                result.tipo_aux = Tipos.VECTOR
+                result.prof_array = symbol.value.profundidad
+
+            if symbol.tipo != Tipos.BOOLEAN or symbol.tsimbolo == Symbols.VECTOR or symbol.tsimbolo == Symbols.ARREGLO:
+                result.valor=tmpR
+                result.isTemp=True
+                result.tipo=symbol.tipo
             else:
                 valor_r = ValC3d(valor="",isTemp= False,tipo= Tipos.BOOLEAN)
-
                 if (self.trueLabel == ""):
                     self.trueLabel = self.generator.newLabel()
-
                 if (self.falseLabel == ""):
                     self.falseLabel = self.generator.newLabel()
-
-                self.generator.addIf(newTemp, "1", "==", self.trueLabel)
+                self.generator.addIf(tmpR, "1", "==", self.trueLabel)
                 self.generator.addGoto(self.falseLabel)
 
                 valor_r.trueLabel = self.trueLabel
                 valor_r.falseLabel = self.falseLabel
-            self.generator.addNextStack(tmp_aux) #volver al enviroment actual de la pila
-            return valor_r
+                result=valor_r
         else:
-            print("no existe dicha id")
+            error = "no existe dicha id"
+            print(error)
+        return result

@@ -14,6 +14,7 @@ class Tipos(Enum):
     STRUCT=11
     MODULO=12
     ARREGLO=13
+    VECTOR = 14
 
 
 def getTipo(s:str):

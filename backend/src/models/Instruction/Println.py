@@ -164,9 +164,10 @@ class Println(Instruccion):
                 self.generator.addComment("Por si la expresiona imprimir es booleana")
                 tbool_str = self.generator.newTemp()  # contendra el indice donde inicia el booleano pasado a string
                 self.generator.addExpAsign(target=tbool_str, right="H")
-                #----------------------------------------------------
-                c3d_exp = exp.generarC3d(ts, ptr)
-                if(c3d_exp.tipo==Tipos.BOOLEAN):#SI ES BOOLEANA ANTES DE CUALQUIER PROCEDIMIENTO, CONVERTIR EL RESULTADO EN STRING
+                # ----------------------------------------------------
+                # SI ES BOOLEANA ANTES DE CUALQUIER PROCEDIMIENTO, CONVERTIR EL RESULTADO EN STRING
+                c3d_exp:ValC3d = exp.generarC3d(ts, ptr)
+                if c3d_exp.tipo==Tipos.BOOLEAN and (c3d_exp.tipo_aux!= Tipos.ARREGLO or c3d_exp.tipo_aux!=Tipos.VECTOR):
                     self.addCopyStr(c3d_exp)    # EN LOS OTROS CASOS ESO ES PRESCINDIBLE
                     self.generator.addSetHeap(index="H",value="-1")
                     self.generator.addNextHeap()
@@ -207,8 +208,9 @@ class Println(Instruccion):
                 self.generator.addComment("Print Complex P.3")
                 self.generator.addLabel(Lf1) #Lf1:
                 self.generator.addExpression(target=contador, left=contador, right="1", operator="+")#para saltarse el "}" de la exp_aux
+                #AQUI ES DONDE SE COLOCA LA VARIABLE
                 self.addCopyStr(exp=c3d_exp)  #metodo para sustituir un {} o {:?} por una variable
-
+                #--------------------------------------------------------------
                 self.generator.addComment("Print Complex P.4")
                 self.generator.addLabel(loop4)  # Loop4:
                 self.generator.addGetHeap(target=texp, index=contador)  # texp=Heap[contador]
@@ -251,11 +253,11 @@ class Println(Instruccion):
         self.generator.addExpression(target=contador, left=contador, right="1", operator="+")  # contador=contador+1;
         self.generator.addGoto(loop)  # goto Loop
         self.generator.addLabel(self.falseLabel)  # Lf:
+        #Copia un string o un valor de una posicion al H libre mas actual como otro string
 
-        # copia un string o un valor de una posicion al H libre mas actual como otro string
     #copiar el valor de una expresion en la pila
     def addCopyStr(self, exp: ValC3d):
-        if exp.tipo_aux != Tipos.ARREGLO:
+        if exp.tipo_aux != Tipos.ARREGLO and exp.tipo_aux != Tipos.VECTOR:
             if exp.tipo in [Tipos.STR, Tipos.STRING, Tipos.CHAR]:
                 contador = self.generator.newTemp()
 
@@ -319,6 +321,88 @@ class Println(Instruccion):
                 self.generator.addSetHeap(index="H", value=str(ord("e")))
                 self.generator.addNextHeap()
                 self.generator.addLabel(newLabel)  # Lsalida:
+        else:
+            self.generator.addComment("INGRESO DE ARRAY AL STRING")
+            self.printArraysC3d(exp)
+
+    def printArraysC3d(self,exp:ValC3d):
+        if exp.prof_array==1:
+            self.generator.addComment("Print array prof 1")
+            t_puntero= self.generator.newTemp()
+            tvalor= self.generator.newTemp()
+            taux = self.generator.newTemp()
+            t_tam = self.generator.newTemp()
+            loop = self.generator.newLabel()
+            t_cont = self.generator.newTemp() # por default ya vale 0
+            Lsalida = self.generator.newLabel()
+            evComma = self.generator.newTemp()
+            self.generator.addExpAsign(target=t_cont,right="0")
+            self.generator.addExpAsign(target=t_puntero,right=exp.valor)
+            self.generator.addComment("Tamanio")
+            self.generator.addGetHeap(target=t_tam,index=t_puntero)
+            self.generator.incVar(t_puntero) #tpuntero = tpuntero +1:
+            if exp.tipo_aux == Tipos.VECTOR:
+                self.generator.incVar(t_puntero)
+            self.generator.addSetHeap(index="H",value=str(ord("["))) #Heap[H]= "["
+            self.generator.addNextHeap() #H = H + 1;
+            self.generator.addLabel(loop)#Loop:
+            self.generator.addIf(left=t_cont,rigth=t_tam,operator=">=",label=Lsalida)
+            self.generator.addExpression(target=taux,left=t_puntero,right=t_cont,operator="+")#taux = tpuntero + i;
+            self.generator.addGetHeap(target=tvalor,index=taux)
+            val = ValC3d(valor=tvalor,isTemp=True,tipo=exp.tipo)
+            self.addCopyStr(val)
+            #LO QUE CAMBIARA SERA EL TEMPORAL VALOR, EL METODO DE IMPRESION SERA SIEMPRE EL MISMO CON ADDCOPYSTR
+            self.generator.incVar(t_cont)#tcont = tcont+1
+            self.generator.addComment("Para evitar poner una comma extra")
+            self.generator.addIf(left=t_cont,rigth=t_tam,operator=">=",label=evComma)
+            self.generator.addSetHeap(index="H",value=str(ord(","))) #Heap[H] = ","
+            self.generator.addNextHeap()  # H = H+1
+            self.generator.addLabel(evComma)#EvComma: para evitar colocar una coma de extra al final del array
+            self.generator.addGoto(loop)# goto Loop
+            self.generator.addLabel(Lsalida)#Lsalida:
+            self.generator.addSetHeap(index="H",value=str(ord("]"))) #Heap[H]= "]"
+            self.generator.addNextHeap()  # H = H+1
+        else:
+            self.generator.addComment("Print array prof N")
+            t_puntero = self.generator.newTemp()
+            tvalor = self.generator.newTemp()
+            taux = self.generator.newTemp()
+            t_tam = self.generator.newTemp()
+            loop = self.generator.newLabel()
+            t_cont = self.generator.newTemp()  # por default ya vale 0
+            Lsalida = self.generator.newLabel()
+            evComma = self.generator.newTemp()
+            self.generator.addExpAsign(target=t_puntero, right=exp.valor)
+            self.generator.addExpAsign(target=t_cont,right="0")
+            self.generator.addComment("Tamanio array prof N")
+            self.generator.addGetHeap(target=t_tam, index=t_puntero)
+            self.generator.incVar(t_puntero)  # tpuntero = tpuntero +1:
+            if exp.tipo_aux == Tipos.VECTOR:
+                self.generator.incVar(t_puntero)
+            self.generator.addSetHeap(index="H", value=str(ord("[")))  # Heap[H]= "["
+            self.generator.addNextHeap()  # H = H + 1;
+            self.generator.addLabel(loop)  # Loop:
+            self.generator.addIf(left=t_cont, rigth=t_tam, operator=">=", label=Lsalida)
+            self.generator.addExpression(target=taux, left=t_puntero, right=t_cont,
+                                         operator="+")  # taux = tpuntero + i;
+            self.generator.addGetHeap(target=tvalor, index=taux)
+            val = ValC3d(valor=tvalor, isTemp=True, tipo=exp.tipo,tipo_aux=exp.tipo_aux)
+            val.prof_array = exp.prof_array - 1
+            self.printArraysC3d(val)
+            self.generator.addComment("Terminar Print array prof N")
+            # LO QUE CAMBIARA SERA EL TEMPORAL VALOR, EL METODO DE IMPRESION SERA SIEMPRE EL MISMO CON ADDCOPYSTR
+            self.generator.incVar(t_cont)  # tcont = tcont+1
+            self.generator.addIf(left=t_cont, rigth=t_tam, operator=">=", label=evComma)
+            self.generator.addSetHeap(index="H", value=str(ord(",")))  # Heap[H] = ","
+            self.generator.addNextHeap()  # H = H+1
+            self.generator.addLabel(evComma)  # EvComma: para evitar colocar una coma de extra al final del array
+            self.generator.addGoto(loop)  # goto Loop
+
+            self.generator.addLabel(Lsalida)
+            self.generator.addSetHeap(index="H", value=str(ord("]")))  # Heap[H]= "]"
+            self.generator.addNextHeap()  # H = H+1
+
+
 
     #pasar un numero a string en c++
     def setHeapStrNum(self,tvalor):

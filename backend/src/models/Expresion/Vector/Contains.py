@@ -90,8 +90,8 @@ class Contains(Expresion):
                 self.generator.addGetHeap(target=t_tam, index=t_puntero)  # t_tam=inicioArray
                 self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
                 if symbol.tsimbolo == Symbols.VECTOR:
-                    #PARA PASAR EL CAPACITY
-                    self.generator.incVar(t_puntero)
+                    #PARA PASAR DE LARGO EL CAPACITY
+                    self.generator.incVar(t_puntero)# tpuntero=tpuntero+1
                 self.generator.addExpAsign(target=tcont, right="0")  # tcont=0
                 self.generator.addLabel(loop)#loop
                 self.generator.addIf(left=tcont,rigth=t_tam,operator=">=",label=self.falseLabel)

@@ -4,9 +4,11 @@ fn main(){
       //  println!(1);
     //}
 
-    let mut x: Vec<bool> = Vec::new();
-    x.push(true);
-    let y = x.capacity();
+    //let mut x: Vec<i64> = vec![vec![2,3,3],vec![2,3,4]];
+    //let z = x[0][1][2];
+    //println!("valor de z: {}",z);
+    let x : Vec <i64> = vec![vec![2,3,3,4],vec![2,4,5,6]];
+    println!("{}",x[0]);
 }
 
 fn prueba(){

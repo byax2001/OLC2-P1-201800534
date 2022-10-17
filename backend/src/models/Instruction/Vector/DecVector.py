@@ -110,7 +110,6 @@ class DecVector(Instruccion):
             return ""
         elif (tipo==Tipos.STRING):
             return ""
-            return ""
         elif (tipo==Tipos.CHAR):
             return "\0"
     def changeExp(self,exp:Expresion):
@@ -118,6 +117,7 @@ class DecVector(Instruccion):
 
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
+
     def generarC3d(self,ts,ptr):
         self.generator.addComment(f"Declaracion de Vector: {self.id}")
         #con vec!--------------------------------------------------------------------
@@ -126,7 +126,7 @@ class DecVector(Instruccion):
             self.vecI.generator=self.generator
             vecIr:ValC3d= self.vecI.generarC3d(ts,ptr)
             if self.tipo==None:
-                newVec = VectorC3d(vec=vecIr.valor, stateCap=False, capacity=0,profundidad=vecIr.prof_array)
+                newVec = VectorC3d(vec=vecIr.valor, stateCap=False, capacity=0,profundidad=vecIr.prof_array+1)
                 symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=vecIr.tipo, line=self.line,
                                 column=self.column, tacceso=self.tacceso)
 
@@ -140,7 +140,7 @@ class DecVector(Instruccion):
                                     fila=self.line, columna=self.column)
             else:
                 if self.tipo==vecIr.tipo:
-                    newVec = VectorC3d(vec=vecIr.valor, stateCap=False, capacity="0", profundidad=vecIr.prof_array)
+                    newVec = VectorC3d(vec=vecIr.valor, stateCap=False, capacity="0", profundidad=vecIr.prof_array+1)
                     symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=vecIr.tipo,
                                     line=self.line,
                                     column=self.column, tacceso=self.tacceso)

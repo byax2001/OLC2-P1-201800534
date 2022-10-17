@@ -5,7 +5,10 @@ class ValC3d:
         self.valor = valor
         self.isTemp = isTemp
         self.tipo = tipo
-        self.tipo_aux = tipo_aux  #para identificar si es un arreglo o no
+        if tipo_aux != Tipos.ARREGLO and tipo_aux != Tipos.VECTOR:
+            self.tipo_aux = tipo
+        else:
+            self.tipo_aux = tipo_aux  #para identificar si es un arreglo o no
         self.prof_array=0 #profundidad de un arreglo
         self.trueLabel = ""
         self.falseLabel = ""

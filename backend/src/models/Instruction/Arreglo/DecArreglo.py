@@ -90,10 +90,9 @@ class DecArreglo(Instruccion):
         self.generator.addComment(f"Declaracion de arreglo: {self.id}")
         if ts.buscarActualTs(self.id)==None:
             if self.arrDim==None:
-
                 self.array.generator = self.generator
                 array:ValC3d=self.array.generarC3d(ts,ptr)
-                nvector=VectorC3d(vec=array.valor,stateCap=False,capacity=0,profundidad=(array.prof_array+1))
+                nvector=VectorC3d(vec=array.valor, profundidad=(array.prof_array+1))
                 print(f"profundidad: {array.prof_array+1}")
                 symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=array.tipo,
                               line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
@@ -105,7 +104,7 @@ class DecArreglo(Instruccion):
                 self.arrDim.generator= self.array.generator = self.generator
                 arrDim:ValC3d=self.arrDim.generarC3d(ts,ptr)
                 array:ValC3d=self.array.generarC3d(ts,ptr)
-                nvector = VectorC3d(vec=array.valor, stateCap=False, capacity=0)
+                nvector = VectorC3d(vec=array.valor, profundidad=(array.prof_array+1))
                 symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=arrDim.tipo,
                               line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
                 rDec:SymC3d=ts.addVar(self.id, symbol)

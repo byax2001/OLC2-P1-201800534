@@ -173,7 +173,7 @@ class Declaracion(Instruccion):
         temp_var: SymC3d = ts.addVar(self.id, newVar)  # ----------------------------
         aux_index = self.generator.newTemp()  # tendra el index
 
-        if (temp_var.tipo != Tipos.BOOLEAN):
+        if temp_var.tipo != Tipos.BOOLEAN or exp.tipo_aux == Tipos.ARREGLO or exp.tipo_aux == Tipos.VECTOR:
             self.generator.addExpression(target=aux_index, left="P", right=str(temp_var.position), operator="+")
             self.generator.addSetStack(index=aux_index, value=str(temp_var.valor))  # Stack[(int)pos]= val
         else:

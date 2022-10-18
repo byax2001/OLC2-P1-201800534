@@ -27,6 +27,7 @@ class Clone(Expresion):
             self.generator.addComment("Puntero del nuevo array")
             tmpR = self.generator.newTemp()
             self.generator.addExpAsign(target=tmpR, right="H")
+            self.cloneArrays(exp)
             exp.valor= tmpR
             exp.isTemp=True
         return exp

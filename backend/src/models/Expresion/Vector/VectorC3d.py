@@ -7,7 +7,3 @@ class VectorC3d:
         self.vector=vec
         self.ocupado=0
         self.profundidad=profundidad
-
-    def len(self):
-        t_tam=self.generator.newTemp()
-        self.generator.addGetHeap(target=t_tam,index=self.vector) #self.vector sera el puntero

@@ -37,7 +37,7 @@ class Enviroment:
                 self.generator.addExpression(target=tmp_aux,left=tmp_aux,right=str(ts.size),operator="+") #variable auxiliar que servira para volver a colocar el enviroment en su lugar  luego del proceso
         return None
 
-    def actualizarC3d(self,id:str,value):
+    def actualizarC3d(self,id:str,value,isArray=False,prof_array=0):
         ts = self
         while ts is not None:
             symbol:Symbol = ts.tabla.get(id)
@@ -47,11 +47,13 @@ class Enviroment:
                 tmp_i = self.generator.newTemp()
                 self.generator.addExpression(target=tmp_i, left="P", right=str(symbol.position), operator="+")
                 self.generator.addSetStack(index=tmp_i,value=str(value))
+                if isArray:
+                    symbol.value.profundidad=prof_array  #value seria un objeto VectorC3d en ese caso
+                                                         #asegurandose previamente que el simbolo es un vector o arreglo
                 ts.tabla.update({id: symbol})
 
                 return True
             ts = ts.anterior
-
         return None
 
     def actualizar(self,id:str,value):

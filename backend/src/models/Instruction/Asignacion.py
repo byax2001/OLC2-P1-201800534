@@ -114,8 +114,21 @@ class Asignacion(Instruccion):
                 if symbol.tipo==exp.tipo:
                     self.generator.addBackStack(index=tmpaux)
                     ts.generator=self.generator
-                    ts.actualizarC3d(id=self.id,value=exp.valor)
+                    if exp.tipo_aux in [Tipos.ARREGLO,Tipos.VECTOR]:
+                        if exp.tipo_aux == Tipos.VECTOR and symbol.tsimbolo == Symbols.VECTOR:
+                            ts.actualizarC3d(id=self.id,value=exp.valor,isArray=True,prof_array=exp.prof_array)
+                        elif exp.tipo_aux == Tipos.ARREGLO and symbol.tsimbolo == Symbols.ARREGLO:
+                            ts.actualizarC3d(id=self.id,value=exp.valor,isArray=True,prof_array=exp.prof_array)
+                        else:
+                            error = "La variable y/o el valor a asignar no son del mismo tipo de arreglos"
+                            print(error)
+                    else:
+                        ts.actualizarC3d(id=self.id, value=exp.valor)
                     self.generator.addNextStack(index=tmpaux)
+                else:
+                    error = "La variable no es del mismo tipo al valor a asignar"
+                    print(error)
+
             else:
                 error="La variable no es muteable"
                 print(error)

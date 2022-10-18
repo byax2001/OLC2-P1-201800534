@@ -3,43 +3,469 @@ float HEAP[78000];
 float STACK[10000];
 float P;
 float H;
-float t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31;
+float t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31,t32,t33,t34,t35,t36,t37,t38,t39,t40,t41,t42,t43,t44,t45,t46,t47,t48,t49,t50,t51,t52,t53,t54,t55,t56,t57,t58,t59,t60,t61,t62,t63,t64,t65,t66,t67,t68,t69,t70,t71,t72,t73,t74,t75,t76,t77,t78,t79,t80,t81,t82,t83,t84,t85,t86,t87,t88,t89,t90,t91,t92,t93,t94,t95,t96,t97,t98,t99,t100,t101,t102,t103,t104,t105,t106,t107,t108,t109,t110,t111,t112,t113,t114,t115,t116,t117,t118,t119,t120,t121,t122,t123,t124,t125,t126,t127,t128,t129,t130,t131,t132,t133,t134,t135,t136,t137,t138,t139,t140,t141,t142,t143,t144,t145,t146,t147,t148,t149,t150,t151,t152,t153,t154,t155,t156,t157,t158,t159,t160,t161,t162,t163,t164,t165,t166,t167,t168,t169,t170,t171,t172,t173,t174,t175,t176,t177,t178,t179,t180,t181,t182,t183,t184,t185,t186,t187,t188,t189,t190,t191,t192,t193,t194,t195,t196,t197,t198,t199,t200,t201,t202,t203,t204,t205,t206,t207,t208,t209,t210,t211,t212,t213,t214,t215,t216,t217,t218,t219,t220,t221,t222,t223,t224,t225,t226,t227,t228,t229,t230,t231,t232,t233,t234,t235,t236,t237,t238,t239,t240,t241,t242,t243,t244,t245,t246,t247,t248,t249,t250,t251,t252,t253,t254,t255,t256,t257,t258,t259,t260,t261,t262,t263,t264,t265,t266,t267,t268,t269,t270,t271,t272,t273,t274,t275,t276,t277,t278,t279,t280,t281,t282;
 
 
 int main(){
-/* FOR IN */
-P = P + 0;
-/* Char Array */
-t0 = 1;
-t1 = 5;
-t2 = 0;
-t4 = H;
+/* Primitivo tipo STR */
+t0 = H  ;
+HEAP[(int)H] = 45;
 H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t1 = t0  ;
 L0:
-if(t0 > t1) goto L1;
-t2 = t2 + 1;
-HEAP[(int)H] = t0;
-H = H + 1;
-t0 = t0 + 1;
-goto L0;
+t2 = HEAP[(int)t1 ];
+if(t2 != -1) goto L1;
+goto L2;
 L1:
-HEAP[(int)t4] = t2;
-t7 = t4;
-/* Tcont */
-t8 = 0;
-/* tamanio */
-t9 = HEAP[(int)t7 ];
-t7 = t7 + 1;
+printf("%c",(char)t2);
+t1 = t1 + 1;
+goto L0;
 L2:
-if(t8 >= t9) goto L3;
-t10 = t7 + t8;
-t5 = HEAP[(int)t10 ];
-t6 = P + 0;
-STACK[(int)t6] = t5;
-/* Instrucciones For */
+printf("%c",10);
+/* Primitivo tipo STR */
+t3 = H  ;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 65;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 72;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 86;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 66;
+H = H + 1;
+HEAP[(int)H] = 65;
+H = H + 1;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t4 = t3  ;
+L3:
+t5 = HEAP[(int)t4 ];
+if(t5 != -1) goto L4;
+goto L5;
+L4:
+printf("%c",(char)t5);
+t4 = t4 + 1;
+goto L3;
+L5:
+printf("%c",10);
+/* Primitivo tipo STR */
+t6 = H  ;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = 45;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t7 = t6  ;
+L6:
+t8 = HEAP[(int)t7 ];
+if(t8 != -1) goto L7;
+goto L8;
+L7:
+printf("%c",(char)t8);
+t7 = t7 + 1;
+goto L6;
+L8:
+printf("%c",10);
+/* Declaracion var: bo1 */
+goto L10;
+L9:
+t9 = P + 0;
+STACK[(int)t9] = 1;
+goto L11;
+L10:
+t9 = P + 0;
+STACK[(int)t9] = 0;
+L11:
+/* Declaracion var: bol21 */
+/* ID EXPRESION: bo1 */
+P = P - t10;
+t12 = P + 0;
+P = P + t10;
+t11 = STACK[(int)t12];
+if(t11 == 1) goto L13;
+goto L12;
+L12:
+t13 = P + 1;
+STACK[(int)t13] = 1;
+goto L14;
+L13:
+t13 = P + 1;
+STACK[(int)t13] = 0;
+L14:
+/* Declaracion var: cad1 */
+/* Metodo ToString o ToOwned */
+t14 = H;
+/* Primitivo tipo STR */
+t15 = H  ;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 112;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+t16 = t15;
+t17 = P + 2;
+STACK[(int)t17] = t16;
+/* Declaracion var: cad21 */
+/* Metodo ToString o ToOwned */
+t18 = H;
+/* Primitivo tipo STR */
+t19 = H  ;
+HEAP[(int)H] = 99;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 110;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+t20 = t19;
+t21 = P + 3;
+STACK[(int)t21] = t20;
+/* Declaracion var: letra1 */
+/* Primitivo tipo STR */
+t22 = H  ;
+HEAP[(int)H] = 99;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+t23 = P + 4;
+STACK[(int)t23] = t22;
+/* Declaracion var: val11 */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+t32 = 2 * 3;
+t31 = 5 + t32;
+t30 = 4 * t31;
+t29 = 2 + t30;
+t28 = 10 * t29;
+t27 = 5 + t28;
+/* Aritmeticas */
+/* Aritmeticas */
+t34 = 8 * 3;
+t33 = t34 * 3;
+t26 = t27 - t33;
+t25 = 7 - t26;
+/* Aritmeticas */
+/* Aritmeticas */
+t36 = 6 * 2;
+t35 = 50 * t36;
+t24 = t25 + t35;
+t37 = P + 5;
+STACK[(int)t37] = t24;
+/* Declaracion var: val21 */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+t44 = 2 * 2;
+t43 = t44 * 2;
+t42 = t43 * 2;
+t41 = t42 - 9;
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+t47 = 8 - 6;
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+t52 = 3 * 3;
+/* Aritmeticas */
+t53 = 6 * 5;
+t51 = t52 - t53;
+t50 = t51 - 7;
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+t56 = 7 * 7;
+t55 = t56 * 7;
+t54 = 9 + t55;
+t49 = t50 - t54;
+t48 = t49 + 10;
+t46 = t47 + t48;
+t45 = t46 - 5;
+t40 = t41 - t45;
+t39 = t40 + 8;
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+t59 = 2 * 3;
+t58 = 5 * t59;
+t57 = 6 - t58;
+t38 = t39 - t57;
+t60 = P + 6;
+STACK[(int)t60] = t38;
+/* Declaracion var: val31 */
+/* Aritmeticas */
+/* Aritmeticas */
+/* ID EXPRESION: val11 */
+P = P - t63;
+t65 = P + 5;
+P = P + t63;
+t64 = STACK[(int)t65];
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* ID EXPRESION: val21 */
+P = P - t70;
+t72 = P + 6;
+P = P + t70;
+t71 = STACK[(int)t72];
+t69 = t71 * 3;
+t68 = 2 + t69;
+t67 = t68 + 1;
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+/* Aritmeticas */
+t76 = 2 * 2;
+t75 = t76 * 2;
+t74 = t75 - 2;
+t73 = t74 * 2;
+t66 = t67 - t73;
+t62 = t64 + t66;
+t61 = t62 - 2;
+t77 = P + 7;
+STACK[(int)t77] = t61;
 /* Instruccion Print */
 /* Primitivo tipo STR */
-t11 = H  ;
+t78 = H  ;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 49;
+H = H + 1;
+HEAP[(int)H] = 49;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
 HEAP[(int)H] = 123;
 H = H + 1;
 HEAP[(int)H] = 125;
@@ -47,90 +473,1824 @@ H = H + 1;
 HEAP[(int)H] = -1;
 H = H + 1;
 /* Por si la expresiona imprimir es booleana */
-t13 = H;
-/* ID EXPRESION: x */
-P = P - t14;
-t16 = P + 0;
-P = P + t14;
-t15 = STACK[(int)t16];
+t80 = H;
+/* ID EXPRESION: val11 */
+P = P - t81;
+t83 = P + 5;
+P = P + t81;
+t82 = STACK[(int)t83];
 /* Para saber donde iniciar a imprimir luego del proceso */
-t12 = H;
+t79 = H;
 /* Print Complex P.1 */
-t17 = t11  ;
-L4:
-t18 = HEAP[(int)t17 ];
-if(t18 == (char)123) goto L7;
-HEAP[(int)H] = t18;
+t84 = t78  ;
+L15:
+t85 = HEAP[(int)t84 ];
+if(t85 == (char)123) goto L18;
+HEAP[(int)H] = t85;
 H = H + 1;
-t17 = t17 + 1;
-goto L4;
+t84 = t84 + 1;
+goto L15;
 /* Print Complex P.2 */
-L7:
-t17 = t17 + 1;
-L5:
-t18 = HEAP[(int)t17 ];
-if(t18 == (char)125) goto L8;
-t17 = t17 + 1;
-goto L5;
+L18:
+t84 = t84 + 1;
+L16:
+t85 = HEAP[(int)t84 ];
+if(t85 == (char)125) goto L19;
+t84 = t84 + 1;
+goto L16;
 /* Print Complex P.3 */
-L8:
-t17 = t17 + 1;
+L19:
+t84 = t84 + 1;
 /* Num to String */
-t19 = t15;
-t20 = H;
-t21 = t19  ;
-L10:
-t22 = t21 / 10;
-t23 = (int)t22;
-if(t23 == 0) goto L11;
-t24 = (int)t21%10;
-t21 = t23;
-HEAP[(int)H] = (int)t24 +48;
+t86 = t82;
+t87 = H;
+t88 = t86  ;
+L21:
+t89 = t88 / 10;
+t90 = (int)t89;
+if(t90 == 0) goto L22;
+t91 = (int)t88%10;
+t88 = t90;
+HEAP[(int)H] = (int)t91 +48;
 H = H + 1;
-goto L10;
-L11:
-HEAP[(int)H] = (int)t21+48;
+goto L21;
+L22:
+HEAP[(int)H] = (int)t88+48;
 H = H + 1;
 /* sort_revers */
-t25 = t20;
-t26 = H-1;
-L12:
-if(t25 >= t26) goto L13;
-t27 = HEAP[(int)t26 ];
-t28 = HEAP[(int)t25 ];
-HEAP[(int)t25] = t27;
-HEAP[(int)t26] = t28;
-t25 = t25 + 1;
-t26 = t26 - 1;
-goto L12;
-L13:
+t92 = t87;
+t93 = H-1;
+L23:
+if(t92 >= t93) goto L24;
+t94 = HEAP[(int)t93 ];
+t95 = HEAP[(int)t92 ];
+HEAP[(int)t92] = t94;
+HEAP[(int)t93] = t95;
+t92 = t92 + 1;
+t93 = t93 - 1;
+goto L23;
+L24:
 /* Print Complex P.4 */
-L6:
-t18 = HEAP[(int)t17 ];
-if(t18 == -1) goto L9;
-HEAP[(int)H] = t18;
+L17:
+t85 = HEAP[(int)t84 ];
+if(t85 == -1) goto L20;
+HEAP[(int)H] = t85;
 H = H + 1;
-t17 = t17 + 1;
-goto L6;
+t84 = t84 + 1;
+goto L17;
 /* Salida print Complex */
-L9:
+L20:
 HEAP[(int)H] = -1;
 H = H + 1;
 /* Impresion */
-t30 = t12  ;
-L14:
-t31 = HEAP[(int)t30 ];
-if(t31 != -1) goto L15;
-goto L16;
-L15:
-printf("%c",(char)t31);
-t30 = t30 + 1;
-goto L14;
-L16:
+t97 = t79  ;
+L25:
+t98 = HEAP[(int)t97 ];
+if(t98 != -1) goto L26;
+goto L27;
+L26:
+printf("%c",(char)t98);
+t97 = t97 + 1;
+goto L25;
+L27:
 printf("%c",10);
-t8 = t8 + 1;
-goto L2;
-L3:
-P = P - 0;
+/* Instruccion Print */
+/* Primitivo tipo STR */
+t99 = H  ;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 50;
+H = H + 1;
+HEAP[(int)H] = 49;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Por si la expresiona imprimir es booleana */
+t101 = H;
+/* ID EXPRESION: val21 */
+P = P - t102;
+t104 = P + 6;
+P = P + t102;
+t103 = STACK[(int)t104];
+/* Para saber donde iniciar a imprimir luego del proceso */
+t100 = H;
+/* Print Complex P.1 */
+t105 = t99  ;
+L28:
+t106 = HEAP[(int)t105 ];
+if(t106 == (char)123) goto L31;
+HEAP[(int)H] = t106;
+H = H + 1;
+t105 = t105 + 1;
+goto L28;
+/* Print Complex P.2 */
+L31:
+t105 = t105 + 1;
+L29:
+t106 = HEAP[(int)t105 ];
+if(t106 == (char)125) goto L32;
+t105 = t105 + 1;
+goto L29;
+/* Print Complex P.3 */
+L32:
+t105 = t105 + 1;
+/* Num to String */
+t107 = t103;
+t108 = H;
+t109 = t107  ;
+L34:
+t110 = t109 / 10;
+t111 = (int)t110;
+if(t111 == 0) goto L35;
+t112 = (int)t109%10;
+t109 = t111;
+HEAP[(int)H] = (int)t112 +48;
+H = H + 1;
+goto L34;
+L35:
+HEAP[(int)H] = (int)t109+48;
+H = H + 1;
+/* sort_revers */
+t113 = t108;
+t114 = H-1;
+L36:
+if(t113 >= t114) goto L37;
+t115 = HEAP[(int)t114 ];
+t116 = HEAP[(int)t113 ];
+HEAP[(int)t113] = t115;
+HEAP[(int)t114] = t116;
+t113 = t113 + 1;
+t114 = t114 - 1;
+goto L36;
+L37:
+/* Print Complex P.4 */
+L30:
+t106 = HEAP[(int)t105 ];
+if(t106 == -1) goto L33;
+HEAP[(int)H] = t106;
+H = H + 1;
+t105 = t105 + 1;
+goto L30;
+/* Salida print Complex */
+L33:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t118 = t100  ;
+L38:
+t119 = HEAP[(int)t118 ];
+if(t119 != -1) goto L39;
+goto L40;
+L39:
+printf("%c",(char)t119);
+t118 = t118 + 1;
+goto L38;
+L40:
+printf("%c",10);
+/* Instruccion Print */
+/* Primitivo tipo STR */
+t120 = H  ;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 51;
+H = H + 1;
+HEAP[(int)H] = 49;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Por si la expresiona imprimir es booleana */
+t122 = H;
+/* ID EXPRESION: val31 */
+P = P - t123;
+t125 = P + 7;
+P = P + t123;
+t124 = STACK[(int)t125];
+/* Para saber donde iniciar a imprimir luego del proceso */
+t121 = H;
+/* Print Complex P.1 */
+t126 = t120  ;
+L41:
+t127 = HEAP[(int)t126 ];
+if(t127 == (char)123) goto L44;
+HEAP[(int)H] = t127;
+H = H + 1;
+t126 = t126 + 1;
+goto L41;
+/* Print Complex P.2 */
+L44:
+t126 = t126 + 1;
+L42:
+t127 = HEAP[(int)t126 ];
+if(t127 == (char)125) goto L45;
+t126 = t126 + 1;
+goto L42;
+/* Print Complex P.3 */
+L45:
+t126 = t126 + 1;
+/* Num to String */
+t128 = t124;
+t129 = H;
+t130 = t128  ;
+L47:
+t131 = t130 / 10;
+t132 = (int)t131;
+if(t132 == 0) goto L48;
+t133 = (int)t130%10;
+t130 = t132;
+HEAP[(int)H] = (int)t133 +48;
+H = H + 1;
+goto L47;
+L48:
+HEAP[(int)H] = (int)t130+48;
+H = H + 1;
+/* sort_revers */
+t134 = t129;
+t135 = H-1;
+L49:
+if(t134 >= t135) goto L50;
+t136 = HEAP[(int)t135 ];
+t137 = HEAP[(int)t134 ];
+HEAP[(int)t134] = t136;
+HEAP[(int)t135] = t137;
+t134 = t134 + 1;
+t135 = t135 - 1;
+goto L49;
+L50:
+/* Print Complex P.4 */
+L43:
+t127 = HEAP[(int)t126 ];
+if(t127 == -1) goto L46;
+HEAP[(int)H] = t127;
+H = H + 1;
+t126 = t126 + 1;
+goto L43;
+/* Salida print Complex */
+L46:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t139 = t121  ;
+L51:
+t140 = HEAP[(int)t139 ];
+if(t140 != -1) goto L52;
+goto L53;
+L52:
+printf("%c",(char)t140);
+t139 = t139 + 1;
+goto L51;
+L53:
+printf("%c",10);
+/* Instruccion Print */
+/* Primitivo tipo STR */
+t141 = H  ;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 117;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 116;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 112;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 99;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 195;
+H = H + 1;
+HEAP[(int)H] = 179;
+H = H + 1;
+HEAP[(int)H] = 110;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Por si la expresiona imprimir es booleana */
+t143 = H;
+/* ID EXPRESION: val31 */
+P = P - t144;
+t146 = P + 7;
+P = P + t144;
+t145 = STACK[(int)t146];
+/* Para saber donde iniciar a imprimir luego del proceso */
+t142 = H;
+/* Print Complex P.1 */
+t147 = t141  ;
+L54:
+t148 = HEAP[(int)t147 ];
+if(t148 == (char)123) goto L57;
+HEAP[(int)H] = t148;
+H = H + 1;
+t147 = t147 + 1;
+goto L54;
+/* Print Complex P.2 */
+L57:
+t147 = t147 + 1;
+L55:
+t148 = HEAP[(int)t147 ];
+if(t148 == (char)125) goto L58;
+t147 = t147 + 1;
+goto L55;
+/* Print Complex P.3 */
+L58:
+t147 = t147 + 1;
+/* Num to String */
+t149 = t145;
+t150 = H;
+t151 = t149  ;
+L60:
+t152 = t151 / 10;
+t153 = (int)t152;
+if(t153 == 0) goto L61;
+t154 = (int)t151%10;
+t151 = t153;
+HEAP[(int)H] = (int)t154 +48;
+H = H + 1;
+goto L60;
+L61:
+HEAP[(int)H] = (int)t151+48;
+H = H + 1;
+/* sort_revers */
+t155 = t150;
+t156 = H-1;
+L62:
+if(t155 >= t156) goto L63;
+t157 = HEAP[(int)t156 ];
+t158 = HEAP[(int)t155 ];
+HEAP[(int)t155] = t157;
+HEAP[(int)t156] = t158;
+t155 = t155 + 1;
+t156 = t156 - 1;
+goto L62;
+L63:
+/* Print Complex P.4 */
+L56:
+t148 = HEAP[(int)t147 ];
+if(t148 == -1) goto L59;
+HEAP[(int)H] = t148;
+H = H + 1;
+t147 = t147 + 1;
+goto L56;
+/* Salida print Complex */
+L59:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t160 = t142  ;
+L64:
+t161 = HEAP[(int)t160 ];
+if(t161 != -1) goto L65;
+goto L66;
+L65:
+printf("%c",(char)t161);
+t160 = t160 + 1;
+goto L64;
+L66:
+printf("%c",10);
+/* Instruccion Print */
+/* Primitivo tipo STR */
+t162 = H  ;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 98;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 49;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Por si la expresiona imprimir es booleana */
+t164 = H;
+/* ID EXPRESION: bo1 */
+P = P - t165;
+t167 = P + 0;
+P = P + t165;
+t166 = STACK[(int)t167];
+if(t166 == 1) goto L67;
+goto L68;
+/* Print de un Boolean */
+L67:
+HEAP[(int)H] = 116;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 117;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+goto L69;
+L68:
+HEAP[(int)H] = 102;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+L69:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Para saber donde iniciar a imprimir luego del proceso */
+t163 = H;
+/* Print Complex P.1 */
+t168 = t162  ;
+L70:
+t169 = HEAP[(int)t168 ];
+if(t169 == (char)123) goto L73;
+HEAP[(int)H] = t169;
+H = H + 1;
+t168 = t168 + 1;
+goto L70;
+/* Print Complex P.2 */
+L73:
+t168 = t168 + 1;
+L71:
+t169 = HEAP[(int)t168 ];
+if(t169 == (char)125) goto L74;
+t168 = t168 + 1;
+goto L71;
+/* Print Complex P.3 */
+L74:
+t168 = t168 + 1;
+t170 = t164  ;
+L76:
+t171 = HEAP[(int)t170 ];
+if(t171 == -1) goto L77;
+HEAP[(int)H] = t171;
+H = H + 1;
+t170 = t170 + 1;
+goto L76;
+L77:
+/* Print Complex P.4 */
+L72:
+t169 = HEAP[(int)t168 ];
+if(t169 == -1) goto L75;
+HEAP[(int)H] = t169;
+H = H + 1;
+t168 = t168 + 1;
+goto L72;
+/* Salida print Complex */
+L75:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t173 = t163  ;
+L78:
+t174 = HEAP[(int)t173 ];
+if(t174 != -1) goto L79;
+goto L80;
+L79:
+printf("%c",(char)t174);
+t173 = t173 + 1;
+goto L78;
+L80:
+printf("%c",10);
+/* Instruccion Print */
+/* Primitivo tipo STR */
+t175 = H  ;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 99;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 49;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Por si la expresiona imprimir es booleana */
+t177 = H;
+/* ID EXPRESION: cad1 */
+P = P - t178;
+t180 = P + 2;
+P = P + t178;
+t179 = STACK[(int)t180];
+/* Para saber donde iniciar a imprimir luego del proceso */
+t176 = H;
+/* Print Complex P.1 */
+t181 = t175  ;
+L81:
+t182 = HEAP[(int)t181 ];
+if(t182 == (char)123) goto L84;
+HEAP[(int)H] = t182;
+H = H + 1;
+t181 = t181 + 1;
+goto L81;
+/* Print Complex P.2 */
+L84:
+t181 = t181 + 1;
+L82:
+t182 = HEAP[(int)t181 ];
+if(t182 == (char)125) goto L85;
+t181 = t181 + 1;
+goto L82;
+/* Print Complex P.3 */
+L85:
+t181 = t181 + 1;
+t183 = t179  ;
+L87:
+t184 = HEAP[(int)t183 ];
+if(t184 == -1) goto L88;
+HEAP[(int)H] = t184;
+H = H + 1;
+t183 = t183 + 1;
+goto L87;
+L88:
+/* Print Complex P.4 */
+L83:
+t182 = HEAP[(int)t181 ];
+if(t182 == -1) goto L86;
+HEAP[(int)H] = t182;
+H = H + 1;
+t181 = t181 + 1;
+goto L83;
+/* Salida print Complex */
+L86:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t186 = t176  ;
+L89:
+t187 = HEAP[(int)t186 ];
+if(t187 != -1) goto L90;
+goto L91;
+L90:
+printf("%c",(char)t187);
+t186 = t186 + 1;
+goto L89;
+L91:
+printf("%c",10);
+/* Instruccion Print */
+/* Primitivo tipo STR */
+t188 = H  ;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 99;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 50;
+H = H + 1;
+HEAP[(int)H] = 49;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Por si la expresiona imprimir es booleana */
+t190 = H;
+/* ID EXPRESION: cad21 */
+P = P - t191;
+t193 = P + 3;
+P = P + t191;
+t192 = STACK[(int)t193];
+/* Para saber donde iniciar a imprimir luego del proceso */
+t189 = H;
+/* Print Complex P.1 */
+t194 = t188  ;
+L92:
+t195 = HEAP[(int)t194 ];
+if(t195 == (char)123) goto L95;
+HEAP[(int)H] = t195;
+H = H + 1;
+t194 = t194 + 1;
+goto L92;
+/* Print Complex P.2 */
+L95:
+t194 = t194 + 1;
+L93:
+t195 = HEAP[(int)t194 ];
+if(t195 == (char)125) goto L96;
+t194 = t194 + 1;
+goto L93;
+/* Print Complex P.3 */
+L96:
+t194 = t194 + 1;
+t196 = t192  ;
+L98:
+t197 = HEAP[(int)t196 ];
+if(t197 == -1) goto L99;
+HEAP[(int)H] = t197;
+H = H + 1;
+t196 = t196 + 1;
+goto L98;
+L99:
+/* Print Complex P.4 */
+L94:
+t195 = HEAP[(int)t194 ];
+if(t195 == -1) goto L97;
+HEAP[(int)H] = t195;
+H = H + 1;
+t194 = t194 + 1;
+goto L94;
+/* Salida print Complex */
+L97:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t199 = t189  ;
+L100:
+t200 = HEAP[(int)t199 ];
+if(t200 != -1) goto L101;
+goto L102;
+L101:
+printf("%c",(char)t200);
+t199 = t199 + 1;
+goto L100;
+L102:
+printf("%c",10);
+/* Instruccion Print */
+/* Primitivo tipo STR */
+t201 = H  ;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 116;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 49;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Por si la expresiona imprimir es booleana */
+t203 = H;
+/* ID EXPRESION: letra1 */
+P = P - t204;
+t206 = P + 4;
+P = P + t204;
+t205 = STACK[(int)t206];
+/* Para saber donde iniciar a imprimir luego del proceso */
+t202 = H;
+/* Print Complex P.1 */
+t207 = t201  ;
+L103:
+t208 = HEAP[(int)t207 ];
+if(t208 == (char)123) goto L106;
+HEAP[(int)H] = t208;
+H = H + 1;
+t207 = t207 + 1;
+goto L103;
+/* Print Complex P.2 */
+L106:
+t207 = t207 + 1;
+L104:
+t208 = HEAP[(int)t207 ];
+if(t208 == (char)125) goto L107;
+t207 = t207 + 1;
+goto L104;
+/* Print Complex P.3 */
+L107:
+t207 = t207 + 1;
+t209 = t205  ;
+L109:
+t210 = HEAP[(int)t209 ];
+if(t210 == -1) goto L110;
+HEAP[(int)H] = t210;
+H = H + 1;
+t209 = t209 + 1;
+goto L109;
+L110:
+/* Print Complex P.4 */
+L105:
+t208 = HEAP[(int)t207 ];
+if(t208 == -1) goto L108;
+HEAP[(int)H] = t208;
+H = H + 1;
+t207 = t207 + 1;
+goto L105;
+/* Salida print Complex */
+L108:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t212 = t202  ;
+L111:
+t213 = HEAP[(int)t212 ];
+if(t213 != -1) goto L112;
+goto L113;
+L112:
+printf("%c",(char)t213);
+t212 = t212 + 1;
+goto L111;
+L113:
+printf("%c",10);
+/* Instruccion Print */
+/* Primitivo tipo STR */
+t214 = H  ;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 98;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 50;
+H = H + 1;
+HEAP[(int)H] = 49;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Por si la expresiona imprimir es booleana */
+t216 = H;
+/* ID EXPRESION: bol21 */
+P = P - t217;
+t219 = P + 1;
+P = P + t217;
+t218 = STACK[(int)t219];
+if(t218 == 1) goto L114;
+goto L115;
+/* Print de un Boolean */
+L114:
+HEAP[(int)H] = 116;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 117;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+goto L116;
+L115:
+HEAP[(int)H] = 102;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+L116:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Para saber donde iniciar a imprimir luego del proceso */
+t215 = H;
+/* Print Complex P.1 */
+t220 = t214  ;
+L117:
+t221 = HEAP[(int)t220 ];
+if(t221 == (char)123) goto L120;
+HEAP[(int)H] = t221;
+H = H + 1;
+t220 = t220 + 1;
+goto L117;
+/* Print Complex P.2 */
+L120:
+t220 = t220 + 1;
+L118:
+t221 = HEAP[(int)t220 ];
+if(t221 == (char)125) goto L121;
+t220 = t220 + 1;
+goto L118;
+/* Print Complex P.3 */
+L121:
+t220 = t220 + 1;
+t222 = t216  ;
+L123:
+t223 = HEAP[(int)t222 ];
+if(t223 == -1) goto L124;
+HEAP[(int)H] = t223;
+H = H + 1;
+t222 = t222 + 1;
+goto L123;
+L124:
+/* Print Complex P.4 */
+L119:
+t221 = HEAP[(int)t220 ];
+if(t221 == -1) goto L122;
+HEAP[(int)H] = t221;
+H = H + 1;
+t220 = t220 + 1;
+goto L119;
+/* Salida print Complex */
+L122:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t225 = t215  ;
+L125:
+t226 = HEAP[(int)t225 ];
+if(t226 != -1) goto L126;
+goto L127;
+L126:
+printf("%c",(char)t226);
+t225 = t225 + 1;
+goto L125;
+L127:
+printf("%c",10);
+/* Primitivo tipo STR */
+t227 = H  ;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t228 = t227  ;
+L128:
+t229 = HEAP[(int)t228 ];
+if(t229 != -1) goto L129;
+goto L130;
+L129:
+printf("%c",(char)t229);
+t228 = t228 + 1;
+goto L128;
+L130:
+printf("%c",10);
+/* Declaracion var: a */
+t230 = P + 8;
+STACK[(int)t230] = 100;
+/* Declaracion var: b */
+t231 = P + 9;
+STACK[(int)t231] = 100;
+/* Declaracion var: c */
+t232 = P + 10;
+STACK[(int)t232] = 7;
+/* Declaracion var: f */
+goto L131;
+L131:
+t233 = P + 11;
+STACK[(int)t233] = 1;
+goto L133;
+L132:
+t233 = P + 11;
+STACK[(int)t233] = 0;
+L133:
+/* Declaracion var: j */
+t234 = P + 12;
+STACK[(int)t234] = 10.0;
+/* Declaracion var: k */
+t235 = P + 13;
+STACK[(int)t235] = 10.0;
+/* Primitivo tipo STR */
+t236 = H  ;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t237 = t236  ;
+L134:
+t238 = HEAP[(int)t237 ];
+if(t238 != -1) goto L135;
+goto L136;
+L135:
+printf("%c",(char)t238);
+t237 = t237 + 1;
+goto L134;
+L136:
+printf("%c",10);
+/* Primitivo tipo STR */
+t239 = H  ;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t240 = t239  ;
+L137:
+t241 = HEAP[(int)t240 ];
+if(t241 != -1) goto L138;
+goto L139;
+L138:
+printf("%c",(char)t241);
+t240 = t240 + 1;
+goto L137;
+L139:
+printf("%c",10);
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: a */
+P = P - t243;
+t245 = P + 8;
+P = P + t243;
+t244 = STACK[(int)t245];
+/* ID EXPRESION: b */
+P = P - t246;
+t248 = P + 9;
+P = P + t246;
+t247 = STACK[(int)t248];
+if(t244 > t247) goto L140;
+goto L143;
+L143:
+/* Operaciones Relacionales */
+/* ID EXPRESION: b */
+P = P - t249;
+t251 = P + 9;
+P = P + t249;
+t250 = STACK[(int)t251];
+/* ID EXPRESION: c */
+P = P - t252;
+t254 = P + 10;
+P = P + t252;
+t253 = STACK[(int)t254];
+if(t250 < t253) goto L140;
+goto L141;
+L140:
+P = P + 14;
+/* Primitivo tipo STR */
+t255 = H  ;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 116;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 110;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 98;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 195;
+H = H + 1;
+HEAP[(int)H] = 173;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 112;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t256 = t255  ;
+L146:
+t257 = HEAP[(int)t256 ];
+if(t257 != -1) goto L147;
+goto L148;
+L147:
+printf("%c",(char)t257);
+t256 = t256 + 1;
+goto L146;
+L148:
+printf("%c",10);
+P = P - 14;
+goto L142;
+L141:
+P = P + 14;
+/* Primitivo tipo STR */
+t258 = H  ;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 116;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 98;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 195;
+H = H + 1;
+HEAP[(int)H] = 173;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 112;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t259 = t258  ;
+L149:
+t260 = HEAP[(int)t259 ];
+if(t260 != -1) goto L150;
+goto L151;
+L150:
+printf("%c",(char)t260);
+t259 = t259 + 1;
+goto L149;
+L151:
+printf("%c",10);
+P = P - 14;
+L142:
+/* End If */
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: a */
+P = P - t262;
+t264 = P + 8;
+P = P + t262;
+t263 = STACK[(int)t264];
+/* ID EXPRESION: b */
+P = P - t265;
+t267 = P + 9;
+P = P + t265;
+t266 = STACK[(int)t267];
+if(t263 == t266) goto L156;
+goto L155;
+L156:
+/* Operaciones Relacionales */
+/* ID EXPRESION: j */
+P = P - t268;
+t270 = P + 12;
+P = P + t268;
+t269 = STACK[(int)t270];
+/* ID EXPRESION: k */
+P = P - t271;
+t273 = P + 13;
+P = P + t271;
+t272 = STACK[(int)t273];
+if(t269 == t272) goto L152;
+goto L155;
+L155:
+/* Operaciones Relacionales */
+/* ID EXPRESION: c */
+P = P - t274;
+t276 = P + 10;
+P = P + t274;
+t275 = STACK[(int)t276];
+if(14 != t275) goto L152;
+goto L153;
+L152:
+P = P + 14;
+/* Primitivo tipo STR */
+t277 = H  ;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 116;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 98;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 195;
+H = H + 1;
+HEAP[(int)H] = 173;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 112;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t278 = t277  ;
+L160:
+t279 = HEAP[(int)t278 ];
+if(t279 != -1) goto L161;
+goto L162;
+L161:
+printf("%c",(char)t279);
+t278 = t278 + 1;
+goto L160;
+L162:
+printf("%c",10);
+P = P - 14;
+goto L154;
+L153:
+P = P + 14;
+/* Primitivo tipo STR */
+t280 = H  ;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 62;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 116;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 110;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 98;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 195;
+H = H + 1;
+HEAP[(int)H] = 173;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 112;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t281 = t280  ;
+L163:
+t282 = HEAP[(int)t281 ];
+if(t282 != -1) goto L164;
+goto L165;
+L164:
+printf("%c",(char)t282);
+t281 = t281 + 1;
+goto L163;
+L165:
+printf("%c",10);
+P = P - 14;
+L154:
+/* End If */
 return 0;
 }

@@ -291,7 +291,7 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
     def divModC3d(self,exp1,exp2,newTemp,operador):
         self.trueLabel = self.generator.newLabel()
         salida = self.generator.newLabel()
-        self.generator.addIf(left=exp2.valor, rigth=0, operator="!=",
+        self.generator.addIf(left=exp2.valor, rigth="0", operator="!=",
                              label=self.trueLabel)  # if (exp2!=0) goto Lv
         self.generator.addError("Math Error!")  # imprime error en c3d
         self.generator.addExpression(target=newTemp, left="0", right="", operator="")  # tnum=0

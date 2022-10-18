@@ -3,6 +3,7 @@ from models.Abstract.Expresion import Expresion
 
 class Clone(Expresion):
     def __init__(self,exp:Expresion,line:int,column:int):
+        super().__init__()
         self.exp=exp
         self.line=line
         self.column=column

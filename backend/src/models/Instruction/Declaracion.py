@@ -157,7 +157,7 @@ class Declaracion(Instruccion):
             if self.tipoVar == None:
                 self.declarar_c3d(ts,ptr,exp_dec)
             else:
-                if self.tipoVar==exp_dec.tipo:
+                if self.tipoVar==exp_dec.tipo or (self.tipoVar in [Tipos.INT64,Tipos.USIZE] and exp_dec.tipo in [Tipos.INT64,Tipos.USIZE]):
                     self.declarar_c3d(ts,ptr,exp_dec)
                 else:
                     error="Tipo de variable no corresponde con el valor a declarar"

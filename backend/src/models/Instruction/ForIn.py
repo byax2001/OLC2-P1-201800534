@@ -70,6 +70,7 @@ class ForIn(Instruccion):
         array:ValC3d = self.arreglo.generarC3d(ts,ptr)
 
         newts = Enviroment(ts,"ForIn")
+        newts.generator = self.generator
         for_var = self.generator.newTemp()
 
         if array.prof_array == 0:

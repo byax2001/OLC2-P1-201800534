@@ -215,15 +215,15 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
         exp1=self.exp1.generarC3d(ts,ptr)
         exp2=self.exp2.generarC3d(ts,ptr)
 
-        if exp1.tipo == Tipos.STRING and exp2.tipo == Tipos.STR and self.operador==Operador.SUMA:
+        if exp1.tipo == Tipos.STRING and exp2.tipo in [Tipos.STR,Tipos.STRING] and self.operador==Operador.SUMA:
             self.generator.addComment("Concatenacion de cadenas")
             self.generator.addExpAsign(target=newTemp,right="H")# Resultado
             self.ConcatenarStrC3d(posInit=exp1.valor)
             self.ConcatenarStrC3d(posInit=exp2.valor)
             # de ultimo añadir al heap un -1 y sumar 1 a H
+            self.generator.addComment("Fin de la concatenacion")
             self.generator.addSetHeap("H", "-1")  # H
             self.generator.addNextHeap()  # H=H+1
-
             result.tipo = Tipos.STRING
             return result
 

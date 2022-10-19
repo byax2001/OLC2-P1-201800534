@@ -1,18 +1,15 @@
 fn main() {
-    let mut a = -1;
-    while (a < 5) {
-        a = a + 1;
-        if a == 3 {
-            println!("a");
-            continue;
-        } else if a == 4 {
-            println!("b");
-            break;
+
+
+    for i in 0..9 {
+
+        let mut output: String = "".to_string();
+        println!("{}",i);
+        for k in 0..i {
+            println!("{}",k);
+            output = output + &"* ".to_string();
         }
+        println!("{}",output);
 
-        println!("El valor de a es: {}, ", a);
     }
-
-
-
 }

@@ -23,10 +23,9 @@ class ToStringOwned(Expresion):
         self.generator.addExpAsign(target=tbool_str, right="H")
         # ----------------------------------------------------
         exp=self.exp.generarC3d(ts,ptr)
-        newTemp=self.generator.newTemp()
-        if exp.tipo == Tipos.STR or exp.tipo == Tipos.CHAR:
-            self.generator.addExpAsign(target=newTemp,right=exp.valor)
-            return ValC3d(valor=newTemp,isTemp=True,tipo=Tipos.STRING)
+
+        if exp.tipo in [Tipos.STRING,Tipos.STR,Tipos.CHAR]:
+            return ValC3d(valor=exp.valor,isTemp=True,tipo=Tipos.STRING)
         elif exp.tipo==Tipos.BOOLEAN:
             self.addCopyStr(exp)
             self.generator.addSetHeap(index="H", value="-1")  # Heap[H]=-1

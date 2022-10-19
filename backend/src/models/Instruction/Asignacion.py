@@ -111,20 +111,94 @@ class Asignacion(Instruccion):
             if symbol.mut:
                 self.exp.generator=self.generator
                 exp:ValC3d=self.exp.generarC3d(ts,ptr)
+
                 if symbol.tipo==exp.tipo:
-                    self.generator.addBackStack(index=tmpaux)
                     ts.generator=self.generator
-                    if exp.tipo_aux in [Tipos.ARREGLO,Tipos.VECTOR]:
-                        if exp.tipo_aux == Tipos.VECTOR and symbol.tsimbolo == Symbols.VECTOR:
-                            ts.actualizarC3d(id=self.id,value=exp.valor,isArray=True,prof_array=exp.prof_array)
-                        elif exp.tipo_aux == Tipos.ARREGLO and symbol.tsimbolo == Symbols.ARREGLO:
-                            ts.actualizarC3d(id=self.id,value=exp.valor,isArray=True,prof_array=exp.prof_array)
+                    if len(self.cIndex) == 0:
+                        self.generator.addBackStack(index=tmpaux)
+                        #ASIGNACION NORMAL: var = val
+
+                        ts.actualizarC3d(id=self.id, value=exp.valor)
+                        self.generator.addNextStack(index=tmpaux)
+                    elif len(self.cIds) ==0: #array[x]==val   len (CIDS) ==0
+
+                        if symbol.tsimbolo in [Symbols.VECTOR, Symbols.ARREGLO]:
+                            if len(self.cIndex) <= symbol.value.profundidad:
+                                if len(self.cIndex)<symbol.value.profundidad and exp.tipo_aux not in [Tipos.VECTOR,Tipos.ARREGLO]:
+                                    # [[1,2],2,[2,3]]
+                                    error = "intento de asignar un elemento no arreglo en una parte no correcta"
+                                    print(error)
+                                else:
+                                    #ASIGNAR
+                                    aux_index = self.generator.newTemp()
+                                    t_puntero = self.generator.newTemp()
+                                    t_tam = self.generator.newTemp()
+                                    tvalor = self.generator.newTemp()  # valor del array buscado actualmente
+                                    taux = self.generator.newTemp()  # suma del puntero y el index actual
+                                    lerror = self.generator.newLabel()
+                                    lsalida = self.generator.newLabel()
+                                    self.generator.addBackStack(tmpaux)
+                                    self.generator.addExpression(target=aux_index, left="P", right=str(symbol.position),
+                                                                 operator="+")
+                                    self.generator.addNextStack(tmpaux)
+                                    self.generator.addGetStack(target=t_puntero, index=aux_index)
+                                    self.generator.addComment("Tamanio")
+                                    self.generator.addGetHeap(target=t_tam, index=t_puntero)
+                                    self.generator.incVar(t_puntero)
+                                    if symbol.tsimbolo == Symbols.VECTOR:
+                                        self.generator.addComment("Saltarse el capacity")
+                                        self.generator.incVar(t_puntero)  # saltarse el capacity
+                                    x = 0
+                                    for index in self.cIndex:
+                                        x += 1
+                                        index.generator = self.generator
+                                        indexR: ValC3d = index.generarC3d(ts, ptr)
+                                        self.generator.addIf(left=indexR.valor, rigth=t_tam, operator=">=",
+                                                             label=lerror)
+                                        self.generator.addIf(left=indexR.valor, rigth="0", operator="<", label=lerror)
+                                        self.generator.addExpression(target=taux, left=t_puntero, right=indexR.valor,
+                                                                     operator="+")  # taux= tpuntero + index
+                                        self.generator.addGetHeap(target=tvalor, index=taux)  # tvalor = Heap[taux]
+                                        if x != len(self.cIndex):
+                                            self.generator.addExpAsign(target=t_puntero,
+                                                                       right=tvalor)  # tpuntero = tvalor
+                                            self.generator.addComment("Tamanio")
+                                            self.generator.addGetHeap(target=t_tam,
+                                                                      index=t_puntero)  # t_tam = Heap[tpuntero]
+                                            self.generator.incVar(t_puntero)  # tpuntero = tpuntero +1
+                                            if symbol.tsimbolo == Symbols.VECTOR:
+                                                self.generator.incVar(t_puntero)
+                                    self.generator.addSetHeap(index=t_puntero,value=exp.valor)
+                                    self.generator.addGoto(lsalida)  # goto Lsalida;
+                                    # EN CASO LOS INDEX DEN ERROR:
+                                    self.generator.addLabel(lerror)  # Lerror:
+                                    self.generator.addError("Bound Error")  # print error
+                                    self.generator.addNewLine()
+                                    self.generator.addLabel(lsalida)
+                            else:
+                                self.generator.addError(f"Bounds Error")
+                                self.generator.addNewLine()
+                                error = "Intento de ingresar a una profundidad mayor a la que posee el array"
+                                print(error)
                         else:
-                            error = "La variable y/o el valor a asignar no son del mismo tipo de arreglos"
+                            error = "No se puede asignar de esa forma a una variable no array"
                             print(error)
                     else:
-                        ts.actualizarC3d(id=self.id, value=exp.valor)
-                    self.generator.addNextStack(index=tmpaux)
+                        #PARA EL var.dato = val  existe una clase llamada modivarstruct
+                        # asi que fijo aca va a ser id[x].val = val
+                        if symbol.tsimbolo == [Symbols.VECTOR, Symbols.ARREGLO]:
+                            if len(self.cIndex) <= symbol.value.profundidad:
+                                #PENDIENTE
+                                print()
+                            else:
+                                self.generator.addError(f"Bounds Error")
+                                self.generator.addNewLine()
+                                error = "Intento de ingresar a una profundidad mayor a la que posee el array"
+                                print(error)
+                        else:
+                            error = "No se puede asignar de esa forma a una variable no array"
+                            print(error)
+
                 else:
                     error = "La variable no es del mismo tipo al valor a asignar"
                     print(error)
@@ -136,4 +210,9 @@ class Asignacion(Instruccion):
             error="dicha variable no existe"
             print(error)
         self.generator.addComment("End Asignacion")
+
+    def tSymtValCorrect(self,symbol:Symbol,exp:ValC3d):
+        if exp.tipo_aux in [Tipos.ARREGLO,Tipos.VECTOR]:
+            if symbol.tsimbolo in [Tipos.VECTOR]:
+                print()
 

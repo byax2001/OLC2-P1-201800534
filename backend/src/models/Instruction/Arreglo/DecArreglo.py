@@ -110,7 +110,7 @@ class DecArreglo(Instruccion):
                 rDec:SymC3d=ts.addVar(self.id, symbol)
                 aux_index=self.generator.newTemp()
                 self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")
-                self.generator.addSetStack(index=aux_index, value=rDec.valor)  # Stack[(int)pos]= val
+                self.generator.addSetStack(index=aux_index, value=array.valor)  # Stack[(int)pos]= val
         else:
             error="variable ya declarada"
             print(error)

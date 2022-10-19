@@ -103,6 +103,7 @@ class Generator:
     def addError(self,error:str):
         for char in error:
             self.addPrintf("c",str(ord(char)))
+        self.addNewLine()
     #añade un comentario al codigo
     def addComment(self,comment:str):
         self.code.append(f"/* {comment} */")

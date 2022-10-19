@@ -109,7 +109,10 @@ def t_entero(t):
     t.value = int(t.value)
     return t
 def t_cadena(t):
-    r'["](\\[\'\"\\nrt]|[^\n\"])*["]' 
+    r'\&?["](\\[\'\"\\nrt]|[^\n\"])*["]'
+    if len(t.value)>1:
+        if t.value[0]== "&":
+            t.value = t.value[1:len(t.value)]
     return t 
 def t_caracter(t):
     r'[\'](\\[\'\"\\nrt]|[^\n\'])[\']' 

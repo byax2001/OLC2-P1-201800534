@@ -49,7 +49,7 @@ class Rango(Expresion):
             self.value=None
             self.tipo=None
     def generarC3d(self,ts,ptr):
-        self.generator.addComment("Char Array")
+        self.generator.addComment("RANGO")
         result = ValC3d(valor="0",isTemp=False,tipo=Tipos.ERROR)
         self.exp1.generator = self.generator
         self.exp2.generator = self.generator

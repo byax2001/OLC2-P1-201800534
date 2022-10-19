@@ -876,14 +876,17 @@ def p_exstruct(p):
 def p_acces_struct_expresion(p):
     """ACCESO_STRUCT  : id  punto  CONJ_ACCES"""
     p[0]=AccesStruct(idPrincipal=p[1],cIds=p[3],line=p.lineno(1), column=0)
+
+#id.id.id ... id = val
 def p_acces_struct_list(p):
     """CONJ_ACCES  : CONJ_ACCES punto id"""
     p[1].append(p[3])
     p[0]=p[1]
+# id
 def p_acces_struct(p):
     """CONJ_ACCES : id"""
     p[0]=[p[1]]
-#modificacion de structs
+#modificacion de VARIABLES DECLARADAS COMO STRUCTS    id.val = hola
 def p_mod_var_struct(p):
     """MOD_VAR_STRUCT : id punto CONJ_ACCES igual EXPRESION"""
     p[0]=ModiVarStruct(idPrincipal=p[1],cIds=p[3],exp=p[5],line=p.lineno(1), column=0)

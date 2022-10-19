@@ -97,7 +97,6 @@ class AccesVec(Expresion):
         if symbol !=None:
             if len(self.cIndex) > symbol.value.profundidad:
                 self.generator.addError(f"Bounds Error")
-                self.generator.addNewLine()
             else:
                 result.tipo=symbol.tipo
                 aux_index = self.generator.newTemp()

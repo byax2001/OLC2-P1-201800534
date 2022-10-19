@@ -279,14 +279,27 @@ class Println(Instruccion):
             elif exp.tipo in [Tipos.INT64, Tipos.USIZE]:
                 self.generator.addComment("Num to String")
                 t1 = self.generator.newTemp()
+                noNeg = self.generator.newLabel()
                 self.generator.addExpAsign(target=t1, right=exp.valor)
+                self.generator.addComment("Por si es Negativo ")
+                self.generator.addIf(left=t1,rigth="0",operator=">=",label=noNeg)# if(t1>0) goto noNeg
+                self.generator.addExpression(target=t1,left=t1,right="-1",operator="*")# t1 = t1*-1
+                self.generator.addSetHeap(index="H",value="45")# Heap[H]=45
+                self.generator.addNextHeap()# H=H+1;
+                self.generator.addLabel(noNeg)# noNeg:
                 self.setHeapStrNum(t1)
             elif exp.tipo==Tipos.FLOAT64:
                 t1 = self.generator.newTemp()
                 t2 = self.generator.newTemp()
                 t3 = self.generator.newTemp()
                 t4 = self.generator.newTemp()
+                noNeg = self.generator.newLabel()
                 self.generator.addExpAsign(target=t1, right=exp.valor)  # t1 = 1245.552
+                self.generator.addIf(left=t1, rigth="0", operator=">=", label=noNeg)  # if(t1>0) goto noNeg
+                self.generator.addExpression(target=t1, left=t1, right="-1", operator="*")  # t1 = t1*-1
+                self.generator.addSetHeap(index="H", value="45")  # Heap[H]=45
+                self.generator.addNextHeap()  # H=H+1;
+                self.generator.addLabel(noNeg)  # noNeg:
                 self.generator.addExpAsign(target=t2, right=f"(int){t1}")  # t2 = (int)t1    : 1245
                 self.generator.addExpression(target=t3, left=t1, right=t2, operator="-")  # t3=t1-t2
                 self.generator.addExpression(target=t3, left=t3, right="1000000", operator="*")  # t3=t1-t2

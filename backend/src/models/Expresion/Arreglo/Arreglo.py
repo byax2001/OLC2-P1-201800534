@@ -86,11 +86,12 @@ class Arreglo(Expresion):
         if self.exp==None:#si es un arreglo normal y no un [exp;multiplicador]
             x=0
             for exp in self.cExp:
-                if x==0:
-                    result.tipo=exp.tipo
-                    x+=1
+
                 exp.generator=self.generator
                 rexp:ValC3d=exp.generarC3d(ts,ptr)
+                if x==0:
+                    result.tipo=rexp.tipo
+                    x+=1
                 if rexp.tipo==rexp.tipo_aux==Tipos.BOOLEAN:
                     self.generator.addComment("Exp Bool")
                     trbool=self.generator.newTemp()

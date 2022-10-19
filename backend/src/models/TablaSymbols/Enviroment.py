@@ -28,12 +28,14 @@ class Enviroment:
 
     def buscarC3d(self,id:str,tmp_aux):
         ts = self
+        self.generator.addExpAsign(target=tmp_aux,right="0")
         while ts is not None:
             exist = ts.tabla.get(id)
             if exist is not None:
                 return exist
             ts = ts.anterior
             if ts!=None:
+                print(f"{id}---{ts.size}")
                 self.generator.addExpression(target=tmp_aux,left=tmp_aux,right=str(ts.size),operator="+") #variable auxiliar que servira para volver a colocar el enviroment en su lugar  luego del proceso
         return None
 

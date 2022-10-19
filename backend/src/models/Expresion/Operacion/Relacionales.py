@@ -58,6 +58,7 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
             self.tipo=None
     def generarC3d(self,ts,ptr:int):
         self.generator.addComment("Operaciones Relacionales")
+
         self.exp1.generator=self.generator
         self.exp2.generator=self.generator
         if self.trueLabel=="":

@@ -64,6 +64,7 @@ class ForIn(Instruccion):
 
     def generarC3d(self,ts:Enviroment,ptr):
         self.generator.addComment("FOR IN")
+        init_code = len(self.generator.code)
         self.generator.addNextStack(index=str(ts.size))# P = P + oldTS_SIZE
         self.arreglo.generator=self.generator
         array:ValC3d = self.arreglo.generarC3d(ts,ptr)
@@ -83,7 +84,7 @@ class ForIn(Instruccion):
                 tsimbolo=3
             symbol = Symbol(mut=True, id=self.id, value=nvector, tipo_simbolo=tsimbolo, tipo=array.tipo,
                             line=self.line, column=self.column, tacceso=0, position=newts.size)
-
+        #SE DECLARA LA VARIABLE
         temp_var: SymC3d = newts.addVar(self.id, symbol)  # ----------------------------
         aux_index = self.generator.newTemp()  # tendra el index
 
@@ -94,16 +95,19 @@ class ForIn(Instruccion):
         loop = self.generator.newLabel()
         lsalida = self.generator.newLabel()
 
+
         self.generator.addExpAsign(target=t_puntero,right=array.valor)
         self.generator.addComment("Tcont")
-        self.generator.addExpAsign(target=t_cont,right="0")
+        self.generator.addExpAsign(target=t_cont,right="-1")
         self.generator.addComment("tamanio")
         self.generator.addGetHeap(target=t_tam,index=t_puntero)
         self.generator.incVar(t_puntero)
-        print(array.tipo_aux)
+
         if array.tipo_aux == Tipos.VECTOR:
             self.generator.incVar(t_puntero)
+        self.generator.addComment("Loop del For")
         self.generator.addLabel(loop) #LOOP:
+        self.generator.incVar(t_cont)
         self.generator.addIf(left=t_cont,rigth=t_tam,operator=">=",label=lsalida)
         self.generator.addExpression(target=t_aux,left=t_puntero,right=t_cont,operator="+")
         self.generator.addGetHeap(target=for_var,index=t_aux) #tfor_v = Heap[tpuntero]
@@ -116,8 +120,19 @@ class ForIn(Instruccion):
             ins.generator=self.generator
             ins.generarC3d(newts,ptr)
 
-        self.generator.incVar(t_cont)
         self.generator.addGoto(loop) #Goto Loop
         self.generator.addLabel(lsalida) #Lsalida:
 
         self.generator.addBackStack(index=str(ts.size))# P = P - oldTS_SIZE
+        f_code = len(self.generator.code)
+        code = ""
+        for x in range(init_code, f_code):
+            if x != f_code - 1:
+                code += self.generator.code[x] + "\n"
+            else:
+                code += self.generator.code[x]
+        for x in reversed(range(init_code, f_code)):
+            self.generator.code.pop(x)
+        code = code.replace("break_i", f"goto {lsalida};")
+        code = code.replace("continue_i", f"goto {loop};")
+        self.generator.addCode(code)

@@ -89,6 +89,8 @@ class Loop(Instruccion):
             self.tipo=None
     def generarC3d(self,ts,ptr):
         self.generator.addComment("Loop Instruction")
+        newts = Enviroment(ts,"Loop")
+        newts.generator=self.generator
         tn_rloop=self.generator.newTemp()
         rloop=ValC3d(valor=tn_rloop,isTemp=True,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
         # Loop:
@@ -97,11 +99,12 @@ class Loop(Instruccion):
         # Salida:
         loop=self.generator.newLabel()
         lexit=self.generator.newLabel()
+
+        init_code = len(self.generator.code)
         self.generator.addLabel(loop)
-        init_code=len(self.generator.code)
         for ins in self.bloque:
             ins.generator=self.generator
-            result=ins.generarC3d(ts,ptr=tn_rloop)
+            result=ins.generarC3d(newts,ptr=tn_rloop)
             if result!=None:
                 rloop.tipo = result.tipo
                 rloop.tipo_aux = result.tipo
@@ -117,6 +120,7 @@ class Loop(Instruccion):
         for x in reversed(range(init_code,f_code)):
             self.generator.code.pop(x)
         code=code.replace("break_i",f"goto {lexit};")
+        code = code.replace("continue_i",f"goto {loop};")
         self.generator.addCode(code)
         self.generator.addGoto(loop)
         self.generator.addLabel(lexit)

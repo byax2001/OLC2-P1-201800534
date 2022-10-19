@@ -71,13 +71,16 @@ class While(Instruccion):
         self.exp.trueLabel = trueLabel
         self.exp.falseLabel = falseLabel
 
+        init_code = len(self.generator.code) #PARA SABER DONDE SE ALBERGARA TODO EL C3D DEL WHILE
+        self.generator.addComment("Loop while")
         self.generator.addLabel(loop)
         vCondicion:ValC3d = self.exp.generarC3d(ts,ptr)
 
         if (vCondicion.tipo == Tipos.BOOLEAN):
             self.generator.addLabel(vCondicion.trueLabel)
 
-            newEnv = Enviroment(ts,"While Bloque")
+            newEnv = Enviroment(ts,"While")
+            newEnv.generator=self.generator
             self.generator.addNextStack(index=str(ts.size))
             for ins in self.bloque:
                 ins.generator = self.generator
@@ -85,6 +88,19 @@ class While(Instruccion):
             self.generator.addBackStack(index=str(ts.size))
             self.generator.addGoto(loop)
             self.generator.addLabel(vCondicion.falseLabel)
+
+            f_code = len(self.generator.code)
+            code = ""
+            for x in range(init_code, f_code):
+                if x != f_code - 1:
+                    code += self.generator.code[x] + "\n"
+                else:
+                    code += self.generator.code[x]
+            for x in reversed(range(init_code, f_code)):
+                self.generator.code.pop(x)
+            code = code.replace("break_i", f"goto {falseLabel};")
+            code = code.replace("continue_i", f"goto {loop};")
+            self.generator.addCode(code)
         else:
             print("La expresion no es booleana")
         self.generator.addComment("End While")

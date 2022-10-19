@@ -48,6 +48,7 @@ class If(Instruccion):
                               columna=self.column)
 
     def generarC3d(self,ts:Enviroment,ptr,lsalida="",aux=0):
+
         self.generator.addComment("If instruction")
         tn_rif=self.generator.newTemp()
         result_if=ValC3d(valor=tn_rif,isTemp=True,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
@@ -67,7 +68,7 @@ class If(Instruccion):
             self.generator.addNextStack(index=str(ts.size))
             for ins in self.bloque1:
                 ins.generator=self.generator
-                result=ins.generarC3d(newts,{"tmpR":ptr,"envAnt":ts.size})
+                result=ins.generarC3d(newts,ptr)
                 if result!=None:
                     result_if.tipo=result.tipo
                     result_if.tipo_aux=result.tipo
@@ -81,6 +82,7 @@ class If(Instruccion):
                     self.generator.addNextStack(index=str(ts.size)) #para que la pila se mueva el nuevo enviroment
                                                                     # se debe de sumar el tamaño del anterior
                     newts = Enviroment(ts, "If")
+                    newts.generator = self.generator
             for ins in self.bloque2:
                 if isinstance(ins,If):
                     ins.generator = self.generator
@@ -89,7 +91,7 @@ class If(Instruccion):
                     ins.generator = self.generator
                                                  #tmpR: label exit luego de un return o break
                                                  #envAnt: para retroceder la pila al enviroment anterior
-                    result=ins.generarC3d(newts, {"tmpR":ptr,"envAnt":ts.size})
+                    result=ins.generarC3d(newts, ptr)
                     if result != None:
                         result_if.tipo = result.tipo
                         result_if.tipo_aux = result.tipo

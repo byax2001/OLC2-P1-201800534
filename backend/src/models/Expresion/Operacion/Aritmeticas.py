@@ -300,6 +300,8 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
         if self.operador==Operador.DIV:
             self.generator.addExpression(target=newTemp, left=exp1.valor, operator="/",
                                      right=exp2.valor)  # tnum= val1/val2
+            if exp1.tipo in [Tipos.INT64,Tipos.USIZE] and exp2.tipo in [Tipos.INT64,Tipos.USIZE]:
+                self.generator.addExpAsign(target=newTemp,right=f"(int){newTemp}")
         else:
             self.generator.addExpression(target=newTemp,left=f"(int){exp1.valor}",right=f"(int){exp2.valor}",operator="%")
         self.generator.addLabel(salida)  # Lsalida

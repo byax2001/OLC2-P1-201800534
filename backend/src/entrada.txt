@@ -1,5 +1,18 @@
 fn main() {
-    let x = 3;
-    let y: f64 = x as f64;
-}
+    let mut a = -1;
+    while (a < 5) {
+        a = a + 1;
+        if a == 3 {
+            println!("a");
+            continue;
+        } else if a == 4 {
+            println!("b");
+            break;
+        }
 
+        println!("El valor de a es: {}, ", a);
+    }
+
+
+
+}

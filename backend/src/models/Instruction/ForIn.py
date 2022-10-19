@@ -65,12 +65,13 @@ class ForIn(Instruccion):
     def generarC3d(self,ts:Enviroment,ptr):
         self.generator.addComment("FOR IN")
         init_code = len(self.generator.code)
-        self.generator.addNextStack(index=str(ts.size))# P = P + oldTS_SIZE
+        self.generator.addNextStack(index=str(ts.size))  # P = P + oldTS_SIZE
         self.arreglo.generator=self.generator
-        array:ValC3d = self.arreglo.generarC3d(ts,ptr)
+
 
         newts = Enviroment(ts,"ForIn")
         newts.generator = self.generator
+        array: ValC3d = self.arreglo.generarC3d(newts, ptr)
         for_var = self.generator.newTemp()
 
         if array.prof_array == 0:

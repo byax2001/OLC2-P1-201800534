@@ -3,54 +3,2637 @@ float HEAP[78000];
 float STACK[10000];
 float P;
 float H;
-float t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31,t32,t33,t34,t35,t36,t37,t38,t39,t40,t41,t42,t43,t44,t45,t46,t47,t48,t49,t50,t51,t52,t53,t54,t55,t56,t57,t58,t59,t60,t61,t62,t63,t64,t65,t66,t67,t68,t69,t70,t71,t72,t73,t74,t75,t76,t77,t78,t79,t80,t81,t82,t83,t84,t85,t86,t87,t88,t89,t90,t91,t92,t93,t94;
+float t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31,t32,t33,t34,t35,t36,t37,t38,t39,t40,t41,t42,t43,t44,t45,t46,t47,t48,t49,t50,t51,t52,t53,t54,t55,t56,t57,t58,t59,t60,t61,t62,t63,t64,t65,t66,t67,t68,t69,t70,t71,t72,t73,t74,t75,t76,t77,t78,t79,t80,t81,t82,t83,t84,t85,t86,t87,t88,t89,t90,t91,t92,t93,t94,t95,t96,t97,t98,t99,t100,t101,t102,t103,t104,t105,t106,t107,t108,t109,t110,t111,t112,t113,t114,t115,t116,t117,t118,t119,t120,t121,t122,t123,t124,t125,t126,t127,t128,t129,t130,t131,t132,t133,t134,t135,t136,t137,t138,t139,t140,t141,t142,t143,t144,t145,t146,t147,t148,t149,t150,t151,t152,t153,t154,t155,t156,t157,t158,t159,t160,t161,t162,t163,t164,t165,t166,t167,t168,t169,t170,t171,t172,t173,t174,t175,t176,t177,t178,t179,t180,t181,t182,t183,t184,t185,t186,t187,t188,t189,t190,t191,t192,t193,t194,t195,t196,t197,t198,t199,t200,t201,t202,t203,t204,t205,t206,t207,t208,t209,t210,t211,t212,t213,t214,t215,t216,t217,t218,t219,t220,t221,t222,t223,t224,t225,t226,t227,t228,t229,t230,t231,t232,t233,t234,t235,t236,t237,t238,t239,t240,t241,t242,t243,t244,t245,t246,t247,t248,t249,t250,t251,t252,t253,t254,t255,t256,t257,t258,t259,t260,t261,t262,t263,t264,t265,t266,t267,t268,t269,t270,t271,t272,t273,t274,t275,t276,t277,t278,t279,t280,t281,t282,t283,t284,t285,t286,t287,t288,t289,t290,t291,t292,t293,t294,t295,t296,t297,t298,t299,t300,t301,t302,t303,t304,t305,t306,t307,t308,t309,t310,t311,t312,t313,t314,t315,t316,t317,t318,t319,t320,t321,t322,t323,t324,t325,t326,t327,t328,t329,t330,t331,t332,t333,t334,t335;
 
 
 int main(){
-/* FOR IN */
-P = P + 0;
-/* RANGO */
-t0 = 0;
-t1 = 9;
-t2 = 0;
-t4 = H;
+/* Declaracion var: a */
+t0 = P + 0;
+STACK[(int)t0] = 909;
+/* Primitivo tipo STR: "=======================================================================" */
+t1 = H  ;
+HEAP[(int)H] = 61;
 H = H + 1;
-L0:
-if(t0 > t1) goto L1;
-t2 = t2 + 1;
-HEAP[(int)H] = t0;
+HEAP[(int)H] = 61;
 H = H + 1;
-t0 = t0 + 1;
-goto L0;
-L1:
-HEAP[(int)t4] = t2;
-t7 = t4;
-/* Tcont */
-t8 = -1;
-/* tamanio */
-t9 = HEAP[(int)t7 ];
-t7 = t7 + 1;
-/* Loop del For */
-L2:
-t8 = t8 + 1;
-if(t8 >= t9) goto L3;
-t10 = t7 + t8;
-t5 = HEAP[(int)t10 ];
-t6 = P + 0;
-STACK[(int)t6] = t5;
-/* Instrucciones For */
-/* Declaracion var: output */
-/* Metodo ToString o ToOwned */
-t11 = H;
-/* Primitivo tipo STR: "" */
-t12 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
 HEAP[(int)H] = -1;
 H = H + 1;
-t13 = P + 1;
-STACK[(int)t13] = t12;
+/* Print de un String o CHAR */
+t2 = t1  ;
+L0:
+t3 = HEAP[(int)t2 ];
+if(t3 != -1) goto L1;
+goto L2;
+L1:
+printf("%c",(char)t3);
+t2 = t2 + 1;
+goto L0;
+L2:
+printf("%c",10);
+/* Primitivo tipo STR: "==================================IF===================================" */
+t4 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t5 = t4  ;
+L3:
+t6 = HEAP[(int)t5 ];
+if(t6 != -1) goto L4;
+goto L5;
+L4:
+printf("%c",(char)t6);
+t5 = t5 + 1;
+goto L3;
+L5:
+printf("%c",10);
+/* Primitivo tipo STR: "=======================================================================" */
+t7 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t8 = t7  ;
+L6:
+t9 = HEAP[(int)t8 ];
+if(t9 != -1) goto L7;
+goto L8;
+L7:
+printf("%c",(char)t9);
+t8 = t8 + 1;
+goto L6;
+L8:
+printf("%c",10);
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: a */
+P = P - t11;
+t13 = P + 0;
+P = P + t11;
+t12 = STACK[(int)t13];
+if(t12 > 50) goto L9;
+goto L10;
+L9:
+P = P + 1;
+/* Primitivo tipo STR: "IF CORRECTO" */
+t14 = H  ;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t15 = t14  ;
+L13:
+t16 = HEAP[(int)t15 ];
+if(t16 != -1) goto L14;
+goto L15;
+L14:
+printf("%c",(char)t16);
+t15 = t15 + 1;
+goto L13;
+L15:
+printf("%c",10);
+P = P - 1;
+goto L11;
+L10:
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: a */
+t18 = 0;
+t18 = t18 + 1;
+P = P - t18;
+t20 = P + 0;
+P = P + t18;
+t19 = STACK[(int)t20];
+if(t19 == 56) goto L16;
+goto L17;
+L16:
+P = P + 0;
+/* Primitivo tipo STR: "IF INCORRECTO" */
+t21 = H  ;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t22 = t21  ;
+L19:
+t23 = HEAP[(int)t22 ];
+if(t23 != -1) goto L20;
+goto L21;
+L20:
+printf("%c",(char)t23);
+t22 = t22 + 1;
+goto L19;
+L21:
+printf("%c",10);
+P = P - 0;
+goto L11;
+L17:
+P = P + 0;
+/* Primitivo tipo STR: "IF INCORRECTO" */
+t24 = H  ;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t25 = t24  ;
+L22:
+t26 = HEAP[(int)t25 ];
+if(t26 != -1) goto L23;
+goto L24;
+L23:
+printf("%c",(char)t26);
+t25 = t25 + 1;
+goto L22;
+L24:
+printf("%c",10);
+P = P - 0;
+L11:
+/* End If */
+/* Primitivo tipo STR: "" */
+t27 = H  ;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t28 = t27  ;
+L25:
+t29 = HEAP[(int)t28 ];
+if(t29 != -1) goto L26;
+goto L27;
+L26:
+printf("%c",(char)t29);
+t28 = t28 + 1;
+goto L25;
+L27:
+printf("%c",10);
+/* Primitivo tipo STR: "=======================================================================" */
+t30 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t31 = t30  ;
+L28:
+t32 = HEAP[(int)t31 ];
+if(t32 != -1) goto L29;
+goto L30;
+L29:
+printf("%c",(char)t32);
+t31 = t31 + 1;
+goto L28;
+L30:
+printf("%c",10);
+/* Primitivo tipo STR: "=============================IFs ANIDADOS==============================" */
+t33 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 65;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 65;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t34 = t33  ;
+L31:
+t35 = HEAP[(int)t34 ];
+if(t35 != -1) goto L32;
+goto L33;
+L32:
+printf("%c",(char)t35);
+t34 = t34 + 1;
+goto L31;
+L33:
+printf("%c",10);
+/* Primitivo tipo STR: "=======================================================================" */
+t36 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t37 = t36  ;
+L34:
+t38 = HEAP[(int)t37 ];
+if(t38 != -1) goto L35;
+goto L36;
+L35:
+printf("%c",(char)t38);
+t37 = t37 + 1;
+goto L34;
+L36:
+printf("%c",10);
+/* Declaracion var: aux */
+t39 = P + 1;
+STACK[(int)t39] = 10;
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: aux */
+P = P - t41;
+t43 = P + 1;
+P = P + t41;
+t42 = STACK[(int)t43];
+if(t42 > 0) goto L37;
+goto L38;
+L37:
+P = P + 2;
+/* Primitivo tipo STR: "PRIMER IF CORRECTO" */
+t44 = H  ;
+HEAP[(int)H] = 80;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 77;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t45 = t44  ;
+L41:
+t46 = HEAP[(int)t45 ];
+if(t46 != -1) goto L42;
+goto L43;
+L42:
+printf("%c",(char)t46);
+t45 = t45 + 1;
+goto L41;
+L43:
+printf("%c",10);
+/* If instruction */
+goto L47;
+L47:
+/* Operaciones Relacionales */
+/* ID EXPRESION: aux */
+t48 = 0;
+t48 = t48 + 2;
+P = P - t48;
+t50 = P + 1;
+P = P + t48;
+t49 = STACK[(int)t50];
+if(t49 == 1) goto L44;
+goto L45;
+L44:
+P = P + 0;
+/* Primitivo tipo STR: "SEGUNDO IF INCORRECTO" */
+t51 = H  ;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 71;
+H = H + 1;
+HEAP[(int)H] = 85;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t52 = t51  ;
+L49:
+t53 = HEAP[(int)t52 ];
+if(t53 != -1) goto L50;
+goto L51;
+L50:
+printf("%c",(char)t53);
+t52 = t52 + 1;
+goto L49;
+L51:
+printf("%c",10);
+P = P - 0;
+goto L46;
+L45:
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: aux */
+t55 = 0;
+t55 = t55 + 0;
+t55 = t55 + 2;
+P = P - t55;
+t57 = P + 1;
+P = P + t55;
+t56 = STACK[(int)t57];
+if(t56 > 10) goto L52;
+goto L53;
+L52:
+P = P + 0;
+/* Primitivo tipo STR: "SEGUNDO IF INCORRECTO" */
+t58 = H  ;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 71;
+H = H + 1;
+HEAP[(int)H] = 85;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t59 = t58  ;
+L55:
+t60 = HEAP[(int)t59 ];
+if(t60 != -1) goto L56;
+goto L57;
+L56:
+printf("%c",(char)t60);
+t59 = t59 + 1;
+goto L55;
+L57:
+printf("%c",10);
+P = P - 0;
+goto L46;
+L53:
+P = P + 0;
+/* Primitivo tipo STR: "SEGUNDO IF CORRECTO" */
+t61 = H  ;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 71;
+H = H + 1;
+HEAP[(int)H] = 85;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t62 = t61  ;
+L58:
+t63 = HEAP[(int)t62 ];
+if(t63 != -1) goto L59;
+goto L60;
+L59:
+printf("%c",(char)t63);
+t62 = t62 + 1;
+goto L58;
+L60:
+printf("%c",10);
+P = P - 0;
+L46:
+/* End If */
+P = P - 2;
+goto L39;
+L38:
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: aux */
+t65 = 0;
+t65 = t65 + 2;
+P = P - t65;
+t67 = P + 1;
+P = P + t65;
+t66 = STACK[(int)t67];
+if(t66 <= 3) goto L61;
+goto L62;
+L61:
+P = P + 0;
+/* Primitivo tipo STR: "PRIMER IF INCORRECTO" */
+t68 = H  ;
+HEAP[(int)H] = 80;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 77;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t69 = t68  ;
+L64:
+t70 = HEAP[(int)t69 ];
+if(t70 != -1) goto L65;
+goto L66;
+L65:
+printf("%c",(char)t70);
+t69 = t69 + 1;
+goto L64;
+L66:
+printf("%c",10);
+/* If instruction */
+goto L70;
+L70:
+/* Operaciones Relacionales */
+/* ID EXPRESION: aux */
+t72 = 0;
+t72 = t72 + 0;
+t72 = t72 + 2;
+P = P - t72;
+t74 = P + 1;
+P = P + t72;
+t73 = STACK[(int)t74];
+if(t73 == 1) goto L67;
+goto L68;
+L67:
+P = P + 0;
+/* Primitivo tipo STR: "SEGUNDO IF INCORRECTO" */
+t75 = H  ;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 71;
+H = H + 1;
+HEAP[(int)H] = 85;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t76 = t75  ;
+L72:
+t77 = HEAP[(int)t76 ];
+if(t77 != -1) goto L73;
+goto L74;
+L73:
+printf("%c",(char)t77);
+t76 = t76 + 1;
+goto L72;
+L74:
+printf("%c",10);
+P = P - 0;
+goto L69;
+L68:
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: aux */
+t79 = 0;
+t79 = t79 + 0;
+t79 = t79 + 0;
+t79 = t79 + 2;
+P = P - t79;
+t81 = P + 1;
+P = P + t79;
+t80 = STACK[(int)t81];
+if(t80 > 10) goto L75;
+goto L76;
+L75:
+P = P + 0;
+/* Primitivo tipo STR: "SEGUNDO IF INCORRECTO" */
+t82 = H  ;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 71;
+H = H + 1;
+HEAP[(int)H] = 85;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t83 = t82  ;
+L78:
+t84 = HEAP[(int)t83 ];
+if(t84 != -1) goto L79;
+goto L80;
+L79:
+printf("%c",(char)t84);
+t83 = t83 + 1;
+goto L78;
+L80:
+printf("%c",10);
+P = P - 0;
+goto L69;
+L76:
+P = P + 0;
+/* Primitivo tipo STR: "SEGUNDO IF CORRECTO" */
+t85 = H  ;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 71;
+H = H + 1;
+HEAP[(int)H] = 85;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t86 = t85  ;
+L81:
+t87 = HEAP[(int)t86 ];
+if(t87 != -1) goto L82;
+goto L83;
+L82:
+printf("%c",(char)t87);
+t86 = t86 + 1;
+goto L81;
+L83:
+printf("%c",10);
+P = P - 0;
+L69:
+/* End If */
+P = P - 0;
+goto L39;
+L62:
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: aux */
+t89 = 0;
+t89 = t89 + 0;
+t89 = t89 + 2;
+P = P - t89;
+t91 = P + 1;
+P = P + t89;
+t90 = STACK[(int)t91];
+/* ID EXPRESION: a */
+t92 = 0;
+t92 = t92 + 0;
+t92 = t92 + 2;
+P = P - t92;
+t94 = P + 0;
+P = P + t92;
+t93 = STACK[(int)t94];
+if(t90 == t93) goto L84;
+goto L85;
+L84:
+P = P + 0;
+/* Primitivo tipo STR: "PRIMER IF INCORRECTO" */
+t95 = H  ;
+HEAP[(int)H] = 80;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 77;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t96 = t95  ;
+L87:
+t97 = HEAP[(int)t96 ];
+if(t97 != -1) goto L88;
+goto L89;
+L88:
+printf("%c",(char)t97);
+t96 = t96 + 1;
+goto L87;
+L89:
+printf("%c",10);
+/* If instruction */
+goto L93;
+L93:
+/* Operaciones Relacionales */
+/* ID EXPRESION: aux */
+t99 = 0;
+t99 = t99 + 0;
+t99 = t99 + 0;
+t99 = t99 + 2;
+P = P - t99;
+t101 = P + 1;
+P = P + t99;
+t100 = STACK[(int)t101];
+if(t100 == 1) goto L90;
+goto L91;
+L90:
+P = P + 0;
+/* Primitivo tipo STR: "SEGUNDO IF INCORRECTO" */
+t102 = H  ;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 71;
+H = H + 1;
+HEAP[(int)H] = 85;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t103 = t102  ;
+L95:
+t104 = HEAP[(int)t103 ];
+if(t104 != -1) goto L96;
+goto L97;
+L96:
+printf("%c",(char)t104);
+t103 = t103 + 1;
+goto L95;
+L97:
+printf("%c",10);
+P = P - 0;
+goto L92;
+L91:
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: aux */
+t106 = 0;
+t106 = t106 + 0;
+t106 = t106 + 0;
+t106 = t106 + 0;
+t106 = t106 + 2;
+P = P - t106;
+t108 = P + 1;
+P = P + t106;
+t107 = STACK[(int)t108];
+if(t107 > 10) goto L98;
+goto L99;
+L98:
+P = P + 0;
+/* Primitivo tipo STR: "SEGUNDO IF INCORRECTO" */
+t109 = H  ;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 71;
+H = H + 1;
+HEAP[(int)H] = 85;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t110 = t109  ;
+L101:
+t111 = HEAP[(int)t110 ];
+if(t111 != -1) goto L102;
+goto L103;
+L102:
+printf("%c",(char)t111);
+t110 = t110 + 1;
+goto L101;
+L103:
+printf("%c",10);
+P = P - 0;
+goto L92;
+L99:
+P = P + 0;
+/* Primitivo tipo STR: "SEGUNDO IF CORRECTO" */
+t112 = H  ;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 71;
+H = H + 1;
+HEAP[(int)H] = 85;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 68;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t113 = t112  ;
+L104:
+t114 = HEAP[(int)t113 ];
+if(t114 != -1) goto L105;
+goto L106;
+L105:
+printf("%c",(char)t114);
+t113 = t113 + 1;
+goto L104;
+L106:
+printf("%c",10);
+P = P - 0;
+L92:
+/* End If */
+P = P - 0;
+goto L39;
+L85:
+L39:
+/* End If */
+/* Primitivo tipo STR: "" */
+t115 = H  ;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t116 = t115  ;
+L107:
+t117 = HEAP[(int)t116 ];
+if(t117 != -1) goto L108;
+goto L109;
+L108:
+printf("%c",(char)t117);
+t116 = t116 + 1;
+goto L107;
+L109:
+printf("%c",10);
+/* Primitivo tipo STR: "=======================================================================" */
+t118 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t119 = t118  ;
+L110:
+t120 = HEAP[(int)t119 ];
+if(t120 != -1) goto L111;
+goto L112;
+L111:
+printf("%c",(char)t120);
+t119 = t119 + 1;
+goto L110;
+L112:
+printf("%c",10);
+/* Primitivo tipo STR: "=================================WHILE=================================" */
+t121 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 87;
+H = H + 1;
+HEAP[(int)H] = 72;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 76;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t122 = t121  ;
+L113:
+t123 = HEAP[(int)t122 ];
+if(t123 != -1) goto L114;
+goto L115;
+L114:
+printf("%c",(char)t123);
+t122 = t122 + 1;
+goto L113;
+L115:
+printf("%c",10);
+/* Primitivo tipo STR: "=======================================================================" */
+t124 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t125 = t124  ;
+L116:
+t126 = HEAP[(int)t125 ];
+if(t126 != -1) goto L117;
+goto L118;
+L117:
+printf("%c",(char)t126);
+t125 = t125 + 1;
+goto L116;
+L118:
+printf("%c",10);
+/* Declaracion var: index */
+t127 = P + 2;
+STACK[(int)t127] = 0;
+/* While Instruction */
+/* Loop while */
+L119:
+/* Operaciones Relacionales */
+/* ID EXPRESION: index */
+P = P - t128;
+t130 = P + 2;
+P = P + t128;
+t129 = STACK[(int)t130];
+if(t129 >= 0) goto L120;
+goto L121;
+L120:
+P = P + 3;
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: index */
+t132 = 0;
+t132 = t132 + 3;
+P = P - t132;
+t134 = P + 2;
+P = P + t132;
+t133 = STACK[(int)t134];
+if(t133 == 0) goto L123;
+goto L124;
+L123:
+P = P + 0;
+/* Asignacion */
+t135 = 0;
+t135 = t135 + 0;
+t135 = t135 + 3;
+/* Aritmeticas */
+/* ID EXPRESION: index */
+t137 = 0;
+t137 = t137 + 0;
+t137 = t137 + 3;
+P = P - t137;
+t139 = P + 2;
+P = P + t137;
+t138 = STACK[(int)t139];
+t136 = t138 + 100;
+P = P - t135;
+t140 = P + 2;
+STACK[(int)t140] = t136;
+P = P + t135;
+/* End Asignacion */
+P = P - 0;
+goto L125;
+L124:
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: index */
+t142 = 0;
+t142 = t142 + 0;
+t142 = t142 + 3;
+P = P - t142;
+t144 = P + 2;
+P = P + t142;
+t143 = STACK[(int)t144];
+if(t143 > 50) goto L127;
+goto L128;
+L127:
+P = P + 0;
+/* Asignacion */
+t145 = 0;
+t145 = t145 + 0;
+t145 = t145 + 0;
+t145 = t145 + 3;
+/* Aritmeticas */
+/* Aritmeticas */
+/* ID EXPRESION: index */
+t148 = 0;
+t148 = t148 + 0;
+t148 = t148 + 0;
+t148 = t148 + 3;
+P = P - t148;
+t150 = P + 2;
+P = P + t148;
+t149 = STACK[(int)t150];
+if(2 != 0) goto L130;
+printf("%c",77);
+printf("%c",97);
+printf("%c",116);
+printf("%c",104);
+printf("%c",32);
+printf("%c",69);
+printf("%c",114);
+printf("%c",114);
+printf("%c",111);
+printf("%c",114);
+printf("%c",33);
+printf("%c",10);
+t147 = 0  ;
+goto L131;
+L130:
+t147 = t149 / 2;
+t147 = (int)t147;
+L131:
+t146 = t147 - 25;
+P = P - t145;
+t151 = P + 2;
+STACK[(int)t151] = t146;
+P = P + t145;
+/* End Asignacion */
+P = P - 0;
+goto L125;
+L128:
+P = P + 0;
+/* Asignacion */
+t152 = 0;
+t152 = t152 + 0;
+t152 = t152 + 0;
+t152 = t152 + 3;
+/* Aritmeticas */
+/* Aritmeticas */
+/* ID EXPRESION: index */
+t155 = 0;
+t155 = t155 + 0;
+t155 = t155 + 0;
+t155 = t155 + 3;
+P = P - t155;
+t157 = P + 2;
+P = P + t155;
+t156 = STACK[(int)t157];
+if(2 != 0) goto L132;
+printf("%c",77);
+printf("%c",97);
+printf("%c",116);
+printf("%c",104);
+printf("%c",32);
+printf("%c",69);
+printf("%c",114);
+printf("%c",114);
+printf("%c",111);
+printf("%c",114);
+printf("%c",33);
+printf("%c",10);
+t154 = 0  ;
+goto L133;
+L132:
+t154 = t156 / 2;
+t154 = (int)t154;
+L133:
+t153 = t154 - 1;
+P = P - t152;
+t158 = P + 2;
+STACK[(int)t158] = t153;
+P = P + t152;
+/* End Asignacion */
+P = P - 0;
+L125:
+/* End If */
 /* Instruccion Print */
 /* Primitivo tipo STR: "{}" */
-t14 = H  ;
+t159 = H  ;
 HEAP[(int)H] = 123;
 H = H + 1;
 HEAP[(int)H] = 125;
@@ -58,245 +2641,1585 @@ H = H + 1;
 HEAP[(int)H] = -1;
 H = H + 1;
 /* Por si la expresiona imprimir es booleana */
-t16 = H;
-/* ID EXPRESION: i */
-t17 = 0;
-P = P - t17;
-t19 = P + 0;
-P = P + t17;
-t18 = STACK[(int)t19];
+t161 = H;
+/* ID EXPRESION: index */
+t162 = 0;
+t162 = t162 + 3;
+P = P - t162;
+t164 = P + 2;
+P = P + t162;
+t163 = STACK[(int)t164];
 /* Para saber donde iniciar a imprimir luego del proceso */
-t15 = H;
+t160 = H;
 /* Print Complex P.1 */
-t20 = t14  ;
-L4:
-t21 = HEAP[(int)t20 ];
-if(t21 == (char)123) goto L7;
-HEAP[(int)H] = t21;
+t165 = t159  ;
+L134:
+t166 = HEAP[(int)t165 ];
+if(t166 == (char)123) goto L137;
+HEAP[(int)H] = t166;
 H = H + 1;
-t20 = t20 + 1;
-goto L4;
+t165 = t165 + 1;
+goto L134;
 /* Print Complex P.2 */
-L7:
-t20 = t20 + 1;
-L5:
-t21 = HEAP[(int)t20 ];
-if(t21 == (char)125) goto L8;
-t20 = t20 + 1;
-goto L5;
+L137:
+t165 = t165 + 1;
+L135:
+t166 = HEAP[(int)t165 ];
+if(t166 == (char)125) goto L138;
+t165 = t165 + 1;
+goto L135;
 /* Print Complex P.3 */
-L8:
-t20 = t20 + 1;
+L138:
+t165 = t165 + 1;
 /* Num to String */
-t22 = t18;
+t167 = t163;
 /* Por si es Negativo  */
-if(t22 >= 0) goto L10;
-t22 = t22 * -1;
+if(t167 >= 0) goto L140;
+t167 = t167 * -1;
 HEAP[(int)H] = 45;
 H = H + 1;
-L10:
-t23 = H;
-t24 = t22  ;
-L11:
-t25 = t24 / 10;
-t26 = (int)t25;
-if(t26 == 0) goto L12;
-t27 = (int)t24%10;
-t24 = t26;
-HEAP[(int)H] = (int)t27 +48;
+L140:
+t168 = H;
+t169 = t167  ;
+L141:
+t170 = t169 / 10;
+t171 = (int)t170;
+if(t171 == 0) goto L142;
+t172 = (int)t169%10;
+t169 = t171;
+HEAP[(int)H] = (int)t172 +48;
 H = H + 1;
-goto L11;
-L12:
-HEAP[(int)H] = (int)t24+48;
+goto L141;
+L142:
+HEAP[(int)H] = (int)t169+48;
 H = H + 1;
 /* sort_revers */
-t28 = t23;
-t29 = H-1;
-L13:
-if(t28 >= t29) goto L14;
-t30 = HEAP[(int)t29 ];
-t31 = HEAP[(int)t28 ];
-HEAP[(int)t28] = t30;
-HEAP[(int)t29] = t31;
-t28 = t28 + 1;
-t29 = t29 - 1;
-goto L13;
-L14:
+t173 = t168;
+t174 = H-1;
+L143:
+if(t173 >= t174) goto L144;
+t175 = HEAP[(int)t174 ];
+t176 = HEAP[(int)t173 ];
+HEAP[(int)t173] = t175;
+HEAP[(int)t174] = t176;
+t173 = t173 + 1;
+t174 = t174 - 1;
+goto L143;
+L144:
 /* Print Complex P.4 */
-L6:
-t21 = HEAP[(int)t20 ];
-if(t21 == -1) goto L9;
-HEAP[(int)H] = t21;
+L136:
+t166 = HEAP[(int)t165 ];
+if(t166 == -1) goto L139;
+HEAP[(int)H] = t166;
 H = H + 1;
-t20 = t20 + 1;
-goto L6;
+t165 = t165 + 1;
+goto L136;
 /* Salida print Complex */
-L9:
+L139:
 HEAP[(int)H] = -1;
 H = H + 1;
 /* Impresion */
-t33 = t15  ;
-L15:
-t34 = HEAP[(int)t33 ];
-if(t34 != -1) goto L16;
-goto L17;
-L16:
-printf("%c",(char)t34);
-t33 = t33 + 1;
-goto L15;
-L17:
+t178 = t160  ;
+L145:
+t179 = HEAP[(int)t178 ];
+if(t179 != -1) goto L146;
+goto L147;
+L146:
+printf("%c",(char)t179);
+t178 = t178 + 1;
+goto L145;
+L147:
 printf("%c",10);
+P = P - 3;
+goto L119;
+L121:
+/* End While */
+/* Primitivo tipo STR: "" */
+t180 = H  ;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t181 = t180  ;
+L148:
+t182 = HEAP[(int)t181 ];
+if(t182 != -1) goto L149;
+goto L150;
+L149:
+printf("%c",(char)t182);
+t181 = t181 + 1;
+goto L148;
+L150:
+printf("%c",10);
+/* Primitivo tipo STR: "=======================================================================" */
+t183 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t184 = t183  ;
+L151:
+t185 = HEAP[(int)t184 ];
+if(t185 != -1) goto L152;
+goto L153;
+L152:
+printf("%c",(char)t185);
+t184 = t184 + 1;
+goto L151;
+L153:
+printf("%c",10);
+/* Primitivo tipo STR: "=============================TRANSFERENCIA=============================" */
+t186 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 65;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 78;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 73;
+H = H + 1;
+HEAP[(int)H] = 65;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t187 = t186  ;
+L154:
+t188 = HEAP[(int)t187 ];
+if(t188 != -1) goto L155;
+goto L156;
+L155:
+printf("%c",(char)t188);
+t187 = t187 + 1;
+goto L154;
+L156:
+printf("%c",10);
+/* Primitivo tipo STR: "=======================================================================" */
+t189 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t190 = t189  ;
+L157:
+t191 = HEAP[(int)t190 ];
+if(t191 != -1) goto L158;
+goto L159;
+L158:
+printf("%c",(char)t191);
+t190 = t190 + 1;
+goto L157;
+L159:
+printf("%c",10);
+/* Asignacion */
+/* Aritmeticas */
+t193 =  - 1;
+P = P - t192;
+t194 = P + 0;
+STACK[(int)t194] = t193;
+P = P + t192;
+/* End Asignacion */
+/* While Instruction */
+/* Loop while */
+L160:
+/* Operaciones Relacionales */
+/* ID EXPRESION: a */
+t195 = 0;
+P = P - t195;
+t197 = P + 0;
+P = P + t195;
+t196 = STACK[(int)t197];
+if(t196 < 5) goto L161;
+goto L162;
+L161:
+P = P + 3;
+/* Asignacion */
+t198 = 0;
+t198 = t198 + 3;
+/* Aritmeticas */
+/* ID EXPRESION: a */
+t200 = 0;
+t200 = t200 + 3;
+P = P - t200;
+t202 = P + 0;
+P = P + t200;
+t201 = STACK[(int)t202];
+t199 = t201 + 1;
+P = P - t198;
+t203 = P + 0;
+STACK[(int)t203] = t199;
+P = P + t198;
+/* End Asignacion */
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: a */
+t205 = 0;
+t205 = t205 + 3;
+P = P - t205;
+t207 = P + 0;
+P = P + t205;
+t206 = STACK[(int)t207];
+if(t206 == 3) goto L164;
+goto L165;
+L164:
+P = P + 0;
+/* Primitivo tipo STR: "a" */
+t208 = H  ;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t209 = t208  ;
+L168:
+t210 = HEAP[(int)t209 ];
+if(t210 != -1) goto L169;
+goto L170;
+L169:
+printf("%c",(char)t210);
+t209 = t209 + 1;
+goto L168;
+L170:
+printf("%c",10);
+/* Continue */
+t211 = t211 + 0;
+t211 = t211 + 3;
+P = P - t211;
+goto L160; 
+P = P - 0;
+goto L166;
+L165:
+/* If instruction */
+/* Operaciones Relacionales */
+/* ID EXPRESION: a */
+t213 = 0;
+t213 = t213 + 0;
+t213 = t213 + 3;
+P = P - t213;
+t215 = P + 0;
+P = P + t213;
+t214 = STACK[(int)t215];
+if(t214 == 4) goto L171;
+goto L172;
+L171:
+P = P + 0;
+/* Primitivo tipo STR: "b" */
+t216 = H  ;
+HEAP[(int)H] = 98;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t217 = t216  ;
+L174:
+t218 = HEAP[(int)t217 ];
+if(t218 != -1) goto L175;
+goto L176;
+L175:
+printf("%c",(char)t218);
+t217 = t217 + 1;
+goto L174;
+L176:
+printf("%c",10);
+/* Break */
+t219 = t219 + 0;
+t219 = t219 + 0;
+t219 = t219 + 3;
+P = P - t219;
+goto L162;
+P = P - 0;
+goto L166;
+L172:
+L166:
+/* End If */
+/* Instruccion Print */
+/* Primitivo tipo STR: "El valor de a es: {}, " */
+t220 = H  ;
+HEAP[(int)H] = 69;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = 44;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Por si la expresiona imprimir es booleana */
+t222 = H;
+/* ID EXPRESION: a */
+t223 = 0;
+t223 = t223 + 3;
+P = P - t223;
+t225 = P + 0;
+P = P + t223;
+t224 = STACK[(int)t225];
+/* Para saber donde iniciar a imprimir luego del proceso */
+t221 = H;
+/* Print Complex P.1 */
+t226 = t220  ;
+L177:
+t227 = HEAP[(int)t226 ];
+if(t227 == (char)123) goto L180;
+HEAP[(int)H] = t227;
+H = H + 1;
+t226 = t226 + 1;
+goto L177;
+/* Print Complex P.2 */
+L180:
+t226 = t226 + 1;
+L178:
+t227 = HEAP[(int)t226 ];
+if(t227 == (char)125) goto L181;
+t226 = t226 + 1;
+goto L178;
+/* Print Complex P.3 */
+L181:
+t226 = t226 + 1;
+/* Num to String */
+t228 = t224;
+/* Por si es Negativo  */
+if(t228 >= 0) goto L183;
+t228 = t228 * -1;
+HEAP[(int)H] = 45;
+H = H + 1;
+L183:
+t229 = H;
+t230 = t228  ;
+L184:
+t231 = t230 / 10;
+t232 = (int)t231;
+if(t232 == 0) goto L185;
+t233 = (int)t230%10;
+t230 = t232;
+HEAP[(int)H] = (int)t233 +48;
+H = H + 1;
+goto L184;
+L185:
+HEAP[(int)H] = (int)t230+48;
+H = H + 1;
+/* sort_revers */
+t234 = t229;
+t235 = H-1;
+L186:
+if(t234 >= t235) goto L187;
+t236 = HEAP[(int)t235 ];
+t237 = HEAP[(int)t234 ];
+HEAP[(int)t234] = t236;
+HEAP[(int)t235] = t237;
+t234 = t234 + 1;
+t235 = t235 - 1;
+goto L186;
+L187:
+/* Print Complex P.4 */
+L179:
+t227 = HEAP[(int)t226 ];
+if(t227 == -1) goto L182;
+HEAP[(int)H] = t227;
+H = H + 1;
+t226 = t226 + 1;
+goto L179;
+/* Salida print Complex */
+L182:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t239 = t221  ;
+L188:
+t240 = HEAP[(int)t239 ];
+if(t240 != -1) goto L189;
+goto L190;
+L189:
+printf("%c",(char)t240);
+t239 = t239 + 1;
+goto L188;
+L190:
+printf("%c",10);
+P = P - 3;
+goto L160;
+L162:
+/* End While */
+/* Primitivo tipo STR: "Se debió imprimir" */
+t241 = H  ;
+HEAP[(int)H] = 83;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 98;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 195;
+H = H + 1;
+HEAP[(int)H] = 179;
+H = H + 1;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 112;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t242 = t241  ;
+L191:
+t243 = HEAP[(int)t242 ];
+if(t243 != -1) goto L192;
+goto L193;
+L192:
+printf("%c",(char)t243);
+t242 = t242 + 1;
+goto L191;
+L193:
+printf("%c",10);
+/* Primitivo tipo STR: "" */
+t244 = H  ;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t245 = t244  ;
+L194:
+t246 = HEAP[(int)t245 ];
+if(t246 != -1) goto L195;
+goto L196;
+L195:
+printf("%c",(char)t246);
+t245 = t245 + 1;
+goto L194;
+L196:
+printf("%c",10);
+/* Primitivo tipo STR: "=======================================================================" */
+t247 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t248 = t247  ;
+L197:
+t249 = HEAP[(int)t248 ];
+if(t249 != -1) goto L198;
+goto L199;
+L198:
+printf("%c",(char)t249);
+t248 = t248 + 1;
+goto L197;
+L199:
+printf("%c",10);
+/* Primitivo tipo STR: "==================================FOR==================================" */
+t250 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 79;
+H = H + 1;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t251 = t250  ;
+L200:
+t252 = HEAP[(int)t251 ];
+if(t252 != -1) goto L201;
+goto L202;
+L201:
+printf("%c",(char)t252);
+t251 = t251 + 1;
+goto L200;
+L202:
+printf("%c",10);
+/* Primitivo tipo STR: "=======================================================================" */
+t253 = H  ;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = 61;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Print de un String o CHAR */
+t254 = t253  ;
+L203:
+t255 = HEAP[(int)t254 ];
+if(t255 != -1) goto L204;
+goto L205;
+L204:
+printf("%c",(char)t255);
+t254 = t254 + 1;
+goto L203;
+L205:
+printf("%c",10);
+/* FOR IN */
+P = P + 3;
+/* RANGO */
+t256 = 0;
+t257 = 9;
+t258 = 0;
+t260 = H;
+H = H + 1;
+L206:
+if(t256 > t257) goto L207;
+t258 = t258 + 1;
+HEAP[(int)H] = t256;
+H = H + 1;
+t256 = t256 + 1;
+goto L206;
+L207:
+HEAP[(int)t260] = t258;
+t263 = t260;
+/* Tcont */
+t264 = -1;
+/* tamanio */
+t265 = HEAP[(int)t263 ];
+t263 = t263 + 1;
+/* Loop del For */
+L208:
+t264 = t264 + 1;
+if(t264 >= t265) goto L209;
+t266 = t263 + t264;
+t261 = HEAP[(int)t266 ];
+t262 = P + 0;
+STACK[(int)t262] = t261;
+/* Instrucciones For */
+/* Declaracion var: output */
+/* Metodo ToString o ToOwned */
+t267 = H;
+/* Primitivo tipo STR: "" */
+t268 = H  ;
+HEAP[(int)H] = -1;
+H = H + 1;
+t269 = P + 1;
+STACK[(int)t269] = t268;
+/* FOR IN */
+P = P + 2;
+/* RANGO */
+/* Aritmeticas */
+/* ID EXPRESION: i */
+t271 = 0;
+t271 = t271 + 2;
+P = P - t271;
+t273 = P + 0;
+P = P + t271;
+t272 = STACK[(int)t273];
+t270 = 10 - t272;
+t274 = 0;
+t275 = t270;
+t276 = 0;
+t278 = H;
+H = H + 1;
+L210:
+if(t274 > t275) goto L211;
+t276 = t276 + 1;
+HEAP[(int)H] = t274;
+H = H + 1;
+t274 = t274 + 1;
+goto L210;
+L211:
+HEAP[(int)t278] = t276;
+t281 = t278;
+/* Tcont */
+t282 = -1;
+/* tamanio */
+t283 = HEAP[(int)t281 ];
+t281 = t281 + 1;
+/* Loop del For */
+L212:
+t282 = t282 + 1;
+if(t282 >= t283) goto L213;
+t284 = t281 + t282;
+t279 = HEAP[(int)t284 ];
+t280 = P + 0;
+STACK[(int)t280] = t279;
+/* Instrucciones For */
+/* Asignacion */
+t285 = 0;
+t285 = t285 + 2;
+/* Metodo ToString o ToOwned */
+t286 = H;
+/* Aritmeticas */
+/* ID EXPRESION: output */
+t288 = 0;
+t288 = t288 + 2;
+P = P - t288;
+t290 = P + 1;
+P = P + t288;
+t289 = STACK[(int)t290];
+/* Primitivo tipo STR: " " */
+t291 = H  ;
+HEAP[(int)H] = 32;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Concatenacion de cadenas */
+t287 = H;
+t292 = t289  ;
+L214:
+t293 = HEAP[(int)t292 ];
+if(t293 != -1) goto L215;
+goto L216;
+L215:
+HEAP[(int)H] = t293;
+H = H + 1;
+t292 = t292 + 1;
+goto L214;
+L216:
+t294 = t291  ;
+L217:
+t295 = HEAP[(int)t294 ];
+if(t295 != -1) goto L218;
+goto L219;
+L218:
+HEAP[(int)H] = t295;
+H = H + 1;
+t294 = t294 + 1;
+goto L217;
+L219:
+/* Fin de la concatenacion */
+HEAP[(int)H] = -1;
+H = H + 1;
+P = P - t285;
+t296 = P + 1;
+STACK[(int)t296] = t287;
+P = P + t285;
+/* End Asignacion */
+goto L212;
+L213:
+P = P - 2;
 /* FOR IN */
 P = P + 2;
 /* RANGO */
 /* ID EXPRESION: i */
-t35 = 0;
-P = P - t35;
-t37 = P + 0;
-P = P + t35;
-t36 = STACK[(int)t37];
-t38 = 0;
-t39 = t36;
-t40 = 0;
-t42 = H;
+t297 = 0;
+t297 = t297 + 2;
+P = P - t297;
+t299 = P + 0;
+P = P + t297;
+t298 = STACK[(int)t299];
+t300 = 0;
+t301 = t298;
+t302 = 0;
+t304 = H;
 H = H + 1;
-L18:
-if(t38 > t39) goto L19;
-t40 = t40 + 1;
-HEAP[(int)H] = t38;
+L220:
+if(t300 > t301) goto L221;
+t302 = t302 + 1;
+HEAP[(int)H] = t300;
 H = H + 1;
-t38 = t38 + 1;
-goto L18;
-L19:
-HEAP[(int)t42] = t40;
-t45 = t42;
+t300 = t300 + 1;
+goto L220;
+L221:
+HEAP[(int)t304] = t302;
+t307 = t304;
 /* Tcont */
-t46 = -1;
+t308 = -1;
 /* tamanio */
-t47 = HEAP[(int)t45 ];
-t45 = t45 + 1;
+t309 = HEAP[(int)t307 ];
+t307 = t307 + 1;
 /* Loop del For */
-L20:
-t46 = t46 + 1;
-if(t46 >= t47) goto L21;
-t48 = t45 + t46;
-t43 = HEAP[(int)t48 ];
-t44 = P + 0;
-STACK[(int)t44] = t43;
+L222:
+t308 = t308 + 1;
+if(t308 >= t309) goto L223;
+t310 = t307 + t308;
+t305 = HEAP[(int)t310 ];
+t306 = P + 0;
+STACK[(int)t306] = t305;
 /* Instrucciones For */
-/* Instruccion Print */
-/* Primitivo tipo STR: "{}" */
-t49 = H  ;
-HEAP[(int)H] = 123;
-H = H + 1;
-HEAP[(int)H] = 125;
-H = H + 1;
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Por si la expresiona imprimir es booleana */
-t51 = H;
-/* ID EXPRESION: k */
-t52 = 0;
-P = P - t52;
-t54 = P + 0;
-P = P + t52;
-t53 = STACK[(int)t54];
-/* Para saber donde iniciar a imprimir luego del proceso */
-t50 = H;
-/* Print Complex P.1 */
-t55 = t49  ;
-L22:
-t56 = HEAP[(int)t55 ];
-if(t56 == (char)123) goto L25;
-HEAP[(int)H] = t56;
-H = H + 1;
-t55 = t55 + 1;
-goto L22;
-/* Print Complex P.2 */
-L25:
-t55 = t55 + 1;
-L23:
-t56 = HEAP[(int)t55 ];
-if(t56 == (char)125) goto L26;
-t55 = t55 + 1;
-goto L23;
-/* Print Complex P.3 */
-L26:
-t55 = t55 + 1;
-/* Num to String */
-t57 = t53;
-/* Por si es Negativo  */
-if(t57 >= 0) goto L28;
-t57 = t57 * -1;
-HEAP[(int)H] = 45;
-H = H + 1;
-L28:
-t58 = H;
-t59 = t57  ;
-L29:
-t60 = t59 / 10;
-t61 = (int)t60;
-if(t61 == 0) goto L30;
-t62 = (int)t59%10;
-t59 = t61;
-HEAP[(int)H] = (int)t62 +48;
-H = H + 1;
-goto L29;
-L30:
-HEAP[(int)H] = (int)t59+48;
-H = H + 1;
-/* sort_revers */
-t63 = t58;
-t64 = H-1;
-L31:
-if(t63 >= t64) goto L32;
-t65 = HEAP[(int)t64 ];
-t66 = HEAP[(int)t63 ];
-HEAP[(int)t63] = t65;
-HEAP[(int)t64] = t66;
-t63 = t63 + 1;
-t64 = t64 - 1;
-goto L31;
-L32:
-/* Print Complex P.4 */
-L24:
-t56 = HEAP[(int)t55 ];
-if(t56 == -1) goto L27;
-HEAP[(int)H] = t56;
-H = H + 1;
-t55 = t55 + 1;
-goto L24;
-/* Salida print Complex */
-L27:
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Impresion */
-t68 = t50  ;
-L33:
-t69 = HEAP[(int)t68 ];
-if(t69 != -1) goto L34;
-goto L35;
-L34:
-printf("%c",(char)t69);
-t68 = t68 + 1;
-goto L33;
-L35:
-printf("%c",10);
 /* Asignacion */
-t70 = 0;
-t70 = t70 + 2;
+t311 = 0;
+t311 = t311 + 2;
 /* Metodo ToString o ToOwned */
-t71 = H;
+t312 = H;
 /* Aritmeticas */
 /* ID EXPRESION: output */
-t73 = 0;
-t73 = t73 + 2;
-P = P - t73;
-t75 = P + 1;
-P = P + t73;
-t74 = STACK[(int)t75];
+t314 = 0;
+t314 = t314 + 2;
+P = P - t314;
+t316 = P + 1;
+P = P + t314;
+t315 = STACK[(int)t316];
 /* Primitivo tipo STR: "* " */
-t76 = H  ;
+t317 = H  ;
 HEAP[(int)H] = 42;
 H = H + 1;
 HEAP[(int)H] = 32;
@@ -304,43 +4227,43 @@ H = H + 1;
 HEAP[(int)H] = -1;
 H = H + 1;
 /* Concatenacion de cadenas */
-t72 = H;
-t77 = t74  ;
-L36:
-t78 = HEAP[(int)t77 ];
-if(t78 != -1) goto L37;
-goto L38;
-L37:
-HEAP[(int)H] = t78;
+t313 = H;
+t318 = t315  ;
+L224:
+t319 = HEAP[(int)t318 ];
+if(t319 != -1) goto L225;
+goto L226;
+L225:
+HEAP[(int)H] = t319;
 H = H + 1;
-t77 = t77 + 1;
-goto L36;
-L38:
-t79 = t76  ;
-L39:
-t80 = HEAP[(int)t79 ];
-if(t80 != -1) goto L40;
-goto L41;
-L40:
-HEAP[(int)H] = t80;
+t318 = t318 + 1;
+goto L224;
+L226:
+t320 = t317  ;
+L227:
+t321 = HEAP[(int)t320 ];
+if(t321 != -1) goto L228;
+goto L229;
+L228:
+HEAP[(int)H] = t321;
 H = H + 1;
-t79 = t79 + 1;
-goto L39;
-L41:
+t320 = t320 + 1;
+goto L227;
+L229:
 /* Fin de la concatenacion */
 HEAP[(int)H] = -1;
 H = H + 1;
-P = P - t70;
-t81 = P + 1;
-STACK[(int)t81] = t72;
-P = P + t70;
+P = P - t311;
+t322 = P + 1;
+STACK[(int)t322] = t313;
+P = P + t311;
 /* End Asignacion */
-goto L20;
-L21:
+goto L222;
+L223:
 P = P - 2;
 /* Instruccion Print */
 /* Primitivo tipo STR: "{}" */
-t82 = H  ;
+t323 = H  ;
 HEAP[(int)H] = 123;
 H = H + 1;
 HEAP[(int)H] = 125;
@@ -348,70 +4271,70 @@ H = H + 1;
 HEAP[(int)H] = -1;
 H = H + 1;
 /* Por si la expresiona imprimir es booleana */
-t84 = H;
+t325 = H;
 /* ID EXPRESION: output */
-t85 = 0;
-P = P - t85;
-t87 = P + 1;
-P = P + t85;
-t86 = STACK[(int)t87];
+t326 = 0;
+P = P - t326;
+t328 = P + 1;
+P = P + t326;
+t327 = STACK[(int)t328];
 /* Para saber donde iniciar a imprimir luego del proceso */
-t83 = H;
+t324 = H;
 /* Print Complex P.1 */
-t88 = t82  ;
-L42:
-t89 = HEAP[(int)t88 ];
-if(t89 == (char)123) goto L45;
-HEAP[(int)H] = t89;
+t329 = t323  ;
+L230:
+t330 = HEAP[(int)t329 ];
+if(t330 == (char)123) goto L233;
+HEAP[(int)H] = t330;
 H = H + 1;
-t88 = t88 + 1;
-goto L42;
+t329 = t329 + 1;
+goto L230;
 /* Print Complex P.2 */
-L45:
-t88 = t88 + 1;
-L43:
-t89 = HEAP[(int)t88 ];
-if(t89 == (char)125) goto L46;
-t88 = t88 + 1;
-goto L43;
+L233:
+t329 = t329 + 1;
+L231:
+t330 = HEAP[(int)t329 ];
+if(t330 == (char)125) goto L234;
+t329 = t329 + 1;
+goto L231;
 /* Print Complex P.3 */
-L46:
-t88 = t88 + 1;
-t90 = t86  ;
-L48:
-t91 = HEAP[(int)t90 ];
-if(t91 == -1) goto L49;
-HEAP[(int)H] = t91;
+L234:
+t329 = t329 + 1;
+t331 = t327  ;
+L236:
+t332 = HEAP[(int)t331 ];
+if(t332 == -1) goto L237;
+HEAP[(int)H] = t332;
 H = H + 1;
-t90 = t90 + 1;
-goto L48;
-L49:
+t331 = t331 + 1;
+goto L236;
+L237:
 /* Print Complex P.4 */
-L44:
-t89 = HEAP[(int)t88 ];
-if(t89 == -1) goto L47;
-HEAP[(int)H] = t89;
+L232:
+t330 = HEAP[(int)t329 ];
+if(t330 == -1) goto L235;
+HEAP[(int)H] = t330;
 H = H + 1;
-t88 = t88 + 1;
-goto L44;
+t329 = t329 + 1;
+goto L232;
 /* Salida print Complex */
-L47:
+L235:
 HEAP[(int)H] = -1;
 H = H + 1;
 /* Impresion */
-t93 = t83  ;
-L50:
-t94 = HEAP[(int)t93 ];
-if(t94 != -1) goto L51;
-goto L52;
-L51:
-printf("%c",(char)t94);
-t93 = t93 + 1;
-goto L50;
-L52:
+t334 = t324  ;
+L238:
+t335 = HEAP[(int)t334 ];
+if(t335 != -1) goto L239;
+goto L240;
+L239:
+printf("%c",(char)t335);
+t334 = t334 + 1;
+goto L238;
+L240:
 printf("%c",10);
-goto L2;
-L3:
-P = P - 0;
+goto L208;
+L209:
+P = P - 3;
 return 0;
 }

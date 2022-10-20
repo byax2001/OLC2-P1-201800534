@@ -60,7 +60,10 @@ class Id(Expresion):
             self.generator.addBackStack(index=tmp_aux)  # para retroceder entre enviroments
             self.generator.addExpression(target=index,left="P",right=str(symbol.position),operator="+")
             self.generator.addNextStack(tmp_aux)  # volver al enviroment actual de la pila
-            self.generator.addGetStack(target=tmpR, index=index)
+            if self.paso_parametro == False:
+                self.generator.addGetStack(target=tmpR, index=index)
+            else:
+                tmpR = index
 
             if symbol.tsimbolo == Symbols.ARREGLO:
                 result.tipo_aux = Tipos.ARREGLO

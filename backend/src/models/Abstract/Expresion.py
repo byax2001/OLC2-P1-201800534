@@ -5,6 +5,7 @@ class Expresion:
         self.generator=Generator()
         self.trueLabel = ""
         self.falseLabel = ""
+        self.paso_parametro = False
 
     def getTipo(self, driver, ts):
         """

@@ -241,6 +241,7 @@ def p_elementcexp(p):
     if p[1]!="&":
         p[0] = p[1]
     else:
+        p[3].paso_parametro = True
         p[0]=p[3]
 #tipo de dato=====================================================================================0
 def p_tipo_dato(p):

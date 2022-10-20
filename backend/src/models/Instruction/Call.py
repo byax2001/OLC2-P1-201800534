@@ -200,6 +200,7 @@ class Call(Instruccion):
             if symbol!=None:
                 self.generator.addComment(f"Llamada a funcion: {self.id}")
                 newts = Enviroment(ts, "Funcion")
+                newts.generator = self.generator
                 newts.size=1 #para saltarse la primera posicion, pues ahi estara el valor del return
                 newts.generator=ts.generator
                 puntero_newEnv=ts.generator.newTemp()
@@ -257,6 +258,6 @@ class Call(Instruccion):
         code_func=code_func.replace("return_i",exit_return)
         code_func+=exit_return+":\n"
         code_func += f"return; \n"
-        code_func += f"}}\n"
+        code_func += f"}}}} \n"
         self.generator.addCodeFunc(code=code_func)
 

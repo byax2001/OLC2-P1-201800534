@@ -176,7 +176,8 @@ class Declaracion(Instruccion):
         aux_index = self.generator.newTemp()  # tendra el index
         self.generator.addComment("Ingreso a la Pila")
         Puntero ="P"
-        if self.en_funcion:
+        if self.en_funcion: #EN EL CASO SEA UNA DECLARACION ANTES DE LLAMAR A UNA FUNCION SE CAMBIA EL TIPO DE PUNTERO
+                            # DE P   a   tn   (tn=P+ts.size)
             Puntero = self.puntero_entorno_nuevo
 
         if temp_var.tipo != Tipos.BOOLEAN or exp.tipo_aux == Tipos.ARREGLO or exp.tipo_aux == Tipos.VECTOR:

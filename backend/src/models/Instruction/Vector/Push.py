@@ -71,8 +71,11 @@ class Push(Instruccion):
                         self.generator.addBackStack(auxStack)
                         auxIndex=self.generator.newTemp()
                         self.generator.addExpression(target=auxIndex,left="P",right=str(symbol.position),operator="+")
-                        self.generator.addGetStack(target=t_puntero,index=auxIndex)
                         self.generator.addNextStack(auxStack)
+                        self.generator.addGetStack(target=t_puntero, index=auxIndex)
+                        if symbol.paso_parametro:  # si fue declarado como paso de parametro en el anterior puntero esta la direccion del verdadero array
+                            # ubicado en el stack
+                            self.generator.addGetStack(target=t_puntero, index=t_puntero)
                         #TAMAÑO
                         self.generator.addGetHeap(target=t_tam,index=t_puntero)# t_tam=inicioArray
                         self.generator.incVar(t_puntero) #tpuntero=tpuntero+1

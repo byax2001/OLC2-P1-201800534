@@ -51,6 +51,9 @@ class Capacity(Expresion):
             self.generator.addExpression(target=tindexA,left="P",right=str(symbol.position),operator="+")
             self.generator.addNextStack(tmp_aux)
             self.generator.addGetStack(target=tpuntero,index=tindexA)
+            if symbol.paso_parametro:  # si fue declarado como paso de parametro en el anterior puntero esta la direccion del verdadero array
+                # ubicado en el stack
+                self.generator.addGetStack(target=tpuntero, index=tpuntero)
             self.generator.incVar(tpuntero)
             self.generator.addGetHeap(target=tmpR,index=tpuntero)
             result.valor=tmpR

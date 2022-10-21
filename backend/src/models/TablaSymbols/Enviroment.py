@@ -61,7 +61,16 @@ class Enviroment:
                 return True
             ts = ts.anterior
         return None
-
+    def actualizarSymbol(self,id:str,Symbol):
+        ts = self
+        while ts is not None:
+            symbol = ts.tabla.get(id)
+            if symbol is not None:
+                symbol = Symbol
+                ts.tabla.update({id: symbol})
+                return True
+            ts = ts.anterior
+        return None
     def actualizar(self,id:str,value):
         ts=self
         while ts is not None:

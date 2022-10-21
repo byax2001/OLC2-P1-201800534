@@ -208,6 +208,8 @@ class Call(Instruccion):
                 self.generator.addComment("Puntero a nuevo enviroment")
                 self.generator.addExpression(target=puntero_newEnv,left="P",right=str(ts.size),operator="+")
                 #change expresion
+                print(f"{self.id}")
+                print(symbol.value)
                 paramsFun = symbol.value[0]  # parametros de la funcion
                 instFun = symbol.value[1]  # instrucciones de la funcion
                 if len(self.cExp) == len(symbol.value[0]):  # el numero de parametros mandados == numero de declaracioes
@@ -232,7 +234,7 @@ class Call(Instruccion):
                 if symbol.func_create==False:
                     self.crear_funcC3d(instructions=instFun,ts=newts,ptr=ptr)
                     symbol.func_create=True
-                    newts.actualizar(id=self.id,value=symbol)
+                    newts.actualizarSymbol(id=self.id,Symbol=symbol)
                 #LLAMADA
                 self.generator.addNextStack(index=str(ts.size))
                 self.generator.addCallFunc(self.id)

@@ -21,7 +21,7 @@ class DecArreglo(Instruccion):
         self.column=column
         self.tacceso = 0 #publico por default
         # DECLARACION CON PASO DE PARAMETRO
-        self.dec_paso_parametro = False
+        self.dec_paso_parametro = False #PARA IDENTIFICAR SI ES UNA DECLARACION DE UNA VARIABLE CON EL PASO DE PARAMETRO Y NO DE VALOR
         # cambio de entorno
         self.puntero_entorno_nuevo = ""
         self.en_funcion = False
@@ -97,8 +97,14 @@ class DecArreglo(Instruccion):
     def generarC3d(self,ts:Enviroment,ptr):
         self.generator.addComment(f"Declaracion de arreglo: {self.id}")
         Puntero = "P"
-        if self.en_funcion:
+        if self.en_funcion:#EN EL CASO SEA UNA DECLARACION ANTES DE LLAMAR A UNA FUNCION SE CAMBIA EL TIPO DE PUNTERO
+                            # DE P   a   tn   (tn=P+ts.size)
             Puntero = self.puntero_entorno_nuevo
+
+        if self.dec_paso_parametro:#SI LA DECLARACION ES UN PASO DE PARAMETRO, SE LE DEBE DE INDICAR A LA
+                                   #EXPRESION QUE DEBERA DE RETORNAR LA DIRECCION Y NO EL VALOR
+            self.array.paso_parametro = True
+
         if ts.buscarActualTs(self.id)==None:
             if self.arrDim==None:
                 self.array.generator = self.generator
@@ -118,7 +124,9 @@ class DecArreglo(Instruccion):
                 self.generator.addSetStack(index=aux_index, value=array.valor)  # Stack[(int)pos]= val
             else:
                 self.arrDim.generator= self.array.generator = self.generator
+                self.generator.addComment("Dimensionales del arreglo")
                 arrDim:ValC3d=self.arrDim.generarC3d(ts,ptr)
+                self.generator.addComment("------------------------")
                 array:ValC3d=self.array.generarC3d(ts,ptr)
                 profundity=array.prof_array
                 if not isinstance(self.array,Id):

@@ -3,178 +3,248 @@ float HEAP[78000];
 float STACK[10000];
 float P;
 float H;
-float t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31,t32,t33,t34,t35,t36;
+float t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23;
 
-void ordIntercambio(){{
-/* Declaracion var: i */
-/* Ingreso a la Pila */
-t6 = P + 2;
-STACK[(int)t6] = 0;
-/* Declaracion var: j */
-/* Ingreso a la Pila */
-t7 = P + 3;
-STACK[(int)t7] = 0;
-/* Instruccion Print */
-/* Primitivo tipo STR: "{}" */
-t8 = H  ;
-HEAP[(int)H] = 123;
-H = H + 1;
-HEAP[(int)H] = 125;
-H = H + 1;
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Por si la expresiona imprimir es booleana */
-t10 = H;
-/* ID EXPRESION: arr */
-t11 = 0;
-P = P - t11;
-t13 = P + 1;
-P = P + t11;
-t12 = STACK[(int)t13];
-t12 = STACK[(int)t12];
-/* Para saber donde iniciar a imprimir luego del proceso */
-t9 = H;
-/* Print Complex P.1 */
-t14 = t8  ;
-L1:
-t15 = HEAP[(int)t14 ];
-if(t15 == (char)123) goto L4;
-HEAP[(int)H] = t15;
-H = H + 1;
-t14 = t14 + 1;
-goto L1;
-/* Print Complex P.2 */
-L4:
-t14 = t14 + 1;
-L2:
-t15 = HEAP[(int)t14 ];
-if(t15 == (char)125) goto L5;
-t14 = t14 + 1;
-goto L2;
-/* Print Complex P.3 */
-L5:
-t14 = t14 + 1;
-/* INGRESO DE ARRAY AL STRING */
-/* Print array prof 1 */
-t20 = 0;
-t16 = t12;
-/* Tamanio */
-t19 = HEAP[(int)t16 ];
-t16 = t16 + 1;
-HEAP[(int)H] = 91;
-H = H + 1;
-L7:
-if(t20 >= t19) goto L8;
-t18 = t16 + t20;
-t17 = HEAP[(int)t18 ];
-/* Num to String */
-t22 = t17;
-/* Por si es Negativo  */
-if(t22 >= 0) goto L9;
-t22 = t22 * -1;
-HEAP[(int)H] = 45;
-H = H + 1;
-L9:
-t23 = H;
-t24 = t22  ;
-L10:
-t25 = t24 / 10;
-t26 = (int)t25;
-if(t26 == 0) goto L11;
-t27 = (int)t24%10;
-t24 = t26;
-HEAP[(int)H] = (int)t27 +48;
-H = H + 1;
-goto L10;
-L11:
-HEAP[(int)H] = (int)t24+48;
-H = H + 1;
-/* sort_revers */
-t28 = t23;
-t29 = H-1;
-L12:
-if(t28 >= t29) goto L13;
-t30 = HEAP[(int)t29 ];
-t31 = HEAP[(int)t28 ];
-HEAP[(int)t28] = t30;
-HEAP[(int)t29] = t31;
-t28 = t28 + 1;
-t29 = t29 - 1;
-goto L12;
-L13:
-t20 = t20 + 1;
-/* Para evitar poner una comma extra */
-if(t20 >= t19) goto t21;
-HEAP[(int)H] = 44;
-H = H + 1;
-t21:
-goto L7;
-L8:
-HEAP[(int)H] = 93;
-H = H + 1;
-/* Print Complex P.4 */
-L3:
-t15 = HEAP[(int)t14 ];
-if(t15 == -1) goto L6;
-HEAP[(int)H] = t15;
-H = H + 1;
-t14 = t14 + 1;
-goto L3;
-/* Salida print Complex */
-L6:
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Impresion */
-t33 = t9  ;
-L14:
-t34 = HEAP[(int)t33 ];
-if(t34 != -1) goto L15;
-goto L16;
-L15:
-printf("%c",(char)t34);
-t33 = t33 + 1;
-goto L14;
-L16:
-printf("%c",10);
-L0:
-return; 
-}} 
 
 int main(){
-/* Declaracion de arreglo: arr1 */
+/* Declaracion de arreglo: estudiantes */
+/* Dimensionales del arreglo */
 t0 = 4;
+/* ------------------------ */
 /* Exp Arreglo */
+/* Metodo ToString o ToOwned */
+/* Por si es booleano el resultado a pasar a string */
+t2 = H;
+/* Primitivo tipo STR: "Lorenza" */
+t3 = H  ;
+HEAP[(int)H] = 76;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 110;
+H = H + 1;
+HEAP[(int)H] = 122;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Metodo ToString o ToOwned */
+/* Por si es booleano el resultado a pasar a string */
+t4 = H;
+/* Primitivo tipo STR: "Rosendo" */
+t5 = H  ;
+HEAP[(int)H] = 82;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 110;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Metodo ToString o ToOwned */
+/* Por si es booleano el resultado a pasar a string */
+t6 = H;
+/* Primitivo tipo STR: "Fermina" */
+t7 = H  ;
+HEAP[(int)H] = 70;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 110;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Metodo ToString o ToOwned */
+/* Por si es booleano el resultado a pasar a string */
+t8 = H;
+/* Primitivo tipo STR: "Markel" */
+t9 = H  ;
+HEAP[(int)H] = 77;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 107;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 108;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
 t1 = H;
 /* Tamanio Arreglo */
 HEAP[(int)H] = 4;
 /* --------------- */
 H = H + 1;
-HEAP[(int)H] = 8;
+HEAP[(int)H] = t3;
 H = H + 1;
-HEAP[(int)H] = 4;
+HEAP[(int)H] = t5;
 H = H + 1;
-HEAP[(int)H] = 6;
+HEAP[(int)H] = t7;
 H = H + 1;
-HEAP[(int)H] = 2;
+HEAP[(int)H] = t9;
 H = H + 1;
-t2 = P + 0;
-STACK[(int)t2] = t1;
-/* Llamada a funcion: ordIntercambio */
-/* Puntero a nuevo enviroment */
-t0 = P + 1;
-/* Declaracion de arreglo: arr */
-/* ID EXPRESION: arr1 */
-t3 = 0;
-P = P - t3;
-t4 = P + 0;
-P = P + t3;
-t5 = t0 + 1;
-STACK[(int)t5] = (int)t4;
-P = P + 1;
-ordIntercambio();
-P = P - 1;
-/* Valor de return */
-t35 = P + 1;
-t36 = STACK[(int)t35];
+t10 = P + 0;
+STACK[(int)t10] = t1;
+/* Declaracion de arreglo: cursos */
+/* Dimensionales del arreglo */
+t11 = 3;
+/* ------------------------ */
+/* Exp Arreglo */
+/* Primitivo tipo STR: "Arqui1" */
+t13 = H  ;
+HEAP[(int)H] = 65;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 113;
+H = H + 1;
+HEAP[(int)H] = 117;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 49;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Primitivo tipo STR: "Archivos" */
+t14 = H  ;
+HEAP[(int)H] = 65;
+H = H + 1;
+HEAP[(int)H] = 114;
+H = H + 1;
+HEAP[(int)H] = 99;
+H = H + 1;
+HEAP[(int)H] = 104;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 118;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 115;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Primitivo tipo STR: "Compi2" */
+t15 = H  ;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 111;
+H = H + 1;
+HEAP[(int)H] = 109;
+H = H + 1;
+HEAP[(int)H] = 112;
+H = H + 1;
+HEAP[(int)H] = 105;
+H = H + 1;
+HEAP[(int)H] = 50;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+t12 = H;
+/* Tamanio Arreglo */
+HEAP[(int)H] = 3;
+/* --------------- */
+H = H + 1;
+HEAP[(int)H] = t13;
+H = H + 1;
+HEAP[(int)H] = t14;
+H = H + 1;
+HEAP[(int)H] = t15;
+H = H + 1;
+t16 = P + 1;
+STACK[(int)t16] = t12;
+/* Declaracion de arreglo: notas_buenas */
+/* Dimensionales del arreglo */
+t17 = 5;
+t18 = 3;
+/* ------------------------ */
+/* Exp Arreglo */
+/* Exp Arreglo */
+t20 = H;
+/* Tamanio Arreglo */
+HEAP[(int)H] = 5;
+/* --------------- */
+H = H + 1;
+HEAP[(int)H] = 53;
+H = H + 1;
+HEAP[(int)H] = 88;
+H = H + 1;
+HEAP[(int)H] = 95;
+H = H + 1;
+HEAP[(int)H] = 89;
+H = H + 1;
+HEAP[(int)H] = 75;
+H = H + 1;
+/* Exp Arreglo */
+t21 = H;
+/* Tamanio Arreglo */
+HEAP[(int)H] = 5;
+/* --------------- */
+H = H + 1;
+HEAP[(int)H] = 81;
+H = H + 1;
+HEAP[(int)H] = 51;
+H = H + 1;
+HEAP[(int)H] = 57;
+H = H + 1;
+HEAP[(int)H] = 67;
+H = H + 1;
+HEAP[(int)H] = 93;
+H = H + 1;
+/* Exp Arreglo */
+t22 = H;
+/* Tamanio Arreglo */
+HEAP[(int)H] = 5;
+/* --------------- */
+H = H + 1;
+HEAP[(int)H] = 94;
+H = H + 1;
+HEAP[(int)H] = 74;
+H = H + 1;
+HEAP[(int)H] = 58;
+H = H + 1;
+HEAP[(int)H] = 84;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+t19 = H;
+/* Tamanio Arreglo */
+HEAP[(int)H] = 3;
+/* --------------- */
+H = H + 1;
+HEAP[(int)H] = t20;
+H = H + 1;
+HEAP[(int)H] = t21;
+H = H + 1;
+HEAP[(int)H] = t22;
+H = H + 1;
+t23 = P + 2;
+STACK[(int)t23] = t19;
 return 0;
 }

@@ -106,6 +106,7 @@ class Asignacion(Instruccion):
     def generarC3d(self,ts:Enviroment,ptr:int):
         self.generator.addComment("Asignacion")
         tmpaux=self.generator.newTemp()
+        ts.generator=self.generator
         symbol:Symbol=ts.buscarC3d(self.id,tmp_aux=tmpaux)
         if symbol!=None:
             if symbol.mut:
@@ -121,7 +122,7 @@ class Asignacion(Instruccion):
                         ts.actualizarC3d(id=self.id, value=exp.valor)
                         self.generator.addNextStack(index=tmpaux)
                     elif len(self.cIds) ==0: #array[x]==val   len (CIDS) ==0
-
+                        self.generator.addComment("Asignacion al elemento de un arreglo o vector")
                         if symbol.tsimbolo in [Symbols.VECTOR, Symbols.ARREGLO]:
                             if len(self.cIndex) <= symbol.value.profundidad:
                                 if len(self.cIndex)<symbol.value.profundidad and exp.tipo_aux not in [Tipos.VECTOR,Tipos.ARREGLO]:
@@ -142,6 +143,9 @@ class Asignacion(Instruccion):
                                                                  operator="+")
                                     self.generator.addNextStack(tmpaux)
                                     self.generator.addGetStack(target=t_puntero, index=aux_index)
+                                    if symbol.paso_parametro:  # si fue declarado como paso de parametro en el anterior puntero esta la direccion del verdadero array
+                                        # ubicado en el stack
+                                        self.generator.addGetStack(target=t_puntero, index=t_puntero)
                                     self.generator.addComment("Tamanio")
                                     self.generator.addGetHeap(target=t_tam, index=t_puntero)
                                     self.generator.incVar(t_puntero)
@@ -156,19 +160,22 @@ class Asignacion(Instruccion):
                                         self.generator.addIf(left=indexR.valor, rigth=t_tam, operator=">=",
                                                              label=lerror)
                                         self.generator.addIf(left=indexR.valor, rigth="0", operator="<", label=lerror)
+                                        #TAUX TIENE EL INDEX PARA ASIGNAR REQUERIDO:  T[AUX] = VAL A ASIGNAR
                                         self.generator.addExpression(target=taux, left=t_puntero, right=indexR.valor,
                                                                      operator="+")  # taux= tpuntero + index
-                                        self.generator.addGetHeap(target=tvalor, index=taux)  # tvalor = Heap[taux]
+
                                         if x != len(self.cIndex):
-                                            self.generator.addExpAsign(target=t_puntero,
-                                                                       right=tvalor)  # tpuntero = tvalor
+                                            #SI ACASO EL ARRAY ES DE MAS DIMENSIONES, en la posicion del heap actual
+                                            #estara la direccion de otro vector
+                                            self.generator.addGetHeap(target=t_puntero, index=taux)  # tpuntero = Heap[taux]
                                             self.generator.addComment("Tamanio")
                                             self.generator.addGetHeap(target=t_tam,
                                                                       index=t_puntero)  # t_tam = Heap[tpuntero]
                                             self.generator.incVar(t_puntero)  # tpuntero = tpuntero +1
                                             if symbol.tsimbolo == Symbols.VECTOR:
                                                 self.generator.incVar(t_puntero)
-                                    self.generator.addSetHeap(index=t_puntero,value=exp.valor)
+                                    self.generator.addComment("Asignacion al elemento del vector")
+                                    self.generator.addSetHeap(index=taux,value=exp.valor)
                                     self.generator.addGoto(lsalida)  # goto Lsalida;
                                     # EN CASO LOS INDEX DEN ERROR:
                                     self.generator.addLabel(lerror)  # Lerror:

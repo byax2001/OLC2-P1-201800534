@@ -48,8 +48,11 @@ class Len(Expresion):
                 auxIndex = self.generator.newTemp()
                 self.generator.addExpression(target=auxIndex, left="P", right=str(symbol.position),
                                              operator="+")
-                self.generator.addGetStack(target=t_puntero, index=auxIndex)
                 self.generator.addNextStack(auxStack)
+                self.generator.addGetStack(target=t_puntero, index=auxIndex)
+                if symbol.paso_parametro: #si fue declarado como paso de parametro en el anterior puntero esta la direccion del verdadero array
+                                          # ubicado en el stack
+                    self.generator.addGetStack(target=t_puntero, index=t_puntero)
                 self.generator.addGetHeap(target=tmpR, index=t_puntero)  # t_tam=inicioArray
             elif symbol.tipo == Tipos.STRING:
                 print() #por si acaso es necesario saber el tamaño de un string
@@ -59,5 +62,5 @@ class Len(Expresion):
         else:
             error = "No existe dicho arreglo"
             print(error)
-        self.generator.addComment("End Insert")
+        self.generator.addComment("End Len")
         return result

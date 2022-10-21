@@ -69,6 +69,7 @@ class If_ternario(Expresion):
         """En la mayoria de expresiones no realiza nada aqui"""
         pass
     def generarC3d(self,ts,ptr:int):
+        self.generator.addComment("If ternario")
         newts=Enviroment(ts,"If ternario")
         trueL = self.generator.newLabel()
         falseL = self.generator.newLabel()
@@ -78,8 +79,6 @@ class If_ternario(Expresion):
         trueLr=self.generator.newLabel()
         exp_r: ValC3d=ValC3d(valor=tmp_r,isTemp=True,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
         self.exp.generator = self.generator
-
-        self.exp2b.generator=self.generator
         self.exp.falseLabel=falseL
         self.exp.trueLabel=trueL
         exp:ValC3d=self.exp.generarC3d(ts,ptr)
@@ -97,18 +96,20 @@ class If_ternario(Expresion):
             exp_r.tipo_aux=e_aux.tipo_aux
             exp_r.trueLabel=trueLr
             exp_r.falseLabel=falseLr
-            if e_aux.valor!="":
-                self.generator.addExpAsign(target=tmp_r,right=e_aux.valor)
+            exp_r.prof_array = e_aux.prof_array
+
+            self.generator.addExpAsign(target=tmp_r,right=e_aux.valor)
+
             self.generator.addGoto(exitL)
             self.generator.addLabel(falseL)
             for ins in self.bloque2:
                 ins.generator = self.generator
                 ins.generarC3d(newts, ptr)
-            self.exp2b.generator = self.generator
-            self.exp2b.trueLabel = trueLr
-            self.exp2b.falseLabel = falseLr
-            e_aux = self.exp2b.generarC3d(ts, ptr)
-            if e_aux.valor != "":
+            if self.exp2b !=None:
+                self.exp2b.generator = self.generator
+                self.exp2b.trueLabel = trueLr
+                self.exp2b.falseLabel = falseLr
+                e_aux = self.exp2b.generarC3d(ts, ptr)
                 self.generator.addExpAsign(target=tmp_r, right=e_aux.valor)
             self.generator.addLabel(exitL)
             return exp_r

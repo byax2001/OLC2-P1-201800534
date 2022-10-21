@@ -19,6 +19,7 @@ class ToStringOwned(Expresion):
         self.exp.generator=self.generator
         self.generator.addComment("Metodo ToString o ToOwned")
         # ----------------------SOLO USADO EN EL CASO QUE LA EXPRESION SEA UN BOOLEANO
+        self.generator.addComment("Por si es booleano el resultado a pasar a string")
         tbool_str = self.generator.newTemp()  # contendra el indice donde inicia el booleano pasado a string
         self.generator.addExpAsign(target=tbool_str, right="H")
         # ----------------------------------------------------

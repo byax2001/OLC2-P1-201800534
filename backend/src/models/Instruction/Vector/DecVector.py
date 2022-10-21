@@ -127,8 +127,13 @@ class DecVector(Instruccion):
     def generarC3d(self,ts,ptr):
         self.generator.addComment(f"Declaracion de Vector: {self.id}")
         Puntero = "P"
-        if self.en_funcion:
+        if self.en_funcion:#EN EL CASO SEA UNA DECLARACION ANTES DE LLAMAR A UNA FUNCION SE CAMBIA EL TIPO DE PUNTERO
+                            # DE P   a   tn   (tn=P+ts.size)
             Puntero = self.puntero_entorno_nuevo
+
+        if self.dec_paso_parametro:#SI LA DECLARACION ES UN PASO DE PARAMETRO, SE LE DEBE DE INDICAR A LA
+                                   #EXPRESION QUE DEBERA DE RETORNAR LA DIRECCION Y NO EL VALOR
+            self.array.paso_parametro = True
         #con vec!--------------------------------------------------------------------
         if self.vecI!=None:
             self.generator.addComment("Vector con vec!")

@@ -71,7 +71,7 @@ class Contains(Expresion):
         result=ValC3d(valor="",isTemp=False,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
         self.generator.addComment(f"Contains Vector {self.id}")
         auxStack = self.generator.newTemp()
-        symbol:Symbol = ts.buscarC3d(self.id,auxStack)
+        symbol:Symbol = ts.buscarC3d(self.id,auxStack,self.en_funcion)
         if symbol != None:
             if symbol.tsimbolo == Symbols.VECTOR or symbol.tsimbolo == Symbols.ARREGLO:
                 self.exp.generator = self.generator

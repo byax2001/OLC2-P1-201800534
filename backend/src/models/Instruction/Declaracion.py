@@ -18,6 +18,8 @@ class Declaracion(Instruccion):
         self.linea = linea
         self.columna = columna
         self.tacceso = 0
+        #DECLARACION CON PASO DE PARAMETRO
+        self.dec_paso_parametro = False
 
         # cambio de entorno
         self.puntero_entorno_nuevo=""
@@ -169,12 +171,16 @@ class Declaracion(Instruccion):
 
         newVar = Symbol(mut=self.mut, id=self.id, value=exp.valor, tipo_simbolo=0, tipo=exp.tipo,
                         line=self.linea, column=self.columna, tacceso=self.tacceso,position=ts.size)
-
+        newVar.paso_parametro=self.dec_paso_parametro
         temp_var: SymC3d = ts.addVar(self.id, newVar)  # ----------------------------
         aux_index = self.generator.newTemp()  # tendra el index
+        self.generator.addComment("Ingreso a la Pila")
+        Puntero ="P"
+        if self.en_funcion:
+            Puntero = self.puntero_entorno_nuevo
 
         if temp_var.tipo != Tipos.BOOLEAN or exp.tipo_aux == Tipos.ARREGLO or exp.tipo_aux == Tipos.VECTOR:
-            self.generator.addExpression(target=aux_index, left="P", right=str(temp_var.position), operator="+")
+            self.generator.addExpression(target=aux_index, left=Puntero, right=str(temp_var.position), operator="+")
             self.generator.addSetStack(index=aux_index, value=str(temp_var.valor))  # Stack[(int)pos]= val
         else:
             # Aqui no estoy añadiendo directamente el valor al hacer el addSetStack
@@ -185,11 +191,11 @@ class Declaracion(Instruccion):
 
             newLabel = self.generator.newLabel()  # metodo que crea y retorna un label  Ln, esta es la etiqueta de salida
             self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
-            self.generator.addExpression(target=aux_index, left="P", right=str(temp_var.position), operator="+")
+            self.generator.addExpression(target=aux_index, left=Puntero, right=str(temp_var.position), operator="+")
             self.generator.addSetStack(index=aux_index, value='1')  # Stack[(int)num]= 1
             self.generator.addGoto(newLabel)  # goto Ln ;
             self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
-            self.generator.addExpression(target=aux_index, left="P", right=str(temp_var.position), operator="+")
+            self.generator.addExpression(target=aux_index, left=Puntero, right=str(temp_var.position), operator="+")
             self.generator.addSetStack(index=aux_index, value='0')  # Stack[(int)num]= 0
             self.generator.addLabel(newLabel)  # añade Ln:  ya existente al codigo principal
 

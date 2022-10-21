@@ -15,3 +15,22 @@ y todos los lugares donde fue asignado.
 C3D:
 Los vectores tendran un apartado mas en el heap que los arreglos que sera el capacity: [len,capacity,contenido...]
                                                                              arreglo:  [len,contenido...]
+#PARA LOS CALL
+*Para la funcion main solo es necesario ejecutar todas las instrucciones.
+*Para el resto de funciones los pasos para un call c3d correcto son :
+-Crear un apuntador (temporal tn) que apunte a una posicion superior a la suma de stack pointer y el tamaño de la tabla
+de simbolos actual   (tn = P + ts.size)
+-No aumentar el stack pointer hasta despues de ejecutar las declaraciones de la funcion, estas se declararan con el nuevo
+Enviroment propio de la funcion.
+-Para las declaraciones de las funciones se utiliza el apuntador anteriormente mencionado para declarar variables en la pila
+En declaracion normal: tindex = P + ts.size;   Stack[tindex] = valor
+En declaracion adentro de una funcion: tindex = tn +ts.size; Stack [tindex] = valor
+-Para esto todas las declaracioens deberan de tener una variable para identificar si son declaraciones adentro de una funcion
+o no, esto se sabra a la hora de ejecutarlas en la clase "Call", donde se cambira el puntero (P o tn) segun sea los dos casos
+anteriormente mencionados   (Normal o adentro de una funcion).
+-Proceder a crear la funcion si aun no ha sido creada en el c3d, para posteriormente aumentar el stack pointer con el tamaño
+actual de la pila, se llama la funcion (id();) y luego se decrementa el tamaño del stackpointer una vez terminada la llamada
+asegurandose de tomar el valor del return de ser necesario.
+-Las funciones seran guardadas en la tabla de simbolos con un parametro que indica si ya se usaron o no, si no se han usado
+se genera en c3d una funcion con todas sus instrucciones (exceptuando las declaraciones iniciales) para posteriormente
+llamar esa funcion.

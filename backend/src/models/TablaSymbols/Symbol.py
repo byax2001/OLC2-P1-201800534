@@ -45,4 +45,5 @@ class Symbol():
         self.tacceso = getAcceso(tacceso)
         self.position = position #esto es para hallar la posicion de esta variable en la pila
         self.func_create=False #para las funciones en c3d, evitando que se vuelvan a crear
-        self.paso_parametro = False
+        self.paso_parametro = False #por si declaro como paso de parametro
+        self.tipo_return = self.tipo

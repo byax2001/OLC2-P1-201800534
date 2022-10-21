@@ -8,6 +8,8 @@ from models.TablaSymbols.Symbol import Symbol
 from BaseDatos.B_datos import B_datos
 from models.TablaSymbols.ValC3d import ValC3d
 from models.TablaSymbols.SymC3d import SymC3d
+from models.Expresion.Id import Id
+
 class DecArreglo(Instruccion):
     def __init__(self,mut:bool,id:str,arrDimensional:Expresion,array:Expresion,line:int,column:int):
         super().__init__()
@@ -18,6 +20,12 @@ class DecArreglo(Instruccion):
         self.line=line
         self.column=column
         self.tacceso = 0 #publico por default
+        # DECLARACION CON PASO DE PARAMETRO
+        self.dec_paso_parametro = False
+        # cambio de entorno
+        self.puntero_entorno_nuevo = ""
+        self.en_funcion = False
+
     def ejecutar(self, driver: Driver, ts: Enviroment):
         if ts.buscarActualTs(self.id)==None:
             if self.arrDim!=None:
@@ -88,28 +96,41 @@ class DecArreglo(Instruccion):
         self.tacceso=acceso
     def generarC3d(self,ts:Enviroment,ptr):
         self.generator.addComment(f"Declaracion de arreglo: {self.id}")
+        Puntero = "P"
+        if self.en_funcion:
+            Puntero = self.puntero_entorno_nuevo
         if ts.buscarActualTs(self.id)==None:
             if self.arrDim==None:
                 self.array.generator = self.generator
                 array:ValC3d=self.array.generarC3d(ts,ptr)
-                nvector=VectorC3d(vec=array.valor, profundidad=(array.prof_array+1))
-                print(f"profundidad: {array.prof_array+1}")
+                profundity = array.prof_array
+                if not isinstance(self.array,Id):
+                    profundity = profundity+1
+                nvector=VectorC3d(vec=array.valor, profundidad=profundity)
+                print(f"profundidad: {profundity}")
                 symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=array.tipo,
                               line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
+                symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
+
                 rDec:SymC3d=ts.addVar(self.id, symbol)
                 aux_index=self.generator.newTemp()
-                self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")
+                self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")
                 self.generator.addSetStack(index=aux_index, value=array.valor)  # Stack[(int)pos]= val
             else:
                 self.arrDim.generator= self.array.generator = self.generator
                 arrDim:ValC3d=self.arrDim.generarC3d(ts,ptr)
                 array:ValC3d=self.array.generarC3d(ts,ptr)
-                nvector = VectorC3d(vec=array.valor, profundidad=(array.prof_array+1))
+                profundity=array.prof_array
+                if not isinstance(self.array,Id):
+                    profundity = profundity +1
+                nvector = VectorC3d(vec=array.valor, profundidad=profundity)
                 symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=arrDim.tipo,
                               line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
+                symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
+
                 rDec:SymC3d=ts.addVar(self.id, symbol)
                 aux_index=self.generator.newTemp()
-                self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")
+                self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")
                 self.generator.addSetStack(index=aux_index, value=array.valor)  # Stack[(int)pos]= val
         else:
             error="variable ya declarada"

@@ -93,7 +93,7 @@ class AccesVec(Expresion):
         self.generator.addComment("Acceso al elemento de un vector")
         result = ValC3d(valor="0",isTemp=False,tipo=Tipos.INT64)
         tmp_aux=self.generator.newTemp()
-        symbol:Symbol = ts.buscarC3d(self.id,tmp_aux)
+        symbol:Symbol = ts.buscarC3d(self.id,tmp_aux,self.en_funcion)
         if symbol !=None:
             if len(self.cIndex) > symbol.value.profundidad:
                 self.generator.addError(f"Bounds Error")

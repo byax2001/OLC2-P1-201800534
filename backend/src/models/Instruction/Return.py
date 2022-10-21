@@ -19,12 +19,13 @@ class Return(Instruccion):
         posCorret = self.SentTranferenciaC(ts, ["Funcion"])
         if posCorret==True:
             tmp_index=self.generator.newTemp()
-            self.generator.addCode("return_i")
+
             if self.exp!=None:
                 self.exp.generator=self.generator
                 exp:ValC3d=self.exp.generarC3d(ts,ptr)
                 self.generator.addExpression(target=tmp_index, left="P", right="0", operator="+")
                 self.generator.addSetStack(index=tmp_index, value=exp.valor)
+            self.generator.addCode("return_i")
         else:
             error = "Return no esta en una funcion"
             print(error)

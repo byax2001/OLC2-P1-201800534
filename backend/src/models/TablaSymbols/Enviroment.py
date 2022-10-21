@@ -26,7 +26,7 @@ class Enviroment:
 
         return None
 
-    def buscarC3d(self,id:str,tmp_aux):
+    def buscarC3d(self,id:str,tmp_aux,enFuncion=False):
         ts = self
         self.generator.addExpAsign(target=tmp_aux,right="0")
         while ts is not None:
@@ -35,7 +35,12 @@ class Enviroment:
                 return exist
             ts = ts.anterior
             if ts!=None:
-                self.generator.addExpression(target=tmp_aux,left=tmp_aux,right=str(ts.size),operator="+") #variable auxiliar que servira para volver a colocar el enviroment en su lugar  luego del proceso
+                if enFuncion==False:
+                    self.generator.addExpression(target=tmp_aux,left=tmp_aux,right=str(ts.size),operator="+") #variable auxiliar que servira para volver a colocar el enviroment en su lugar  luego del proceso
+                else:
+                    enFuncion=False #SE HACE ESTO POR LA FORMA ESPECIAL EN LA QUE SE PASAN VALORES A FUNCIONES EN C3D
+                                     #SE BUSCA DE FORMA NORMAL, PERO YA QUE NO SE AH AUMENTADO EL ENVIROMENT EN LA PILA
+                                     #SE IGNORA EL PRIMER ENVIROMENT
         return None
 
     def actualizarC3d(self,id:str,value,isArray=False,prof_array=0):

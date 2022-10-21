@@ -57,6 +57,8 @@ from models.Instruction.Vector.DecVector import DecVector
 from models.Instruction.Arreglo.DecArreglo import DecArreglo
 from models.Expresion.Arreglo.Arreglo import Arreglo
 from models.Expresion.Arreglo.DimensionalArreglo import DimensionalArreglo
+#ayudas
+from models.TablaSymbols.Tipos import Tipos
 
 
 tokens = lexer.tokens
@@ -575,9 +577,15 @@ def p_funcion3(p):
     #    ->  NameStruct {}     |    -> Vec < ID >
     """
     FUNCION : fn id para LISTAPARAMETROS parc menos mayor id BLOQUE_INST
-            | fn id para LISTAPARAMETROS parc menos mayor VEC BLOQUE_INST
     """
     p[0]=Funcion(id=p[2],lparametros=p[4],tipo=p[8],bloque=p[9],line=p.lineno(1),column=0)
+def p_fucion_rvec(p):
+    """
+        FUNCION : fn id para LISTAPARAMETROS parc menos mayor VEC BLOQUE_INST
+    """
+    p[0] = Funcion(id=p[2], lparametros=p[4], tipo=p[8], bloque=p[9], line=p.lineno(1), column=0)
+    p[0].tipo_return = Tipos.VECTOR
+
 
 def p_lista_parametros(p):
     """LISTAPARAMETROS : LISTAPARAMETROS coma PARAMETRO"""
@@ -602,6 +610,7 @@ def p_parametro2(p):
         p[0]=DecArreglo(mut=True,id=p[1],arrDimensional=None,array=None,line=p.lineno(1),column=0)
     elif len(p)==6:
         p[0] = DecArreglo(mut=True, id=p[1], arrDimensional=p[5], array=None, line=p.lineno(1), column=0)
+    p[0].dec_paso_parametro=True
 def p_parametro3(p):
     """PARAMETRO : id dospuntos ampersand mut VEC
                 | mut id dospuntos ampersand VEC"""
@@ -609,6 +618,7 @@ def p_parametro3(p):
         p[0]=DecVector(mut=True,id=p[1],tipo=p[5],vecI=None,capacity=None,line=p.lineno(1),column=0)
     else:
         p[0] = DecVector(mut=False, id=p[2], tipo=p[5], vecI=None, capacity=None, line=p.lineno(1), column=0)
+    p[0].dec_paso_parametro = True
 
 
 def p_parametro4(p):
@@ -619,6 +629,7 @@ def p_parametro4(p):
         p[0] = DecVector(mut=False, id=p[1], tipo=p[3], vecI=None, capacity=None, line=p.lineno(1), column=0)
     else:
         p[0] = DecVector(mut=True, id=p[2], tipo=p[4], vecI=None, capacity=None, line=p.lineno(1), column=0)
+
 def p_parametro5(p):
     """PARAMETRO : id dospuntos ampersand mut id"""
     p[0]=DecStruct(mut=True,id=p[1],exp=None, line=p.lineno(1), column=0)

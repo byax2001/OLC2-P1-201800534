@@ -51,8 +51,9 @@ class Id(Expresion):
 
     def generarC3d(self,ts:Enviroment,ptr:int):
         self.generator.addComment(f"ID EXPRESION: {self.id}")
+        ts.generator =self.generator
         tmp_aux = self.generator.newTemp() #para volver al enviroment actual de la pila luego del proceso de busqueda, y resta de P
-        symbol:Symbol = ts.buscarC3d(self.id,tmp_aux)
+        symbol:Symbol = ts.buscarC3d(self.id,tmp_aux,self.en_funcion)
         result = ValC3d(valor="0",isTemp=False,tipo=Tipos.ERROR)
         if symbol!=None:
             if self.paso_parametro == False: #CUANDO LO PIDEN SIN &
@@ -73,7 +74,6 @@ class Id(Expresion):
                     self.generator.addNextStack(tmp_aux)  # volver al enviroment actual de la pila
                     self.generator.addGetStack(target=tmpR, index=index)
                     self.generator.addGetStack(target=tmpR, index=tmpR)
-
                 if symbol.tsimbolo == Symbols.ARREGLO:
                     result.tipo_aux = Tipos.ARREGLO
                     result.prof_array = symbol.value.profundidad
@@ -103,6 +103,7 @@ class Id(Expresion):
                     self.generator.addBackStack(index=tmp_aux)  # para retroceder entre enviroments
                     self.generator.addExpression(target=tmpR, left="P", right=str(symbol.position), operator="+")
                     self.generator.addNextStack(tmp_aux)  # volver al enviroment actual de la pila
+                    tmpR=f"(int){tmpR}"
                 else: #si el simbolo fue declarado como un paso de parametro
                     #SI EL SIMBOLO FUE DECLARADO COMO PASO DE PARAMETRO LO QUE SE GUARDO EN LA PILA: STACK[index] = val
                     #FUE LA DIRECCION MANDADA, ENTONCES ES DE SUBSTRAER DICHA DIRECCION DE LA PILLA

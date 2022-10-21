@@ -21,6 +21,12 @@ class DecVector(Instruccion):
         self.line=line
         self.column=column
         self.tacceso = 0  #publico por default
+        # DECLARACION CON PASO DE PARAMETRO
+        self.dec_paso_parametro = False
+        # cambio de entorno
+        self.puntero_entorno_nuevo = ""
+        self.en_funcion = False
+
     def ejecutar(self, driver: Driver, ts: Enviroment):
         existe=ts.buscarActualTs(self.id)
         if existe==None:
@@ -120,6 +126,9 @@ class DecVector(Instruccion):
 
     def generarC3d(self,ts,ptr):
         self.generator.addComment(f"Declaracion de Vector: {self.id}")
+        Puntero = "P"
+        if self.en_funcion:
+            Puntero = self.puntero_entorno_nuevo
         #con vec!--------------------------------------------------------------------
         if self.vecI!=None:
             self.generator.addComment("Vector con vec!")
@@ -129,10 +138,11 @@ class DecVector(Instruccion):
                 newVec = VectorC3d(vec=vecIr.valor, profundidad=vecIr.prof_array+1)
                 symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=vecIr.tipo, line=self.line,
                                 column=self.column, tacceso=self.tacceso)
+                symbol.paso_parametro=self.dec_paso_parametro #por si acaso es una declaracion con paso de parametro
 
                 rDec=ts.addVar(self.id, symbol)
                 aux_index=self.generator.newTemp()
-                self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")#taux=P+pos
+                self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")#taux=P+pos
                 self.generator.addSetStack(index=aux_index, value=vecIr.valor)  # Stack[(int)pos]= val
 
                 print("Se declaro un vector con \"vec!\"")
@@ -144,10 +154,10 @@ class DecVector(Instruccion):
                     symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=vecIr.tipo,
                                     line=self.line,
                                     column=self.column, tacceso=self.tacceso)
-
+                    symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
                     rDec = ts.addVar(self.id, symbol)
                     aux_index = self.generator.newTemp()
-                    self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")#taux=P+pos
+                    self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")#taux=P+pos
                     self.generator.addSetStack(index=aux_index, value=vecIr.valor)  # Stack[(int)pos]= val
 
                     print("Se declaro un vector con \"vec!\"")
@@ -187,10 +197,10 @@ class DecVector(Instruccion):
                 newVec = VectorC3d(vec=tvector, stateCap=True, capacity=vecIr.valor,profundidad=1)
                 symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
                                 line=self.line, column=self.column, tacceso=self.tacceso)
-
+                symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
                 rDec = ts.addVar(self.id, symbol)
                 aux_index = self.generator.newTemp()
-                self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")
+                self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")
                 self.generator.addSetStack(index=aux_index, value=tvector)  # Stack[(int)pos]= punterVector
 
                 print("Se declaro un vector con \"with_capacity()\"")
@@ -217,10 +227,10 @@ class DecVector(Instruccion):
             newVec = VectorC3d(vec=tvector, stateCap=False, capacity="0", profundidad=1)
             symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
                             line=self.line, column=self.column, tacceso=self.tacceso)
-
+            symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
             rDec = ts.addVar(self.id, symbol)
             aux_index = self.generator.newTemp()
-            self.generator.addExpression(target=aux_index, left="P", right=str(rDec.position), operator="+")
+            self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")
             self.generator.addSetStack(index=aux_index, value=tvector)  # Stack[(int)pos]= punterVector
 
 

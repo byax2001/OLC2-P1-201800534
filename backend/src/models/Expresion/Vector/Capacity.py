@@ -41,7 +41,7 @@ class Capacity(Expresion):
 
     def generarC3d(self,ts:Enviroment,ptr):
         tmp_aux=self.generator.newTemp()
-        symbol:Symbol=ts.buscarC3d(self.id,tmp_aux)
+        symbol:Symbol=ts.buscarC3d(self.id,tmp_aux,self.en_funcion)
         result=ValC3d(valor="0",isTemp=False,tipo=Tipos.ERROR)
         if symbol.tsimbolo==Symbols.VECTOR:
             tmpR=self.generator.newTemp()

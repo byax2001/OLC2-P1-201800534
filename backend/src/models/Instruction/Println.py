@@ -258,6 +258,7 @@ class Println(Instruccion):
     #copiar el valor de una expresion en la pila
     def addCopyStr(self, exp: ValC3d):
         if exp.tipo_aux != Tipos.ARREGLO and exp.tipo_aux != Tipos.VECTOR:
+
             if exp.tipo in [Tipos.STR, Tipos.STRING, Tipos.CHAR]:
                 contador = self.generator.newTemp()
 
@@ -334,6 +335,8 @@ class Println(Instruccion):
                 self.generator.addSetHeap(index="H", value=str(ord("e")))
                 self.generator.addNextHeap()
                 self.generator.addLabel(newLabel)  # Lsalida:
+            else:
+                print(f"La expresion a imprimir da error {self.linea}")
         else:
             self.generator.addComment("INGRESO DE ARRAY AL STRING")
             self.printArraysC3d(exp)

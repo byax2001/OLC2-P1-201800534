@@ -17,12 +17,18 @@ class Funcion(Instruccion):
         self.line=line
         self.column=column
         self.tacceso = 0 #publico por default
+        self.tipo_return = None
     def ejecutar(self, driver: Driver, ts: Enviroment):
         existe=ts.buscarActualTs(self.id)
         if existe==None:
             print("Se guardo una funcion")
             newSymbol=Symbol(mut=False,id=self.id,value=[self.params,self.bloque],tipo_simbolo=2,
                              tipo=self.tipoFun,line=self.line,column=self.column,tacceso=self.tacceso)
+            if self.tipo_return!=None: #PARA INDICAR EL TIPO DE RETORNO DE LA FUNCION ES ARREGLO O VECTORES SI ASI LO ES
+                                        # tipo_return solo no sera None en las producciones donde las funciones
+                                        # retornen arrays
+                newSymbol.tipo_return=self.tipo_return
+
             ts.addVar(self.id,newSymbol)
         else:
             print("Id ya declarado")

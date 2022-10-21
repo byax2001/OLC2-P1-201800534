@@ -6,6 +6,8 @@ class Expresion:
         self.trueLabel = ""
         self.falseLabel = ""
         self.paso_parametro = False
+        # cambio de entorno
+        self.en_funcion = False
 
     def getTipo(self, driver, ts):
         """

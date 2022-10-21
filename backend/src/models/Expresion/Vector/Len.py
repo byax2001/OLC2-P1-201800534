@@ -38,7 +38,7 @@ class Len(Expresion):
         tmpR=self.generator.newTemp()
         result=ValC3d(valor=tmpR,isTemp=True,tipo=Tipos.ERROR)
         auxStack = self.generator.newTemp()
-        symbol: Symbol = ts.buscarC3d(self.id, auxStack)
+        symbol: Symbol = ts.buscarC3d(self.id, auxStack,self.en_funcion)
         if symbol != None:
             if symbol.tsimbolo == Symbols.VECTOR or symbol.tsimbolo == Symbols.ARREGLO:
                 result.tipo = Tipos.INT64

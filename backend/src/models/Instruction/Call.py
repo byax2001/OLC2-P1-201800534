@@ -188,6 +188,7 @@ class Call(Instruccion):
             self.tipo=None
 
     def generarC3d(self,ts:Enviroment,ptr:int):
+
         if self.id=="main":
             symbol = ts.buscar(self.id)
             insts=symbol.value[1]
@@ -204,19 +205,26 @@ class Call(Instruccion):
                 newts.size=1 #para saltarse la primera posicion, pues ahi estara el valor del return
                 newts.generator=ts.generator
                 puntero_newEnv=ts.generator.newTemp()
+                self.generator.addComment("Puntero a nuevo enviroment")
                 self.generator.addExpression(target=puntero_newEnv,left="P",right=str(ts.size),operator="+")
                 #change expresion
                 paramsFun = symbol.value[0]  # parametros de la funcion
                 instFun = symbol.value[1]  # instrucciones de la funcion
-                if len(self.cExp) == len(symbol.value[0]):  # el numero de parametros mandados
+                if len(self.cExp) == len(symbol.value[0]):  # el numero de parametros mandados == numero de declaracioes
                     # por el call y los que necesita la funcion deben de ser iguales
                     x = 0
                     # ==============================Asignacion de expresiones para las declaraciones de la funcion=======================
                     for exp in self.cExp:  # expresiones enviados en el call
+                        exp.en_funcion=True #Variable que provoca un cambio en el "buscarC3d" del enviroment, pensado principalmente
+                                           #para expresiones ID, provoca ignorar el tamaño del enviroment mas cercano
+                                           #no habria que hacer esto si se aumentara el env de la pila antes, pero para los call y funciones es necesario
                         paramsFun[x].changeExp(exp)
                         x += 1
                     # ==============================Declaracion de parametros=======================
                     for declaracion in paramsFun:
+                        declaracion.generator=self.generator
+                        declaracion.puntero_entorno_nuevo=puntero_newEnv
+                        declaracion.en_funcion = True
                         declaracion.generarC3d(newts,ptr)
                 else:
                     return ValC3d(valor="0",isTemp=False,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
@@ -232,9 +240,10 @@ class Call(Instruccion):
                 #VALOR RETURN
                 tmp_aux=self.generator.newTemp() #indice donde se encuentra el resultado del metodo
                 tmp_return=self.generator.newTemp() #resultado del metodo
+                self.generator.addComment("Valor de return")
                 self.generator.addExpression(target=tmp_aux,left="P",right=str(ts.size),operator="+")
                 self.generator.addGetStack(target=tmp_return,index=tmp_aux)
-                return ValC3d(valor=tmp_return,isTemp=True,tipo=self.tipo,tipo_aux=self.tipo)
+                return ValC3d(valor=tmp_return,isTemp=True,tipo=symbol.tipo,tipo_aux=symbol.tipo_return)
             else:
                 print("No ha sido declarada dicha funcion " + str(self.line))
                 error = "No ha sido declarada dicha funcion"
@@ -255,7 +264,7 @@ class Call(Instruccion):
         #limpiar el arreglo code quitando el codigo que pertenece a la funcion
         for i in reversed(range(i_aux1,i_aux2)):  # reversed es para usar un rango a la inversa de n a 0
             self.generator.code.pop(i)
-        code_func=code_func.replace("return_i",exit_return)
+        code_func=code_func.replace("return_i",f"goto {exit_return};")
         code_func+=exit_return+":\n"
         code_func += f"return; \n"
         code_func += f"}}}} \n"

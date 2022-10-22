@@ -60,11 +60,10 @@ class DimensionalArreglo(Expresion):
                 result.tipo=result.tipo_aux=self.tipo
                 result.valor=[tmpU]
                 result.isTemp=True
-                return result
             else:
                 error="Error: El tamaño de una parte del arreglo no es entero o usize"
                 print(error)
-                return result
+
         else:
             self.dimArr.generator=self.generator
             self.Dim.generator=self.generator
@@ -75,14 +74,14 @@ class DimensionalArreglo(Expresion):
                 self.generator.addExpAsign(target=tmpU,right=rDim.valor)
                 result.tipo=arrDim.tipo
                 result.tipo_aux = Tipos.ARREGLO
-                result.valor=arrDim.valor.insert(0,tmpU)# Se agregan a la inversa para un mejor control pues por ejemplo
+                arrDim.valor.insert(0, tmpU)  # Se agregan a la inversa para un mejor control pues por ejemplo
+                result.valor=arrDim.valor
                 # [[&str;2];4] es un array de 4 elementos con dos elementos adentro de cada uno de estos
                 result.isTemp=True
-                return result
             else:
                 error="Error: El tamaño de una parte del arreglo no es entero o usize"
                 print(error)
-                return result
+        return result
 
 
 

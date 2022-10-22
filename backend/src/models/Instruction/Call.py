@@ -208,8 +208,6 @@ class Call(Instruccion):
                 self.generator.addComment("Puntero a nuevo enviroment")
                 self.generator.addExpression(target=puntero_newEnv,left="P",right=str(ts.size),operator="+")
                 #change expresion
-                print(f"{self.id}")
-                print(symbol.value)
                 paramsFun = symbol.value[0]  # parametros de la funcion
                 instFun = symbol.value[1]  # instrucciones de la funcion
                 if len(self.cExp) == len(symbol.value[0]):  # el numero de parametros mandados == numero de declaracioes

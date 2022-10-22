@@ -16,6 +16,7 @@ class If_ternario(Expresion):
         self.line=line
         self.column=column
         self.instancia=0
+        self.tmpR = ""
     def getTipo(self, driver, ts):
         self.resetInst()
         if self.tipo==None and self.value==None:
@@ -68,51 +69,74 @@ class If_ternario(Expresion):
     def ejecutar(self, driver, ts):
         """En la mayoria de expresiones no realiza nada aqui"""
         pass
-    def generarC3d(self,ts,ptr:int):
+    def generarC3d(self,ts,ptr:int,lsalida="",aux=0):
         self.generator.addComment("If ternario")
+
+        if self.tmpR == "": #todos los resultados apuntaran al mismo tmpR de este if
+            self.tmpR = self.generator.newTemp()
+
         newts=Enviroment(ts,"If ternario")
+        newts.generator = self.generator
         trueL = self.generator.newLabel()
         falseL = self.generator.newLabel()
-        exitL = self.generator.newLabel()
         tmp_r=self.generator.newTemp()
         falseLr=self.generator.newLabel()
         trueLr=self.generator.newLabel()
-        exp_r: ValC3d=ValC3d(valor=tmp_r,isTemp=True,tipo=Tipos.ERROR,tipo_aux=Tipos.ERROR)
+        if lsalida=="":
+            lsalida=self.generator.newLabel()
+            self.generator.addComment("IF")
+        else:
+            self.generator.addComment("ELSE IF ")
+        result = ValC3d(valor=self.tmpR, isTemp=True, tipo=Tipos.ERROR)
         self.exp.generator = self.generator
         self.exp.falseLabel=falseL
         self.exp.trueLabel=trueL
+        self.generator.addComment("Condicion del if")
         exp:ValC3d=self.exp.generarC3d(ts,ptr)
+        self.generator.addComment("Fin condicion del If")
         if exp.tipo==Tipos.BOOLEAN:
             self.generator.addLabel(trueL)
+            self.generator.addNextStack(index=str(ts.size))
             for ins in self.bloque1:
                 ins.generator=self.generator
-                ins.generarC3d(ts,ptr)
+                ins.generarC3d(newts,ptr)
             self.exp1b.generator = self.generator
-            self.exp1b.trueLabel=trueLr
-            self.exp1b.falseLabel=falseLr
             e_aux=self.exp1b.generarC3d(newts,ptr)
             # ESTO SOLO SE HACE UNA VEZ, YA QUE EL IF TERNARIO DEBE DE CONTENER SOLO VALORES DEL MISMO TIPO
-            exp_r.tipo=e_aux.tipo
-            exp_r.tipo_aux=e_aux.tipo_aux
-            exp_r.trueLabel=trueLr
-            exp_r.falseLabel=falseLr
-            exp_r.prof_array = e_aux.prof_array
+            result.tipo=e_aux.tipo
+            result.tipo_aux=e_aux.tipo_aux
+            result.trueLabel=trueLr
+            result.falseLabel=falseLr
+            result.prof_array = e_aux.prof_array
 
-            self.generator.addExpAsign(target=tmp_r,right=e_aux.valor)
-
-            self.generator.addGoto(exitL)
+            self.generator.addExpAsign(target=self.tmpR,right=e_aux.valor)
+            self.generator.addBackStack(index=str(ts.size))
+            self.generator.addGoto(lsalida)
             self.generator.addLabel(falseL)
-            for ins in self.bloque2:
-                ins.generator = self.generator
-                ins.generarC3d(newts, ptr)
-            if self.exp2b !=None:
+
+            if not isinstance(self.exp2b, If_ternario):
+                self.generator.addComment("ELSE")
+                self.generator.addNextStack(index=str(ts.size))  # para que la pila se mueva el nuevo enviroment
+                # se debe de sumar el tamaño del anterior
+                newts = Enviroment(ts, "If")
+                newts.generator = self.generator
+                for ins in self.bloque2:
+                    ins.generator = self.generator
+                    ins.generarC3d(newts, ptr)
+                    if self.exp2b != None:
+                        self.exp2b.generator = self.generator
+                        e_aux = self.exp2b.generarC3d(newts, ptr)
+                        self.generator.addExpAsign(target=self.tmpR, right=e_aux.valor)
+                self.generator.addBackStack(index=str(ts.size))
+            else:
                 self.exp2b.generator = self.generator
-                self.exp2b.trueLabel = trueLr
-                self.exp2b.falseLabel = falseLr
-                e_aux = self.exp2b.generarC3d(ts, ptr)
-                self.generator.addExpAsign(target=tmp_r, right=e_aux.valor)
-            self.generator.addLabel(exitL)
-            return exp_r
+                self.exp2b.tmpR = self.tmpR
+                self.exp2b.generarC3d(ts, ptr, lsalida, 1)
+
         else:
             error="La expresion del if debe de ser una expresion booleana"
             print(error)
+        if aux == 0:
+            self.generator.addLabel(lsalida)
+        self.generator.addComment("End If ternario")
+        return result

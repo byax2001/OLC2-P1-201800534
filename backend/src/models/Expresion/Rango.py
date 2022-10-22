@@ -70,7 +70,7 @@ class Rango(Expresion):
             self.generator.addExpAsign(target=tmpR, right="H")# tmpR = H
             self.generator.addNextHeap()# H = H + 1;
             self.generator.addLabel(loop)# Loop:
-            self.generator.addIf(left=v1,rigth=v2,operator=">",label=lsalida)#   if (t1 == -1 ) goto Lsalida
+            self.generator.addIf(left=v1,rigth=v2,operator=">=",label=lsalida)#   if (t1 == -1 ) goto Lsalida
             self.generator.incVar(t_cont)#	tcont = tcont +1
             self.generator.addSetHeap(index="H",value=v1)#	Heap[H] = v1
             self.generator.addNextHeap()#       H = H + 1;

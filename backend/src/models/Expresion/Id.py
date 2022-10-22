@@ -124,7 +124,7 @@ class Id(Expresion):
                 result.isTemp = True
                 result.tipo = symbol.tipo
         else:
-            error = "no existe dicha id"
+            error = f"no existe dicha id {self.id}"
             print(error)
 
         return result

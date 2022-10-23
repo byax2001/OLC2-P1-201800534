@@ -164,6 +164,7 @@ class Println(Instruccion):
                 self.generator.addComment("Por si la expresiona imprimir es booleana")
                 tbool_str = self.generator.newTemp()  # contendra el indice donde inicia el booleano pasado a string
                 self.generator.addExpAsign(target=tbool_str, right="H")
+                self.generator.addComment("--------------------")
                 # ----------------------------------------------------
                 # SI ES BOOLEANA ANTES DE CUALQUIER PROCEDIMIENTO, CONVERTIR EL RESULTADO EN STRING
                 c3d_exp:ValC3d = exp.generarC3d(ts, ptr)

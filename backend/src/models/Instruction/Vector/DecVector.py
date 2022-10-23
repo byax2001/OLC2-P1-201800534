@@ -9,6 +9,7 @@ from models.Driver import Driver
 from models.TablaSymbols.Enviroment import Enviroment
 from BaseDatos.B_datos import B_datos
 from models.TablaSymbols.ValC3d import ValC3d
+from models.Expresion.Id import Id
 #dec vector vacio
 class DecVector(Instruccion):
     def __init__(self,mut:bool,id,tipo, vecI:vecI,capacity:Expresion,line:int,column:int):
@@ -133,16 +134,19 @@ class DecVector(Instruccion):
 
         if self.dec_paso_parametro:#SI LA DECLARACION ES UN PASO DE PARAMETRO, SE LE DEBE DE INDICAR A LA
                                    #EXPRESION QUE DEBERA DE RETORNAR LA DIRECCION Y NO EL VALOR
-            self.array.paso_parametro = True
+            self.vecI.paso_parametro = True
         #con vec!--------------------------------------------------------------------
         if self.vecI!=None:
             self.generator.addComment("Vector con vec!")
             self.vecI.generator=self.generator
             vecIr:ValC3d= self.vecI.generarC3d(ts,ptr)
+            profundity = vecIr.prof_array
+            if not isinstance(self.vecI, Id):
+                profundity = profundity + 1
             if self.tipo==None:
-                newVec = VectorC3d(vec=vecIr.valor, profundidad=vecIr.prof_array+1)
+                newVec = VectorC3d(vec=vecIr.valor, profundidad=profundity)
                 symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=vecIr.tipo, line=self.line,
-                                column=self.column, tacceso=self.tacceso)
+                                column=self.column, tacceso=self.tacceso,position=ts.size)
                 symbol.paso_parametro=self.dec_paso_parametro #por si acaso es una declaracion con paso de parametro
 
                 rDec=ts.addVar(self.id, symbol)
@@ -155,10 +159,9 @@ class DecVector(Instruccion):
                                     fila=self.line, columna=self.column)
             else:
                 if self.tipo==vecIr.tipo:
-                    newVec = VectorC3d(vec=vecIr.valor, profundidad=vecIr.prof_array+1)
+                    newVec = VectorC3d(vec=vecIr.valor, profundidad=profundity)
                     symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=vecIr.tipo,
-                                    line=self.line,
-                                    column=self.column, tacceso=self.tacceso)
+                                    line=self.line,column=self.column, tacceso=self.tacceso,position=ts.size)
                     symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
                     rDec = ts.addVar(self.id, symbol)
                     aux_index = self.generator.newTemp()
@@ -175,14 +178,10 @@ class DecVector(Instruccion):
             self.generator.addComment("Vector con Capacity")
             self.capacity.generator=self.generator
             vecIr: ValC3d = self.capacity.generarC3d(ts, ptr)
-            if vecIr in [Tipos.INT64,Tipos.USIZE]:
+            if vecIr.tipo in [Tipos.INT64,Tipos.USIZE]:
                 tvector=self.generator.newTemp()
-                loop=self.generator.newLabel()
-                tcont=self.generator.newTemp()
-                tvalor=self.generator.newTemp()
-                lsalida=self.generator.newLabel()
                 self.generator.addExpAsign(target=tvector, right="H")  # tr=H  (inicio del arreglo)
-                self.generator.addComment("Tamanio del arreglo")
+                self.generator.addComment("Tamanio del Vector")
                 self.generator.addSetHeap(index="H",value="0") # Heap[H]=tam arreglo
                 self.generator.addNextHeap() #H=H+1
                 self.generator.addComment("Capacity")
@@ -199,9 +198,9 @@ class DecVector(Instruccion):
                 #self.generator.addGoto(loop)# goto Loop
                 #self.generator.addLabel(lsalida) #Lsalida
 
-                newVec = VectorC3d(vec=tvector, stateCap=True, capacity=vecIr.valor,profundidad=1)
+                newVec = VectorC3d(vec=tvector,profundidad=1)
                 symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
-                                line=self.line, column=self.column, tacceso=self.tacceso)
+                                line=self.line, column=self.column, tacceso=self.tacceso, position=ts.size)
                 symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
                 rDec = ts.addVar(self.id, symbol)
                 aux_index = self.generator.newTemp()
@@ -231,7 +230,7 @@ class DecVector(Instruccion):
 
             newVec = VectorC3d(vec=tvector, stateCap=False, capacity="0", profundidad=1)
             symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
-                            line=self.line, column=self.column, tacceso=self.tacceso)
+                            line=self.line, column=self.column, tacceso=self.tacceso, position=ts.size)
             symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
             rDec = ts.addVar(self.id, symbol)
             aux_index = self.generator.newTemp()

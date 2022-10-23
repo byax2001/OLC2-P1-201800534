@@ -73,6 +73,18 @@ class Insert(Instruccion):
                     expR: ValC3d = self.exp.generarC3d(ts, ptr)
                     indexR: ValC3d = self.index.generarC3d(ts,ptr)
                     if symbol.tipo == expR.tipo and indexR.tipo in [Tipos.INT64,Tipos.USIZE]:
+                        tvexp = self.generator.newTemp()
+                        if expR.tipo != Tipos.BOOLEAN or expR.tipo_aux in [Tipos.ARREGLO, Tipos.VECTOR]:
+                            self.generator.addExpAsign(tvexp, right=expR.valor)
+                        else:
+                            lsalida = self.generator.newLabel()
+                            self.generator.addLabel(expR.trueLabel)
+                            self.generator.addExpAsign(tvexp, right="1")
+                            self.generator.addGoto(lsalida)
+                            self.generator.addLabel(expR.falseLabel)
+                            self.generator.addExpAsign(tvexp, right="0")
+                            self.generator.addLabel(lsalida)
+
                         t_puntero = self.generator.newTemp()
                         t_tam = self.generator.newTemp()
                         t_tamNew = self.generator.newTemp()
@@ -105,6 +117,7 @@ class Insert(Instruccion):
                         self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
                         # CAPACITY
                         self.generator.addGetHeap(target=t_capacity, index=t_puntero)
+                        self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
                         # DUPLICAR CAPACIDAD DE VECTOR SI SE INGRESA UN ELEMENTO QUE HACE UN TAMAÑO MAYOR A LA CAPACIDAD
                         LnoDupCapacity = self.generator.newLabel()
                         capNot0 = self.generator.newLabel()
@@ -116,16 +129,17 @@ class Insert(Instruccion):
                         self.generator.addIf(left=t_tam, rigth=t_capacity, operator="<", label=LnoDupCapacity)
                         self.generator.addExpression(target=t_capacity, left=t_capacity, right="2", operator="*")
                         self.generator.addLabel(LnoDupCapacity)
-                        self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
 
                         self.generator.addIf(left=t_indexInsert,rigth=t_tam,operator=">",
                                              label=lerror)#if (tindex>tam) goto Lerror #Bounds Error
                                                           # si  tindex==tam el insert funcionara como push
 
-
-
                         #INICIO Y NUEVO TAMAÑO DEL NUEVO ARREGLO:
                         self.generator.addExpAsign(target=tcont, right="0")  # tcont=0
+                        # EL ESPACIO DEL STACK CON EL PUNTERO DEL VECTOR SERA OCUPADO POR LA DIRECCION DE UN NUEVO VECTOR
+                        if symbol.paso_parametro:
+                            self.generator.addGetStack(target=auxIndex, index=auxIndex)
+
                         # puntero del array ahora en una nueva posicion
                         self.generator.addSetStack(index=auxIndex, value="H")  # ahora el puntero anterior apunta
                                                                                # al nuevo array
@@ -140,7 +154,7 @@ class Insert(Instruccion):
                         self.generator.addSetHeap(index="H", value=t_capacity)
                         self.generator.addNextHeap()  # H=H+1
                         #LOOP 1:
-                        self.generator.addLabel(loopAI) #LoopAI:
+                        self.generator.addLabel(loopAI) #LoopAI:  loop antes del insert
                         self.generator.addIf(left=tcont,rigth=t_indexInsert, operator=">=",label=linsert) #if (tcont >= tindex) goto Linsert
                         self.generator.addGetHeap(target=t_aux,index=t_puntero)
                         self.generator.addSetHeap(index="H",value=t_aux)
@@ -150,7 +164,7 @@ class Insert(Instruccion):
                         self.generator.addGoto(loopAI)
                         #LINSERT:
                         self.generator.addLabel(linsert)#Linsert:
-                        self.generator.addSetHeap(index="H",value=expR.valor)
+                        self.generator.addSetHeap(index="H",value=tvexp)
                         self.generator.addNextHeap()
                         #LOOP 2:
                         # se copia el resto del contenido del array principal a una nueva posicion

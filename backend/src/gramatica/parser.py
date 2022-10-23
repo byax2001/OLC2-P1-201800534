@@ -732,8 +732,12 @@ def p_instv_remove(p): #esta va en expresiones
     """REMOVE : id punto remove para EXPRESION parc"""
     p[0]= Remove(id=p[1],index=p[5],line=p.lineno(1), column=0)
 def p_instv_contains(p):
-    """CONTAINS : id punto contains para ampersand EXPRESION parc"""
-    p[0]=Contains(id=p[1],exp=p[6],line=p.lineno(1), column=0)
+    """CONTAINS : id punto contains para ampersand EXPRESION parc
+                | id punto contains para EXPRESION parc"""
+    if len(p)==8:
+        p[0]=Contains(id=p[1],exp=p[6],line=p.lineno(1), column=0)
+    else:
+        p[0] = Contains(id=p[1], exp=p[5], line=p.lineno(1), column=0)
 def p_instv_len(p):
     """LEN : EXPRESION punto len para parc"""
     p[0] = Len(id="",exp=p[1],line=p.lineno(1), column=0)

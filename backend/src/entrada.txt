@@ -4,6 +4,8 @@ fn pila_vacia(vec: &mut Vec<i64>) -> bool {
 }
 
 fn apilar(capacidad: usize, vec: &mut Vec<i64>, value: i64) {
+    println!("vec: {}",vec.len());
+    println!("capacidad: {}",capacidad);
     if vec.len() < capacidad {
         vec.insert(vec.len(), value);
     } else {
@@ -26,6 +28,7 @@ fn cola_vacia(vec: &mut Vec<i64>) -> bool {
 }
 
 fn encolar(capacidad: usize, vec: &mut Vec<i64>, value: i64) {
+
     if vec.len() < capacidad {
         vec.push(value);
     } else {
@@ -46,5 +49,12 @@ fn main() {
     let capacidad: usize = 10;
     let mut pila: Vec<i64> = Vec::with_capacity(capacidad - 2);
     let mut cola: Vec<i64> = vec![1,2,3,4,5];
+
+    let datos: [i64; 5] = [10,20,30,40,50];
+    for dato in datos {
+        apilar(capacidad, &mut pila, dato);
+    }
+
+
 
 }

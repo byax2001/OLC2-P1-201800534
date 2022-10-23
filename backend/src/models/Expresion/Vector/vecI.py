@@ -2,6 +2,7 @@ from models.TablaSymbols.Tipos import Tipos
 from models.Abstract.Expresion import Expresion
 from BaseDatos.B_datos import B_datos
 from models.TablaSymbols.ValC3d import ValC3d
+
 #dec vector vacio
 #  vectorI == vec!
 class vecI(Expresion):

@@ -254,9 +254,32 @@ class Call(Instruccion):
         #CREACION DE LA FUNCION EN C3D
         code_func="void "+self.id + "(){{\n"
         i_aux1=len(self.generator.code)
+        x =0
         for inst in instructions:
+            x+=1
             inst.generator=self.generator
-            inst.generarC3d(ts,ptr)
+            if x != len(instructions):
+                inst.generarC3d(ts,ptr)
+            else:
+                if isinstance(inst,Expresion): #EN RUST HAY UNA FORMA DE RETORNAR SIN USO DEL RETURN Y ES
+                                               #COLOCANDO UNA EXPRESION SOLA  AL FINAL DEL METODO
+                                               #EXPRESION AL FINAL ES IGUAL A: RETURN EXPRESION
+                    tmp_index = self.generator.newTemp()
+                    exp: ValC3d = inst.generarC3d(ts, ptr)
+                    self.generator.addExpression(target=tmp_index, left="P", right="0", operator="+")
+                    if exp.tipo != Tipos.BOOLEAN or exp.tipo_aux in [Tipos.ARREGLO,Tipos.VECTOR]:
+                        self.generator.addSetStack(index=tmp_index, value=exp.valor)
+                    else:
+                        lsalida = self.generator.newLabel()
+                        self.generator.addLabel(exp.trueLabel)
+                        self.generator.addSetStack(index=tmp_index, value="1")
+                        self.generator.addGoto(lsalida)
+                        self.generator.addLabel(exp.falseLabel)
+                        self.generator.addSetStack(index=tmp_index, value="0")
+                        self.generator.addLabel(lsalida)
+                    self.generator.addCode("return_i")
+                else:
+                    inst.generarC3d(ts, ptr)
         i_aux2=len(self.generator.code)
         #copiar lo que se almaceno en el arreglo code al string actual
         for i in range(i_aux1,i_aux2):

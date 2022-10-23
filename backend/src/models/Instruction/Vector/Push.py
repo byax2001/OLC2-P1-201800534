@@ -51,6 +51,7 @@ class Push(Instruccion):
                               columna=self.column)
     def generarC3d(self,ts:Enviroment,ptr):
         self.generator.addComment(f"Push Vector {self.id}")
+        ts.generator=self.generator
         auxStack = self.generator.newTemp()
         symbol:Symbol = ts.buscarC3d(self.id,auxStack)
         if symbol != None:
@@ -59,6 +60,18 @@ class Push(Instruccion):
                     self.exp.generator=self.generator
                     expR:ValC3d=self.exp.generarC3d(ts,ptr)
                     if symbol.tipo == expR.tipo:
+                        tvexp =self.generator.newTemp()
+                        if expR.tipo != Tipos.BOOLEAN or expR.tipo_aux in [Tipos.ARREGLO,Tipos.VECTOR]:
+                            self.generator.addExpAsign(tvexp,right=expR.valor)
+                        else:
+                            lsalida = self.generator.newLabel()
+                            self.generator.addLabel(expR.trueLabel)
+                            self.generator.addExpAsign(tvexp,right="1")
+                            self.generator.addGoto(lsalida)
+                            self.generator.addLabel(expR.falseLabel)
+                            self.generator.addExpAsign(tvexp, right="0")
+                            self.generator.addLabel(lsalida)
+
                         t_puntero = self.generator.newTemp()
                         t_tam = self.generator.newTemp()
                         t_capacity = self.generator.newTemp()
@@ -81,6 +94,7 @@ class Push(Instruccion):
                         self.generator.incVar(t_puntero) #tpuntero=tpuntero+1
                         #CAPACITY
                         self.generator.addGetHeap(target=t_capacity,index=t_puntero)
+                        self.generator.incVar(t_puntero)  #tpuntero=tpuntero+1
                         #DUPLICAR CAPACIDAD DE VECTOR SI SE INGRESA UN ELEMENTO QUE HACE UN TAMAÑO MAYOR A LA CAPACIDAD
                         LnoDupCapacity=self.generator.newLabel()
                         capNot0 = self.generator.newLabel()
@@ -92,10 +106,13 @@ class Push(Instruccion):
                         self.generator.addIf(left=t_tam,rigth=t_capacity,operator="<",label=LnoDupCapacity)
                         self.generator.addExpression(target=t_capacity,left=t_capacity,right="2",operator="*")
                         self.generator.addLabel(LnoDupCapacity)
-                        self.generator.incVar(t_puntero)  # tpuntero=tpuntero+1
+
 
                         self.generator.addExpAsign(target=tcont,right="0")# tcont=0
-                        #puntero del array ahora en una nueva posicion
+                        #EL ESPACIO DEL STACK CON EL PUNTERO DEL VECTOR SERA OCUPADO POR LA DIRECCION DE UN NUEVO VECTOR
+                        if symbol.paso_parametro:
+                            self.generator.addGetStack(target=auxIndex,index=auxIndex)
+
                         self.generator.addSetStack(index=auxIndex,value="H")# ahora el puntero anterior apunta
                                                                             # al nuevo array
                         self.generator.addComment("New Tamanio")
@@ -118,7 +135,7 @@ class Push(Instruccion):
                         self.generator.addGoto(loop)# goto loop
                         self.generator.addLabel(lsalida)# Lsalida:
                         #se copia en la ultima posicion el nuevo valor
-                        self.generator.addSetHeap(index="H",value=expR.valor)
+                        self.generator.addSetHeap(index="H",value=tvexp)
                         self.generator.addNextHeap()#H=H+1
                     else:
                         error="La expresion y el arreglo no son del mismo tipo"

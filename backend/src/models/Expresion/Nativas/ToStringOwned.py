@@ -103,7 +103,7 @@ class ToStringOwned(Expresion):
         self.generator.addExpression(target=t2, left=t1, right="10", operator="/") #t2=t1/10
         self.generator.addExpAsign(target=t3, right=f"(int){t2}") #t3=(int)t2
         self.generator.addIf(left=t3,rigth="0",operator="==",label=Lf) #if(t3==0) goto Lf
-        self.generator.addExpAsign(target=t4,right=f"fmod({t1},10)") # t4=fmod(t1,10):  t4=t1%10
+        self.generator.addExpAsign(target=t4,right=f"(int){t1}%10") # t4=fmod(t1,10):  t4=t1%10
 
         self.generator.addExpAsign(target=t1,right=t3) #t1=t3
         self.generator.addSetHeap(index="H",value=f"(int){t4} +48") #Heap[H]=(char)t4+48   #EN ASSEMBLER CUANDO SE LE SUMA 30h A UN NUMERO

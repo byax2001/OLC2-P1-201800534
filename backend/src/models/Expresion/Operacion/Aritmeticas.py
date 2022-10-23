@@ -250,8 +250,11 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                 result.tipo = exp1.tipo
             elif self.operador==Operador.POW:
                 if exp1.tipo in [Tipos.FLOAT64, Tipos.INT64]:
+                    self.generator.addComment("POW----------------------")
                     tmpr=self.powC3d(exp1,exp2)
+                    self.generator.addComment("POW----------------------")
                     self.generator.addExpAsign(target=newTemp,right=tmpr)
+
                 result.tipo = exp1.tipo
             elif self.operador == Operador.POWF:
                 if exp1.tipo in [Tipos.FLOAT64, Tipos.INT64]:
@@ -333,22 +336,29 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
         t2=self.generator.newTemp()
         tcont=self.generator.newTemp()
         taux=self.generator.newTemp()
+        taux2= self.generator.newTemp()
         loop=self.generator.newLabel()
         L0=self.generator.newLabel()
         L1=self.generator.newLabel()
         Lsalida=self.generator.newLabel()
         self.generator.addExpAsign(target=t1,right=exp1.valor)# t1=v1
         self.generator.addExpAsign(target=t2, right=exp2.valor)# t2=v2
-        self.generator.addExpAsign(target=tcont,right="0")# tcont=0
+        self.generator.addExpAsign(target=tcont,right="1")# tcont=04
+        self.generator.addExpAsign(target=taux, right=t2)  # taux=t2
+        self.generator.addExpAsign(target=taux2,right=t1) # taux2=t1
         self.generator.addIf(left=t2,rigth="0",operator="==",label=L0)# if(t2==0) goto L0
         self.generator.addIf(left=t2,rigth="0",operator=">",label=loop)# if(t2>0) goto loop
-        self.generator.addExpAsign(target=taux,right=t2)# taux=t2
         self.generator.addExpression(target=t2,left=t2,right="-1",operator="*")# t2=t2*-1
+
         self.generator.addLabel(loop)# Loop:
         self.generator.addIf(left=tcont,rigth=t2,operator=">=",label=L1)#  if(tcont => t2) goto L1
-        self.generator.addExpression(target=t1,left=t1,right=t1,operator="*")#  t1=t1*t1
+        if exp1.tipo in [Tipos.INT64,Tipos.USIZE]:
+            self.generator.addExpression(target=t1,left=f"(int){t1}",right=f"(int){taux2}",operator="*")#  t1=t1*t1
+        else:
+            self.generator.addExpression(target=t1, left=t1, right=taux2, operator="*")
         self.generator.addExpression(target=tcont,left=tcont,right="1",operator="+")#  tcont=tcont+1
         self.generator.addGoto(loop)#  goto Loop
+
         self.generator.addLabel(L0)# L0:
         self.generator.addExpAsign(target=t1,right="1")# t1=1;
         self.generator.addGoto(Lsalida)# goto Lsalida
@@ -356,6 +366,7 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
         self.generator.addIf(left=taux,rigth="0",operator=">",label=Lsalida)# if(taux>0) goto Lsalida
         self.generator.addExpression(target=t1,left="1",right=t1,operator="/")# t1=1/t1;
         self.generator.addLabel(Lsalida)# Lsalida:
+
         return t1 #retorno de la variable con el resultado
 
 

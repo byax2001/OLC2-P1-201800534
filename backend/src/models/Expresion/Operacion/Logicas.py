@@ -66,6 +66,7 @@ class Logicas(OperacionLog): #de esta forma se esta indicando que aritmeticas he
             self.value=None
             self.tipo=None
     def generarC3d(self,ts,ptr:int):
+        self.generator.addComment("Logicas")
         if (self.trueLabel == ""):
             self.trueLabel = self.generator.newLabel()  # Ln: (true)
 
@@ -77,6 +78,7 @@ class Logicas(OperacionLog): #de esta forma se esta indicando que aritmeticas he
             self.exp2.generator=self.generator
         val:ValC3d = ValC3d(valor="",isTemp=False,tipo=Tipos.BOOLEAN,tipo_aux=Tipos.BOOLEAN)
         if self.operador==OperadorLog.AND:
+            self.generator.addLabel("Logica: And")
             # B -> B1 && B2  |  B1.true = B.nuevaetiqueta()
             #                |  B1.false = B.false
             #                |  B2.true = B.true
@@ -92,6 +94,7 @@ class Logicas(OperacionLog): #de esta forma se esta indicando que aritmeticas he
             val.trueLabel=self.trueLabel
             val.falseLabel=self.falseLabel
         elif self.operador==OperadorLog.OR:
+            self.generator.addLabel("Logica: Or")
             # B -> B1 || B2  |  B1.true = B.true
             #                |  B1.false = nuevaetiqueta()
             #                |  B2.true = B.true
@@ -107,6 +110,7 @@ class Logicas(OperacionLog): #de esta forma se esta indicando que aritmeticas he
             val.trueLabel = self.trueLabel
             val.falseLabel = self.falseLabel
         elif self.operador==OperadorLog.NOT:
+            self.generator.addLabel("Logica: Not")
             self.exp1.trueLabel=self.falseLabel
             self.exp1.falseLabel=self.trueLabel
             self.exp1.generarC3d(ts,ptr)

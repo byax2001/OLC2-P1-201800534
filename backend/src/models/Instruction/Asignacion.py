@@ -116,10 +116,21 @@ class Asignacion(Instruccion):
                 if symbol.tipo==exp.tipo:
                     ts.generator=self.generator
                     if len(self.cIndex) == 0:
+                        tvalor = self.generator.newTemp()
+                        if exp.tipo != Tipos.BOOLEAN or  exp.tipo_aux not in [Tipos.VECTOR,Tipos.ARREGLO]:
+                            self.generator.addExpAsign(target=tvalor,right=exp.valor)
+                        else:
+                            lsalida = self.generator.addLabel()
+                            self.generator.addLabel(exp.trueLabel)
+                            self.generator.addExpAsign(target=tvalor,right="1")
+                            self.generator.addGoto(lsalida)
+                            self.generator.addLabel(exp.falseLabel)
+                            self.generator.addExpAsign(target=tvalor,right="0")
+                            self.generator.addLabel(lsalida)
+
                         self.generator.addBackStack(index=tmpaux)
                         #ASIGNACION NORMAL: var = val
-
-                        ts.actualizarC3d(id=self.id, value=exp.valor)
+                        ts.actualizarC3d(id=self.id, value=tvalor)
                         self.generator.addNextStack(index=tmpaux)
                     elif len(self.cIds) ==0: #array[x]==val   len (CIDS) ==0
                         self.generator.addComment("Asignacion al elemento de un arreglo o vector")

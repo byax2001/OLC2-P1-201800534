@@ -21,6 +21,8 @@ class Call(Instruccion):
         self.line=line
         self.column=column
         self.instancia=0
+        self.trueLabel = ""
+        self.falseLabel = ""
     def ejecutar(self, driver: Driver, ts: Enviroment):
         self.value=None
         self.tipo=None
@@ -188,6 +190,10 @@ class Call(Instruccion):
             self.tipo=None
 
     def generarC3d(self,ts:Enviroment,ptr:int):
+        if self.trueLabel=="":
+            self.trueLabel=self.generator.newLabel()
+        if self.falseLabel=="":
+            self.falseLabel=self.generator.newLabel()
 
         if self.id=="main":
             symbol = ts.buscar(self.id)
@@ -243,7 +249,13 @@ class Call(Instruccion):
                 self.generator.addComment("Valor de return")
                 self.generator.addExpression(target=tmp_aux,left="P",right=str(ts.size),operator="+")
                 self.generator.addGetStack(target=tmp_return,index=tmp_aux)
-                return ValC3d(valor=tmp_return,isTemp=True,tipo=symbol.tipo,tipo_aux=symbol.tipo_return)
+                if symbol.tipo==Tipos.BOOLEAN and symbol.tipo_return  not in [Tipos.VECTOR,Tipos.ARREGLO]:
+                    self.generator.addIf(left=tmp_return,rigth="1",operator="==",label=self.trueLabel)
+                    self.generator.addGoto(self.falseLabel)
+                result = ValC3d(valor=tmp_return,isTemp=True,tipo=symbol.tipo,tipo_aux=symbol.tipo_return)
+                result.trueLabel=self.trueLabel
+                result.falseLabel=self.falseLabel
+                return  result
             else:
                 print("No ha sido declarada dicha funcion " + str(self.line))
                 error = "No ha sido declarada dicha funcion"

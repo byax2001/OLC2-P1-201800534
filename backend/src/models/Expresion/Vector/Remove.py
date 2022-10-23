@@ -127,15 +127,23 @@ class Remove(Expresion):
 
                         self.generator.addIf(left=t_indexRemove, rigth=t_tam, operator=">=",
                                              label=lerror)  # if (tindex>=tam) goto Lerror #Bounds Error
+                        self.generator.addIf(left=t_indexRemove, rigth="0", operator="<",
+                                             label=lerror)  # if (tindex<0) goto Lerror #Bounds Error
+
+                        #SI EL VECTOR SE DECLARO COMO PASO DE PARAMETRO
+                        # EL ESPACIO DEL STACK CON EL PUNTERO DEL VECTOR SERA OCUPADO POR LA DIRECCION DE UN NUEVO VECTOR
+                        if symbol.paso_parametro:
+                            self.generator.addGetStack(target=auxIndex, index=auxIndex)
 
                         # INICIO Y NUEVO TAMAÑO DEL NUEVO ARREGLO:
                         self.generator.addExpAsign(target=tcont, right="0")  # tcont=0
                         # puntero del array ahora en una nueva posicion
                         self.generator.addSetStack(index=auxIndex, value="H")  # ahora el puntero anterior apunta
                         # al nuevo array
+                        self.generator.addComment("New tamanio despues de remove")
                         self.generator.addExpression(target=t_tamNew, left=t_tam, right="1",
-                                                     operator="-")  # tamnew=tam+1
-                        self.generator.addSetHeap(index="H", value=t_tamNew)  # Heap[H]=tamnew;
+                                                     operator="-")  # tamnew=tam-1
+                        self.generator.addSetHeap(index="H", value=f"(int){t_tamNew}")  # Heap[H]=tamnew;
                         # nuevo tamaño del nuevo array
                         self.generator.addNextHeap()  # H=H+1
                         # CAPACITY
@@ -144,7 +152,7 @@ class Remove(Expresion):
                         self.generator.addNextHeap()  # H=H+1
 
                         # LOOP 1:
-                        self.generator.addLabel(loopAR)  # LoopAI:                          loop antes del remove
+                        self.generator.addLabel(loopAR)  # LoopAR:                          loop antes del remove
                         self.generator.addIf(left=tcont, rigth=t_indexRemove, operator=">=",
                                              label=lremove)  # if (tcont >= tindex) goto Linsert
                         self.generator.addGetHeap(target=t_aux, index=t_puntero)
@@ -153,8 +161,10 @@ class Remove(Expresion):
                         self.generator.incVar(tcont)
                         self.generator.addNextHeap()
                         self.generator.addGoto(loopAR)
+
                         # LREMOVE:
-                        self.generator.addLabel(lremove)  # Linsert:
+                        self.generator.addComment("Valor a remover")
+                        self.generator.addLabel(lremove)  # Lremove:
                         self.generator.addGetHeap(target=tmpR,index=t_puntero)
                         self.generator.incVar(t_puntero)
                         self.generator.incVar(tcont)

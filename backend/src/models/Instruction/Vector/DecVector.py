@@ -27,6 +27,8 @@ class DecVector(Instruccion):
         # cambio de entorno
         self.puntero_entorno_nuevo = ""
         self.en_funcion = False
+        # auxiliar profundidad
+
 
     def ejecutar(self, driver: Driver, ts: Enviroment):
         existe=ts.buscarActualTs(self.id)

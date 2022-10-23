@@ -19,6 +19,7 @@ class Continue(Instruccion):
         posCorret = self.SentTranferenciaC(ts, ["Loop", "While", "ForIn"])
         if posCorret==True: #100% seguridad que el continue vendra en un bucle si no, no se ejecutara lo siguiente solo el error
             t_envAc=self.generator.newTemp()#temporal con el tamaño necesario para regresar la pila a su estado en el inicio del bucle
+            self.generator.addExpAsign(target=t_envAc,right="0");
             envBucle: Enviroment = self.EnvMasCercanoContinue(ts, ["Loop", "While", "ForIn"],tmpA=t_envAc)
 
             #EN EL WHILE SI HAY QUE SALIRSE DEL ENVIROMENT DE ESTE, PUES LAS CONDICIONES SE VERIFICAN CON EL ENV ANTERIOR

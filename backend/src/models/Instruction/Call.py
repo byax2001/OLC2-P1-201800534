@@ -255,6 +255,7 @@ class Call(Instruccion):
                 result = ValC3d(valor=tmp_return,isTemp=True,tipo=symbol.tipo,tipo_aux=symbol.tipo_return)
                 result.trueLabel=self.trueLabel
                 result.falseLabel=self.falseLabel
+
                 return  result
             else:
                 print("No ha sido declarada dicha funcion " + str(self.line))
@@ -276,9 +277,11 @@ class Call(Instruccion):
                 if isinstance(inst,Expresion): #EN RUST HAY UNA FORMA DE RETORNAR SIN USO DEL RETURN Y ES
                                                #COLOCANDO UNA EXPRESION SOLA  AL FINAL DEL METODO
                                                #EXPRESION AL FINAL ES IGUAL A: RETURN EXPRESION
+                    self.generator.addComment("Retorno de Expresion sin Return")
                     tmp_index = self.generator.newTemp()
+                    self.generator.addExpression(target=tmp_index, left="P", right="0",operator="+")
                     exp: ValC3d = inst.generarC3d(ts, ptr)
-                    self.generator.addExpression(target=tmp_index, left="P", right="0", operator="+")
+
                     if exp.tipo != Tipos.BOOLEAN or exp.tipo_aux in [Tipos.ARREGLO,Tipos.VECTOR]:
                         self.generator.addSetStack(index=tmp_index, value=exp.valor)
                     else:

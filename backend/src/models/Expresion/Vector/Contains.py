@@ -56,7 +56,7 @@ class Contains(Expresion):
         if self.falseLabel=="":
             self.falseLabel=self.generator.newLabel()
         if self.trueLabel=="":
-            self.trueLabel=self.trueLabel
+            self.trueLabel=self.generator.newLabel()
         # tpuntero = puntero
         # ttam= Heap[puntero]
         # puntero+=1

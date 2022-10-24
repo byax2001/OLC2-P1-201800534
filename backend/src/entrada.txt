@@ -4,7 +4,6 @@ fn pila_vacia(vec: &mut Vec<i64>) -> bool {
 }
 
 fn apilar(capacidad: usize, vec: &mut Vec<i64>, value: i64) {
-
     if vec.len() < capacidad {
         vec.insert(vec.len(), value);
     } else {
@@ -27,7 +26,6 @@ fn cola_vacia(vec: &mut Vec<i64>) -> bool {
 }
 
 fn encolar(capacidad: usize, vec: &mut Vec<i64>, value: i64) {
-
     if vec.len() < capacidad {
         vec.push(value);
     } else {
@@ -50,16 +48,17 @@ fn main() {
     let mut cola: Vec<i64> = vec![1,2,3,4,5];
 
     let datos: [i64; 5] = [10,20,30,40,50];
+
     for dato in datos {
         apilar(capacidad, &mut pila, dato);
     }
+
     println!("{:?}", pila);
     println!("{}", desapilar(&mut pila));
     apilar(capacidad, &mut pila, 1250);
     apilar(capacidad, &mut pila, 2200);
     apilar(capacidad, &mut pila, 3500);
     println!("{}", desapilar(&mut pila));
-
     println!("{}", desapilar(&mut pila));
     println!("{}", desapilar(&mut pila));
     println!("{}", desapilar(&mut pila));
@@ -91,7 +90,7 @@ fn main() {
     println!("{}", cola.capacity());
     println!("");
 
-
+    // vectores entre vectores
     let mut lista: Vec<Vec<i64>> = Vec::new();
     lista.push(vec![0; 10]);
     lista.push(vec![1; 10]);
@@ -107,4 +106,9 @@ fn main() {
     println!("{:?}", lista[4]);
     println!("{}", lista[4][8]);
     println!("");
+
+    let vec = vec!["Hola", "!", "Sale", "Este", "Semestre", "2022"];
+    println!("{}", vec.contains(&"Semestre") || vec.contains(&"2023"));
+    println!("{}", vec.contains(&"Semestre") && vec.contains(&"2023"));
+    println!("{}", vec.contains(&"Hola"));
 }

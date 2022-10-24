@@ -28,6 +28,7 @@ class DecVector(Instruccion):
         self.puntero_entorno_nuevo = ""
         self.en_funcion = False
         # auxiliar profundidad
+        self.profundidad = 1
 
 
     def ejecutar(self, driver: Driver, ts: Enviroment):
@@ -177,6 +178,7 @@ class DecVector(Instruccion):
                     error="El tipo de arreglo no es igual al tipo de variable que lo guardara"
                     print(error)
         elif self.capacity!=None:
+            print(f"Tipo:      {self.tipo}")
             self.generator.addComment("Vector con Capacity")
             self.capacity.generator=self.generator
             vecIr: ValC3d = self.capacity.generarC3d(ts, ptr)
@@ -200,7 +202,7 @@ class DecVector(Instruccion):
                 #self.generator.addGoto(loop)# goto Loop
                 #self.generator.addLabel(lsalida) #Lsalida
 
-                newVec = VectorC3d(vec=tvector,profundidad=1)
+                newVec = VectorC3d(vec=tvector,profundidad=self.profundidad)
                 symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
                                 line=self.line, column=self.column, tacceso=self.tacceso, position=ts.size)
                 symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
@@ -218,6 +220,7 @@ class DecVector(Instruccion):
                 B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
                                   columna=self.column)
         else:# con new
+            print(f"Tipo:      {self.tipo}")
             self.generator.addComment("Vector con New")
             tvector=self.generator.newTemp()
             self.generator.addExpAsign(target=tvector, right="H")  # tr=H  (inicio del arreglo)
@@ -230,7 +233,7 @@ class DecVector(Instruccion):
             self.generator.addComment("--------------")
 
 
-            newVec = VectorC3d(vec=tvector, stateCap=False, capacity="0", profundidad=1)
+            newVec = VectorC3d(vec=tvector, profundidad=self.profundidad)
             symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
                             line=self.line, column=self.column, tacceso=self.tacceso, position=ts.size)
             symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro

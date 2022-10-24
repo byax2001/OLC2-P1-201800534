@@ -583,7 +583,8 @@ def p_fucion_rvec(p):
     """
         FUNCION : fn id para LISTAPARAMETROS parc menos mayor VEC BLOQUE_INST
     """
-    p[0] = Funcion(id=p[2], lparametros=p[4], tipo=p[8], bloque=p[9], line=p.lineno(1), column=0)
+    tipo = p[8]["tipo"]
+    p[0] = Funcion(id=p[2], lparametros=p[4], tipo=tipo, bloque=p[9], line=p.lineno(1), column=0)
     p[0].tipo_return = Tipos.VECTOR
 
 
@@ -615,9 +616,15 @@ def p_parametro3(p):
     """PARAMETRO : id dospuntos ampersand mut VEC
                 | mut id dospuntos ampersand VEC"""
     if p[4]=="mut":
-        p[0]=DecVector(mut=True,id=p[1],tipo=p[5],vecI=None,capacity=None,line=p.lineno(1),column=0)
+        profundidad = p[5]["profundidad"]
+        tipo = p[5]["tipo"]
+        p[0]=DecVector(mut=True,id=p[1],tipo=tipo,vecI=None,capacity=None,line=p.lineno(1),column=0)
+        p[0].profundidad=profundidad
     else:
-        p[0] = DecVector(mut=False, id=p[2], tipo=p[5], vecI=None, capacity=None, line=p.lineno(1), column=0)
+        profundidad = p[5]["profundidad"]
+        tipo = p[5]["tipo"]
+        p[0] = DecVector(mut=False, id=p[2], tipo=tipo, vecI=None, capacity=None, line=p.lineno(1), column=0)
+        p[0].profundidad = profundidad
     p[0].dec_paso_parametro = True
 
 
@@ -626,9 +633,15 @@ def p_parametro4(p):
             | mut id dospuntos VEC
     """
     if p[1]!="mut":
-        p[0] = DecVector(mut=False, id=p[1], tipo=p[3], vecI=None, capacity=None, line=p.lineno(1), column=0)
+        profundidad = p[3]["profundidad"]
+        tipo = p[3]["tipo"]
+        p[0] = DecVector(mut=False, id=p[1], tipo=tipo, vecI=None, capacity=None, line=p.lineno(1), column=0)
+        p[0].profundidad = profundidad
     else:
-        p[0] = DecVector(mut=True, id=p[2], tipo=p[4], vecI=None, capacity=None, line=p.lineno(1), column=0)
+        profundidad = p[4]["profundidad"]
+        tipo = p[4]["tipo"]
+        p[0] = DecVector(mut=True, id=p[2], tipo=tipo, vecI=None, capacity=None, line=p.lineno(1), column=0)
+        p[0].profundidad = profundidad
 
 def p_parametro5(p):
     """PARAMETRO : id dospuntos ampersand mut id"""
@@ -659,9 +672,13 @@ def p_defvector_2(p):
         | let mut id dospuntos VEC igual VECI
     """
     if p[2] != "mut":
-        p[0]=DecVector(mut=False,id=p[2],tipo=p[4],vecI=p[6],capacity=None,line=p.lineno(1), column=0)
+        profundidad = p[4]["profundidad"]
+        tipo = p[4]["tipo"]
+        p[0]=DecVector(mut=False,id=p[2],tipo=tipo,vecI=p[6],capacity=None,line=p.lineno(1), column=0)
     else:
-        p[0]=DecVector(mut=True,id=p[3],tipo=p[5],vecI=p[7],capacity=None,line=p.lineno(1), column=0)
+        profundidad = p[5]["profundidad"]
+        tipo = p[5]["tipo"]
+        p[0]=DecVector(mut=True,id=p[3],tipo=tipo,vecI=p[7],capacity=None,line=p.lineno(1), column=0)
 
 def p_devector_3(p):
     """DECVECTOR : let id dospuntos VEC igual Vec dospuntos dospuntos FUNCVEC
@@ -670,24 +687,39 @@ def p_devector_3(p):
                 | let mut id igual Vec dospuntos dospuntos FUNCVEC"""
     if p[2]!="mut":
         if len(p)==10:  #con vec < tipovar >
-            p[0] = DecVector(mut=False,id=p[2],tipo=p[4], vecI=None, capacity=p[9], line=p.lineno(1), column=0)
+            profundidad= p[4]["profundidad"]
+            tipo = p[4]["tipo"]
+
+            p[0] = DecVector(mut=False,id=p[2],tipo=tipo, vecI=None, capacity=p[9], line=p.lineno(1), column=0)
+            p[0].profundidad = profundidad
         else:
             p[0] = DecVector(mut=False, id=p[2], tipo=None, vecI=None, capacity=p[7], line=p.lineno(1), column=0)
     else:
         if len(p)==11:  #con vec < tipovar >
-            p[0] = DecVector(mut=True,id=p[3],tipo=p[5],  vecI=None, capacity=p[10], line=p.lineno(1), column=0)
+            profundidad = p[5]["profundidad"]
+            tipo = p[5]["tipo"]
+
+            p[0] = DecVector(mut=True,id=p[3],tipo=tipo,  vecI=None, capacity=p[10], line=p.lineno(1), column=0)
+            p[0].profundidad = profundidad
         else:
             p[0] = DecVector(mut=True, id=p[3], tipo=None, vecI=None, capacity=p[8], line=p.lineno(1), column=0)
 
 def p_dimensional_vector_recur(p):
     """VEC : Vec menor VEC mayor"""
     p[0]=p[3]
+    p[0] = {"profundidad": (1+p[0]["profundidad"]), "tipo": p[0]["tipo"]}
+    print(p[0])
 def p_dimensional_vector(p):
     """VEC : Vec menor TIPOVAR mayor"""
     p[0]=p[3]
+    p[0] = {"profundidad": 1, "tipo": p[0]}
+    print(p[0])
 def p_dimensional_vetor2(p):
     """VEC : Vec menor CONJ_ACCES_MOD mayor """  #Aqui va tanto los vectores tipo id (que almacenan structs) y los id::id:id que almacenan structs de modulos
     p[0]=p[3][len(p[3])-1]
+
+    p[0]={"profundidad":1,"tipo":p[0]}
+    print(p[0])
 
 
 def p_vectori(p):

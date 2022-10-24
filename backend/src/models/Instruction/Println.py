@@ -160,16 +160,14 @@ class Println(Instruccion):
             #a cada una de las expresiones un exp.generator=self.generator
             for exp in self.cExp:
                 exp.generator=self.generator
-                #----------------------SOLO USADO EN EL CASO QUE LA EXPRESION SEA UN BOOLEANO
-                self.generator.addComment("Por si la expresiona imprimir es booleana")
-                tbool_str = self.generator.newTemp()  # contendra el indice donde inicia el booleano pasado a string
-                self.generator.addExpAsign(target=tbool_str, right="H")
-                self.generator.addComment("--------------------")
-                # ----------------------------------------------------
                 # SI ES BOOLEANA ANTES DE CUALQUIER PROCEDIMIENTO, CONVERTIR EL RESULTADO EN STRING
                 c3d_exp:ValC3d = exp.generarC3d(ts, ptr)
                 if c3d_exp.tipo==Tipos.BOOLEAN and (c3d_exp.tipo_aux!= Tipos.ARREGLO or c3d_exp.tipo_aux!=Tipos.VECTOR):
-                    self.addCopyStr(c3d_exp)    # EN LOS OTROS CASOS ESO ES PRESCINDIBLE
+                    # ----------------------SOLO USADO EN EL CASO QUE LA EXPRESION SEA UN BOOLEANO
+                    self.generator.addComment("Imprimir Expresion Booleana")
+                    tbool_str = self.generator.newTemp()  # contendra el indice donde inicia el booleano pasado a string
+                    # ----------------------------------------------------
+                    self.addCopyStr(c3d_exp,tbool_str)    # EN LOS OTROS CASOS ESO ES PRESCINDIBLE
                     self.generator.addSetHeap(index="H",value="-1")
                     self.generator.addNextHeap()
                     c3d_exp=ValC3d(valor=tbool_str,isTemp=True,tipo=Tipos.STRING,tipo_aux=Tipos.STRING)
@@ -257,7 +255,7 @@ class Println(Instruccion):
         #Copia un string o un valor de una posicion al H libre mas actual como otro string
 
     #copiar el valor de una expresion en la pila
-    def addCopyStr(self, exp: ValC3d):
+    def addCopyStr(self, exp: ValC3d,tmp_bool=""):
         if exp.tipo_aux != Tipos.ARREGLO and exp.tipo_aux != Tipos.VECTOR:
 
             if exp.tipo in [Tipos.STR, Tipos.STRING, Tipos.CHAR]:
@@ -315,6 +313,7 @@ class Println(Instruccion):
                 self.generator.addComment("Print de un Boolean")
                 newLabel = self.generator.newLabel()  # Lsalida
                 self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
+                self.generator.addExpAsign(target=tmp_bool, right="H")
                 self.generator.addSetHeap(index="H", value=str(ord("t")))
                 self.generator.addNextHeap()
                 self.generator.addSetHeap(index="H", value=str(ord("r")))
@@ -325,6 +324,7 @@ class Println(Instruccion):
                 self.generator.addNextHeap()
                 self.generator.addGoto(newLabel)  # goto Lsalida;
                 self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
+                self.generator.addExpAsign(target=tmp_bool, right="H")
                 self.generator.addSetHeap(index="H", value=str(ord("f")))
                 self.generator.addNextHeap()
                 self.generator.addSetHeap(index="H", value=str(ord("a")))

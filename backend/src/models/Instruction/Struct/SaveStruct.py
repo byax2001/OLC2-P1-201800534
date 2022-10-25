@@ -30,3 +30,18 @@ class SaveStruct(Instruccion):
                               columna=self.column)
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
+
+    def generarC3d(self,ts,ptr):
+        symbol = ts.buscarActualTs(self.id)
+        if symbol == None:
+            # aqui se podria agregar un metodo donde si una declaracion tiene el mismo id que alguna de las anteriores dar error y no declarar el struct
+
+            struct = Struct(self.cInst);
+            symbol = Symbol(mut=False, id=self.id, value=struct, tipo_simbolo=4, tipo=Tipos.STRUCT, line=self.line,
+                            column=self.column, tacceso=self.tacceso)
+            ts.addVar(self.id, symbol)
+            print(f"Struct declarado {self.id}")
+        else:
+            error = "Error: se intenta declarar un struct con una id ya declarada "
+            print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,columna=self.column)

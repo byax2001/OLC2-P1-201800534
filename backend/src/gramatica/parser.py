@@ -493,6 +493,7 @@ def p_instruction_1oneline(p):
                     | DECARREGLO
                     | DECVECTOR
                     | DECSTRUCT
+                    | RETURN
                     | MOD_VAR_STRUCT"""
     p[0]=p[1]
 def p_brazos_list(p):

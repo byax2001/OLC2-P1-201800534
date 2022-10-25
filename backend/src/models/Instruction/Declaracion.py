@@ -2,7 +2,7 @@ from models.Abstract.Instruction import Instruccion
 from models.Abstract.Expresion import Expresion
 from models.TablaSymbols.Enviroment import Enviroment
 from models.TablaSymbols.Tipos import Tipos,getTipo
-from models.TablaSymbols.Symbol import Symbol
+from models.TablaSymbols.Symbol import Symbol,Symbols
 from models.TablaSymbols.SymC3d import SymC3d
 from models.Expresion.Vector.Vector import Vector
 from models.TablaSymbols.ValC3d import ValC3d
@@ -198,6 +198,67 @@ class Declaracion(Instruccion):
             self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
             self.generator.addExpression(target=aux_index, left=Puntero, right=str(temp_var.position), operator="+")
             self.generator.addSetStack(index=aux_index, value='0')  # Stack[(int)num]= 0
+            self.generator.addLabel(newLabel)  # añade Ln:  ya existente al codigo principal
+
+            # if var==1 goto L1
+            # goto L2
+            # L1:
+            #  var1= 1
+            # goto   LnewLabel
+            # L2:
+            #   var1= 0
+            # LnewLabel:
+    def decStructsC3d(self,ts,ptr):
+        self.generator.addComment(f"Declaracion var struct: {self.id}")
+        symbol = ts.buscarActualTs(self.id)
+        if symbol == None:
+            self.exp.generator = self.generator
+            exp_dec: ValC3d = self.exp.generarC3d(ts=ts, ptr=ptr)
+            if self.tipoVar == None:
+                self.declarar_elementos_structC3d(ts, ptr, exp_dec)
+            else:
+                if self.tipoVar == exp_dec.tipo or (
+                        self.tipoVar in [Tipos.INT64, Tipos.USIZE] and exp_dec.tipo in [Tipos.INT64, Tipos.USIZE]):
+                    self.declarar_elementos_structC3d(ts, ptr, exp_dec)
+                else:
+                    error = "Tipo de variable no corresponde con el valor a declarar"
+                    print(error)
+        else:
+            print("Variable ya declarada")
+
+    def declarar_elementos_structC3d(self,ts,ptr,exp:ValC3d):
+        tipoSym= 0
+        if exp.tipo_aux == Tipos.ARREGLO:
+            tipoSym= 1
+        elif exp.tipo_aux == Tipos.VECTOR:
+            tipoSym=3
+
+        newVar = Symbol(mut=self.mut, id=self.id, value=exp.valor, tipo_simbolo=tipoSym, tipo=exp.tipo,
+                        line=self.linea, column=self.columna, tacceso=self.tacceso, position=ts.size)
+        newVar.paso_parametro = self.dec_paso_parametro
+        temp_var: SymC3d = ts.addVar(self.id, newVar)  # ----------------------------
+        aux_index = self.generator.newTemp()  # tendra el index
+        self.generator.addComment("Ingreso al Heap por el puntero")
+        Puntero = ptr #ptr tiene el puntero en este caso
+
+        if temp_var.tipo != Tipos.BOOLEAN or exp.tipo_aux == Tipos.ARREGLO or exp.tipo_aux == Tipos.VECTOR:
+            self.generator.addExpression(target=aux_index, left=Puntero, right=str(temp_var.position), operator="+")
+            self.generator.addSetHeap(index=aux_index, value=str(temp_var.valor))  # Heap[(int)pos]= val
+        else:
+            # Aqui no estoy añadiendo directamente el valor al hacer el addSetStack
+            # sino escribiendo un if que dependiendo del resultado anterior asignara 1 o 0 a la variable
+            # ejem:  if (valor==True){ var1=1  } else {var1=0}:
+            # con el if realizado en anteriores expresiones, se ira al label que asigna 1 o 0 (true o false)
+            # en el stack y no tocara el otro
+
+            newLabel = self.generator.newLabel()  # metodo que crea y retorna un label  Ln, esta es la etiqueta de salida
+            self.generator.addLabel(exp.trueLabel)  # añade Ln:  ya existente al codigo principal (true)
+            self.generator.addExpression(target=aux_index, left=Puntero, right=str(temp_var.position), operator="+")
+            self.generator.addSetHeap(index=aux_index, value='1')  # Heap[(int)num]= 1
+            self.generator.addGoto(newLabel)  # goto Ln ;
+            self.generator.addLabel(exp.falseLabel)  # añade Ln:  ya existente al codigo principal (false)
+            self.generator.addExpression(target=aux_index, left=Puntero, right=str(temp_var.position), operator="+")
+            self.generator.addSetHeap(index=aux_index, value='0')  # Heap[(int)num]= 0
             self.generator.addLabel(newLabel)  # añade Ln:  ya existente al codigo principal
 
             # if var==1 goto L1

@@ -1,6 +1,7 @@
 from models.TablaSymbols.Symbol import Symbol,getSymbol
 from Generator3D.Generator3D import Generator
 from models.TablaSymbols.SymC3d import SymC3d
+
 class Enviroment:
     def __init__(self,anterior,env) -> None:
         self.generator=Generator()

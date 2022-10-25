@@ -47,4 +47,5 @@ class Symbol():
         self.func_create=False #para las funciones en c3d, evitando que se vuelvan a crear
         self.paso_parametro = False #por si declaro como paso de parametro
         self.tipo_return = self.tipo #PARA LAS FUNCIONES, INDICA EL TIPO DE RETURN, ESTE SOLOS SE CAMBIARA INDIVIDUALMENTE
-                                     #A MANO EN EL PARSER EN CASO LA FUNCION INDIQUE QUE DEBE DE RETORNAR UN ARRAY O VECTOR
+                                 #A MANO EN EL PARSER EN CASO LA FUNCION INDIQUE QUE DEBE DE RETORNAR UN ARRAY O VECTOR
+        self.env_aux =None  #Enviroment auxiliar para modulos y structs

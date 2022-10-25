@@ -5,6 +5,7 @@ from models.Expresion.Struct.ExpStruct import ExpStruct
 from models.Expresion.Struct.Struct import Struct
 from models.TablaSymbols.Tipos import Tipos
 from BaseDatos.B_datos import B_datos
+from models.TablaSymbols.ValC3d import ValC3d
 
 class DecStructExp(Expresion):
     def __init__(self, idStruct: str, expStruct:[ExpStruct], line: int, column: int):
@@ -85,3 +86,45 @@ class DecStructExp(Expresion):
 
     def ejecutar(self, driver: Driver, ts: Enviroment):
         pass
+
+    def generarC3d(self,ts,ptr):
+        ts.generator = self.generator
+        tmpR = self.generator.newTemp()
+        result = ValC3d(valor=tmpR,isTemp=True,tipo=Tipos.ERROR)
+        newts = Enviroment(ts, "Struct")
+        struct = ts.buscar(self.idSt)
+        if struct != None:
+            if struct.tipo == Tipos.STRUCT:
+                st: Struct = struct.value
+                st.clearDecs()
+                if len(self.cExp) == st.getSize():
+                    for exp in self.cExp:
+                        changeExp = st.changeExp(exp.id, exp.exp)
+                        if changeExp == False:
+                            error = "Error al asignar: la variable no existe en el struct solicitado o el tipo de valor no es igual al tipo  de la variable"
+                            print(error)
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                              columna=self.column)
+                            return result
+                    result.tipo=Tipos.STRUCT
+                    result.tipo_aux=Tipos.STRUCT
+                    result.env_aux = newts
+                    self.generator.addExpAsign(target=tmpR,right="H")
+                    self.generator.addExpression(target="H",left="H",right=str(len(self.cExp)),operator="+")
+                    st.ejecutarDecsC3d(ts=newts,ptr=tmpR,generator=self.generator)
+                else:
+                    error = "No tiene la cantidad suficiente de variables declaradas para el struct"
+                    print(error)
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
+            else:
+                error = "Error el id del struct a declarar en una variable pertenece al id de una variable no struct"
+                print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
+        else:
+            error = "Intento de asignacion de un struct inexistente"
+            print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
+        return result

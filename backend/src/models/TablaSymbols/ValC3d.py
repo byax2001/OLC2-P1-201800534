@@ -10,6 +10,7 @@ class ValC3d:
         else:
             self.tipo_aux = tipo_aux  #para identificar si es un arreglo o no
         self.prof_array=0 #profundidad de un arreglo
+        self.env_aux = None #Enviroments resultados de Structs y Modulos
         self.trueLabel = ""
         self.falseLabel = ""
 

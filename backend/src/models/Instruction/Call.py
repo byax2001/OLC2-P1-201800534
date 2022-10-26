@@ -249,13 +249,12 @@ class Call(Instruccion):
                 self.generator.addComment("Valor de return")
                 self.generator.addExpression(target=tmp_aux,left="P",right=str(ts.size),operator="+")
                 self.generator.addGetStack(target=tmp_return,index=tmp_aux)
-                if symbol.tipo==Tipos.BOOLEAN and symbol.tipo_return  not in [Tipos.VECTOR,Tipos.ARREGLO]:
+                if symbol.tipo==Tipos.BOOLEAN and symbol.tipo_return not in [Tipos.VECTOR,Tipos.ARREGLO]:
                     self.generator.addIf(left=tmp_return,rigth="1",operator="==",label=self.trueLabel)
                     self.generator.addGoto(self.falseLabel)
                 result = ValC3d(valor=tmp_return,isTemp=True,tipo=symbol.tipo,tipo_aux=symbol.tipo_return)
                 result.trueLabel=self.trueLabel
                 result.falseLabel=self.falseLabel
-
                 return  result
             else:
                 print("No ha sido declarada dicha funcion " + str(self.line))

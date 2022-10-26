@@ -11,6 +11,7 @@ from models.TablaSymbols.SymC3d import SymC3d
 
 class DecStruct(Instruccion):
     def __init__(self,mut, id, exp:ExpStruct, line: int, column: int):
+        super().__init__()
         self.mut=mut
         self.id = id
         self.exp=exp
@@ -51,7 +52,13 @@ class DecStruct(Instruccion):
         self.exp=exp
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
+    def getId(self):
+        return self.id
+    def getExp(self):
+        return self.exp
+
     def generarC3d(self,ts,ptr):
+        self.generator.addComment(f"Declaracion de un var struct: {self.id}")
         existe = ts.buscarActualTs(self.id)
         if existe == None:
             self.exp.generator=self.generator
@@ -61,16 +68,48 @@ class DecStruct(Instruccion):
             if t_exp == Tipos.STRUCT:
                 # lo que guardaran los structs son enviroments nuevos donde se podra consultar las variables en posteriores ocasiones
                 symbol = Symbol(mut=self.mut, id=self.mut, value=v_exp, tipo_simbolo=4, tipo=Tipos.STRUCT,
-                                line=self.line, column=self.column, tacceso=self.tacceso)
+                                line=self.line, column=self.column, tacceso=self.tacceso,position=str(ts.size))
                 symbol.env_aux = exp.env_aux
                 temp_var: SymC3d=ts.addVar(self.id, symbol)
                 aux_index = self.generator.newTemp()
                 Puntero = "P"
                 self.generator.addExpression(target=aux_index, left=Puntero, right=str(temp_var.position), operator="+")
                 self.generator.addSetStack(index=aux_index, value=str(temp_var.valor))  # Stack[(int)pos]= val
-                print("Variable struct declarada")
+                print(f"Variable struct declarada {self.id}")
                 B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,
                                     fila=self.line,columna=self.column)
+            else:
+                error = "Error el struct a declarar da error o no es struct"
+                print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
+        else:
+            error = "Error la variable ya ha sido declarada"
+            print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
+
+    def decStructsC3d(self, ts, ptr):
+        self.generator.addComment(f"Declaracion de un var struct: {self.id}")
+        existe = ts.buscarActualTs(self.id)
+        if existe == None:
+            self.exp.generator = self.generator
+            exp: ValC3d = self.exp.generarC3d(ts, ptr)
+            t_exp = exp.tipo
+            v_exp = exp.valor
+            if t_exp == Tipos.STRUCT:
+                # lo que guardaran los structs son enviroments nuevos donde se podra consultar las variables en posteriores ocasiones
+                symbol = Symbol(mut=self.mut, id=self.mut, value=v_exp, tipo_simbolo=4, tipo=Tipos.STRUCT,
+                                line=self.line, column=self.column, tacceso=self.tacceso, position=str(ts.size))
+                symbol.env_aux = exp.env_aux
+                temp_var: SymC3d = ts.addVar(self.id, symbol)
+                aux_index = self.generator.newTemp()
+                Puntero = ptr
+                self.generator.addExpression(target=aux_index, left=Puntero, right=str(temp_var.position), operator="+")
+                self.generator.addSetHeap(index=aux_index, value=str(temp_var.valor))  # Stack[(int)pos]= val
+                print(f"Variable struct declarada adentro de otro struct {self.id}")
+                B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,
+                                    fila=self.line, columna=self.column)
             else:
                 error = "Error el struct a declarar da error o no es struct"
                 print(error)

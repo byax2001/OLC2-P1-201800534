@@ -80,16 +80,16 @@ class Id(Expresion):
                 elif symbol.tsimbolo == Symbols.VECTOR:
                     result.tipo_aux = Tipos.VECTOR
                     result.prof_array = symbol.value.profundidad
-
                 if symbol.tipo != Tipos.BOOLEAN or symbol.tsimbolo == Symbols.VECTOR or symbol.tsimbolo == Symbols.ARREGLO:
                     result.valor = tmpR
                     result.isTemp = True
                     result.tipo = symbol.tipo
+                    result.env_aux = symbol.env_aux
                 else:
                     valor_r = ValC3d(valor="", isTemp=False, tipo=Tipos.BOOLEAN)
-                    if (self.trueLabel == ""):
+                    if self.trueLabel == "":
                         self.trueLabel = self.generator.newLabel()
-                    if (self.falseLabel == ""):
+                    if self.falseLabel == "":
                         self.falseLabel = self.generator.newLabel()
                     self.generator.addIf(tmpR, "1", "==", self.trueLabel)
                     self.generator.addGoto(self.falseLabel)
@@ -119,7 +119,7 @@ class Id(Expresion):
                 elif symbol.tsimbolo == Symbols.VECTOR:
                     result.tipo_aux = Tipos.VECTOR
                     result.prof_array = symbol.value.profundidad
-
+                result.env_aux = symbol.env_aux
                 result.valor = tmpR
                 result.isTemp = True
                 result.tipo = symbol.tipo

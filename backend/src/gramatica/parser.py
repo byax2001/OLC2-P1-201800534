@@ -541,7 +541,8 @@ def p_continue(p):
     p[0] = Continue(line=p.lineno(1),column=0)
 #return =====================================================================================
 def p_return(p):
-    """RETURN : return EXPRESION"""
+    """RETURN : return EXPRESION
+             | return STRUCT_EXP"""
     p[0] = Return(exp=p[2],line=p.lineno(1),column=0)
 def p_return_2(p):
     """RETURN : return"""
@@ -580,6 +581,7 @@ def p_funcion3(p):
     FUNCION : fn id para LISTAPARAMETROS parc menos mayor id BLOQUE_INST
     """
     p[0]=Funcion(id=p[2],lparametros=p[4],tipo=p[8],bloque=p[9],line=p.lineno(1),column=0)
+    p[0].tipo_return = Tipos.STRUCT
 def p_fucion_rvec(p):
     """
         FUNCION : fn id para LISTAPARAMETROS parc menos mayor VEC BLOQUE_INST
@@ -709,12 +711,12 @@ def p_dimensional_vector_recur(p):
     """VEC : Vec menor VEC mayor"""
     p[0]=p[3]
     p[0] = {"profundidad": (1+p[0]["profundidad"]), "tipo": p[0]["tipo"]}
-    print(p[0])
+
 def p_dimensional_vector(p):
     """VEC : Vec menor TIPOVAR mayor"""
     p[0]=p[3]
     p[0] = {"profundidad": 1, "tipo": p[0]}
-    print(p[0])
+
 def p_dimensional_vetor2(p):
     """VEC : Vec menor CONJ_ACCES_MOD mayor """  #Aqui va tanto los vectores tipo id (que almacenan structs) y los id::id:id que almacenan structs de modulos
     p[0]=p[3][len(p[3])-1]
@@ -885,11 +887,18 @@ def p_element_pub_struc(p):
     """ELSTRUCT : pub ELSTRUCT"""
     p[2].changeAcces(1)
     p[0]=p[2]
-def p_elemento_struct(p):
-    """ELSTRUCT : id dospuntos TIPOVAR
-                | id dospuntos id"""
+def p_elemento_struct_tvar(p):
+    """ELSTRUCT : id dospuntos TIPOVAR"""
                 #el ultimo es para los elementos de tipo struct
     p[0]=Declaracion(mut=True,id=p[1],tipo=p[3],exp=None,linea=p.lineno(1), columna=0)
+def p_elemento_struct_tstruct(p):
+    """ELSTRUCT :  id dospuntos id"""
+    # el ultimo es para los elementos de tipo struct
+    p[0] = DecStruct(mut=True,id=p[1],exp=None,line=p.lineno(1), column=0)
+def p_elemento_struct3_tarreglo(p):
+    """ELSTRUCT :  id dospuntos DIMENSION_ARR"""
+    # el ultimo es para los elementos de tipo struct
+    p[0] = DecArreglo(mut=True,id=p[1],arrDimensional=p[3],array=None,line=p.lineno(1), column=0)
 #declaracion de variables structs
 def p_dec_var_struct(p):
     """DECSTRUCT : let id igual STRUCT_EXP
@@ -906,6 +915,7 @@ def p_dec_var_struct2(p):
     else:
         p[0] = DecStruct(mut=True, id=p[3],exp=p[7], line=p.lineno(1), column=0)
 def p_dec_var_struct_exp(p):
+    #{id:expresion, id:expresion, id:[expresion:expresion], id:expresion}
     """STRUCT_EXP : id llavea CONJEXP_STRUCT llavec"""
     p[0]=DecStructExp(idStruct=p[1],expStruct=p[3],line=p.lineno(1), column=0)
 def p_conjexp_struct(p):
@@ -918,7 +928,8 @@ def p_conjexp_struc_u(p):
 def p_exstruct(p):
     # Structname { var1:valor,var2:valor  }    expresion struct: var1 : valor
     """EXSTRUCT : id dospuntos EXPRESION
-                | id dospuntos STRUCT_EXP """
+                | id dospuntos STRUCT_EXP
+                | id dospuntos ARREGLO"""
     p[0]=ExpStruct(id=p[1],exp1=p[3],line=p.lineno(1), column=0)
     #{id:id expresion:expresion}
 #Acceso struct

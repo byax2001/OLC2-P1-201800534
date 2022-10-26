@@ -9,7 +9,7 @@ class Struct:
             dec.changeExp(None)
     def changeExp(self,id,exp):
         for dec in self.nDec:
-            if dec.getId()==id and dec.exp==None:
+            if dec.getId()==id and dec.getExp()==None:
                 dec.changeExp(exp)
                 return True
         return False

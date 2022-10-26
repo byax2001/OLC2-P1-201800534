@@ -91,9 +91,13 @@ class DecArreglo(Instruccion):
 
     def changeExp(self,exp:Expresion):
         self.array=exp
-
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
+    def getId(self):
+        return self.id
+    def getExp(self):
+        return self.array
+
     def generarC3d(self,ts:Enviroment,ptr):
         self.generator.addComment(f"Declaracion de arreglo: {self.id}")
         Puntero = "P"
@@ -140,6 +144,56 @@ class DecArreglo(Instruccion):
                 aux_index=self.generator.newTemp()
                 self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")
                 self.generator.addSetStack(index=aux_index, value=array.valor)  # Stack[(int)pos]= val
+        else:
+            error="variable ya declarada"
+            print(error)
+
+    def decStructsC3d(self,ts:Enviroment,ptr):
+        self.generator.addComment(f"Declaracion de vector en struct: {self.id}")
+        Puntero = ptr
+        if self.en_funcion:#EN EL CASO SEA UNA DECLARACION ANTES DE LLAMAR A UNA FUNCION SE CAMBIA EL TIPO DE PUNTERO
+                            # DE P   a   tn   (tn=P+ts.size)
+            Puntero = self.puntero_entorno_nuevo
+
+        if self.dec_paso_parametro:#SI LA DECLARACION ES UN PASO DE PARAMETRO, SE LE DEBE DE INDICAR A LA
+                                   #EXPRESION QUE DEBERA DE RETORNAR LA DIRECCION Y NO EL VALOR
+            self.array.paso_parametro = True
+
+        if ts.buscarActualTs(self.id)==None:
+            if self.arrDim==None:
+                self.array.generator = self.generator
+                array:ValC3d=self.array.generarC3d(ts,ptr)
+                profundity = array.prof_array
+                if not isinstance(self.array,Id):
+                    profundity = profundity+1
+                nvector=VectorC3d(vec=array.valor, profundidad=profundity)
+                print(f"profundidad: {profundity}")
+                symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=array.tipo,
+                              line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
+                symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
+
+                rDec:SymC3d=ts.addVar(self.id, symbol)
+                aux_index=self.generator.newTemp()
+                self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")
+                self.generator.addSetHeap(index=aux_index, value=array.valor)  # Heap[(int)pos]= val
+            else:
+                self.arrDim.generator= self.array.generator = self.generator
+                self.generator.addComment("Dimensionales del arreglo")
+                arrDim:ValC3d=self.arrDim.generarC3d(ts,ptr)
+                self.generator.addComment("------------------------")
+                array:ValC3d=self.array.generarC3d(ts,ptr) #ARRAY
+                profundity=array.prof_array
+                if not isinstance(self.array,Id):
+                    profundity = profundity +1
+                nvector = VectorC3d(vec=array.valor, profundidad=profundity)
+                symbol=Symbol(mut=self.mut,id=self.id,value=nvector,tipo_simbolo=1,tipo=arrDim.tipo,
+                              line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
+                symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
+
+                rDec:SymC3d=ts.addVar(self.id, symbol)
+                aux_index=self.generator.newTemp()
+                self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")
+                self.generator.addSetHeap(index=aux_index, value=array.valor)  # Heap[(int)pos]= val
         else:
             error="variable ya declarada"
             print(error)

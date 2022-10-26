@@ -3,287 +3,302 @@ float HEAP[78000];
 float STACK[10000];
 float P;
 float H;
-float t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31,t32,t33,t34,t35,t36,t37,t38,t39;
+float t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31,t32,t33,t34,t35,t36,t37,t38,t39,t40,t41;
 
+void parametros_invalidos(){{
+/* Instruccion Print */
+/* Primitivo tipo STR: "{}" */
+t23 = H  ;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* ID EXPRESION: x */
+t25 = 0;
+t25 = t25 + 0;
+t25 = t25 + 2;
+/* Para saber donde iniciar a imprimir luego del proceso */
+t24 = H;
+/* Print Complex P.1 */
+t26 = t23  ;
+L30:
+t27 = HEAP[(int)t26 ];
+if(t27 == (char)123) goto L33;
+HEAP[(int)H] = t27;
+H = H + 1;
+t26 = t26 + 1;
+goto L30;
+/* Print Complex P.2 */
+L33:
+t26 = t26 + 1;
+L31:
+t27 = HEAP[(int)t26 ];
+if(t27 == (char)125) goto L34;
+t26 = t26 + 1;
+goto L31;
+/* Print Complex P.3 */
+L34:
+t26 = t26 + 1;
+/* Print Complex P.4 */
+L32:
+t27 = HEAP[(int)t26 ];
+if(t27 == -1) goto L35;
+HEAP[(int)H] = t27;
+H = H + 1;
+t26 = t26 + 1;
+goto L32;
+/* Salida print Complex */
+L35:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t29 = t24  ;
+L36:
+t30 = HEAP[(int)t29 ];
+if(t30 != -1) goto L37;
+goto L38;
+L37:
+printf("%c",(char)t30);
+t29 = t29 + 1;
+goto L36;
+L38:
+printf("%c",10);
+L29:
+return; 
+}} 
 
 int main(){
-t0 = H;
-H = H + 3;
-/* Declaracion var struct: nombre */
-/* Metodo ToString o ToOwned */
-/* Por si es booleano el resultado a pasar a string */
+/* Instruccion Print */
+/* Primitivo tipo STR: "{}" */
+t0 = H  ;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Aritmeticas */
+/* Primitivo tipo STR: "cadena" */
+t3 = H  ;
+HEAP[(int)H] = 99;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = 100;
+H = H + 1;
+HEAP[(int)H] = 101;
+H = H + 1;
+HEAP[(int)H] = 110;
+H = H + 1;
+HEAP[(int)H] = 97;
+H = H + 1;
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Para saber donde iniciar a imprimir luego del proceso */
 t1 = H;
-/* Primitivo tipo STR: "Fer" */
-t2 = H  ;
-HEAP[(int)H] = 70;
+/* Print Complex P.1 */
+t4 = t0  ;
+L2:
+t5 = HEAP[(int)t4 ];
+if(t5 == (char)123) goto L5;
+HEAP[(int)H] = t5;
 H = H + 1;
-HEAP[(int)H] = 101;
+t4 = t4 + 1;
+goto L2;
+/* Print Complex P.2 */
+L5:
+t4 = t4 + 1;
+L3:
+t5 = HEAP[(int)t4 ];
+if(t5 == (char)125) goto L6;
+t4 = t4 + 1;
+goto L3;
+/* Print Complex P.3 */
+L6:
+t4 = t4 + 1;
+/* Print Complex P.4 */
+L4:
+t5 = HEAP[(int)t4 ];
+if(t5 == -1) goto L7;
+HEAP[(int)H] = t5;
 H = H + 1;
-HEAP[(int)H] = 114;
+t4 = t4 + 1;
+goto L4;
+/* Salida print Complex */
+L7:
+HEAP[(int)H] = -1;
+H = H + 1;
+/* Impresion */
+t7 = t1  ;
+L8:
+t8 = HEAP[(int)t7 ];
+if(t8 != -1) goto L9;
+goto L10;
+L9:
+printf("%c",(char)t8);
+t7 = t7 + 1;
+goto L8;
+L10:
+printf("%c",10);
+/* Instruccion Print */
+/* Primitivo tipo STR: "{}" */
+t9 = H  ;
+HEAP[(int)H] = 123;
+H = H + 1;
+HEAP[(int)H] = 125;
 H = H + 1;
 HEAP[(int)H] = -1;
 H = H + 1;
-/* Ingreso al Heap por el puntero */
-t3 = t0 + 0;
-HEAP[(int)t3] = t2;
-/* Declaracion var struct: edad */
-/* Ingreso al Heap por el puntero */
-t4 = t0 + 1;
-HEAP[(int)t4] = 18;
-/* Declaracion var struct: descripcion */
-/* Metodo ToString o ToOwned */
-/* Por si es booleano el resultado a pasar a string */
-t5 = H;
-/* Primitivo tipo STR: "No hace nada" */
-t6 = H  ;
-HEAP[(int)H] = 78;
-H = H + 1;
-HEAP[(int)H] = 111;
-H = H + 1;
-HEAP[(int)H] = 32;
-H = H + 1;
-HEAP[(int)H] = 104;
-H = H + 1;
-HEAP[(int)H] = 97;
-H = H + 1;
-HEAP[(int)H] = 99;
-H = H + 1;
-HEAP[(int)H] = 101;
-H = H + 1;
-HEAP[(int)H] = 32;
-H = H + 1;
-HEAP[(int)H] = 110;
-H = H + 1;
-HEAP[(int)H] = 97;
-H = H + 1;
-HEAP[(int)H] = 100;
-H = H + 1;
-HEAP[(int)H] = 97;
-H = H + 1;
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Ingreso al Heap por el puntero */
-t7 = t0 + 2;
-HEAP[(int)t7] = t6;
-t8 = P + 0;
-STACK[(int)t8] = t0;
-t9 = H;
-H = H + 3;
-/* Declaracion var struct: nombre */
-/* Metodo ToString o ToOwned */
-/* Por si es booleano el resultado a pasar a string */
+/* ID EXPRESION: x */
+t11 = 0;
+t11 = t11 + 2;
+/* Para saber donde iniciar a imprimir luego del proceso */
 t10 = H;
-/* Primitivo tipo STR: "Fer" */
-t11 = H  ;
-HEAP[(int)H] = 70;
+/* Print Complex P.1 */
+t12 = t9  ;
+L11:
+t13 = HEAP[(int)t12 ];
+if(t13 == (char)123) goto L14;
+HEAP[(int)H] = t13;
 H = H + 1;
-HEAP[(int)H] = 101;
+t12 = t12 + 1;
+goto L11;
+/* Print Complex P.2 */
+L14:
+t12 = t12 + 1;
+L12:
+t13 = HEAP[(int)t12 ];
+if(t13 == (char)125) goto L15;
+t12 = t12 + 1;
+goto L12;
+/* Print Complex P.3 */
+L15:
+t12 = t12 + 1;
+/* Print Complex P.4 */
+L13:
+t13 = HEAP[(int)t12 ];
+if(t13 == -1) goto L16;
+HEAP[(int)H] = t13;
 H = H + 1;
-HEAP[(int)H] = 114;
-H = H + 1;
+t12 = t12 + 1;
+goto L13;
+/* Salida print Complex */
+L16:
 HEAP[(int)H] = -1;
 H = H + 1;
-/* Ingreso al Heap por el puntero */
-t12 = t9 + 0;
-HEAP[(int)t12] = t11;
-/* Declaracion var struct: edad */
-/* Ingreso al Heap por el puntero */
-t13 = t9 + 1;
-HEAP[(int)t13] = 18;
-/* Declaracion var struct: descripcion */
-/* Metodo ToString o ToOwned */
-/* Por si es booleano el resultado a pasar a string */
-t14 = H;
-/* Primitivo tipo STR: "Maneja un carro" */
-t15 = H  ;
-HEAP[(int)H] = 77;
+/* Impresion */
+t15 = t10  ;
+L17:
+t16 = HEAP[(int)t15 ];
+if(t16 != -1) goto L18;
+goto L19;
+L18:
+printf("%c",(char)t16);
+t15 = t15 + 1;
+goto L17;
+L19:
+printf("%c",10);
+/* If instruction */
+/* Aritmeticas */
+/* Aritmeticas */
+t19 = 3 * 6;
+t18 = t19 + 7;
+L22:
+/* End If */
+/* If instruction */
+/* Operaciones Relacionales */
+if(5 < 6) goto L23;
+goto L24;
+L23:
+P = P + 0;
+/* Break */
+P = P - 0;
+goto L25;
+L24:
+L25:
+/* End If */
+/* Llamada a funcion: parametros_invalidos */
+/* Puntero a nuevo enviroment */
+t21 = P + 0;
+/* Declaracion var: x */
+/* Primitivo tipo STR: "Prueba" */
+t22 = H  ;
+HEAP[(int)H] = 80;
 H = H + 1;
-HEAP[(int)H] = 97;
-H = H + 1;
-HEAP[(int)H] = 110;
-H = H + 1;
-HEAP[(int)H] = 101;
-H = H + 1;
-HEAP[(int)H] = 106;
-H = H + 1;
-HEAP[(int)H] = 97;
-H = H + 1;
-HEAP[(int)H] = 32;
+HEAP[(int)H] = 114;
 H = H + 1;
 HEAP[(int)H] = 117;
 H = H + 1;
-HEAP[(int)H] = 110;
-H = H + 1;
-HEAP[(int)H] = 32;
-H = H + 1;
-HEAP[(int)H] = 99;
-H = H + 1;
-HEAP[(int)H] = 97;
-H = H + 1;
-HEAP[(int)H] = 114;
-H = H + 1;
-HEAP[(int)H] = 114;
-H = H + 1;
-HEAP[(int)H] = 111;
-H = H + 1;
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Ingreso al Heap por el puntero */
-t16 = t9 + 2;
-HEAP[(int)t16] = t15;
-t17 = P + 1;
-STACK[(int)t17] = t9;
-t18 = H;
-H = H + 3;
-/* Declaracion var struct: placa */
-/* Metodo ToString o ToOwned */
-/* Por si es booleano el resultado a pasar a string */
-t19 = H;
-/* Primitivo tipo STR: "090PLO" */
-t20 = H  ;
-HEAP[(int)H] = 48;
-H = H + 1;
-HEAP[(int)H] = 57;
-H = H + 1;
-HEAP[(int)H] = 48;
-H = H + 1;
-HEAP[(int)H] = 80;
-H = H + 1;
-HEAP[(int)H] = 76;
-H = H + 1;
-HEAP[(int)H] = 79;
-H = H + 1;
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Ingreso al Heap por el puntero */
-t21 = t18 + 0;
-HEAP[(int)t21] = t20;
-/* Declaracion var struct: color */
-/* Metodo ToString o ToOwned */
-/* Por si es booleano el resultado a pasar a string */
-t22 = H;
-/* Primitivo tipo STR: "gris" */
-t23 = H  ;
-HEAP[(int)H] = 103;
-H = H + 1;
-HEAP[(int)H] = 114;
-H = H + 1;
-HEAP[(int)H] = 105;
-H = H + 1;
-HEAP[(int)H] = 115;
-H = H + 1;
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Ingreso al Heap por el puntero */
-t24 = t18 + 1;
-HEAP[(int)t24] = t23;
-/* Declaracion var struct: tipo */
-/* Metodo ToString o ToOwned */
-/* Por si es booleano el resultado a pasar a string */
-t25 = H;
-/* Primitivo tipo STR: "mecanico" */
-t26 = H  ;
-HEAP[(int)H] = 109;
-H = H + 1;
 HEAP[(int)H] = 101;
 H = H + 1;
-HEAP[(int)H] = 99;
+HEAP[(int)H] = 98;
 H = H + 1;
 HEAP[(int)H] = 97;
 H = H + 1;
-HEAP[(int)H] = 110;
-H = H + 1;
-HEAP[(int)H] = 105;
-H = H + 1;
-HEAP[(int)H] = 99;
-H = H + 1;
-HEAP[(int)H] = 111;
-H = H + 1;
 HEAP[(int)H] = -1;
 H = H + 1;
-/* Ingreso al Heap por el puntero */
-t27 = t18 + 2;
-HEAP[(int)t27] = t26;
-t28 = P + 2;
-STACK[(int)t28] = t18;
-t29 = H;
-H = H + 3;
-/* Declaracion var struct: placa */
-/* Metodo ToString o ToOwned */
-/* Por si es booleano el resultado a pasar a string */
-t30 = H;
-/* Primitivo tipo STR: "P0S921" */
-t31 = H  ;
-HEAP[(int)H] = 80;
-H = H + 1;
-HEAP[(int)H] = 48;
-H = H + 1;
-HEAP[(int)H] = 83;
-H = H + 1;
-HEAP[(int)H] = 57;
-H = H + 1;
-HEAP[(int)H] = 50;
-H = H + 1;
-HEAP[(int)H] = 49;
-H = H + 1;
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Ingreso al Heap por el puntero */
-t32 = t29 + 0;
-HEAP[(int)t32] = t31;
-/* Declaracion var struct: color */
-/* Metodo ToString o ToOwned */
-/* Por si es booleano el resultado a pasar a string */
-t33 = H;
-/* Primitivo tipo STR: "verde" */
+P = P + 0;
+parametros_invalidos();
+P = P - 0;
+/* Valor de return */
+t31 = P + 0;
+t32 = STACK[(int)t31];
+/* Declaracion var: variable1 */
+/* Ingreso a la Pila */
+t33 = P + 0;
+STACK[(int)t33] = 23;
+/* Declaracion var: variable1 */
+/* Declaracion var: prueba_tipo */
+/* Primitivo tipo STR: "Cadena" */
 t34 = H  ;
-HEAP[(int)H] = 118;
+HEAP[(int)H] = 67;
 H = H + 1;
-HEAP[(int)H] = 101;
-H = H + 1;
-HEAP[(int)H] = 114;
+HEAP[(int)H] = 97;
 H = H + 1;
 HEAP[(int)H] = 100;
 H = H + 1;
 HEAP[(int)H] = 101;
 H = H + 1;
-HEAP[(int)H] = -1;
-H = H + 1;
-/* Ingreso al Heap por el puntero */
-t35 = t29 + 1;
-HEAP[(int)t35] = t34;
-/* Declaracion var struct: tipo */
-/* Metodo ToString o ToOwned */
-/* Por si es booleano el resultado a pasar a string */
-t36 = H;
-/* Primitivo tipo STR: "automatico" */
-t37 = H  ;
-HEAP[(int)H] = 97;
-H = H + 1;
-HEAP[(int)H] = 117;
-H = H + 1;
-HEAP[(int)H] = 116;
-H = H + 1;
-HEAP[(int)H] = 111;
-H = H + 1;
-HEAP[(int)H] = 109;
+HEAP[(int)H] = 110;
 H = H + 1;
 HEAP[(int)H] = 97;
 H = H + 1;
-HEAP[(int)H] = 116;
-H = H + 1;
-HEAP[(int)H] = 105;
-H = H + 1;
-HEAP[(int)H] = 99;
-H = H + 1;
-HEAP[(int)H] = 111;
-H = H + 1;
 HEAP[(int)H] = -1;
 H = H + 1;
-/* Ingreso al Heap por el puntero */
-t38 = t29 + 2;
-HEAP[(int)t38] = t37;
-t39 = P + 3;
-STACK[(int)t39] = t29;
+/* Ingreso a la Pila */
+t35 = P + 1;
+STACK[(int)t35] = t34;
+/* Asignacion */
+t36 = 0;
+/* End Asignacion */
+/* Declaracion var: no_mutable */
+/* Ingreso a la Pila */
+t37 = P + 2;
+STACK[(int)t37] = 7;
+/* Asignacion */
+t38 = 0;
+/* End Asignacion */
+/* Declaracion de arreglo: arr3 */
+/* Dimensionales del arreglo */
+t39 = 4;
+/* ------------------------ */
+/* Exp Arreglo */
+t40 = H;
+/* Tamanio Arreglo */
+HEAP[(int)H] = 4;
+/* --------------- */
+H = H + 1;
+HEAP[(int)H] = 90;
+H = H + 1;
+HEAP[(int)H] = 3;
+H = H + 1;
+HEAP[(int)H] = 40;
+H = H + 1;
+HEAP[(int)H] = 10;
+H = H + 1;
+t41 = P + 3;
+STACK[(int)t41] = t40;
 return 0;
 }

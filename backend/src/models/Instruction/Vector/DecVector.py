@@ -128,6 +128,10 @@ class DecVector(Instruccion):
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
 
+    def getId(self):
+        return self.id
+    def getExp(self):
+        return self.vecI
     def generarC3d(self,ts,ptr):
         self.generator.addComment(f"Declaracion de Vector: {self.id}")
         Puntero = "P"

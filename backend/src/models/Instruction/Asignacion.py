@@ -115,7 +115,7 @@ class Asignacion(Instruccion):
 
                 if symbol.tipo==exp.tipo:
                     ts.generator=self.generator
-                    if len(self.cIndex) == 0:
+                    if len(self.cIndex) == 0 and len(self.cIds) ==0:
                         tvalor = self.generator.newTemp()
                         if exp.tipo != Tipos.BOOLEAN or  exp.tipo_aux not in [Tipos.VECTOR,Tipos.ARREGLO]:
                             self.generator.addExpAsign(target=tvalor,right=exp.valor)

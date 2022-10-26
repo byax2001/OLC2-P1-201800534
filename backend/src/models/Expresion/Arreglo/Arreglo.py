@@ -141,6 +141,7 @@ class Arreglo(Expresion):
                 return result
             #array[0] tamaño del array
             self.generator.addSetHeap(index="H",value=taux)
+            self.generator.addNextHeap() #H = H+1
             # tvalor=valor
             self.exp.generator=self.generator
             rval=self.exp.generarC3d(ts,ptr)
@@ -159,14 +160,13 @@ class Arreglo(Expresion):
                 self.generator.addNextHeap()
             else:
                 self.generator.addExpAsign(target=tvalor,right=rval.valor)
-
             self.generator.addLabel(loop) #Loop:
             self.generator.addIf(left=tcont,rigth=taux,operator=">=",label=lsalida) ##if(tcont>=taux) goto Lsalida
             self.generator.addSetHeap(index="H",value=tvalor) #   #Heap[H]=tvalor
             self.generator.addNextHeap()#    #H=H+1
             self.generator.addExpression(target=tcont,left=tcont,right="1",operator="+")#tcont=tcont+1;
             self.generator.addGoto(loop) #goto Loop
-            self.generator.newLabel(lsalida)#Lsalida:
+            self.generator.addLabel(lsalida)#Lsalida:
         result.prof_array=self.profundidad
         return result
 

@@ -13,6 +13,7 @@ from models.TablaSymbols.ValC3d import ValC3d
 from models.TablaSymbols.Tipos import Tipos
 from models.Expresion.Vector.VectorC3d import VectorC3d
 from models.TablaSymbols.SymC3d import SymC3d
+from models.Expresion.Id import Id
 
 class ForIn(Instruccion):
     def __init__(self,id:str,arreglo,cInst:[Instruccion],line:int,column:int):
@@ -70,13 +71,16 @@ class ForIn(Instruccion):
 
 
         newts = Enviroment(ts,"ForIn")
-        newts.generator = self.generator
-        array: ValC3d = self.arreglo.generarC3d(newts, ptr)
+        newts.generator = self.generator #Enviroment del for
+        array: ValC3d = self.arreglo.generarC3d(newts, ptr)  #Expresion que contiene el arreglo
         for_var = self.generator.newTemp()
+        if isinstance(self.arreglo,Id):
+            array.prof_array = array.prof_array -1
 
         if array.prof_array == 0:
             symbol= Symbol(mut=True,id=self.id,value=for_var,tipo_simbolo=0,tipo=array.tipo,line=self.line,
                        column=self.column,tacceso=0,position=newts.size)
+            symbol.env_aux = array.env_aux
         else:
             nvector = VectorC3d(vec=array.valor, profundidad=array.prof_array)
             tsimbolo = 0
@@ -86,6 +90,7 @@ class ForIn(Instruccion):
                 tsimbolo=3
             symbol = Symbol(mut=True, id=self.id, value=nvector, tipo_simbolo=tsimbolo, tipo=array.tipo,
                             line=self.line, column=self.column, tacceso=0, position=newts.size)
+            symbol.env_aux=array.env_aux
         #SE DECLARA LA VARIABLE
         temp_var: SymC3d = newts.addVar(self.id, symbol)  # ----------------------------
         aux_index = self.generator.newTemp()  # tendra el index

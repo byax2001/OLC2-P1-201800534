@@ -88,6 +88,7 @@ class DecStructExp(Expresion):
         pass
 
     def generarC3d(self,ts,ptr):
+        self.generator.addComment("Expresion Dec Struct  {id:expresion,id:expresion}")
         ts.generator = self.generator
         tmpR = self.generator.newTemp()
         result = ValC3d(valor=tmpR,isTemp=True,tipo=Tipos.ERROR)

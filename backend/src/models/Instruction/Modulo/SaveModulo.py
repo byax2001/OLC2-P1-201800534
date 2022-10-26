@@ -30,3 +30,23 @@ class SaveModulo(Instruccion):
                               columna=self.column)
     def changeAcces(self,acceso:int):
         self.tacceso=acceso
+
+    def generarC3d(self,ts,ptr):
+        existe = ts.buscar(self.id)
+        newts = Enviroment(ts, "Modulo")
+        if existe == None:
+            for ins in self.cInst:
+                ins.generator=self.generator
+                ins.generarC3d(newts,ptr);
+            symbol = Symbol(mut=False, id=self.id, value=newts, tipo_simbolo=5, tipo=Tipos.MODULO, line=self.line,
+                            column=self.column, tacceso=self.tacceso)
+            ts.addVar(self.id, symbol)
+            print(f"Modulo declarado {self.id}")
+            B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,
+                                fila=self.line,
+                                columna=self.column)
+        else:
+            error = "Error id ya ha sido declarado en otra variable"
+            print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)

@@ -34,3 +34,6 @@ asegurandose de tomar el valor del return de ser necesario.
 -Las funciones seran guardadas en la tabla de simbolos con un parametro que indica si ya se usaron o no, si no se han usado
 se genera en c3d una funcion con todas sus instrucciones (exceptuando las declaraciones iniciales) para posteriormente
 llamar esa funcion.
+-La variable ptr que tienen la mayoria de def es una variable auxiliar, en la mayoria de casos transportan un puntero
+especial a la hora de hacer declaraciones de variables adentro de struct o bien contienen el temporal tmpR (temporal resultado)
+de algunas expresiones.

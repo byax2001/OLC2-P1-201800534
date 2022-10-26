@@ -134,9 +134,13 @@ class Push(Instruccion):
                         self.generator.incVar(tcont)#   tcont= tcont+1
                         self.generator.addGoto(loop)# goto loop
                         self.generator.addLabel(lsalida)# Lsalida:
+                        self.generator.addComment(f"Se inserta el nuevo dato en la ultima posicion del vec: {self.id}")
                         #se copia en la ultima posicion el nuevo valor
                         self.generator.addSetHeap(index="H",value=tvexp)
                         self.generator.addNextHeap()#H=H+1
+                        if symbol.tipo== Tipos.STRUCT:
+                            symbol.env_aux = expR.env_aux
+                            ts.actualizarSymbol(id=self.id,Symbol=symbol)
                     else:
                         error="La expresion y el arreglo no son del mismo tipo"
                         print(error)

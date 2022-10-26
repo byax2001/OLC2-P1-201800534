@@ -102,5 +102,9 @@ class While(Instruccion):
             code = code.replace("continue_i", f"goto {loop};")
             self.generator.addCode(code)
         else:
-            print("La expresion no es booleana")
+
+            error="La expresion no es booleana"
+            print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         self.generator.addComment("End While")

@@ -85,4 +85,6 @@ class Rango(Expresion):
         else:
             error = "Una o ambas expresiones no son int o usize"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         return result

@@ -101,6 +101,8 @@ class If(Instruccion):
         else:
             error="La expresion debe de ser de tipo booleano"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         if aux==0:
             self.generator.addLabel(lsalida)
 

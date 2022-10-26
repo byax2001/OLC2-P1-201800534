@@ -259,12 +259,14 @@ class Call(Instruccion):
             else:
                 print("No ha sido declarada dicha funcion " + str(self.line))
                 error = "No ha sido declarada dicha funcion"
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
 
 
     def crear_funcC3d(self,instructions,ts,ptr):
         exit_return=self.generator.newLabel()
         #CREACION DE LA FUNCION EN C3D
-        code_func="void "+self.id + "(){{\n"
+        code_func="void "+self.id + "(){\n"
         i_aux1=len(self.generator.code)
         x =0
         for inst in instructions:
@@ -304,6 +306,6 @@ class Call(Instruccion):
         code_func=code_func.replace("return_i",f"goto {exit_return};")
         code_func+=exit_return+":\n"
         code_func += f"return; \n"
-        code_func += f"}}}} \n"
+        code_func += f"}} \n"
         self.generator.addCodeFunc(code=code_func)
 

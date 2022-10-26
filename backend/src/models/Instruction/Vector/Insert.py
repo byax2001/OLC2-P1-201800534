@@ -184,13 +184,21 @@ class Insert(Instruccion):
                     else:
                         error = "La expresion y el arreglo no son del mismo tipo o el index no es un int o usize"
                         print(error)
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                 else:
                     error = "Se intenta hacer push a una variable que no es un vector"
                     print(error)
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
             else:
                 error = "Intento de cambio a un arreglo no muteable"
                 print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         else:
             error = "No existe dicho arreglo"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         self.generator.addComment("End Insert")

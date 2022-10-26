@@ -153,6 +153,8 @@ class vecI(Expresion):
             else:
                 error = "El multiplicador debe de ser un dato entero"
                 print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
                 return result
             self.generator.addComment("Tamanio Vec!")
             self.generator.addSetHeap(index="H", value=taux) # array[0] tamaño del vector

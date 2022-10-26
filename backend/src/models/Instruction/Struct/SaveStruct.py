@@ -40,6 +40,8 @@ class SaveStruct(Instruccion):
             symbol = Symbol(mut=False, id=self.id, value=struct, tipo_simbolo=4, tipo=Tipos.STRUCT, line=self.line,
                             column=self.column, tacceso=self.tacceso)
             ts.addVar(self.id, symbol)
+            B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,
+                                fila=self.line, columna=self.column)
             print(f"Struct declarado {self.id}")
         else:
             error = "Error: se intenta declarar un struct con una id ya declarada "

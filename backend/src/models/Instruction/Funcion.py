@@ -46,3 +46,6 @@ class Funcion(Instruccion):
             ts.addVar(self.id, newSymbol)
         else:
             print("Id ya declarado")
+            error = "Id ya declarado"
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)

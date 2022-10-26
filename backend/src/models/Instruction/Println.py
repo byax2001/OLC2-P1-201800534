@@ -293,6 +293,7 @@ class Println(Instruccion):
                 t2 = self.generator.newTemp()
                 t3 = self.generator.newTemp()
                 t4 = self.generator.newTemp()
+
                 noNeg = self.generator.newLabel()
                 self.generator.addExpAsign(target=t1, right=exp.valor)  # t1 = 1245.552
                 self.generator.addIf(left=t1, rigth="0", operator=">=", label=noNeg)  # if(t1>0) goto noNeg
@@ -428,8 +429,10 @@ class Println(Instruccion):
         t2=self.generator.newTemp()
         t3=self.generator.newTemp()
         t4=self.generator.newTemp()
+        tnum_ascii = self.generator.newTemp()
         loop=self.generator.newLabel()
         Lf=self.generator.newLabel()
+        self.generator.addExpAsign(target=tnum_ascii, right="0")
         self.generator.addExpAsign(target=linit,right="H")#usado para el metodo de reordenar a la inversa
         self.generator.addExpression(target=t1,left=tvalor,right="",operator="") #t1=valor double o int
         self.generator.addLabel(loop) #Loop
@@ -439,13 +442,17 @@ class Println(Instruccion):
         self.generator.addExpAsign(target=t4,right=f"(int){t1}%10") # t4=(int)t1%10:  t4=t1%10
 
         self.generator.addExpAsign(target=t1,right=t3) #t1=t3
-        self.generator.addSetHeap(index="H",value=f"(int){t4} +48") #Heap[H]=(char)t4+48   #EN ASSEMBLER CUANDO SE LE SUMA 30h A UN NUMERO
+        self.generator.addComment("Temporal con el numero en ascii")
+        self.generator.addExpression(target=tnum_ascii,left=f"(int){t4}",right="48",operator="+")
+        self.generator.addSetHeap(index="H",value=tnum_ascii) #Heap[H]=(char)t4+48   #EN ASSEMBLER CUANDO SE LE SUMA 30h A UN NUMERO
                                                                                             #SE CONVIERTE A ASCII, EN ESTE CASO SE SUMAN 48
                                                                                             #POR QUE 48d==30h
         self.generator.addNextHeap() #H=H+1
         self.generator.addGoto(loop)
         self.generator.addLabel(Lf) # Lf:
-        self.generator.addSetHeap(index="H", value=f"(int){t1}+48") #Heap[H]=(char)t4
+        self.generator.addExpression(target=tnum_ascii, left=f"(int){t1}", right="48", operator="+")
+        self.generator.addComment("Temporal con el numero en ascii")
+        self.generator.addSetHeap(index="H", value=tnum_ascii) #Heap[H]=(char)t4
         self.generator.addNextHeap()  # H=H+1
         self.sort_reverse(init=linit,fin="H-1")
 

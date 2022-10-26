@@ -164,14 +164,23 @@ class Declaracion(Instruccion):
                 else:
                     error="Tipo de variable no corresponde con el valor a declarar"
                     print(error)
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                      columna=self.columna)
         else:
-            print("Variable ya declarada")
+            error = f"Variable ya declarada {self.id}"
+            print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                              columna=self.columna)
 
     def declarar_c3d(self,ts,ptr,exp:ValC3d):
 
         newVar = Symbol(mut=self.mut, id=self.id, value=exp.valor, tipo_simbolo=0, tipo=exp.tipo,
                         line=self.linea, column=self.columna, tacceso=self.tacceso,position=ts.size)
         newVar.paso_parametro=self.dec_paso_parametro
+
+        B_datos().appendVar(id=self.id, t_simbolo=newVar.tsimbolo, t_dato=newVar.tipo,
+                            ambito=ts.env, fila=self.linea, columna=self.columna)
+
         temp_var: SymC3d = ts.addVar(self.id, newVar)  # ----------------------------
         aux_index = self.generator.newTemp()  # tendra el index
         self.generator.addComment("Ingreso a la Pila")
@@ -223,6 +232,7 @@ class Declaracion(Instruccion):
                 else:
                     error = "Tipo de variable no corresponde con el valor a declarar"
                     print(error)
+
         else:
             print("Variable ya declarada")
 

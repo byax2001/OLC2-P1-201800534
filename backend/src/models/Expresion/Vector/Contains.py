@@ -123,9 +123,13 @@ class Contains(Expresion):
             else:
                 error = "Se intenta hacer push a una variable que no es un vector"
                 print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
 
         else:
             error="No existe dicho arreglo"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         self.generator.addComment("END Contains")
         return result

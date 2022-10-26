@@ -136,6 +136,8 @@ class If_ternario(Expresion):
         else:
             error="La expresion del if debe de ser una expresion booleana"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         if aux == 0:
             self.generator.addLabel(lsalida)
         self.generator.addComment("End If ternario")

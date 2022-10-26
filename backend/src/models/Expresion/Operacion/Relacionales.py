@@ -91,6 +91,8 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
             if val2.tipo != Tipos.BOOLEAN:
                 error = "Las variables no son del mismo tipo"
                 print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
             return valor
 
         val2:ValC3d=self.exp2.generarC3d(ts,ptr)
@@ -109,6 +111,8 @@ class Relacionales(OperacionRel): #de esta forma se esta indicando que aritmetic
         else:
             error="Las literales a comparar no son del mismo tipo"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                              columna=self.columna)
 
 
 

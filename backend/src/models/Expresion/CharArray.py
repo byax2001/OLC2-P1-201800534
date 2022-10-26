@@ -79,4 +79,6 @@ class CharArray(Expresion):
         else:
             error = "La expresion no es un string o &str"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         return result

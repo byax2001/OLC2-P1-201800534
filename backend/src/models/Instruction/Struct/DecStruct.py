@@ -70,6 +70,8 @@ class DecStruct(Instruccion):
                 symbol = Symbol(mut=self.mut, id=self.mut, value=v_exp, tipo_simbolo=4, tipo=Tipos.STRUCT,
                                 line=self.line, column=self.column, tacceso=self.tacceso,position=str(ts.size))
                 symbol.env_aux = exp.env_aux
+
+
                 temp_var: SymC3d=ts.addVar(self.id, symbol)
                 aux_index = self.generator.newTemp()
                 Puntero = "P"

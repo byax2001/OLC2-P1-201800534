@@ -4,6 +4,7 @@ from models.TablaSymbols.Symbol import Symbol,Symbols
 from models.TablaSymbols.Enviroment import Enviroment
 from models.Expresion.Vector.Vector import Vector
 from models.TablaSymbols.ValC3d import ValC3d
+from BaseDatos.B_datos import B_datos
 
 class Id(Expresion):    
     def __init__(self, id:str, linea: int, columna: int):
@@ -126,5 +127,7 @@ class Id(Expresion):
         else:
             error = f"no existe dicha id {self.id}"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                              columna=self.columna)
 
         return result

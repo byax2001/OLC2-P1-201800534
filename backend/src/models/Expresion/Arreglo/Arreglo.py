@@ -138,6 +138,8 @@ class Arreglo(Expresion):
             else:
                 error="El multiplicador debe de ser un dato entero"
                 print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
                 return result
             #array[0] tamaño del array
             self.generator.addSetHeap(index="H",value=taux)

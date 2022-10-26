@@ -9,41 +9,6 @@ import {Link, resolvePath} from 'react-router-dom'
 let consola=""
 
 
-/* 
-export const Ejecutar=function(entrada){
-    let l=[]
-    let promesa = new Promise(function(resolve, reject) {
-        sentServer(entrada)
-        .then((resp) => resp.json())
-        .then(function(dat) {
-            console.log(dat)
-            l.push(dat.Contenido)
-            console.log(l)
-        })
-        resolve(true);
-        } 
-    )
-    promesa.then(bool => console.log('Bool is true'))//<------------------------- aqui instancio el metodo
-    console.log("lista")
-    console.log(l)
-    return consola
-}
-export const sentServer=async(texto)=>{
-    const url="http://localhost:5000/DataAnalisis"
-    let config={
-        method:'POST',       //ELEMENTOS A ENVIAR
-        body:JSON.stringify([{entrada:texto}]),
-        headers : { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-    }
-
-    const res= await fetch(url,config)
-    //esto lo devuelve como una lista {hola: "pureba"}
-    return res
-}
-*/
 export default class Principal extends Component{
     
     constructor() {
@@ -58,6 +23,7 @@ export default class Principal extends Component{
         return(
             <React.Fragment>
             <header align="center"><h1>DB Rust</h1></header>
+            <button id="CopiarC3d" className="btn btn-dark btnEffect" onClick={()=>{this.copyToClipBoard()}}>Copiar </button>
             <div id="GButtons" className="btn-group">
                 <button className="btn btn-secondary" onClick={()=>this.Execute()}>
                 Ejecutar 
@@ -100,8 +66,15 @@ export default class Principal extends Component{
             consola:""
         })  
     }
+    
+    copyToClipBoard() {
+        var content = this.state.consola;
+        navigator.clipboard.writeText(content)
+        alert("Codigo 3D Copiado!");
+    }
+
     Execute=async()=>{
-        const url="http://localhost:5000/DataAnalisis"
+        const url="http://localhost:5000/DataAnalisisC3d"
         let config={
             method:'POST',       //ELEMENTOS A ENVIAR
             body:JSON.stringify([{entrada:this.state.entrada}]),
@@ -113,6 +86,7 @@ export default class Principal extends Component{
     
         const res= await fetch(url,config)
         const data =await res.json()
+        console.log(data)
         this.setState({
             consola:data.Contenido
         })

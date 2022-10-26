@@ -64,4 +64,6 @@ class Capacity(Expresion):
         else:
             error="Intento de capacity en una variable que no es vector"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         return result

@@ -40,6 +40,8 @@ class SaveModulo(Instruccion):
                 ins.generarC3d(newts,ptr);
             symbol = Symbol(mut=False, id=self.id, value=newts, tipo_simbolo=5, tipo=Tipos.MODULO, line=self.line,
                             column=self.column, tacceso=self.tacceso)
+
+
             ts.addVar(self.id, symbol)
             print(f"Modulo declarado {self.id}")
             B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,

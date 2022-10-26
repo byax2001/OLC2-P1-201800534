@@ -4,7 +4,7 @@ from models.Abstract import Expresion
 from models import Driver
 from models.TablaSymbols.ValC3d import ValC3d
 from models.TablaSymbols.Tipos import Tipos
-
+from BaseDatos.B_datos import B_datos
 class Break(Instruccion):
     def __init__(self, exp: Expresion, line:int, column:int):
         super().__init__()
@@ -47,3 +47,5 @@ class Break(Instruccion):
         else:
             error = "Break no esta en un bucle"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                              columna=self.columna)

@@ -63,6 +63,8 @@ class DimensionalArreglo(Expresion):
             else:
                 error="Error: El tamaño de una parte del arreglo no es entero o usize"
                 print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
 
         else:
             self.dimArr.generator=self.generator
@@ -81,6 +83,8 @@ class DimensionalArreglo(Expresion):
             else:
                 error="Error: El tamaño de una parte del arreglo no es entero o usize"
                 print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         return result
 
 

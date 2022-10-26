@@ -4,6 +4,7 @@ from models.Abstract import Expresion
 from models import Driver
 from models.TablaSymbols.ValC3d import ValC3d
 from models.TablaSymbols.Tipos import Tipos
+from BaseDatos.B_datos import B_datos
 
 class Return(Instruccion):
     def __init__(self, exp: Expresion, line:int, column:int):
@@ -51,3 +52,5 @@ class Return(Instruccion):
         else:
             error = "Return no esta en una funcion"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)

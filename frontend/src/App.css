@@ -82,3 +82,36 @@ header{
   top: 10px;
   left: 15px;
 }
+#CopiarC3d{
+  position: absolute;
+  top:20px;
+  right: 10px;
+  z-index: 2;
+}
+/*EFECTOS DE BOTONES*/
+.btnEffect{
+  padding: 5px 10px;
+  text-align: center;
+  color:white;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 7px;
+  box-shadow: 0 4px black;
+  padding-right:5px;
+  padding-left: 5px;
+}
+
+.btnEffect:hover {
+  background-color: #08555b;
+}
+.btnEffect:active {
+  background-color: #08555b;
+  box-shadow: 0 5px black;
+  transform: translateY(4px);
+}
+.animacion{
+  height: 400px;
+  background-color: white;
+
+}

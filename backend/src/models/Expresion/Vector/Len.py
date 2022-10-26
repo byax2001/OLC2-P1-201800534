@@ -96,6 +96,8 @@ class Len(Expresion):
                     else:
                         error = "Se intenta usar len en un elemento que no es vector o arreglo en el interior de un arreglo "
                         print(error)
+                        B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                          columna=self.column)
                 else:
                     self.generator.addGetHeap(target=tmpR, index=t_puntero)  # t_tam=inicioArray
             elif symbol.tipo == Tipos.STRING:
@@ -103,8 +105,12 @@ class Len(Expresion):
             else:
                 error = "Se intenta usar len en un elemento no vector o arreglo"
                 print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                  columna=self.column)
         else:
             error = "No existe dicho arreglo"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         self.generator.addComment("End Len")
         return result

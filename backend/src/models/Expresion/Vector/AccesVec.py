@@ -155,4 +155,6 @@ class AccesVec(Expresion):
         else:
             error="No existe vector o arreglo con dicho id"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         return result

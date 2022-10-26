@@ -122,6 +122,9 @@ class DecArreglo(Instruccion):
                               line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
                 symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
 
+                B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo,
+                                    ambito=ts.env, fila=self.line, columna=self.column)
+
                 rDec:SymC3d=ts.addVar(self.id, symbol)
                 aux_index=self.generator.newTemp()
                 self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")
@@ -140,6 +143,9 @@ class DecArreglo(Instruccion):
                               line=self.line,column=self.column,tacceso=self.tacceso,position=ts.size)
                 symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
 
+                B_datos().appendVar(id=self.id, t_simbolo=symbol.tsimbolo, t_dato=symbol.tipo, ambito=ts.env,
+                                    fila=self.line, columna=self.column)
+
                 rDec:SymC3d=ts.addVar(self.id, symbol)
                 aux_index=self.generator.newTemp()
                 self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")
@@ -147,6 +153,8 @@ class DecArreglo(Instruccion):
         else:
             error="variable ya declarada"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
 
     def decStructsC3d(self,ts:Enviroment,ptr):
         self.generator.addComment(f"Declaracion de vector en struct: {self.id}")

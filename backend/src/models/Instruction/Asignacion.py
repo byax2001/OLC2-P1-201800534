@@ -198,9 +198,13 @@ class Asignacion(Instruccion):
                                 self.generator.addNewLine()
                                 error = "Intento de ingresar a una profundidad mayor a la que posee el array"
                                 print(error)
+                                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                                  columna=self.columna)
                         else:
                             error = "No se puede asignar de esa forma a una variable no array"
                             print(error)
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                              columna=self.columna)
                     else:
                         #PARA EL var.dato = val  existe una clase llamada modivarstruct
                         # asi que fijo aca va a ser id[x].val = val
@@ -213,20 +217,30 @@ class Asignacion(Instruccion):
                                 self.generator.addNewLine()
                                 error = "Intento de ingresar a una profundidad mayor a la que posee el array"
                                 print(error)
+                                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                                  columna=self.columna)
                         else:
                             error = "No se puede asignar de esa forma a una variable no array"
                             print(error)
+                            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                              columna=self.columna)
 
                 else:
-                    error = "La variable no es del mismo tipo al valor a asignar"
+                    error = f"La variable no es del mismo tipo al valor a asignar {self.id}"
                     print(error)
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                      columna=self.columna)
 
             else:
-                error="La variable no es muteable"
+                error=f"La variable no es muteable {self.id}"
                 print(error)
+                B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                                  columna=self.columna)
         else:
-            error="dicha variable no existe"
+            error=f"dicha variable no existe {self.id}"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
+                              columna=self.columna)
         self.generator.addComment("End Asignacion")
 
     def tSymtValCorrect(self,symbol:Symbol,exp:ValC3d):

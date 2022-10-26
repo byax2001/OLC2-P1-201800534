@@ -1,5 +1,6 @@
 from models.Abstract.Instruction import Instruccion
 from models.TablaSymbols.Enviroment import Enviroment
+from BaseDatos.B_datos import B_datos
 
 class Continue(Instruccion):
     def __init__(self,line:int, column:int):
@@ -30,3 +31,5 @@ class Continue(Instruccion):
         else:
             error = "Continue no esta en un bucle"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)

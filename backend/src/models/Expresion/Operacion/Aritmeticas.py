@@ -208,8 +208,11 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
             return result
 
         if self.exp2==None:
-            print("error expresion 2 es nula",end="") #imprimir sin nuevo salto de linea
+            error="error expresion 2 es nula"
+            print(error,end="") #imprimir sin nuevo salto de linea
             print(self.linea)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
             return
         self.exp2.generator = self.generator
         exp1=self.exp1.generarC3d(ts,ptr)
@@ -288,6 +291,7 @@ class Aritmeticas(Operacion): #de esta forma se esta indicando que aritmeticas h
                 result.tipo = exp1.tipo
         else:
             error="Los nodos a operar deben de ser del mismo tipo"
+            print(error)
             B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.linea,
                                   columna=self.columna)
         return result

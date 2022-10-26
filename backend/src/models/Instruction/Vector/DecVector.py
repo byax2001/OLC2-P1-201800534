@@ -170,6 +170,7 @@ class DecVector(Instruccion):
                     symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=vecIr.tipo,
                                     line=self.line,column=self.column, tacceso=self.tacceso,position=ts.size)
                     symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
+
                     rDec = ts.addVar(self.id, symbol)
                     aux_index = self.generator.newTemp()
                     self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")#taux=P+pos
@@ -181,6 +182,8 @@ class DecVector(Instruccion):
                 else:
                     error="El tipo de arreglo no es igual al tipo de variable que lo guardara"
                     print(error)
+                    B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                                      columna=self.column)
         elif self.capacity!=None:
             print(f"Tipo:      {self.tipo}")
             self.generator.addComment("Vector con Capacity")
@@ -210,6 +213,8 @@ class DecVector(Instruccion):
                 symbol = Symbol(mut=self.mut, id=self.id, value=newVec, tipo_simbolo=3, tipo=self.tipo,
                                 line=self.line, column=self.column, tacceso=self.tacceso, position=ts.size)
                 symbol.paso_parametro = self.dec_paso_parametro  # por si acaso es una declaracion con paso de parametro
+
+
                 rDec = ts.addVar(self.id, symbol)
                 aux_index = self.generator.newTemp()
                 self.generator.addExpression(target=aux_index, left=Puntero, right=str(rDec.position), operator="+")

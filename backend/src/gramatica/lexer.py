@@ -1,5 +1,6 @@
 # Declaracion de tokens
 from ply import lex
+from BaseDatos.B_datos import B_datos
 
 reservadas = {
     #r'exp regular' : id
@@ -157,6 +158,7 @@ def t_ignorar_salto(t):
 def t_error(t):
 
     print(f'Caracter no reconocido {t.value[0]!r} en la linea {t.lexer.lineno}')
+    B_datos().appendE(descripcion=f"Error lexico simbolo {t.value[0]!r}", ambito="Global", linea=t.lexer.lineno, columna="0")
     t.lexer.skip(1)
 
 lex.lex()

@@ -54,4 +54,6 @@ class Sqrt(Expresion):
         else:
             error="La expresion a hacer abs no es un numero"
             print(error)
+            B_datos().appendE(descripcion=error, ambito=ts.env, linea=self.line,
+                              columna=self.column)
         return result

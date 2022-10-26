@@ -66,8 +66,9 @@ def DataAnalisisC3d():
         generator: Generator = Generator()
         if ast == None:
             ast = Nothing(line=0, column=0)
-
-        ast.generarC3d(ts=ts, generator=generator)
+            ast.generarC3d(ts=ts, ptr=0)
+        else:
+            ast.generarC3d(ts=ts, generator=generator)
         main = ts.buscar("main")
         if main != None:
             call = Call("main", [], line=0, column=0);

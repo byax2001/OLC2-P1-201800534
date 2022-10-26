@@ -2,6 +2,7 @@ from ply.yacc import yacc
 from gramatica import lexer
 from models.Ast.Ast import Ast
 #Expresiones
+from BaseDatos.B_datos import B_datos
 from models.Expresion.Operacion.Aritmeticas import Aritmeticas
 from models.Expresion.Operacion.Relacionales import Relacionales
 from models.Expresion.Operacion.Logicas import Logicas
@@ -997,6 +998,7 @@ def p_conj_acces_mod2(p):
 def p_error(p):
     if p:
         print(f'Error de sintaxis simbolo: {p.value!r}  fila: {p.lineno} columna: {p.lexpos}')
+        B_datos().appendE(descripcion=f"Error sintactico simbolo {p.value!r}",ambito="Global",linea=p.lineno,columna="0")
     else:
         print("Syntax error")
 
